@@ -1,0 +1,590 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>Dumpster Champs Service Areas</name>
+    <description>Roll-off dumpster rental service locations across the United States. Flat-rate pricing from $495. Same-day delivery available.</description>
+
+    <Style id="dumpsterChamps">
+      <IconStyle>
+        <color>ff1c7aee</color>
+        <scale>1.2</scale>
+        <Icon>
+          <href>https://www.dumpsterchamps.com/images/map-marker.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <color>ff1c7aee</color>
+        <scale>0.8</scale>
+      </LabelStyle>
+    </Style>
+
+    <Placemark>
+      <name>Dumpster Rental Phoenix, AZ</name>
+      <description><![CDATA[
+        <h3>Dumpster Champs - Phoenix, AZ</h3>
+        <p>Affordable roll-off dumpster rental in Phoenix. 10-40 yard containers with flat-rate pricing.</p>
+        <ul>
+          <li>Same-day delivery available</li>
+          <li>Flat-rate pricing from $495</li>
+          <li>No hidden fees</li>
+          <li>7-day rental included</li>
+        </ul>
+        <p><a href="https://www.dumpsterchamps.com/dumpster-rental-phoenix-az">Get a Free Quote</a></p>
+        <p>Call: (888) 860-0710</p>
+      ]]></description>
+      <styleUrl>#dumpsterChamps</styleUrl>
+      <Point>
+        <coordinates>-112.074,33.4484,0</coordinates>
+      </Point>
+      <ExtendedData>
+        <Data name="city"><value>Phoenix</value></Data>
+        <Data name="state"><value>Arizona</value></Data>
+        <Data name="stateAbbr"><value>AZ</value></Data>
+        <Data name="url"><value>https://www.dumpsterchamps.com/dumpster-rental-phoenix-az</value></Data>
+        <Data name="phone"><value>(888) 860-0710</value></Data>
+        <Data name="serviceType"><value>Dumpster Rental</value></Data>
+      </ExtendedData>
+    </Placemark>
+    <Placemark>
+      <name>Dumpster Rental Fontana, CA</name>
+      <description><![CDATA[
+        <h3>Dumpster Champs - Fontana, CA</h3>
+        <p>Affordable roll-off dumpster rental in Fontana. 10-40 yard containers with flat-rate pricing.</p>
+        <ul>
+          <li>Same-day delivery available</li>
+          <li>Flat-rate pricing from $495</li>
+          <li>No hidden fees</li>
+          <li>7-day rental included</li>
+        </ul>
+        <p><a href="https://www.dumpsterchamps.com/dumpster-rental-fontana-ca">Get a Free Quote</a></p>
+        <p>Call: (888) 860-0710</p>
+      ]]></description>
+      <styleUrl>#dumpsterChamps</styleUrl>
+      <Point>
+        <coordinates>-117.4550195,34.0799946,0</coordinates>
+      </Point>
+      <ExtendedData>
+        <Data name="city"><value>Fontana</value></Data>
+        <Data name="state"><value>California</value></Data>
+        <Data name="stateAbbr"><value>CA</value></Data>
+        <Data name="url"><value>https://www.dumpsterchamps.com/dumpster-rental-fontana-ca</value></Data>
+        <Data name="phone"><value>(888) 860-0710</value></Data>
+        <Data name="serviceType"><value>Dumpster Rental</value></Data>
+      </ExtendedData>
+    </Placemark>
+    <Placemark>
+      <name>Dumpster Rental Los Angeles, CA</name>
+      <description><![CDATA[
+        <h3>Dumpster Champs - Los Angeles, CA</h3>
+        <p>Affordable roll-off dumpster rental in Los Angeles. 10-40 yard containers with flat-rate pricing.</p>
+        <ul>
+          <li>Same-day delivery available</li>
+          <li>Flat-rate pricing from $495</li>
+          <li>No hidden fees</li>
+          <li>7-day rental included</li>
+        </ul>
+        <p><a href="https://www.dumpsterchamps.com/dumpster-rental-los-angeles-ca">Get a Free Quote</a></p>
+        <p>Call: (888) 860-0710</p>
+      ]]></description>
+      <styleUrl>#dumpsterChamps</styleUrl>
+      <Point>
+        <coordinates>-118.2437,34.0522,0</coordinates>
+      </Point>
+      <ExtendedData>
+        <Data name="city"><value>Los Angeles</value></Data>
+        <Data name="state"><value>California</value></Data>
+        <Data name="stateAbbr"><value>CA</value></Data>
+        <Data name="url"><value>https://www.dumpsterchamps.com/dumpster-rental-los-angeles-ca</value></Data>
+        <Data name="phone"><value>(888) 860-0710</value></Data>
+        <Data name="serviceType"><value>Dumpster Rental</value></Data>
+      </ExtendedData>
+    </Placemark>
+    <Placemark>
+      <name>Dumpster Rental North Hollywood, CA</name>
+      <description><![CDATA[
+        <h3>Dumpster Champs - North Hollywood, CA</h3>
+        <p>Affordable roll-off dumpster rental in North Hollywood. 10-40 yard containers with flat-rate pricing.</p>
+        <ul>
+          <li>Same-day delivery available</li>
+          <li>Flat-rate pricing from $495</li>
+          <li>No hidden fees</li>
+          <li>7-day rental included</li>
+        </ul>
+        <p><a href="https://www.dumpsterchamps.com/dumpster-rental-north-hollywood-ca">Get a Free Quote</a></p>
+        <p>Call: (888) 860-0710</p>
+      ]]></description>
+      <styleUrl>#dumpsterChamps</styleUrl>
+      <Point>
+        <coordinates>-118.4110618,34.1942088,0</coordinates>
+      </Point>
+      <ExtendedData>
+        <Data name="city"><value>North Hollywood</value></Data>
+        <Data name="state"><value>California</value></Data>
+        <Data name="stateAbbr"><value>CA</value></Data>
+        <Data name="url"><value>https://www.dumpsterchamps.com/dumpster-rental-north-hollywood-ca</value></Data>
+        <Data name="phone"><value>(888) 860-0710</value></Data>
+        <Data name="serviceType"><value>Dumpster Rental</value></Data>
+      </ExtendedData>
+    </Placemark>
+    <Placemark>
+      <name>Dumpster Rental Richmond, CA</name>
+      <description><![CDATA[
+        <h3>Dumpster Champs - Richmond, CA</h3>
+        <p>Affordable roll-off dumpster rental in Richmond. 10-40 yard containers with flat-rate pricing.</p>
+        <ul>
+          <li>Same-day delivery available</li>
+          <li>Flat-rate pricing from $495</li>
+          <li>No hidden fees</li>
+          <li>7-day rental included</li>
+        </ul>
+        <p><a href="https://www.dumpsterchamps.com/dumpster-rental-richmond-ca">Get a Free Quote</a></p>
+        <p>Call: (888) 860-0710</p>
+      ]]></description>
+      <styleUrl>#dumpsterChamps</styleUrl>
+      <Point>
+        <coordinates>-122.3572059,37.9181489,0</coordinates>
+      </Point>
+      <ExtendedData>
+        <Data name="city"><value>Richmond</value></Data>
+        <Data name="state"><value>California</value></Data>
+        <Data name="stateAbbr"><value>CA</value></Data>
+        <Data name="url"><value>https://www.dumpsterchamps.com/dumpster-rental-richmond-ca</value></Data>
+        <Data name="phone"><value>(888) 860-0710</value></Data>
+        <Data name="serviceType"><value>Dumpster Rental</value></Data>
+      </ExtendedData>
+    </Placemark>
+    <Placemark>
+      <name>Dumpster Rental San Diego, CA</name>
+      <description><![CDATA[
+        <h3>Dumpster Champs - San Diego, CA</h3>
+        <p>Affordable roll-off dumpster rental in San Diego. 10-40 yard containers with flat-rate pricing.</p>
+        <ul>
+          <li>Same-day delivery available</li>
+          <li>Flat-rate pricing from $495</li>
+          <li>No hidden fees</li>
+          <li>7-day rental included</li>
+        </ul>
+        <p><a href="https://www.dumpsterchamps.com/dumpster-rental-san-diego-ca">Get a Free Quote</a></p>
+        <p>Call: (888) 860-0710</p>
+      ]]></description>
+      <styleUrl>#dumpsterChamps</styleUrl>
+      <Point>
+        <coordinates>-117.1611,32.7157,0</coordinates>
+      </Point>
+      <ExtendedData>
+        <Data name="city"><value>San Diego</value></Data>
+        <Data name="state"><value>California</value></Data>
+        <Data name="stateAbbr"><value>CA</value></Data>
+        <Data name="url"><value>https://www.dumpsterchamps.com/dumpster-rental-san-diego-ca</value></Data>
+        <Data name="phone"><value>(888) 860-0710</value></Data>
+        <Data name="serviceType"><value>Dumpster Rental</value></Data>
+      </ExtendedData>
+    </Placemark>
+    <Placemark>
+      <name>Dumpster Rental West Sacramento, CA</name>
+      <description><![CDATA[
+        <h3>Dumpster Champs - West Sacramento, CA</h3>
+        <p>Affordable roll-off dumpster rental in West Sacramento. 10-40 yard containers with flat-rate pricing.</p>
+        <ul>
+          <li>Same-day delivery available</li>
+          <li>Flat-rate pricing from $495</li>
+          <li>No hidden fees</li>
+          <li>7-day rental included</li>
+        </ul>
+        <p><a href="https://www.dumpsterchamps.com/dumpster-rental-west-sacramento-ca">Get a Free Quote</a></p>
+        <p>Call: (888) 860-0710</p>
+      ]]></description>
+      <styleUrl>#dumpsterChamps</styleUrl>
+      <Point>
+        <coordinates>-121.557627,38.540222,0</coordinates>
+      </Point>
+      <ExtendedData>
+        <Data name="city"><value>West Sacramento</value></Data>
+        <Data name="state"><value>California</value></Data>
+        <Data name="stateAbbr"><value>CA</value></Data>
+        <Data name="url"><value>https://www.dumpsterchamps.com/dumpster-rental-west-sacramento-ca</value></Data>
+        <Data name="phone"><value>(888) 860-0710</value></Data>
+        <Data name="serviceType"><value>Dumpster Rental</value></Data>
+      </ExtendedData>
+    </Placemark>
+    <Placemark>
+      <name>Dumpster Rental Fairfield, CT</name>
+      <description><![CDATA[
+        <h3>Dumpster Champs - Fairfield, CT</h3>
+        <p>Affordable roll-off dumpster rental in Fairfield. 10-40 yard containers with flat-rate pricing.</p>
+        <ul>
+          <li>Same-day delivery available</li>
+          <li>Flat-rate pricing from $495</li>
+          <li>No hidden fees</li>
+          <li>7-day rental included</li>
+        </ul>
+        <p><a href="https://www.dumpsterchamps.com/dumpster-rental-fairfield-ct">Get a Free Quote</a></p>
+        <p>Call: (888) 860-0710</p>
+      ]]></description>
+      <styleUrl>#dumpsterChamps</styleUrl>
+      <Point>
+        <coordinates>-73.19897,41.184755,0</coordinates>
+      </Point>
+      <ExtendedData>
+        <Data name="city"><value>Fairfield</value></Data>
+        <Data name="state"><value>Connecticut</value></Data>
+        <Data name="stateAbbr"><value>CT</value></Data>
+        <Data name="url"><value>https://www.dumpsterchamps.com/dumpster-rental-fairfield-ct</value></Data>
+        <Data name="phone"><value>(888) 860-0710</value></Data>
+        <Data name="serviceType"><value>Dumpster Rental</value></Data>
+      </ExtendedData>
+    </Placemark>
+    <Placemark>
+      <name>Dumpster Rental Jacksonville, FL</name>
+      <description><![CDATA[
+        <h3>Dumpster Champs - Jacksonville, FL</h3>
+        <p>Affordable roll-off dumpster rental in Jacksonville. 10-40 yard containers with flat-rate pricing.</p>
+        <ul>
+          <li>Same-day delivery available</li>
+          <li>Flat-rate pricing from $495</li>
+          <li>No hidden fees</li>
+          <li>7-day rental included</li>
+        </ul>
+        <p><a href="https://www.dumpsterchamps.com/dumpster-rental-jacksonville">Get a Free Quote</a></p>
+        <p>Call: (888) 860-0710</p>
+      ]]></description>
+      <styleUrl>#dumpsterChamps</styleUrl>
+      <Point>
+        <coordinates>-81.6557,30.3322,0</coordinates>
+      </Point>
+      <ExtendedData>
+        <Data name="city"><value>Jacksonville</value></Data>
+        <Data name="state"><value>Florida</value></Data>
+        <Data name="stateAbbr"><value>FL</value></Data>
+        <Data name="url"><value>https://www.dumpsterchamps.com/dumpster-rental-jacksonville</value></Data>
+        <Data name="phone"><value>(888) 860-0710</value></Data>
+        <Data name="serviceType"><value>Dumpster Rental</value></Data>
+      </ExtendedData>
+    </Placemark>
+    <Placemark>
+      <name>Dumpster Rental Jacksonville, FL</name>
+      <description><![CDATA[
+        <h3>Dumpster Champs - Jacksonville, FL</h3>
+        <p>Affordable roll-off dumpster rental in Jacksonville. 10-40 yard containers with flat-rate pricing.</p>
+        <ul>
+          <li>Same-day delivery available</li>
+          <li>Flat-rate pricing from $495</li>
+          <li>No hidden fees</li>
+          <li>7-day rental included</li>
+        </ul>
+        <p><a href="https://www.dumpsterchamps.com/dumpster-rental-jacksonville-fl">Get a Free Quote</a></p>
+        <p>Call: (888) 860-0710</p>
+      ]]></description>
+      <styleUrl>#dumpsterChamps</styleUrl>
+      <Point>
+        <coordinates>-81.6557,30.3322,0</coordinates>
+      </Point>
+      <ExtendedData>
+        <Data name="city"><value>Jacksonville</value></Data>
+        <Data name="state"><value>Florida</value></Data>
+        <Data name="stateAbbr"><value>FL</value></Data>
+        <Data name="url"><value>https://www.dumpsterchamps.com/dumpster-rental-jacksonville-fl</value></Data>
+        <Data name="phone"><value>(888) 860-0710</value></Data>
+        <Data name="serviceType"><value>Dumpster Rental</value></Data>
+      </ExtendedData>
+    </Placemark>
+    <Placemark>
+      <name>Dumpster Rental Orlando, FL</name>
+      <description><![CDATA[
+        <h3>Dumpster Champs - Orlando, FL</h3>
+        <p>Affordable roll-off dumpster rental in Orlando. 10-40 yard containers with flat-rate pricing.</p>
+        <ul>
+          <li>Same-day delivery available</li>
+          <li>Flat-rate pricing from $495</li>
+          <li>No hidden fees</li>
+          <li>7-day rental included</li>
+        </ul>
+        <p><a href="https://www.dumpsterchamps.com/dumpster-rental-orlando-fl">Get a Free Quote</a></p>
+        <p>Call: (888) 860-0710</p>
+      ]]></description>
+      <styleUrl>#dumpsterChamps</styleUrl>
+      <Point>
+        <coordinates>-81.3792,28.5383,0</coordinates>
+      </Point>
+      <ExtendedData>
+        <Data name="city"><value>Orlando</value></Data>
+        <Data name="state"><value>Florida</value></Data>
+        <Data name="stateAbbr"><value>FL</value></Data>
+        <Data name="url"><value>https://www.dumpsterchamps.com/dumpster-rental-orlando-fl</value></Data>
+        <Data name="phone"><value>(888) 860-0710</value></Data>
+        <Data name="serviceType"><value>Dumpster Rental</value></Data>
+      </ExtendedData>
+    </Placemark>
+    <Placemark>
+      <name>Dumpster Rental Tampa, FL</name>
+      <description><![CDATA[
+        <h3>Dumpster Champs - Tampa, FL</h3>
+        <p>Affordable roll-off dumpster rental in Tampa. 10-40 yard containers with flat-rate pricing.</p>
+        <ul>
+          <li>Same-day delivery available</li>
+          <li>Flat-rate pricing from $495</li>
+          <li>No hidden fees</li>
+          <li>7-day rental included</li>
+        </ul>
+        <p><a href="https://www.dumpsterchamps.com/dumpster-rental-tampa-fl">Get a Free Quote</a></p>
+        <p>Call: (888) 860-0710</p>
+      ]]></description>
+      <styleUrl>#dumpsterChamps</styleUrl>
+      <Point>
+        <coordinates>-82.4572,27.9506,0</coordinates>
+      </Point>
+      <ExtendedData>
+        <Data name="city"><value>Tampa</value></Data>
+        <Data name="state"><value>Florida</value></Data>
+        <Data name="stateAbbr"><value>FL</value></Data>
+        <Data name="url"><value>https://www.dumpsterchamps.com/dumpster-rental-tampa-fl</value></Data>
+        <Data name="phone"><value>(888) 860-0710</value></Data>
+        <Data name="serviceType"><value>Dumpster Rental</value></Data>
+      </ExtendedData>
+    </Placemark>
+    <Placemark>
+      <name>Dumpster Rental Louisville, KY</name>
+      <description><![CDATA[
+        <h3>Dumpster Champs - Louisville, KY</h3>
+        <p>Affordable roll-off dumpster rental in Louisville. 10-40 yard containers with flat-rate pricing.</p>
+        <ul>
+          <li>Same-day delivery available</li>
+          <li>Flat-rate pricing from $495</li>
+          <li>No hidden fees</li>
+          <li>7-day rental included</li>
+        </ul>
+        <p><a href="https://www.dumpsterchamps.com/dumpster-rental-louisville-ky">Get a Free Quote</a></p>
+        <p>Call: (888) 860-0710</p>
+      ]]></description>
+      <styleUrl>#dumpsterChamps</styleUrl>
+      <Point>
+        <coordinates>-85.7585,38.2527,0</coordinates>
+      </Point>
+      <ExtendedData>
+        <Data name="city"><value>Louisville</value></Data>
+        <Data name="state"><value>Kentucky</value></Data>
+        <Data name="stateAbbr"><value>KY</value></Data>
+        <Data name="url"><value>https://www.dumpsterchamps.com/dumpster-rental-louisville-ky</value></Data>
+        <Data name="phone"><value>(888) 860-0710</value></Data>
+        <Data name="serviceType"><value>Dumpster Rental</value></Data>
+      </ExtendedData>
+    </Placemark>
+    <Placemark>
+      <name>Dumpster Rental Las Vegas, NV</name>
+      <description><![CDATA[
+        <h3>Dumpster Champs - Las Vegas, NV</h3>
+        <p>Affordable roll-off dumpster rental in Las Vegas. 10-40 yard containers with flat-rate pricing.</p>
+        <ul>
+          <li>Same-day delivery available</li>
+          <li>Flat-rate pricing from $495</li>
+          <li>No hidden fees</li>
+          <li>7-day rental included</li>
+        </ul>
+        <p><a href="https://www.dumpsterchamps.com/dumpster-rental-las-vegas-nv">Get a Free Quote</a></p>
+        <p>Call: (888) 860-0710</p>
+      ]]></description>
+      <styleUrl>#dumpsterChamps</styleUrl>
+      <Point>
+        <coordinates>-115.1398,36.1699,0</coordinates>
+      </Point>
+      <ExtendedData>
+        <Data name="city"><value>Las Vegas</value></Data>
+        <Data name="state"><value>Nevada</value></Data>
+        <Data name="stateAbbr"><value>NV</value></Data>
+        <Data name="url"><value>https://www.dumpsterchamps.com/dumpster-rental-las-vegas-nv</value></Data>
+        <Data name="phone"><value>(888) 860-0710</value></Data>
+        <Data name="serviceType"><value>Dumpster Rental</value></Data>
+      </ExtendedData>
+    </Placemark>
+    <Placemark>
+      <name>Dumpster Rental Charlotte, NC</name>
+      <description><![CDATA[
+        <h3>Dumpster Champs - Charlotte, NC</h3>
+        <p>Affordable roll-off dumpster rental in Charlotte. 10-40 yard containers with flat-rate pricing.</p>
+        <ul>
+          <li>Same-day delivery available</li>
+          <li>Flat-rate pricing from $495</li>
+          <li>No hidden fees</li>
+          <li>7-day rental included</li>
+        </ul>
+        <p><a href="https://www.dumpsterchamps.com/dumpster-rental-charlotte-nc">Get a Free Quote</a></p>
+        <p>Call: (888) 860-0710</p>
+      ]]></description>
+      <styleUrl>#dumpsterChamps</styleUrl>
+      <Point>
+        <coordinates>-80.8431,35.2271,0</coordinates>
+      </Point>
+      <ExtendedData>
+        <Data name="city"><value>Charlotte</value></Data>
+        <Data name="state"><value>North Carolina</value></Data>
+        <Data name="stateAbbr"><value>NC</value></Data>
+        <Data name="url"><value>https://www.dumpsterchamps.com/dumpster-rental-charlotte-nc</value></Data>
+        <Data name="phone"><value>(888) 860-0710</value></Data>
+        <Data name="serviceType"><value>Dumpster Rental</value></Data>
+      </ExtendedData>
+    </Placemark>
+    <Placemark>
+      <name>Dumpster Rental Tulsa, OK</name>
+      <description><![CDATA[
+        <h3>Dumpster Champs - Tulsa, OK</h3>
+        <p>Affordable roll-off dumpster rental in Tulsa. 10-40 yard containers with flat-rate pricing.</p>
+        <ul>
+          <li>Same-day delivery available</li>
+          <li>Flat-rate pricing from $495</li>
+          <li>No hidden fees</li>
+          <li>7-day rental included</li>
+        </ul>
+        <p><a href="https://www.dumpsterchamps.com/dumpster-rental-tulsa-ok">Get a Free Quote</a></p>
+        <p>Call: (888) 860-0710</p>
+      ]]></description>
+      <styleUrl>#dumpsterChamps</styleUrl>
+      <Point>
+        <coordinates>-95.9928,36.1539,0</coordinates>
+      </Point>
+      <ExtendedData>
+        <Data name="city"><value>Tulsa</value></Data>
+        <Data name="state"><value>Oklahoma</value></Data>
+        <Data name="stateAbbr"><value>OK</value></Data>
+        <Data name="url"><value>https://www.dumpsterchamps.com/dumpster-rental-tulsa-ok</value></Data>
+        <Data name="phone"><value>(888) 860-0710</value></Data>
+        <Data name="serviceType"><value>Dumpster Rental</value></Data>
+      </ExtendedData>
+    </Placemark>
+    <Placemark>
+      <name>Dumpster Rental Austin, TX</name>
+      <description><![CDATA[
+        <h3>Dumpster Champs - Austin, TX</h3>
+        <p>Affordable roll-off dumpster rental in Austin. 10-40 yard containers with flat-rate pricing.</p>
+        <ul>
+          <li>Same-day delivery available</li>
+          <li>Flat-rate pricing from $495</li>
+          <li>No hidden fees</li>
+          <li>7-day rental included</li>
+        </ul>
+        <p><a href="https://www.dumpsterchamps.com/dumpster-rental-austin-tx">Get a Free Quote</a></p>
+        <p>Call: (888) 860-0710</p>
+      ]]></description>
+      <styleUrl>#dumpsterChamps</styleUrl>
+      <Point>
+        <coordinates>-97.7431,30.2672,0</coordinates>
+      </Point>
+      <ExtendedData>
+        <Data name="city"><value>Austin</value></Data>
+        <Data name="state"><value>Texas</value></Data>
+        <Data name="stateAbbr"><value>TX</value></Data>
+        <Data name="url"><value>https://www.dumpsterchamps.com/dumpster-rental-austin-tx</value></Data>
+        <Data name="phone"><value>(888) 860-0710</value></Data>
+        <Data name="serviceType"><value>Dumpster Rental</value></Data>
+      </ExtendedData>
+    </Placemark>
+    <Placemark>
+      <name>Dumpster Rental Dallas, TX</name>
+      <description><![CDATA[
+        <h3>Dumpster Champs - Dallas, TX</h3>
+        <p>Affordable roll-off dumpster rental in Dallas. 10-40 yard containers with flat-rate pricing.</p>
+        <ul>
+          <li>Same-day delivery available</li>
+          <li>Flat-rate pricing from $495</li>
+          <li>No hidden fees</li>
+          <li>7-day rental included</li>
+        </ul>
+        <p><a href="https://www.dumpsterchamps.com/dumpster-rental-dallas-tx">Get a Free Quote</a></p>
+        <p>Call: (888) 860-0710</p>
+      ]]></description>
+      <styleUrl>#dumpsterChamps</styleUrl>
+      <Point>
+        <coordinates>-96.797,32.7767,0</coordinates>
+      </Point>
+      <ExtendedData>
+        <Data name="city"><value>Dallas</value></Data>
+        <Data name="state"><value>Texas</value></Data>
+        <Data name="stateAbbr"><value>TX</value></Data>
+        <Data name="url"><value>https://www.dumpsterchamps.com/dumpster-rental-dallas-tx</value></Data>
+        <Data name="phone"><value>(888) 860-0710</value></Data>
+        <Data name="serviceType"><value>Dumpster Rental</value></Data>
+      </ExtendedData>
+    </Placemark>
+    <Placemark>
+      <name>Dumpster Rental Houston, TX</name>
+      <description><![CDATA[
+        <h3>Dumpster Champs - Houston, TX</h3>
+        <p>Affordable roll-off dumpster rental in Houston. 10-40 yard containers with flat-rate pricing.</p>
+        <ul>
+          <li>Same-day delivery available</li>
+          <li>Flat-rate pricing from $495</li>
+          <li>No hidden fees</li>
+          <li>7-day rental included</li>
+        </ul>
+        <p><a href="https://www.dumpsterchamps.com/dumpster-rental-houston-tx">Get a Free Quote</a></p>
+        <p>Call: (888) 860-0710</p>
+      ]]></description>
+      <styleUrl>#dumpsterChamps</styleUrl>
+      <Point>
+        <coordinates>-95.3698,29.7604,0</coordinates>
+      </Point>
+      <ExtendedData>
+        <Data name="city"><value>Houston</value></Data>
+        <Data name="state"><value>Texas</value></Data>
+        <Data name="stateAbbr"><value>TX</value></Data>
+        <Data name="url"><value>https://www.dumpsterchamps.com/dumpster-rental-houston-tx</value></Data>
+        <Data name="phone"><value>(888) 860-0710</value></Data>
+        <Data name="serviceType"><value>Dumpster Rental</value></Data>
+      </ExtendedData>
+    </Placemark>
+    <Placemark>
+      <name>Dumpster Rental San Antonio, TX</name>
+      <description><![CDATA[
+        <h3>Dumpster Champs - San Antonio, TX</h3>
+        <p>Affordable roll-off dumpster rental in San Antonio. 10-40 yard containers with flat-rate pricing.</p>
+        <ul>
+          <li>Same-day delivery available</li>
+          <li>Flat-rate pricing from $495</li>
+          <li>No hidden fees</li>
+          <li>7-day rental included</li>
+        </ul>
+        <p><a href="https://www.dumpsterchamps.com/dumpster-rental-san-antonio-tx">Get a Free Quote</a></p>
+        <p>Call: (888) 860-0710</p>
+      ]]></description>
+      <styleUrl>#dumpsterChamps</styleUrl>
+      <Point>
+        <coordinates>-98.4936,29.4241,0</coordinates>
+      </Point>
+      <ExtendedData>
+        <Data name="city"><value>San Antonio</value></Data>
+        <Data name="state"><value>Texas</value></Data>
+        <Data name="stateAbbr"><value>TX</value></Data>
+        <Data name="url"><value>https://www.dumpsterchamps.com/dumpster-rental-san-antonio-tx</value></Data>
+        <Data name="phone"><value>(888) 860-0710</value></Data>
+        <Data name="serviceType"><value>Dumpster Rental</value></Data>
+      </ExtendedData>
+    </Placemark>
+    <Placemark>
+      <name>Dumpster Rental Milwaukee, WI</name>
+      <description><![CDATA[
+        <h3>Dumpster Champs - Milwaukee, WI</h3>
+        <p>Affordable roll-off dumpster rental in Milwaukee. 10-40 yard containers with flat-rate pricing.</p>
+        <ul>
+          <li>Same-day delivery available</li>
+          <li>Flat-rate pricing from $495</li>
+          <li>No hidden fees</li>
+          <li>7-day rental included</li>
+        </ul>
+        <p><a href="https://www.dumpsterchamps.com/dumpster-rental-milwaukee-wi">Get a Free Quote</a></p>
+        <p>Call: (888) 860-0710</p>
+      ]]></description>
+      <styleUrl>#dumpsterChamps</styleUrl>
+      <Point>
+        <coordinates>-87.9065,43.0389,0</coordinates>
+      </Point>
+      <ExtendedData>
+        <Data name="city"><value>Milwaukee</value></Data>
+        <Data name="state"><value>Wisconsin</value></Data>
+        <Data name="stateAbbr"><value>WI</value></Data>
+        <Data name="url"><value>https://www.dumpsterchamps.com/dumpster-rental-milwaukee-wi</value></Data>
+        <Data name="phone"><value>(888) 860-0710</value></Data>
+        <Data name="serviceType"><value>Dumpster Rental</value></Data>
+      </ExtendedData>
+    </Placemark>
+
+  </Document>
+</kml>

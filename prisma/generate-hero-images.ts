@@ -1,0 +1,144 @@
+/**
+ * Generate Hero Images for Homepage
+ *
+ * Following CRO playbook principles:
+ * - Person looking RIGHT toward CTA (gaze principle)
+ * - Orange/coral shirt to match CTA color (#f97316)
+ * - Homeowner or contractor persona
+ * - Satisfied, confident expression
+ * - Context: near dumpster or renovation scene
+ */
+
+import * as dotenv from 'dotenv';
+dotenv.config();
+
+import * as fs from 'fs/promises';
+import * as path from 'path';
+
+interface FalImageResult {
+  url: string;
+  width: number;
+  height: number;
+  content_type: string;
+}
+
+interface FalResponse {
+  images: FalImageResult[];
+  seed: number;
+  has_nsfw_concepts: boolean[];
+}
+
+async function generateImage(
+  prompt: string,
+  options: { model?: string; width?: number; height?: number } = {}
+): Promise<string> {
+  const { model = 'flux-pro', width = 1280, height = 720 } = options;
+  const apiKey = process.env.FAL_KEY;
+
+  if (!apiKey) {
+    throw new Error('FAL_KEY not set in environment');
+  }
+
+  console.log(`Using FAL_KEY: ${apiKey.substring(0, 10)}...`);
+
+  const endpoint = model === 'flux-pro' ? 'fal-ai/flux-pro' : 'fal-ai/flux/dev';
+
+  const response = await fetch(`https://fal.run/${endpoint}`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Key ${apiKey}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      prompt,
+      image_size: { width, height },
+      num_images: 1,
+      enable_safety_checker: true,
+    }),
+  });
+
+  if (!response.ok) {
+    const error = await response.text();
+    throw new Error(`Fal.ai API error: ${response.status} - ${error}`);
+  }
+
+  const data: FalResponse = await response.json();
+  if (!data.images?.[0]?.url) {
+    throw new Error('No image URL in Fal.ai response');
+  }
+
+  return data.images[0].url;
+}
+
+async function downloadImage(url: string, localPath: string): Promise<void> {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`Failed to download image: ${response.status}`);
+  }
+  const buffer = await response.arrayBuffer();
+  await fs.writeFile(localPath, Buffer.from(buffer));
+}
+
+async function generateHeroImages() {
+  console.log('Generating hero images for homepage...\n');
+
+  // Ensure directory exists
+  const heroDir = path.join(process.cwd(), 'public', 'images', 'hero');
+  await fs.mkdir(heroDir, { recursive: true });
+
+  // Desktop hero image - Person on left looking RIGHT toward form
+  const desktopPrompt = `Professional photograph of a confident male homeowner in his 40s wearing an orange work polo shirt, standing in front of his suburban home driveway. He is positioned on the LEFT side of frame, looking to the RIGHT with a satisfied smile. A clean roll-off dumpster is visible behind him. Bright sunny day, well-maintained lawn. The homeowner appears pleased and confident. High quality, professional photography, shallow depth of field focusing on the person. Natural lighting, editorial style.`;
+
+  // Mobile hero image - Same person looking UP
+  const mobilePrompt = `Professional portrait photograph of a confident male homeowner in his 40s wearing an orange work polo shirt. He is looking UPWARD with a satisfied, confident expression. Bright natural lighting, clean background with slight blur suggesting residential setting. High quality headshot style, professional photography.`;
+
+  // Contractor variant for A/B testing
+  const contractorPrompt = `Professional photograph of a confident female contractor in her 30s wearing an orange safety vest and hard hat. She is positioned on the LEFT side of frame, looking to the RIGHT with a professional smile. Construction site with a roll-off dumpster visible behind her. She has a clipboard in hand. High quality, professional photography, editorial style.`;
+
+  const images = [
+    {
+      name: 'hero-homeowner-desktop.jpg',
+      prompt: desktopPrompt,
+      width: 800,
+      height: 1000,  // Portrait orientation for left column
+    },
+    {
+      name: 'hero-homeowner-mobile.jpg',
+      prompt: mobilePrompt,
+      width: 800,
+      height: 600,
+    },
+    {
+      name: 'hero-contractor-desktop.jpg',
+      prompt: contractorPrompt,
+      width: 800,
+      height: 1000,
+    },
+  ];
+
+  for (const img of images) {
+    console.log(`Generating ${img.name}...`);
+    try {
+      const url = await generateImage(img.prompt, {
+        model: 'flux-pro',
+        width: img.width,
+        height: img.height,
+      });
+
+      if (url) {
+        const localPath = path.join(heroDir, img.name);
+        await downloadImage(url, localPath);
+        console.log(`✓ Saved to ${localPath}`);
+      } else {
+        console.log(`✗ Failed to generate ${img.name} - no URL returned`);
+      }
+    } catch (error) {
+      console.error(`✗ Error generating ${img.name}:`, error);
+    }
+    console.log('');
+  }
+
+  console.log('Done!');
+}
+
+generateHeroImages().catch(console.error);

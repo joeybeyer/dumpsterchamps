@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=file:./prisma/dev.db
+      - RESEND_API_KEY=${RESEND_API_KEY}
+      - ADMIN_EMAIL=${ADMIN_EMAIL:-contact@dumpsterchamps.com}
+      - FROM_EMAIL=${FROM_EMAIL:-noreply@dumpsterchamps.com}
+      - NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL:-https://www.dumpsterchamps.com}
+      - NEXT_PUBLIC_PHONE=${NEXT_PUBLIC_PHONE:-(888) 860-0710}
+    volumes:
+      - sqlite_data:/app/prisma
+    restart: unless-stopped
+
+volumes:
+  sqlite_data:

@@ -1,0 +1,93 @@
+import { Resend } from "resend";
+
+// Lazy initialization to avoid build-time errors
+let resend: Resend | null = null;
+
+function getResendClient(): Resend | null {
+  if (!process.env.RESEND_API_KEY) {
+    console.warn("RESEND_API_KEY not configured - email notifications disabled");
+    return null;
+  }
+  if (!resend) {
+    resend = new Resend(process.env.RESEND_API_KEY);
+  }
+  return resend;
+}
+
+interface LeadEmailData {
+  name: string;
+  email: string;
+  phone?: string;
+  city?: string;
+  state?: string;
+  projectType?: string;
+  dumpsterSize?: string;
+  message?: string;
+  source?: string;
+}
+
+export async function sendLeadNotification(lead: LeadEmailData) {
+  const client = getResendClient();
+  if (!client) {
+    console.log("Email notifications disabled - skipping lead notification");
+    return { success: false, error: "Email not configured" };
+  }
+
+  const adminEmail = process.env.ADMIN_EMAIL || "contact@dumpsterchamps.com";
+  const fromEmail = process.env.FROM_EMAIL || "noreply@dumpsterchamps.com";
+
+  try {
+    const { data, error } = await client.emails.send({
+      from: `Dumpster Champs <${fromEmail}>`,
+      to: [adminEmail],
+      subject: `New Lead: ${lead.name} - ${lead.city || "Unknown City"}`,
+      html: `
+        <h2>New Lead Received</h2>
+        <table style="border-collapse: collapse; width: 100%; max-width: 600px;">
+          <tr>
+            <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">Name</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">${lead.name}</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">Email</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">${lead.email}</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">Phone</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">${lead.phone || "Not provided"}</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">Location</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">${lead.city || ""}${lead.city && lead.state ? ", " : ""}${lead.state || ""}</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">Project Type</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">${lead.projectType || "Not specified"}</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">Dumpster Size</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">${lead.dumpsterSize || "Not specified"}</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">Message</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">${lead.message || "No message"}</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">Source Page</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">${lead.source || "Unknown"}</td>
+          </tr>
+        </table>
+      `,
+    });
+
+    if (error) {
+      console.error("Error sending email:", error);
+      return { success: false, error };
+    }
+
+    return { success: true, data };
+  } catch (error) {
+    console.error("Error sending email:", error);
+    return { success: false, error };
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git config:*)",
+      "Bash(npx create-next-app@latest:*)",
+      "Bash(npm init:*)",
+      "Bash(npm install:*)",
+      "Bash(cat:*)",
+      "Bash(npm pkg set:*)",
+      "Bash(npm pkg:*)",
+      "Bash(npx prisma generate:*)",
+      "Bash(npx prisma db push:*)",
+      "Bash(npm run db:seed:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm run dev:*)",
+      "Bash(tasklist:*)",
+      "Bash(findstr:*)",
+      "Bash(taskkill //F //PID 40608)",
+      "Bash(taskkill //F //PID 30864)",
+      "Bash(taskkill //F //PID 33768)",
+      "Bash(taskkill //F //PID 30428)",
+      "Bash(taskkill //F //PID 32352)",
+      "Bash(curl:*)",
+      "Bash(npx ts-node:*)",
+      "Bash(npx tsx:*)",
+      "Bash(taskkill //F //PID 12136)",
+      "Bash(taskkill //F //PID 25344)",
+      "Bash(taskkill //F //PID 35268)",
+      "Bash(dir:*)",
+      "Bash(npx prisma db execute:*)",
+      "Bash(timeout:*)",
+      "Bash(cd:*)",
+      "Bash(sqlite3:*)",
+      "Bash(node -e:*)",
+      "Bash(git remote:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}
