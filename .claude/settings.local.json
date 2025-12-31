@@ -33,7 +33,15 @@
       "Bash(sqlite3:*)",
       "Bash(node -e:*)",
       "Bash(git remote:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nInitial commit - Dumpster Champs website\n\n- Next.js 15 with App Router\n- 509 city pages with SEO optimization\n- Blog pillar pages and city-specific blog posts\n- Content clustering \\(Ferris Wheel model\\)\n- Quote form with lead capture\n- Prisma ORM with SQLite database\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git branch:*)",
+      "Bash(git push:*)",
+      "Bash(nslookup:*)",
+      "Bash(ipconfig:*)",
+      "Bash(git commit:*)",
+      "Bash(powershell -Command \"Compress-Archive -Path ''deploy/*'' -DestinationPath ''dumpsterchamps-deploy.zip'' -Force\")",
+      "Bash(pm2 restart:*)"
     ]
   }
 }

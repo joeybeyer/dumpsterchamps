@@ -13,6 +13,7 @@ interface NeighborhoodGridProps {
   cityName: string;
   stateName: string;
   coordinates?: { lat: number; lng: number } | null;
+  gbpEmbed?: string | null;
 }
 
 export function NeighborhoodGrid({
@@ -20,11 +21,15 @@ export function NeighborhoodGrid({
   cityName,
   stateName,
   coordinates,
+  gbpEmbed,
 }: NeighborhoodGridProps) {
-  // Google Maps embed URL
-  const mapSrc = coordinates
-    ? `https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY || ""}&q=${encodeURIComponent(cityName + ", " + stateName)}&center=${coordinates.lat},${coordinates.lng}&zoom=11`
-    : `https://www.google.com/maps/embed/v1/place?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY || ""}&q=${encodeURIComponent(cityName + ", " + stateName)}&zoom=11`;
+  // Extract iframe src from embed code if present
+  const extractIframeSrc = (embed: string) => {
+    const match = embed.match(/src="([^"]+)"/);
+    return match ? match[1] : null;
+  };
+
+  const mapSrc = gbpEmbed ? extractIframeSrc(gbpEmbed) : null;
 
   return (
     <section className="py-16 bg-white">
@@ -37,11 +42,40 @@ export function NeighborhoodGrid({
           Same-day delivery available in most neighborhoods.
         </p>
 
-        <div className="grid lg:grid-cols-2 gap-8">
+        {/* Layout: 2 columns with map when GBP embed exists, full width otherwise */}
+        <div className={mapSrc ? "grid lg:grid-cols-2 gap-8" : ""}>
           {/* Neighborhoods list */}
-          <div>
-            <div className="grid sm:grid-cols-2 gap-4">
-              {neighborhoods.map((neighborhood) => (
+          <div className={mapSrc ? "" : "grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"}>
+            {mapSrc ? (
+              <div className="grid sm:grid-cols-2 gap-4">
+                {neighborhoods.map((neighborhood) => (
+                  <div
+                    key={neighborhood.id || neighborhood.slug}
+                    className="bg-secondary-50 rounded-lg p-4 hover:bg-secondary-100 transition-colors"
+                  >
+                    <div className="flex items-start gap-3">
+                      <MapPin className="h-5 w-5 text-primary-600 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <h3 className="font-semibold text-secondary-900">
+                          {neighborhood.name}
+                        </h3>
+                        {neighborhood.description && (
+                          <p className="text-sm text-secondary-600 mt-1">
+                            {neighborhood.description}
+                          </p>
+                        )}
+                        {neighborhood.zipCodes && (
+                          <p className="text-xs text-secondary-500 mt-1">
+                            ZIP: {neighborhood.zipCodes}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              neighborhoods.map((neighborhood) => (
                 <div
                   key={neighborhood.id || neighborhood.slug}
                   className="bg-secondary-50 rounded-lg p-4 hover:bg-secondary-100 transition-colors"
@@ -65,21 +99,13 @@ export function NeighborhoodGrid({
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
-
-            {neighborhoods.length === 0 && (
-              <div className="bg-secondary-50 rounded-lg p-6 text-center">
-                <p className="text-secondary-600">
-                  We serve all neighborhoods in {cityName}. Contact us for delivery to your area.
-                </p>
-              </div>
+              ))
             )}
           </div>
 
-          {/* Map */}
-          <div className="bg-secondary-100 rounded-xl overflow-hidden h-[400px] lg:h-auto">
-            {process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY ? (
+          {/* Google Business Profile Map */}
+          {mapSrc && (
+            <div className="bg-secondary-100 rounded-xl overflow-hidden h-[400px] lg:h-auto lg:min-h-[400px]">
               <iframe
                 src={mapSrc}
                 width="100%"
@@ -88,23 +114,19 @@ export function NeighborhoodGrid({
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title={`Service area map for ${cityName}`}
+                title={`Dumpster Rental Champs ${cityName} location`}
               />
-            ) : (
-              <div className="flex items-center justify-center h-full min-h-[400px] bg-secondary-100">
-                <div className="text-center p-6">
-                  <MapPin className="h-12 w-12 text-secondary-400 mx-auto mb-4" />
-                  <h3 className="font-semibold text-secondary-700 mb-2">
-                    Serving {cityName} Area
-                  </h3>
-                  <p className="text-sm text-secondary-500">
-                    We deliver dumpsters throughout {cityName} and surrounding communities.
-                  </p>
-                </div>
-              </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
+
+        {neighborhoods.length === 0 && (
+          <div className="bg-secondary-50 rounded-lg p-6 text-center">
+            <p className="text-secondary-600">
+              We serve all neighborhoods in {cityName}. Contact us for delivery to your area.
+            </p>
+          </div>
+        )}
 
         {/* Service area note */}
         <div className="mt-8 bg-primary-50 rounded-xl p-6">

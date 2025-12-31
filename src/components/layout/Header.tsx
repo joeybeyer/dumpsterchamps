@@ -27,6 +27,7 @@ const navigation = [
       { name: "40 Yard Dumpster", href: "/40-yard-dumpster" },
     ],
   },
+  { name: "Calculator", href: "/calculator" },
   { name: "Locations", href: "/locations" },
   { name: "Blog", href: "/blog" },
   { name: "About", href: "/about" },
@@ -105,7 +106,7 @@ export function Header() {
           <div className="hidden lg:block">
             <Link
               href="/contact"
-              className="bg-primary-600 text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-primary-700 transition-colors"
+              className="bg-primary-600 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-primary-700 transition-colors whitespace-nowrap text-sm"
             >
               Get a Free Quote
             </Link>

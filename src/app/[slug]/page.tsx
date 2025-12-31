@@ -547,26 +547,8 @@ async function CityPage({ citySlug }: { citySlug: string }) {
         cityName={city.name}
         stateName={city.state.name}
         coordinates={coordinates}
+        gbpEmbed={city.gbpEmbed}
       />
-
-      {/* Google Business Profile Map Embed */}
-      {city.gbpEmbed && (
-        <section className="py-16 bg-white">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-secondary-900 mb-4 text-center">
-              Serving {city.name} & Surrounding Areas
-            </h2>
-            <p className="text-secondary-600 text-center mb-8 max-w-2xl mx-auto">
-              Dumpster Champs proudly serves {city.name} and the surrounding communities. Same-day delivery available throughout our service area.
-            </p>
-            <div className="max-w-4xl mx-auto rounded-xl overflow-hidden shadow-lg">
-              <div
-                dangerouslySetInnerHTML={{ __html: city.gbpEmbed }}
-              />
-            </div>
-          </div>
-        </section>
-      )}
 
       {/* Why Choose Us Section */}
       <WhyChooseUs
@@ -621,7 +603,7 @@ async function CityPage({ citySlug }: { citySlug: string }) {
                 <Link
                   key={nc.id}
                   href={`/dumpster-rental-${nc.slug}`}
-                  className="p-4 bg-secondary-50 rounded-lg text-center hover:bg-primary-50 hover:text-primary-600 transition-colors font-medium"
+                  className="p-4 bg-secondary-50 rounded-lg text-center text-secondary-800 hover:bg-primary-50 hover:text-primary-600 transition-colors font-medium"
                 >
                   {nc.name}
                 </Link>
