@@ -92,11 +92,87 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.9,
   }));
 
+  // Neighborhood pages
+  const neighborhoods = await prisma.neighborhoodPage.findMany({
+    select: { slug: true, updatedAt: true, city: { select: { slug: true } } },
+  });
+
+  const neighborhoodPages: MetadataRoute.Sitemap = neighborhoods.map((n) => ({
+    url: `${baseUrl}/dumpster-rental-${n.city.slug}/${n.slug}`,
+    lastModified: n.updatedAt,
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
+  // Blog pillar pages
+  const blogPillarPages: MetadataRoute.Sitemap = [
+    {
+      url: `${baseUrl}/blog`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/blog/dumpster-sizes-guide`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/blog/dumpster-rental-cost-guide`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/blog/what-can-go-in-dumpster`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/blog/how-to-rent-dumpster`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+  ];
+
+  // City blog index pages
+  const citiesWithBlogs = await prisma.city.findMany({
+    where: { blogs: { some: {} } },
+    select: { slug: true },
+  });
+
+  const cityBlogIndexPages: MetadataRoute.Sitemap = citiesWithBlogs.map((city) => ({
+    url: `${baseUrl}/blog/${city.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly",
+    priority: 0.7,
+  }));
+
+  // Individual blog posts
+  const blogPosts = await prisma.cityBlog.findMany({
+    where: { published: true },
+    select: { slug: true, updatedAt: true, city: { select: { slug: true } } },
+  });
+
+  const blogPostPages: MetadataRoute.Sitemap = blogPosts.map((post) => ({
+    url: `${baseUrl}/blog/${post.city.slug}/${post.slug}`,
+    lastModified: post.updatedAt,
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
+
   return [
     ...staticPages,
     ...sizePages,
     ...servicePages,
     ...statePages,
     ...cityPages,
+    ...neighborhoodPages,
+    ...blogPillarPages,
+    ...cityBlogIndexPages,
+    ...blogPostPages,
   ];
 }
