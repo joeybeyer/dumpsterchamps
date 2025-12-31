@@ -31,11 +31,11 @@ const DEBRIS_TYPES = [
 ];
 
 const DUMPSTER_SIZES = [
-  { size: 10, dimensions: "12' x 8' x 3.5'", weightLimit: 2000, priceRange: [300, 450], bestFor: "Small cleanouts, bathroom remodels" },
-  { size: 15, dimensions: "16' x 7.5' x 4'", weightLimit: 3000, priceRange: [350, 500], bestFor: "Medium projects, single room demos" },
-  { size: 20, dimensions: "22' x 7.5' x 4.5'", weightLimit: 4000, priceRange: [400, 575], bestFor: "Kitchen remodels, roof tear-offs, large cleanouts" },
-  { size: 30, dimensions: "22' x 7.5' x 6'", weightLimit: 5000, priceRange: [450, 650], bestFor: "Major renovations, construction debris" },
-  { size: 40, dimensions: "22' x 7.5' x 8'", weightLimit: 6000, priceRange: [500, 750], bestFor: "Commercial projects, whole house demos" },
+  { size: 10, dimensions: "12' x 8' x 3.5'", weightLimit: 4000, priceRange: [495, 495], bestFor: "Small cleanouts, bathroom remodels" },
+  { size: 15, dimensions: "16' x 7.5' x 4'", weightLimit: 6000, priceRange: [550, 550], bestFor: "Medium projects, single room demos" },
+  { size: 20, dimensions: "22' x 7.5' x 4.5'", weightLimit: 8000, priceRange: [595, 595], bestFor: "Kitchen remodels, roof tear-offs, large cleanouts" },
+  { size: 30, dimensions: "22' x 7.5' x 6'", weightLimit: 10000, priceRange: [695, 695], bestFor: "Major renovations, construction debris" },
+  { size: 40, dimensions: "22' x 7.5' x 8'", weightLimit: 12000, priceRange: [795, 795], bestFor: "Commercial projects, whole house demos" },
 ];
 
 export function DumpsterCalculator() {

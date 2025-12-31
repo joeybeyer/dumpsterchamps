@@ -1,4 +1,5 @@
-import { MapPin } from "lucide-react";
+import Link from "next/link";
+import { MapPin, Calculator, ChevronRight } from "lucide-react";
 
 interface Neighborhood {
   id?: string;
@@ -11,6 +12,7 @@ interface Neighborhood {
 interface NeighborhoodGridProps {
   neighborhoods: Neighborhood[];
   cityName: string;
+  citySlug: string;
   stateName: string;
   coordinates?: { lat: number; lng: number } | null;
   gbpEmbed?: string | null;
@@ -19,18 +21,11 @@ interface NeighborhoodGridProps {
 export function NeighborhoodGrid({
   neighborhoods,
   cityName,
+  citySlug,
   stateName,
   coordinates,
   gbpEmbed,
 }: NeighborhoodGridProps) {
-  // Extract iframe src from embed code if present
-  const extractIframeSrc = (embed: string) => {
-    const match = embed.match(/src="([^"]+)"/);
-    return match ? match[1] : null;
-  };
-
-  const mapSrc = gbpEmbed ? extractIframeSrc(gbpEmbed) : null;
-
   return (
     <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
@@ -42,48 +37,21 @@ export function NeighborhoodGrid({
           Same-day delivery available in most neighborhoods.
         </p>
 
-        {/* Layout: 2 columns with map when GBP embed exists, full width otherwise */}
-        <div className={mapSrc ? "grid lg:grid-cols-2 gap-8" : ""}>
-          {/* Neighborhoods list */}
-          <div className={mapSrc ? "" : "grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"}>
-            {mapSrc ? (
-              <div className="grid sm:grid-cols-2 gap-4">
-                {neighborhoods.map((neighborhood) => (
-                  <div
-                    key={neighborhood.id || neighborhood.slug}
-                    className="bg-secondary-50 rounded-lg p-4 hover:bg-secondary-100 transition-colors"
-                  >
-                    <div className="flex items-start gap-3">
-                      <MapPin className="h-5 w-5 text-primary-600 flex-shrink-0 mt-0.5" />
-                      <div>
-                        <h3 className="font-semibold text-secondary-900">
-                          {neighborhood.name}
-                        </h3>
-                        {neighborhood.description && (
-                          <p className="text-sm text-secondary-600 mt-1">
-                            {neighborhood.description}
-                          </p>
-                        )}
-                        {neighborhood.zipCodes && (
-                          <p className="text-xs text-secondary-500 mt-1">
-                            ZIP: {neighborhood.zipCodes}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              neighborhoods.map((neighborhood) => (
-                <div
+        {/* Layout: Always 2 columns on large screens */}
+        <div className="grid lg:grid-cols-3 gap-8">
+          {/* Neighborhoods list - takes 2 columns */}
+          <div className="lg:col-span-2">
+            <div className="grid sm:grid-cols-2 gap-4">
+              {neighborhoods.map((neighborhood) => (
+                <Link
                   key={neighborhood.id || neighborhood.slug}
-                  className="bg-secondary-50 rounded-lg p-4 hover:bg-secondary-100 transition-colors"
+                  href={`/dumpster-rental-${citySlug}/${neighborhood.slug}`}
+                  className="bg-secondary-50 rounded-lg p-4 hover:bg-secondary-100 hover:shadow-md transition-all group"
                 >
                   <div className="flex items-start gap-3">
                     <MapPin className="h-5 w-5 text-primary-600 flex-shrink-0 mt-0.5" />
                     <div>
-                      <h3 className="font-semibold text-secondary-900">
+                      <h3 className="font-semibold text-secondary-900 group-hover:text-primary-600 transition-colors">
                         {neighborhood.name}
                       </h3>
                       {neighborhood.description && (
@@ -96,28 +64,51 @@ export function NeighborhoodGrid({
                           ZIP: {neighborhood.zipCodes}
                         </p>
                       )}
+                      <span className="text-xs text-primary-600 mt-2 inline-flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                        View details <ChevronRight className="h-3 w-3" />
+                      </span>
                     </div>
                   </div>
-                </div>
-              ))
-            )}
+                </Link>
+              ))}
+            </div>
           </div>
 
-          {/* Google Business Profile Map */}
-          {mapSrc && (
-            <div className="bg-secondary-100 rounded-xl overflow-hidden h-[400px] lg:h-auto lg:min-h-[400px]">
-              <iframe
-                src={mapSrc}
-                width="100%"
-                height="100%"
-                style={{ border: 0, minHeight: "400px" }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title={`Dumpster Rental Champs ${cityName} location`}
-              />
+          {/* Calculator CTA - takes 1 column */}
+          <div className="lg:col-span-1">
+            <div className="bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl p-6 text-white sticky top-24">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="bg-white/20 p-3 rounded-lg">
+                  <Calculator className="h-8 w-8" />
+                </div>
+                <h3 className="text-xl font-bold">What Size Dumpster Do I Need?</h3>
+              </div>
+              <p className="text-primary-100 mb-6">
+                Not sure which dumpster size is right for your {cityName} project? 
+                Use our free calculator to get a personalized recommendation in 30 seconds.
+              </p>
+              <ul className="space-y-2 mb-6 text-sm">
+                <li className="flex items-center gap-2">
+                  <span className="bg-white/20 rounded-full p-1">✓</span>
+                  Avoid overpaying for too much space
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="bg-white/20 rounded-full p-1">✓</span>
+                  Prevent weight overage fees
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="bg-white/20 rounded-full p-1">✓</span>
+                  Get accurate price estimates
+                </li>
+              </ul>
+              <Link
+                href="/calculator"
+                className="block w-full bg-white text-primary-600 text-center py-3 px-6 rounded-lg font-semibold hover:bg-primary-50 transition-colors"
+              >
+                Try the Calculator →
+              </Link>
             </div>
-          )}
+          </div>
         </div>
 
         {neighborhoods.length === 0 && (

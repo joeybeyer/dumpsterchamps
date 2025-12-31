@@ -15,18 +15,20 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "Dumpster Rentals at an Affordable Price | Dumpster Champs",
+    default: "Dumpster Rental Near Me from $495 | Dumpster Champs",
     template: "%s | Dumpster Champs",
   },
   description:
-    "Rent a dumpster for your next project. We offer 10, 15, 20, 30, and 40 yard roll-off dumpsters for residential and commercial use. Get a free quote today!",
+    "Dumpster rental near me from $495. Same-day delivery on 10, 15, 20, 30 & 40 yard roll-off dumpsters. All-inclusive pricing, no hidden fees. Get a free quote!",
   keywords: [
+    "dumpster rental near me",
     "dumpster rental",
     "roll off dumpster",
+    "dumpster rentals",
+    "dumpsters near me",
     "construction dumpster",
     "residential dumpster",
     "waste removal",
-    "junk removal",
   ],
   authors: [{ name: "Dumpster Champs" }],
   openGraph: {
@@ -34,15 +36,15 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://www.dumpsterchamps.com",
     siteName: "Dumpster Champs",
-    title: "Dumpster Rentals at an Affordable Price | Dumpster Champs",
+    title: "Dumpster Rental Near Me from $495 | Dumpster Champs",
     description:
-      "Rent a dumpster for your next project. We offer 10, 15, 20, 30, and 40 yard roll-off dumpsters for residential and commercial use.",
+      "Dumpster rental near me from $495. Same-day delivery on 10-40 yard roll-off dumpsters. All-inclusive pricing, no hidden fees.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dumpster Rentals at an Affordable Price | Dumpster Champs",
+    title: "Dumpster Rental Near Me from $495 | Dumpster Champs",
     description:
-      "Rent a dumpster for your next project. We offer 10, 15, 20, 30, and 40 yard roll-off dumpsters for residential and commercial use.",
+      "Dumpster rental near me from $495. Same-day delivery on 10-40 yard roll-off dumpsters. All-inclusive pricing, no hidden fees.",
   },
   robots: {
     index: true,

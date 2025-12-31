@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { ChevronRight, Phone, Check, Truck, Clock, Shield, Ruler, Package, Wrench, MapPin, HardHat, Home, Star } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { QuoteForm } from "@/components/forms/QuoteForm";
-import { LocalBusinessSchema, BreadcrumbSchema, ServiceSchema, ProductSchema, FAQSchema } from "@/components/seo/SchemaMarkup";
+import { LocalBusinessSchema, BreadcrumbSchema, ServiceSchema, ProductSchema, FAQSchema, DumpsterProductSchema, HowToSchema } from "@/components/seo/SchemaMarkup";
 import {
   SizeCard,
   LocalFAQAccordion,
@@ -260,9 +260,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     }
     case "size": {
       const size = await prisma.dumpsterSize.findUnique({ where: { slug } });
+      // Enhanced metadata with prices for SEO
+      const sizeNum = parseInt(slug.split("-")[0]);
+      const pricing = DUMPSTER_PRICING[sizeNum as keyof typeof DUMPSTER_PRICING];
+      const price = pricing?.price || 495;
+
       return {
-        title: size?.metaTitle || size?.name,
-        description: size?.metaDesc || size?.description,
+        title: `${sizeNum} Yard Dumpster Rental $${price} | Size Guide [2025]`,
+        description: `Rent a ${sizeNum} yard dumpster for $${price}. Holds ${pricing?.capacity || "multiple pickup loads"}. Perfect for ${pricing?.idealFor?.[0]?.toLowerCase() || "home projects"}. Same-day delivery, 7-day rental included. No hidden fees.`,
+        keywords: `${sizeNum} yard dumpster rental, ${sizeNum} yard dumpster near me, ${sizeNum} yard roll off, ${sizeNum} yard container rental`,
       };
     }
     case "service": {
@@ -304,10 +310,36 @@ async function StatePage({ stateSlug }: { stateSlug: string }) {
 
   const phone = process.env.NEXT_PUBLIC_PHONE || "(888) 860-0710";
 
+  // State-specific FAQs
+  const stateFaqs = [
+    {
+      question: `How much does a dumpster rental cost in ${state.name}?`,
+      answer: `Dumpster rental prices in ${state.name} range from $495 to $795 depending on size. This includes delivery, pickup, a 7-day rental period, and disposal. We offer 10, 15, 20, 30, and 40 yard dumpsters to fit any project.`,
+    },
+    {
+      question: `Do I need a permit for a dumpster in ${state.name}?`,
+      answer: `Permit requirements vary by city in ${state.name}. If you place the dumpster on your private property (like a driveway), you typically don't need a permit. For street placement, most cities require a right-of-way permit. Check with your local city for specific requirements.`,
+    },
+    {
+      question: `How long can I keep a dumpster in ${state.name}?`,
+      answer: `Our standard rental period is 7 days, which is included in the flat-rate price. Need it longer? No problem — we offer flexible extensions for an additional daily fee. Just let us know when you book or call us to extend.`,
+    },
+    {
+      question: `What can I put in a dumpster in ${state.name}?`,
+      answer: `Most household and construction debris is accepted, including furniture, appliances, drywall, wood, roofing materials, and yard waste. Prohibited items include hazardous materials, batteries, tires, paint, and chemicals. Contact us if you're unsure about a specific item.`,
+    },
+    {
+      question: `Do you offer same-day dumpster delivery in ${state.name}?`,
+      answer: `Yes! We offer same-day and next-day delivery in most ${state.name} cities when you order before noon. Delivery is available Monday through Saturday. Call us at ${phone} for the fastest service.`,
+    },
+  ];
+
   return (
     <>
-      <section className="bg-gradient-to-br from-secondary-900 to-secondary-800 text-white py-16">
+      {/* Hero Section */}
+      <section className="bg-gradient-to-br from-secondary-900 to-secondary-800 text-white py-12 lg:py-16">
         <div className="container mx-auto px-4">
+          {/* Breadcrumb */}
           <div className="flex items-center gap-2 text-secondary-300 text-sm mb-4">
             <Link href="/" className="hover:text-white">Home</Link>
             <ChevronRight className="h-4 w-4" />
@@ -315,65 +347,306 @@ async function StatePage({ stateSlug }: { stateSlug: string }) {
             <ChevronRight className="h-4 w-4" />
             <span className="text-white">{state.name}</span>
           </div>
-          <h1 className="text-4xl lg:text-5xl font-bold mb-4">Dumpster Rental in {state.name}</h1>
-          <p className="text-xl text-secondary-200 max-w-3xl">{state.description}</p>
-        </div>
-      </section>
 
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-3 gap-12">
-            <div className="lg:col-span-2">
-              <h2 className="text-2xl font-bold text-secondary-900 mb-6">Cities We Serve in {state.name}</h2>
-              {state.cities.length > 0 ? (
-                <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
-                  {state.cities.map((city) => (
-                    <Link
-                      key={city.id}
-                      href={`/dumpster-rental-${city.slug}`}
-                      className="flex items-center gap-2 p-3 bg-white rounded-lg border border-secondary-200 hover:border-primary-300 hover:shadow-md transition-all"
-                    >
-                      <MapPin className="h-4 w-4 text-primary-600 flex-shrink-0" />
-                      <span className="text-secondary-800 hover:text-primary-600">{city.name}</span>
-                    </Link>
-                  ))}
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+            <div>
+              {/* Kicker */}
+              <div className="flex items-center gap-2 mb-4">
+                <div className="flex -space-x-1">
+                  <Star className="h-5 w-5 text-yellow-400 fill-yellow-400" />
+                  <Star className="h-5 w-5 text-yellow-400 fill-yellow-400" />
+                  <Star className="h-5 w-5 text-yellow-400 fill-yellow-400" />
+                  <Star className="h-5 w-5 text-yellow-400 fill-yellow-400" />
+                  <Star className="h-5 w-5 text-yellow-400 fill-yellow-400" />
                 </div>
-              ) : (
-                <p className="text-secondary-600">Contact us for dumpster rental services in {state.name}.</p>
-              )}
+                <span className="text-primary-400 font-medium text-sm">
+                  Serving {state.cities.length}+ Cities Across {state.name}
+                </span>
+              </div>
 
-              <div className="mt-12 prose prose-secondary max-w-none">
-                <h2>Dumpster Rental Services in {state.name}</h2>
-                <p>Dumpster Champs provides reliable and affordable roll-off dumpster rentals throughout {state.name}.</p>
-                <h3>Available Dumpster Sizes</h3>
-                <ul>
-                  <li><strong>10 Yard Dumpster</strong> - Perfect for small cleanouts</li>
-                  <li><strong>15 Yard Dumpster</strong> - Ideal for medium-sized projects</li>
-                  <li><strong>20 Yard Dumpster</strong> - Our most popular size</li>
-                  <li><strong>30 Yard Dumpster</strong> - Great for large renovations</li>
-                  <li><strong>40 Yard Dumpster</strong> - Best for major commercial projects</li>
-                </ul>
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 leading-tight">
+                Dumpster Rental in {state.name}
+              </h1>
+
+              <p className="text-lg text-secondary-200 mb-6 leading-relaxed">
+                {state.description || `Fast, affordable roll-off dumpster rentals throughout ${state.name}. 10-40 yard containers starting at $495 with same-day delivery, flat-rate pricing, and no hidden fees.`}
+              </p>
+
+              {/* Trust Badges */}
+              <div className="flex flex-wrap gap-3 mb-6">
+                <div className="flex items-center gap-2 bg-secondary-800/60 px-3 py-2 rounded-lg text-sm">
+                  <Clock className="h-4 w-4 text-primary-400" />
+                  <span>Same-Day Delivery</span>
+                </div>
+                <div className="flex items-center gap-2 bg-secondary-800/60 px-3 py-2 rounded-lg text-sm">
+                  <Shield className="h-4 w-4 text-primary-400" />
+                  <span>No Hidden Fees</span>
+                </div>
+                <div className="flex items-center gap-2 bg-secondary-800/60 px-3 py-2 rounded-lg text-sm">
+                  <MapPin className="h-4 w-4 text-primary-400" />
+                  <span>{state.cities.length}+ Cities</span>
+                </div>
+              </div>
+
+              {/* CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-3">
+                <a
+                  href={`tel:${phone.replace(/\D/g, "")}`}
+                  className="bg-primary-600 text-white px-8 py-4 rounded-lg font-semibold text-center hover:bg-primary-700 transition-colors flex items-center justify-center gap-2"
+                >
+                  <Phone className="h-5 w-5" />
+                  Call Now: {phone}
+                </a>
+                <Link
+                  href="#quote-form"
+                  className="border-2 border-white px-8 py-4 rounded-lg font-semibold text-center hover:bg-white hover:text-secondary-900 transition-colors"
+                >
+                  Get Online Quote
+                </Link>
               </div>
             </div>
 
-            <div className="lg:col-span-1">
-              <div className="sticky top-24">
-                <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
-                  <h3 className="text-xl font-bold text-secondary-900 mb-4">Get a Free Quote</h3>
-                  <QuoteForm stateName={state.name} />
-                </div>
-                <div className="bg-primary-600 text-white rounded-xl p-6">
-                  <h3 className="text-lg font-semibold mb-2">Need Help?</h3>
-                  <p className="text-primary-100 mb-4">Call us for immediate assistance.</p>
-                  <a href={`tel:${phone.replace(/\D/g, "")}`} className="flex items-center gap-2 text-xl font-bold hover:text-primary-100">
-                    <Phone className="h-5 w-5" />{phone}
-                  </a>
-                </div>
-              </div>
+            {/* Quote Form */}
+            <div id="quote-form" className="bg-white rounded-xl p-6 shadow-2xl">
+              <h2 className="text-xl font-bold text-secondary-900 mb-4">
+                Get Your Free Quote in 60 Seconds
+              </h2>
+              <QuoteForm stateName={state.name} />
             </div>
           </div>
         </div>
       </section>
+
+      {/* Dumpster Sizes & Pricing Section */}
+      <section className="py-16 bg-secondary-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-secondary-900 mb-4 text-center">
+            Dumpster Sizes & Pricing in {state.name}
+          </h2>
+          <p className="text-secondary-600 text-center mb-8 max-w-2xl mx-auto">
+            Flat-rate pricing includes delivery, pickup, 7-day rental, and weight allowance. No hidden fees or surprise charges.
+          </p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
+            {DUMPSTER_SIZES.map((d) => (
+              <SizeCard
+                key={d.size}
+                size={d.size}
+                price={d.price}
+                weight={d.weight}
+                dimensions={d.dimensions}
+                capacity={d.capacity}
+                idealFor={d.idealFor}
+                isPopular={"popular" in d && d.popular}
+              />
+            ))}
+          </div>
+          <div className="text-center mt-8">
+            <Link
+              href="/dumpster-rental-prices"
+              className="inline-flex items-center gap-2 text-primary-600 font-semibold hover:text-primary-700"
+            >
+              View Detailed Pricing Guide
+              <ChevronRight className="h-5 w-5" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Service Types Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-secondary-900 mb-4 text-center">
+            Dumpster Rental Services in {state.name}
+          </h2>
+          <p className="text-secondary-600 text-center mb-8 max-w-2xl mx-auto">
+            We offer specialized dumpster rental solutions for every type of project across {state.name}.
+          </p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+            <Link
+              href="/roll-off-dumpster-rental"
+              className="bg-secondary-50 rounded-xl p-6 hover:shadow-lg transition-all group text-center"
+            >
+              <div className="bg-primary-100 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary-200 transition-colors">
+                <Truck className="h-7 w-7 text-primary-600" />
+              </div>
+              <h3 className="font-bold text-secondary-900 mb-2 group-hover:text-primary-600 transition-colors">
+                Roll-Off Dumpsters
+              </h3>
+              <p className="text-sm text-secondary-600">
+                Open-top containers for construction, renovations & large cleanouts
+              </p>
+            </Link>
+            <Link
+              href="/construction-dumpster-rental"
+              className="bg-secondary-50 rounded-xl p-6 hover:shadow-lg transition-all group text-center"
+            >
+              <div className="bg-primary-100 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary-200 transition-colors">
+                <HardHat className="h-7 w-7 text-primary-600" />
+              </div>
+              <h3 className="font-bold text-secondary-900 mb-2 group-hover:text-primary-600 transition-colors">
+                Construction Dumpsters
+              </h3>
+              <p className="text-sm text-secondary-600">
+                Job site waste solutions for contractors & builders
+              </p>
+            </Link>
+            <Link
+              href="/residential-dumpster-rental"
+              className="bg-secondary-50 rounded-xl p-6 hover:shadow-lg transition-all group text-center"
+            >
+              <div className="bg-primary-100 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary-200 transition-colors">
+                <Home className="h-7 w-7 text-primary-600" />
+              </div>
+              <h3 className="font-bold text-secondary-900 mb-2 group-hover:text-primary-600 transition-colors">
+                Residential Dumpsters
+              </h3>
+              <p className="text-sm text-secondary-600">
+                Perfect for home cleanouts, renovations & yard waste
+              </p>
+            </Link>
+            <Link
+              href="/small-dumpster-rental"
+              className="bg-secondary-50 rounded-xl p-6 hover:shadow-lg transition-all group text-center"
+            >
+              <div className="bg-primary-100 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary-200 transition-colors">
+                <Package className="h-7 w-7 text-primary-600" />
+              </div>
+              <h3 className="font-bold text-secondary-900 mb-2 group-hover:text-primary-600 transition-colors">
+                Small Dumpsters
+              </h3>
+              <p className="text-sm text-secondary-600">
+                Compact 10-15 yard options for smaller projects
+              </p>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Cities Section */}
+      <section className="py-16 bg-secondary-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-secondary-900 mb-4 text-center">
+            Cities We Serve in {state.name}
+          </h2>
+          <p className="text-secondary-600 text-center mb-8 max-w-2xl mx-auto">
+            Click on any city below to see local dumpster rental options, pricing, and availability.
+          </p>
+          {state.cities.length > 0 ? (
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
+              {state.cities.map((city) => (
+                <Link
+                  key={city.id}
+                  href={`/dumpster-rental-${city.slug}`}
+                  className="flex items-center gap-2 p-4 bg-white rounded-lg border border-secondary-200 hover:border-primary-300 hover:shadow-md transition-all"
+                >
+                  <MapPin className="h-4 w-4 text-primary-600 flex-shrink-0" />
+                  <span className="text-secondary-800 font-medium hover:text-primary-600">{city.name}</span>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <p className="text-secondary-600 text-center">Contact us for dumpster rental services in {state.name}.</p>
+          )}
+        </div>
+      </section>
+
+      {/* Why Choose Us Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-secondary-900 mb-4 text-center">
+            Why Choose Dumpster Champs in {state.name}?
+          </h2>
+          <p className="text-secondary-600 text-center mb-12 max-w-2xl mx-auto">
+            We&apos;re committed to providing the best dumpster rental experience across {state.name}.
+          </p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+            <div className="text-center">
+              <div className="bg-primary-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Clock className="h-8 w-8 text-primary-600" />
+              </div>
+              <h3 className="font-bold text-secondary-900 mb-2">Same-Day Delivery</h3>
+              <p className="text-secondary-600 text-sm">Order before noon for same-day delivery in most {state.name} cities.</p>
+            </div>
+            <div className="text-center">
+              <div className="bg-primary-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Shield className="h-8 w-8 text-primary-600" />
+              </div>
+              <h3 className="font-bold text-secondary-900 mb-2">No Hidden Fees</h3>
+              <p className="text-secondary-600 text-sm">Flat-rate pricing includes delivery, pickup, and disposal. No surprises.</p>
+            </div>
+            <div className="text-center">
+              <div className="bg-primary-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Ruler className="h-8 w-8 text-primary-600" />
+              </div>
+              <h3 className="font-bold text-secondary-900 mb-2">All Sizes Available</h3>
+              <p className="text-secondary-600 text-sm">From 10-yard to 40-yard dumpsters for any project size.</p>
+            </div>
+            <div className="text-center">
+              <div className="bg-primary-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Star className="h-8 w-8 text-primary-600" />
+              </div>
+              <h3 className="font-bold text-secondary-900 mb-2">5-Star Service</h3>
+              <p className="text-secondary-600 text-sm">Friendly, professional service with excellent reviews.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-16 bg-secondary-50">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold text-secondary-900 mb-4 text-center">
+              Frequently Asked Questions About Dumpster Rental in {state.name}
+            </h2>
+            <p className="text-secondary-600 text-center mb-8">
+              Got questions? We&apos;ve got answers. Here are the most common questions about renting a dumpster in {state.name}.
+            </p>
+            <LocalFAQAccordion
+              faqs={stateFaqs}
+              cityName={state.name}
+              stateName={state.name}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-16 bg-primary-600 text-white">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold mb-4">
+            Ready to Rent a Dumpster in {state.name}?
+          </h2>
+          <p className="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
+            Get your free quote today! Same-day delivery available. Flat-rate pricing with no hidden fees.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href={`tel:${phone.replace(/\D/g, "")}`}
+              className="inline-flex items-center justify-center gap-2 bg-white text-primary-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-primary-50 transition-colors"
+            >
+              <Phone className="h-5 w-5" />
+              Call {phone}
+            </a>
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center gap-2 border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-primary-600 transition-colors"
+            >
+              Request Online Quote
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Schema Markup */}
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://www.dumpsterchamps.com" },
+          { name: "Locations", url: "https://www.dumpsterchamps.com/locations" },
+          { name: state.name, url: `https://www.dumpsterchamps.com/dumpster-rental-${state.slug}` },
+        ]}
+      />
+      <FAQSchema faqs={stateFaqs} />
     </>
   );
 }
@@ -391,11 +664,27 @@ async function CityPage({ citySlug }: { citySlug: string }) {
 
   if (!city) return notFound();
 
-  const nearbyCities = await prisma.city.findMany({
+  // Get nearby cities sorted by geographic distance (if coordinates available)
+  const allStateCities = await prisma.city.findMany({
     where: { stateId: city.stateId, id: { not: city.id } },
-    take: 6,
-    orderBy: { name: "asc" },
+    select: { id: true, name: true, slug: true, latitude: true, longitude: true },
   });
+
+  // Calculate distance and sort by proximity
+  const nearbyCities = city.latitude && city.longitude
+    ? allStateCities
+        .map((nc) => ({
+          ...nc,
+          distance: nc.latitude && nc.longitude
+            ? Math.sqrt(
+                Math.pow((nc.latitude - city.latitude!) * 69, 2) +
+                Math.pow((nc.longitude - city.longitude!) * 54.6, 2)
+              )
+            : Infinity,
+        }))
+        .sort((a, b) => a.distance - b.distance)
+        .slice(0, 6)
+    : allStateCities.sort((a, b) => a.name.localeCompare(b.name)).slice(0, 6);
 
   // Use city-specific phone (GBP) or default
   const phone = city.phone || process.env.NEXT_PUBLIC_PHONE || "(888) 860-0710";
@@ -522,12 +811,92 @@ async function CityPage({ citySlug }: { citySlug: string }) {
               />
             ))}
           </div>
+          <div className="text-center mt-8">
+            <Link
+              href="/dumpster-rental-prices"
+              className="inline-flex items-center gap-2 text-primary-600 font-semibold hover:text-primary-700"
+            >
+              View Detailed Pricing Guide
+              <ChevronRight className="h-5 w-5" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Service Types Section - Links to non-geo service pages */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-secondary-900 mb-4 text-center">
+            Dumpster Rental Services in {city.name}
+          </h2>
+          <p className="text-secondary-600 text-center mb-8 max-w-2xl mx-auto">
+            We offer specialized dumpster rental solutions for every type of project in {city.name}.
+            Choose the service that fits your needs.
+          </p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+            <Link
+              href="/roll-off-dumpster-rental"
+              className="bg-secondary-50 rounded-xl p-6 hover:shadow-lg transition-all group text-center"
+            >
+              <div className="bg-primary-100 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary-200 transition-colors">
+                <Truck className="h-7 w-7 text-primary-600" />
+              </div>
+              <h3 className="font-bold text-secondary-900 mb-2 group-hover:text-primary-600 transition-colors">
+                Roll-Off Dumpsters
+              </h3>
+              <p className="text-sm text-secondary-600">
+                Open-top containers for construction, renovations & large cleanouts
+              </p>
+            </Link>
+            <Link
+              href="/construction-dumpster-rental"
+              className="bg-secondary-50 rounded-xl p-6 hover:shadow-lg transition-all group text-center"
+            >
+              <div className="bg-primary-100 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary-200 transition-colors">
+                <Truck className="h-7 w-7 text-primary-600" />
+              </div>
+              <h3 className="font-bold text-secondary-900 mb-2 group-hover:text-primary-600 transition-colors">
+                Construction Dumpsters
+              </h3>
+              <p className="text-sm text-secondary-600">
+                Job site waste solutions for contractors & builders
+              </p>
+            </Link>
+            <Link
+              href="/residential-dumpster-rental"
+              className="bg-secondary-50 rounded-xl p-6 hover:shadow-lg transition-all group text-center"
+            >
+              <div className="bg-primary-100 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary-200 transition-colors">
+                <Truck className="h-7 w-7 text-primary-600" />
+              </div>
+              <h3 className="font-bold text-secondary-900 mb-2 group-hover:text-primary-600 transition-colors">
+                Residential Dumpsters
+              </h3>
+              <p className="text-sm text-secondary-600">
+                Perfect for home cleanouts, renovations & yard waste
+              </p>
+            </Link>
+            <Link
+              href="/small-dumpster-rental"
+              className="bg-secondary-50 rounded-xl p-6 hover:shadow-lg transition-all group text-center"
+            >
+              <div className="bg-primary-100 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary-200 transition-colors">
+                <Truck className="h-7 w-7 text-primary-600" />
+              </div>
+              <h3 className="font-bold text-secondary-900 mb-2 group-hover:text-primary-600 transition-colors">
+                Small Dumpsters
+              </h3>
+              <p className="text-sm text-secondary-600">
+                Compact 10-15 yard options for smaller projects
+              </p>
+            </Link>
+          </div>
         </div>
       </section>
 
       {/* AI-Generated City Content Section */}
       {city.aiDescription && (
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-secondary-50">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <div
@@ -545,6 +914,7 @@ async function CityPage({ citySlug }: { citySlug: string }) {
       <NeighborhoodGrid
         neighborhoods={city.neighborhoods}
         cityName={city.name}
+        citySlug={city.slug}
         stateName={city.state.name}
         coordinates={coordinates}
         gbpEmbed={city.gbpEmbed}
@@ -591,13 +961,16 @@ async function CityPage({ citySlug }: { citySlug: string }) {
         </div>
       </section>
 
-      {/* Nearby Cities Section */}
+      {/* Nearby Cities Section - Internal Linking for SEO */}
       {nearbyCities.length > 0 && (
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
-            <h2 className="text-2xl font-bold text-secondary-900 mb-6 text-center">
-              Also Serving Nearby Cities in {city.state.name}
+            <h2 className="text-2xl font-bold text-secondary-900 mb-2 text-center">
+              Dumpster Rental in Nearby {city.state.name} Cities
             </h2>
+            <p className="text-secondary-600 text-center mb-6">
+              We also serve these cities near {city.name}:
+            </p>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 max-w-4xl mx-auto">
               {nearbyCities.map((nc) => (
                 <Link
@@ -709,8 +1082,10 @@ async function SizePage({ sizeSlug }: { sizeSlug: string }) {
                   />
                 </div>
               )}
-              <h1 className="text-4xl lg:text-5xl font-bold mb-4">{size.name}</h1>
-              <p className="text-xl text-secondary-200 mb-6">{size.description}</p>
+              <h1 className="text-4xl lg:text-5xl font-bold mb-4">{size.name} Near Me</h1>
+              <p className="text-xl text-secondary-200 mb-6">
+                Looking for a {size.size} yard dumpster rental near you? {size.description} Same-day delivery available in most areas.
+              </p>
 
               {/* Price with transparency message */}
               <div className="bg-secondary-800/60 rounded-lg p-4 mb-6">
@@ -807,10 +1182,31 @@ async function SizePage({ sizeSlug }: { sizeSlug: string }) {
         </div>
       </section>
 
+      {/* Calculator CTA Section */}
+      <section className="py-12 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl p-8 md:p-12 text-white text-center">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">
+              Not Sure If a {size.size} Yard Is Right for You?
+            </h2>
+            <p className="text-lg text-primary-100 mb-6 max-w-2xl mx-auto">
+              Use our free dumpster size calculator to get a personalized recommendation based on your specific project.
+              Avoid paying for space you don&apos;t need — or running out of room mid-project.
+            </p>
+            <Link
+              href="/calculator"
+              className="inline-flex items-center gap-2 bg-white text-primary-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-primary-50 transition-colors"
+            >
+              Try the Size Calculator →
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <section className="py-16 bg-primary-600 text-white">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to Rent a {size.name}?</h2>
-          <p className="text-xl text-primary-100 mb-8">Get your free quote today!</p>
+          <h2 className="text-3xl font-bold mb-4">Ready to Rent a {size.name} Near You?</h2>
+          <p className="text-xl text-primary-100 mb-8">Get your free quote today! Same-day delivery in most areas.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/contact" className="bg-white text-primary-600 px-8 py-4 rounded-lg font-semibold hover:bg-primary-50 transition-colors">Get a Free Quote</Link>
             <a href={`tel:${phone.replace(/\D/g, "")}`} className="flex items-center justify-center gap-2 border-2 border-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-primary-600 transition-colors">
@@ -821,18 +1217,59 @@ async function SizePage({ sizeSlug }: { sizeSlug: string }) {
       </section>
 
       {/* Schema Markup */}
-      <ProductSchema
-        name={size.name}
-        description={size.description || `${size.name} rental for residential and commercial projects.`}
-        url={`https://www.dumpsterchamps.com/${size.slug}`}
-        priceRange={size.priceRange || "$350-$850"}
-      />
+      {(() => {
+        const sizeNum = size.size;
+        const pricingData = DUMPSTER_PRICING[sizeNum as keyof typeof DUMPSTER_PRICING];
+        return pricingData ? (
+          <DumpsterProductSchema
+            size={sizeNum}
+            price={pricingData.price}
+            dimensions={pricingData.dimensions}
+            capacity={pricingData.capacity}
+            weightLimit={pricingData.weight}
+          />
+        ) : (
+          <ProductSchema
+            name={size.name}
+            description={size.description || `${size.name} rental for residential and commercial projects.`}
+            url={`https://www.dumpsterchamps.com/${size.slug}`}
+            priceRange={size.priceRange || "$350-$850"}
+          />
+        );
+      })()}
       <BreadcrumbSchema
         items={[
           { name: "Home", url: "https://www.dumpsterchamps.com" },
           { name: "Dumpster Sizes", url: "https://www.dumpsterchamps.com/dumpster-sizes" },
           { name: size.name, url: `https://www.dumpsterchamps.com/${size.slug}` },
         ]}
+      />
+      <HowToSchema
+        name={`How to Rent a ${size.size} Yard Dumpster`}
+        description={`Step-by-step guide to renting a ${size.size} yard dumpster for your project. Takes just 5 minutes to order.`}
+        steps={[
+          {
+            name: "Choose Your Dumpster Size",
+            text: `Select a ${size.size} yard dumpster based on your project needs. This size holds ${DUMPSTER_PRICING[size.size as keyof typeof DUMPSTER_PRICING]?.capacity || "several pickup truck loads"} and is ideal for ${DUMPSTER_PRICING[size.size as keyof typeof DUMPSTER_PRICING]?.idealFor?.[0] || "various projects"}.`,
+          },
+          {
+            name: "Get a Free Quote",
+            text: "Call (888) 860-0710 or fill out our online form for instant pricing. Our all-inclusive rate covers delivery, pickup, and a 7-day rental period.",
+          },
+          {
+            name: "Schedule Delivery",
+            text: "Choose your delivery date. Same-day and next-day delivery available in most areas. We'll confirm placement location and any access requirements.",
+          },
+          {
+            name: "Fill Your Dumpster",
+            text: "Load your debris into the dumpster. Keep materials level with the top edge - no overflow allowed. Avoid prohibited items like batteries, tires, and hazardous materials.",
+          },
+          {
+            name: "Schedule Pickup",
+            text: "When you're done or at the end of your rental period, call us to schedule pickup. We'll haul away your debris and dispose of it responsibly.",
+          },
+        ]}
+        totalTime="PT5M"
       />
     </>
   );

@@ -185,8 +185,9 @@ export default async function NeighborhoodPage({ params }: PageProps) {
               </h1>
 
               <p className="text-xl text-secondary-200 mb-8">
-                Fast, reliable roll-off dumpster delivery to {neighborhood.name} and surrounding areas.
-                Same-day service available with flat-rate pricing.
+                Looking for <Link href={`/${slug}`} className="text-primary-300 hover:text-primary-200 underline">dumpster rental in {city.name}</Link>?
+                We offer fast, reliable <Link href="/roll-off-dumpster-rental" className="text-primary-300 hover:text-primary-200 underline">roll-off dumpster</Link> delivery
+                to {neighborhood.name} and surrounding areas. Same-day service available with flat-rate pricing starting at $495.
               </p>
 
               {/* Trust Badges */}
@@ -241,9 +242,49 @@ export default async function NeighborhoodPage({ params }: PageProps) {
                 />
               </article>
 
+              {/* Service Type Links - ACROSS linking to non-geo service pages */}
+              <div className="mt-12 p-6 bg-primary-50 rounded-xl">
+                <h3 className="text-xl font-bold text-secondary-900 mb-4">
+                  Dumpster Types Available in {neighborhood.name}
+                </h3>
+                <p className="text-secondary-600 mb-4">
+                  We offer a variety of dumpster rental options to match your project needs:
+                </p>
+                <div className="grid sm:grid-cols-2 gap-3">
+                  <Link
+                    href="/roll-off-dumpster-rental"
+                    className="flex items-center gap-3 px-4 py-3 bg-white rounded-lg text-secondary-700 hover:text-primary-600 hover:shadow-md transition-all"
+                  >
+                    <Truck className="h-5 w-5 text-primary-600" />
+                    <span>Roll-Off Dumpster Rental</span>
+                  </Link>
+                  <Link
+                    href="/construction-dumpster-rental"
+                    className="flex items-center gap-3 px-4 py-3 bg-white rounded-lg text-secondary-700 hover:text-primary-600 hover:shadow-md transition-all"
+                  >
+                    <Truck className="h-5 w-5 text-primary-600" />
+                    <span>Construction Dumpster Rental</span>
+                  </Link>
+                  <Link
+                    href="/residential-dumpster-rental"
+                    className="flex items-center gap-3 px-4 py-3 bg-white rounded-lg text-secondary-700 hover:text-primary-600 hover:shadow-md transition-all"
+                  >
+                    <Truck className="h-5 w-5 text-primary-600" />
+                    <span>Residential Dumpster Rental</span>
+                  </Link>
+                  <Link
+                    href="/small-dumpster-rental"
+                    className="flex items-center gap-3 px-4 py-3 bg-white rounded-lg text-secondary-700 hover:text-primary-600 hover:shadow-md transition-all"
+                  >
+                    <Truck className="h-5 w-5 text-primary-600" />
+                    <span>Small Dumpster Rental</span>
+                  </Link>
+                </div>
+              </div>
+
               {/* Neighboring Areas */}
               {neighboringAreas.length > 0 && (
-                <div className="mt-12 p-6 bg-secondary-50 rounded-xl">
+                <div className="mt-8 p-6 bg-secondary-50 rounded-xl">
                   <h3 className="text-xl font-bold text-secondary-900 mb-4">
                     Nearby Areas We Serve
                   </h3>

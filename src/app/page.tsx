@@ -12,35 +12,35 @@ const dumpsterSizes = [
     name: "10 Yard",
     dimensions: "12' x 8' x 3.5'",
     ideal: "Small cleanouts, bathroom remodels",
-    price: "$350-$450",
+    price: "$495",
   },
   {
     size: 15,
     name: "15 Yard",
     dimensions: "16' x 7.5' x 4'",
     ideal: "Medium renovations, yard debris",
-    price: "$400-$500",
+    price: "$550",
   },
   {
     size: 20,
     name: "20 Yard",
     dimensions: "22' x 7.5' x 4.5'",
     ideal: "Roofing, large cleanouts",
-    price: "$450-$550",
+    price: "$595",
   },
   {
     size: 30,
     name: "30 Yard",
     dimensions: "22' x 7.5' x 6'",
     ideal: "Construction, demolition",
-    price: "$500-$650",
+    price: "$695",
   },
   {
     size: 40,
     name: "40 Yard",
     dimensions: "22' x 7.5' x 8'",
     ideal: "Large commercial projects",
-    price: "$600-$850",
+    price: "$795",
   },
 ];
 
@@ -113,14 +113,13 @@ export default async function HomePage() {
 
               {/* Headline - Problem-focused with action verb */}
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 leading-tight">
-                Get Your Renovation Debris Gone — Fast, Flat-Rate Delivery
+                Dumpster Rental Near Me — Fast Delivery from $495
               </h1>
 
               {/* Description - Addresses pain points */}
               <p className="text-lg text-secondary-200 mb-6 leading-relaxed">
-                Stop stressing about debris. We deliver roll-off dumpsters to your
-                driveway tomorrow — pick up when you&apos;re done. Transparent pricing,
-                no hidden fees.
+                Need a dumpster? We deliver roll-off containers to your driveway as soon as tomorrow.
+                All-inclusive pricing starts at <strong className="text-white">$495</strong> — no hidden fees, no surprises.
               </p>
 
               {/* Trust Badges */}
@@ -351,10 +350,13 @@ export default async function HomePage() {
       <AggregateRatingSchema ratingValue={4.9} reviewCount={500} />
       <FAQSchema
         faqs={[
-          { question: "What size dumpster do I need?", answer: "The size depends on your project. A 10-yard dumpster is great for small cleanouts, while a 40-yard is best for large construction projects. Call us for personalized recommendations." },
-          { question: "How long can I keep the dumpster?", answer: "Standard rental periods are 7-10 days, but we offer flexible extensions if you need more time." },
-          { question: "What can I put in the dumpster?", answer: "Most household and construction debris is accepted. Prohibited items include hazardous waste, tires, batteries, and appliances with refrigerants." },
-          { question: "Do you offer same-day delivery?", answer: "Yes! We offer same-day or next-day delivery in most service areas." },
+          { question: "How much does a dumpster rental cost?", answer: "Dumpster rental prices start at $495 for a 10-yard container, with all-inclusive pricing that covers delivery, pickup, 7-day rental, and weight allowance. Our 15-yard is $550, 20-yard is $595, 30-yard is $695, and 40-yard is $795. No hidden fees." },
+          { question: "What size dumpster do I need?", answer: "The size depends on your project. A 10-yard dumpster is great for small cleanouts and bathroom remodels. A 20-yard handles kitchen remodels and large cleanouts. A 30-40 yard is best for major construction or whole-house cleanouts. Use our free size calculator or call for recommendations." },
+          { question: "How do I find dumpster rental near me?", answer: "Dumpster Champs provides dumpster rental services nationwide. Enter your zip code or call us to get instant availability and pricing for your area. We offer same-day delivery in most locations." },
+          { question: "How long can I keep the dumpster?", answer: "Standard rental period is 7 days, included in your price. Need more time? Extensions are available for $10-$20 per day depending on dumpster size. Just call before your rental period ends." },
+          { question: "What can I put in the dumpster?", answer: "Most household items, furniture, appliances (without freon), yard waste, renovation debris, roofing shingles, and construction materials are accepted. Prohibited items include hazardous waste, paint, chemicals, tires, batteries, and electronics in some areas." },
+          { question: "Do you offer same-day delivery?", answer: "Yes! We offer same-day or next-day delivery in most service areas. Call before noon for best availability on same-day orders." },
+          { question: "Will a dumpster damage my driveway?", answer: "We place wooden boards under the dumpster wheels to protect your driveway surface. Most driveways handle dumpsters without any issues. Let us know if you have concerns about your specific surface." },
         ]}
       />
     </>

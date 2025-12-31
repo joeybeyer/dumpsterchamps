@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
 import { prisma } from "@/lib/prisma";
+import { BLOG_TEMPLATES } from "@/data/blogTemplates";
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.dumpsterchamps.com";
 
@@ -38,6 +39,42 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: `${baseUrl}/dumpster-sizes`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/calculator`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/dumpster-rental-prices`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/roll-off-dumpster-rental`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/construction-dumpster-rental`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/residential-dumpster-rental`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/small-dumpster-rental`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.9,
@@ -136,33 +173,59 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly",
       priority: 0.9,
     },
+    {
+      url: `${baseUrl}/blog/dumpster-rental-hidden-fees`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/blog/roll-off-vs-front-load-dumpster`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/blog/20-yard-dumpster-capacity`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/blog/cheapest-way-to-rent-dumpster`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/blog/dumpster-permit-guide`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
   ];
 
-  // City blog index pages
-  const citiesWithBlogs = await prisma.city.findMany({
-    where: { blogs: { some: {} } },
-    select: { slug: true },
-  });
-
-  const cityBlogIndexPages: MetadataRoute.Sitemap = citiesWithBlogs.map((city) => ({
+  // City blog index pages (all cities have template-based blogs)
+  const cityBlogIndexPages: MetadataRoute.Sitemap = cities.map((city) => ({
     url: `${baseUrl}/blog/${city.slug}`,
     lastModified: new Date(),
     changeFrequency: "weekly",
     priority: 0.7,
   }));
 
-  // Individual blog posts
-  const blogPosts = await prisma.cityBlog.findMany({
-    where: { published: true },
-    select: { slug: true, updatedAt: true, city: { select: { slug: true } } },
-  });
-
-  const blogPostPages: MetadataRoute.Sitemap = blogPosts.map((post) => ({
-    url: `${baseUrl}/blog/${post.city.slug}/${post.slug}`,
-    lastModified: post.updatedAt,
-    changeFrequency: "monthly",
-    priority: 0.6,
-  }));
+  // Individual blog posts from templates (19 posts per city)
+  const blogPostPages: MetadataRoute.Sitemap = [];
+  for (const city of cities) {
+    for (const template of BLOG_TEMPLATES) {
+      const blogSlug = template.slugTemplate.replace("[CITY_SLUG]", city.slug);
+      blogPostPages.push({
+        url: `${baseUrl}/blog/${city.slug}/${blogSlug}`,
+        lastModified: new Date(),
+        changeFrequency: "monthly",
+        priority: 0.6,
+      });
+    }
+  }
 
   return [
     ...staticPages,

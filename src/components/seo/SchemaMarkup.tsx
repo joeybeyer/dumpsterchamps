@@ -194,6 +194,99 @@ export function ProductSchema({
   );
 }
 
+interface DumpsterProductSchemaProps {
+  size: number;
+  price: number;
+  dimensions: string;
+  capacity: string;
+  weightLimit: string;
+}
+
+export function DumpsterProductSchema({
+  size,
+  price,
+  dimensions,
+  capacity,
+  weightLimit,
+}: DumpsterProductSchemaProps) {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: `${size} Yard Dumpster Rental`,
+    description: `${size} yard roll-off dumpster rental. Dimensions: ${dimensions}. Holds ${capacity}. Weight limit: ${weightLimit}. Includes delivery, pickup, 7-day rental. Same-day delivery available.`,
+    url: `https://www.dumpsterchamps.com/${size}-yard-dumpster`,
+    brand: {
+      "@type": "Brand",
+      name: "Dumpster Champs",
+    },
+    offers: {
+      "@type": "Offer",
+      price: price.toString(),
+      priceCurrency: "USD",
+      availability: "https://schema.org/InStock",
+      priceValidUntil: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split("T")[0],
+      seller: {
+        "@type": "Organization",
+        name: "Dumpster Champs",
+      },
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.9",
+      reviewCount: "500",
+      bestRating: "5",
+      worstRating: "1",
+    },
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
+interface HowToSchemaProps {
+  name: string;
+  description: string;
+  steps: Array<{
+    name: string;
+    text: string;
+    image?: string;
+  }>;
+  totalTime?: string;
+}
+
+export function HowToSchema({
+  name,
+  description,
+  steps,
+  totalTime = "PT5M",
+}: HowToSchemaProps) {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name,
+    description,
+    totalTime,
+    step: steps.map((step, index) => ({
+      "@type": "HowToStep",
+      position: index + 1,
+      name: step.name,
+      text: step.text,
+      ...(step.image && { image: step.image }),
+    })),
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
 interface BreadcrumbSchemaProps {
   items: Array<{ name: string; url: string }>;
 }

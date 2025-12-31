@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { ChevronRight, Check, X, AlertTriangle, Recycle, Info } from "lucide-react";
+import { ChevronRight, Check, X, AlertTriangle, Recycle, Info, ArrowRight } from "lucide-react";
 import { FAQSchema, BreadcrumbSchema } from "@/components/seo/SchemaMarkup";
 import { AuthorBox } from "@/components/blog/AuthorBox";
 
@@ -437,6 +437,52 @@ export default function WhatCanGoInDumpster() {
                   <p className="text-secondary-700">{faq.answer}</p>
                 </div>
               ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Find a Dumpster Near You */}
+      <section className="py-16 bg-secondary-50">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold text-secondary-900 mb-4 text-center">
+              Find a Dumpster Near You
+            </h2>
+            <p className="text-center text-secondary-600 mb-8 max-w-2xl mx-auto">
+              We deliver dumpsters across the United States. Find pricing and availability in your city:
+            </p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+              {[
+                { name: "New York City", slug: "dumpster-rental-new-york-city-ny" },
+                { name: "Los Angeles", slug: "dumpster-rental-los-angeles-ca" },
+                { name: "Chicago", slug: "dumpster-rental-chicago-il" },
+                { name: "Houston", slug: "dumpster-rental-houston-tx" },
+                { name: "Phoenix", slug: "dumpster-rental-phoenix-az" },
+                { name: "Philadelphia", slug: "dumpster-rental-philadelphia-pa" },
+                { name: "Dallas", slug: "dumpster-rental-dallas-tx" },
+                { name: "Atlanta", slug: "dumpster-rental-atlanta-ga" },
+                { name: "Miami", slug: "dumpster-rental-miami-fl" },
+                { name: "Denver", slug: "dumpster-rental-denver-co" },
+                { name: "Seattle", slug: "dumpster-rental-seattle-wa" },
+                { name: "Boston", slug: "dumpster-rental-boston-ma" },
+              ].map((city) => (
+                <Link
+                  key={city.slug}
+                  href={`/${city.slug}`}
+                  className="bg-white hover:bg-primary-50 hover:text-primary-700 text-secondary-700 px-4 py-3 rounded-lg text-sm font-medium text-center transition-colors"
+                >
+                  {city.name}
+                </Link>
+              ))}
+            </div>
+            <div className="text-center mt-6">
+              <Link
+                href="/locations"
+                className="text-primary-600 hover:text-primary-700 font-medium inline-flex items-center gap-1"
+              >
+                View all locations <ArrowRight className="h-4 w-4" />
+              </Link>
             </div>
           </div>
         </div>
