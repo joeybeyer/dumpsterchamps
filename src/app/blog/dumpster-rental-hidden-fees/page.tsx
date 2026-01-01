@@ -4,6 +4,10 @@ import Image from "next/image";
 import { ChevronRight, Check, X, AlertTriangle, DollarSign, ArrowRight } from "lucide-react";
 import { FAQSchema, BreadcrumbSchema } from "@/components/seo/SchemaMarkup";
 import { AuthorBox } from "@/components/blog/AuthorBox";
+import { LastUpdated, ArticleSchema } from "@/components/seo/LastUpdated";
+
+// Content freshness date - update this when content is refreshed
+const LAST_UPDATED = new Date("2025-12-31");
 
 export const metadata: Metadata = {
   title: "7 Hidden Dumpster Rental Fees to Watch For [2026 Guide]",
@@ -159,7 +163,7 @@ export default function HiddenFeesGuide() {
                 That $299 dumpster rental can quickly become $600+ with hidden fees. Learn exactly what to look for and how to get transparent, all-inclusive pricing.
               </p>
               <div className="flex flex-wrap gap-4 text-sm text-secondary-300">
-                <span>Last Updated: January 2026</span>
+                <LastUpdated date={LAST_UPDATED} className="text-secondary-300" showIcon={false} prefix="" />
                 <span>|</span>
                 <span>10 min read</span>
               </div>
@@ -433,6 +437,12 @@ export default function HiddenFeesGuide() {
           { name: "Blog", url: "https://www.dumpsterchamps.com/blog" },
           { name: "Hidden Dumpster Rental Fees", url: "https://www.dumpsterchamps.com/blog/dumpster-rental-hidden-fees" },
         ]}
+      />
+      <ArticleSchema
+        title="7 Hidden Dumpster Rental Fees to Watch For"
+        description="Avoid surprise charges! Learn about the 7 most common hidden dumpster rental fees and how to get transparent, all-inclusive pricing."
+        url="https://www.dumpsterchamps.com/blog/dumpster-rental-hidden-fees"
+        dateModified={LAST_UPDATED}
       />
     </>
   );

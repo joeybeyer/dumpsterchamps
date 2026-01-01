@@ -113,7 +113,7 @@ export default async function HomePage() {
 
               {/* Headline - Problem-focused with action verb */}
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 leading-tight">
-                Dumpster Rental Near Me — Fast Delivery from $495
+                Dumpster Rental — Fast Delivery from $495
               </h1>
 
               {/* Description - Addresses pain points */}

@@ -4,13 +4,17 @@ import Image from "next/image";
 import { ChevronRight, Check, Ruler, Package, ArrowRight } from "lucide-react";
 import { FAQSchema, BreadcrumbSchema } from "@/components/seo/SchemaMarkup";
 import { AuthorBox } from "@/components/blog/AuthorBox";
+import { LastUpdated, ArticleSchema } from "@/components/seo/LastUpdated";
+
+// Content freshness date - update this when content is refreshed
+const LAST_UPDATED = new Date("2025-12-31");
 
 export const metadata: Metadata = {
-  title: "Complete Dumpster Size Guide: 10, 15, 20, 30 & 40 Yard Explained [2026]",
+  title: "Dumpster Sizes: 10-40 Yard Complete Guide [2026]",
   description:
-    "The ultimate 2026 guide to dumpster sizes. Learn which size (10, 15, 20, 30, or 40 yard) is right for your project. Dimensions, capacity, pricing & use cases explained.",
+    "The ultimate 2026 guide to dumpster sizes. Learn which size (10, 15, 20, 30, or 40 yard) is right for your project. Dimensions, capacity & pricing explained.",
   openGraph: {
-    title: "Complete Dumpster Size Guide 2026 | Dumpster Champs",
+    title: "Dumpster Sizes: 10-40 Yard Complete Guide [2026]",
     description: "The ultimate guide to choosing the right dumpster size for your project.",
     type: "article",
   },
@@ -178,8 +182,8 @@ export default function DumpsterSizesGuide() {
               <p className="text-xl text-secondary-200 mb-6">
                 Choosing the right dumpster size is crucial for your project&apos;s success. Too small means paying for a second rental. Too large means overpaying for space you don&apos;t need. This comprehensive guide helps you make the right choice.
               </p>
-              <div className="flex flex-wrap gap-4 text-sm text-secondary-300">
-                <span>Last Updated: January 2026</span>
+              <div className="flex flex-wrap items-center gap-4 text-sm text-secondary-300">
+                <LastUpdated date={LAST_UPDATED} className="text-secondary-300" showIcon={false} prefix="" />
                 <span>|</span>
                 <span>15 min read</span>
               </div>
@@ -502,6 +506,13 @@ export default function DumpsterSizesGuide() {
           { name: "Blog", url: "https://www.dumpsterchamps.com/blog" },
           { name: "Dumpster Sizes Guide", url: "https://www.dumpsterchamps.com/blog/dumpster-sizes-guide" },
         ]}
+      />
+      <ArticleSchema
+        title="Complete Dumpster Size Guide: 10, 15, 20, 30 & 40 Yard Explained"
+        description="The ultimate guide to dumpster sizes. Learn which size (10, 15, 20, 30, or 40 yard) is right for your project. Dimensions, capacity, pricing & use cases explained."
+        url="https://www.dumpsterchamps.com/blog/dumpster-sizes-guide"
+        dateModified={LAST_UPDATED}
+        image="https://www.dumpsterchamps.com/images/blog/dumpster-sizes-guide-hero.jpg"
       />
     </>
   );

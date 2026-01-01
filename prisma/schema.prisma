@@ -183,7 +183,13 @@ model Lead {
   dumpsterSize String?
   message      String?
   source       String?
+  spam         Boolean  @default(false)
+  spamReason   String?  // Why it was flagged: "honeypot", "fake_phone", "disposable_email", etc.
   createdAt    DateTime @default(now())
+
+  @@index([email])
+  @@index([phone])
+  @@index([createdAt])
 }
 
 model Page {

@@ -1,6 +1,5 @@
 import { MetadataRoute } from "next";
 import { prisma } from "@/lib/prisma";
-import { BLOG_TEMPLATES } from "@/data/blogTemplates";
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.dumpsterchamps.com";
 
@@ -205,27 +204,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  // City blog index pages (all cities have template-based blogs)
-  const cityBlogIndexPages: MetadataRoute.Sitemap = cities.map((city) => ({
-    url: `${baseUrl}/blog/${city.slug}`,
-    lastModified: new Date(),
-    changeFrequency: "weekly",
-    priority: 0.7,
-  }));
-
-  // Individual blog posts from templates (19 posts per city)
-  const blogPostPages: MetadataRoute.Sitemap = [];
-  for (const city of cities) {
-    for (const template of BLOG_TEMPLATES) {
-      const blogSlug = template.slugTemplate.replace("[CITY_SLUG]", city.slug);
-      blogPostPages.push({
-        url: `${baseUrl}/blog/${city.slug}/${blogSlug}`,
-        lastModified: new Date(),
-        changeFrequency: "monthly",
-        priority: 0.6,
-      });
-    }
-  }
+  // Skip city-specific blog posts from sitemap - focus on quality pages only
+  // City blog indexes and individual posts are generated on-demand but not in sitemap
 
   return [
     ...staticPages,
@@ -235,7 +215,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...cityPages,
     ...neighborhoodPages,
     ...blogPillarPages,
-    ...cityBlogIndexPages,
-    ...blogPostPages,
   ];
 }

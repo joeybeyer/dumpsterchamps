@@ -4,6 +4,10 @@ import Image from "next/image";
 import { ChevronRight, Check, DollarSign, X, AlertTriangle, Lightbulb, ArrowRight } from "lucide-react";
 import { FAQSchema, BreadcrumbSchema } from "@/components/seo/SchemaMarkup";
 import { AuthorBox } from "@/components/blog/AuthorBox";
+import { LastUpdated, ArticleSchema } from "@/components/seo/LastUpdated";
+
+// Content freshness date - update this when content is refreshed
+const LAST_UPDATED = new Date("2025-12-31");
 
 export const metadata: Metadata = {
   title: "Cheapest Way to Rent a Dumpster: 9 Money-Saving Tips [2026]",
@@ -157,7 +161,7 @@ export default function CheapestDumpsterRental() {
                 Don&apos;t overpay for dumpster rental. These 9 tips can save you $50-500 on your next rental—without sacrificing service.
               </p>
               <div className="flex flex-wrap gap-4 text-sm text-secondary-300">
-                <span>Last Updated: January 2026</span>
+                <LastUpdated date={LAST_UPDATED} className="text-secondary-300" showIcon={false} prefix="" />
                 <span>|</span>
                 <span>7 min read</span>
               </div>
@@ -398,6 +402,12 @@ export default function CheapestDumpsterRental() {
           { name: "Blog", url: "https://www.dumpsterchamps.com/blog" },
           { name: "Cheapest Way to Rent a Dumpster", url: "https://www.dumpsterchamps.com/blog/cheapest-way-to-rent-dumpster" },
         ]}
+      />
+      <ArticleSchema
+        title="Cheapest Way to Rent a Dumpster: 9 Money-Saving Tips"
+        description="Save $50-200 on dumpster rental with these proven tips. Learn how to get the best price, avoid hidden fees, and choose the right size without overpaying."
+        url="https://www.dumpsterchamps.com/blog/cheapest-way-to-rent-dumpster"
+        dateModified={LAST_UPDATED}
       />
     </>
   );

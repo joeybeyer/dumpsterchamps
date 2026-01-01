@@ -4,13 +4,17 @@ import Image from "next/image";
 import { ChevronRight, Check, X, AlertTriangle, Recycle, Info, ArrowRight } from "lucide-react";
 import { FAQSchema, BreadcrumbSchema } from "@/components/seo/SchemaMarkup";
 import { AuthorBox } from "@/components/blog/AuthorBox";
+import { LastUpdated, ArticleSchema } from "@/components/seo/LastUpdated";
+
+// Content freshness date - update this when content is refreshed
+const LAST_UPDATED = new Date("2025-12-31");
 
 export const metadata: Metadata = {
-  title: "What Can & Can't Go in a Dumpster? Complete 2026 Disposal Guide",
+  title: "What Goes in a Dumpster? Disposal Guide [2026]",
   description:
     "Complete 2026 guide to dumpster disposal rules. Learn exactly what items are accepted, prohibited, and how to avoid contamination fees. Includes disposal alternatives.",
   openGraph: {
-    title: "What Can Go in a Dumpster? Complete Guide | Dumpster Champs",
+    title: "What Goes in a Dumpster? Disposal Guide [2026]",
     description: "Complete guide to what you can and can't put in a dumpster, with disposal alternatives for prohibited items.",
     type: "article",
   },
@@ -226,8 +230,8 @@ export default function WhatCanGoInDumpster() {
               <p className="text-xl text-secondary-200 mb-6">
                 Know before you throw. Putting the wrong items in your dumpster can result in contamination fees of $75-250+. This guide covers everything you can dispose of, what&apos;s prohibited, and alternatives for items that can&apos;t go in the dumpster.
               </p>
-              <div className="flex flex-wrap gap-4 text-sm text-secondary-300">
-                <span>Last Updated: January 2026</span>
+              <div className="flex flex-wrap items-center gap-4 text-sm text-secondary-300">
+                <LastUpdated date={LAST_UPDATED} className="text-secondary-300" showIcon={false} prefix="" />
                 <span>|</span>
                 <span>10 min read</span>
               </div>
@@ -529,6 +533,13 @@ export default function WhatCanGoInDumpster() {
           { name: "Blog", url: "https://www.dumpsterchamps.com/blog" },
           { name: "What Can Go in a Dumpster", url: "https://www.dumpsterchamps.com/blog/what-can-go-in-dumpster" },
         ]}
+      />
+      <ArticleSchema
+        title="What Can & Can't Go in a Dumpster? Complete Disposal Guide"
+        description="Complete guide to dumpster disposal rules. Learn exactly what items are accepted, prohibited, and how to avoid contamination fees."
+        url="https://www.dumpsterchamps.com/blog/what-can-go-in-dumpster"
+        dateModified={LAST_UPDATED}
+        image="https://www.dumpsterchamps.com/images/blog/what-can-go-in-dumpster-hero.jpg"
       />
     </>
   );

@@ -15,7 +15,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "Dumpster Rental Near Me from $495 | Dumpster Champs",
+    default: "Dumpster Rental Near Me from $495 [2026] | Dumpster Champs",
     template: "%s | Dumpster Champs",
   },
   description:
@@ -36,13 +36,13 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://www.dumpsterchamps.com",
     siteName: "Dumpster Champs",
-    title: "Dumpster Rental Near Me from $495 | Dumpster Champs",
+    title: "Dumpster Rental Near Me from $495 [2026] | Dumpster Champs",
     description:
       "Dumpster rental near me from $495. Same-day delivery on 10-40 yard roll-off dumpsters. All-inclusive pricing, no hidden fees.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dumpster Rental Near Me from $495 | Dumpster Champs",
+    title: "Dumpster Rental Near Me from $495 [2026] | Dumpster Champs",
     description:
       "Dumpster rental near me from $495. Same-day delivery on 10-40 yard roll-off dumpsters. All-inclusive pricing, no hidden fees.",
   },

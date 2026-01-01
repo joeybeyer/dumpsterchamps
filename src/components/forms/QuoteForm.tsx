@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
 interface QuoteFormProps {
@@ -43,6 +43,17 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
 
+  // Spam prevention: honeypot field (should remain empty)
+  const [honeypot, setHoneypot] = useState("");
+
+  // Spam prevention: timestamp when form was loaded
+  const [formTimestamp, setFormTimestamp] = useState<number>(0);
+
+  // Set timestamp when component mounts
+  useEffect(() => {
+    setFormTimestamp(Date.now());
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("loading");
@@ -56,6 +67,9 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
           ...formData,
           type: "quote",
           source: typeof window !== "undefined" ? window.location.href : "",
+          // Spam prevention fields
+          honeypot,
+          formTimestamp,
         }),
       });
 
@@ -74,6 +88,7 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
         dumpsterSize: "",
         message: "",
       });
+      setHoneypot("");
     } catch (error) {
       setStatus("error");
       setErrorMessage("Something went wrong. Please try again or call us directly.");
@@ -98,6 +113,22 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
           {errorMessage}
         </div>
       )}
+
+      {/* Honeypot field - hidden from humans, visible to bots */}
+      <div className="absolute left-[-9999px]" aria-hidden="true">
+        <label htmlFor="website">
+          Leave this field empty
+        </label>
+        <input
+          type="text"
+          id="website"
+          name="website"
+          tabIndex={-1}
+          autoComplete="off"
+          value={honeypot}
+          onChange={(e) => setHoneypot(e.target.value)}
+        />
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>

@@ -4,13 +4,17 @@ import Image from "next/image";
 import { ChevronRight, Check, Ruler, Package, Scale, ArrowRight } from "lucide-react";
 import { FAQSchema, BreadcrumbSchema } from "@/components/seo/SchemaMarkup";
 import { AuthorBox } from "@/components/blog/AuthorBox";
+import { LastUpdated, ArticleSchema } from "@/components/seo/LastUpdated";
+
+// Content freshness date - update this when content is refreshed
+const LAST_UPDATED = new Date("2025-12-31");
 
 export const metadata: Metadata = {
-  title: "How Much Does a 20 Yard Dumpster Hold? Complete Capacity Guide [2026]",
+  title: "20 Yard Dumpster Capacity Guide [2026]",
   description:
     "Discover exactly what fits in a 20 yard dumpster: 6-8 pickup truck loads, 3 tons of debris. See real examples for renovations, roofing, cleanouts & more.",
   openGraph: {
-    title: "20 Yard Dumpster Capacity Guide | Dumpster Champs",
+    title: "20 Yard Dumpster Capacity Guide [2026]",
     description: "Complete guide to what fits in a 20 yard dumpster with real-world examples.",
     type: "article",
   },
@@ -140,7 +144,7 @@ export default function TwentyYardCapacity() {
                 The 20 yard is our most popular size for good reason. Here&apos;s exactly what fits, real project examples, and how to know if it&apos;s right for you.
               </p>
               <div className="flex flex-wrap gap-4 text-sm text-secondary-300">
-                <span>Last Updated: January 2026</span>
+                <LastUpdated date={LAST_UPDATED} className="text-secondary-300" showIcon={false} prefix="" />
                 <span>|</span>
                 <span>6 min read</span>
               </div>
@@ -429,6 +433,12 @@ export default function TwentyYardCapacity() {
           { name: "Blog", url: "https://www.dumpsterchamps.com/blog" },
           { name: "20 Yard Dumpster Capacity", url: "https://www.dumpsterchamps.com/blog/20-yard-dumpster-capacity" },
         ]}
+      />
+      <ArticleSchema
+        title="How Much Does a 20 Yard Dumpster Hold? Complete Capacity Guide"
+        description="Discover exactly what fits in a 20 yard dumpster: 6-8 pickup truck loads, 3 tons of debris. See real examples for renovations, roofing, cleanouts & more."
+        url="https://www.dumpsterchamps.com/blog/20-yard-dumpster-capacity"
+        dateModified={LAST_UPDATED}
       />
     </>
   );

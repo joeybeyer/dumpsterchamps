@@ -4,13 +4,17 @@ import Image from "next/image";
 import { ChevronRight, Check, X, Truck, Building2, Home, ArrowRight } from "lucide-react";
 import { FAQSchema, BreadcrumbSchema } from "@/components/seo/SchemaMarkup";
 import { AuthorBox } from "@/components/blog/AuthorBox";
+import { LastUpdated, ArticleSchema } from "@/components/seo/LastUpdated";
+
+// Content freshness date - update this when content is refreshed
+const LAST_UPDATED = new Date("2025-12-31");
 
 export const metadata: Metadata = {
-  title: "Roll-Off vs Front-Load Dumpsters: Which Do You Need? [2026 Guide]",
+  title: "Roll-Off vs Front-Load Dumpster Guide [2026]",
   description:
     "Roll-off or front-load dumpster? Learn the key differences, ideal uses, and which type is right for your project. Complete 2026 comparison guide.",
   openGraph: {
-    title: "Roll-Off vs Front-Load Dumpsters | Dumpster Champs",
+    title: "Roll-Off vs Front-Load Dumpster Guide [2026]",
     description: "Complete guide to choosing between roll-off and front-load dumpsters for your project.",
     type: "article",
   },
@@ -188,7 +192,7 @@ export default function RollOffVsFrontLoad() {
                 Two very different dumpster types for very different needs. Here&apos;s how to choose the right one for your project or business.
               </p>
               <div className="flex flex-wrap gap-4 text-sm text-secondary-300">
-                <span>Last Updated: January 2026</span>
+                <LastUpdated date={LAST_UPDATED} className="text-secondary-300" showIcon={false} prefix="" />
                 <span>|</span>
                 <span>8 min read</span>
               </div>
@@ -491,6 +495,12 @@ export default function RollOffVsFrontLoad() {
           { name: "Blog", url: "https://www.dumpsterchamps.com/blog" },
           { name: "Roll-Off vs Front-Load Dumpsters", url: "https://www.dumpsterchamps.com/blog/roll-off-vs-front-load-dumpster" },
         ]}
+      />
+      <ArticleSchema
+        title="Roll-Off vs Front-Load Dumpsters: Which Do You Need?"
+        description="Roll-off or front-load dumpster? Learn the key differences, ideal uses, and which type is right for your project."
+        url="https://www.dumpsterchamps.com/blog/roll-off-vs-front-load-dumpster"
+        dateModified={LAST_UPDATED}
       />
     </>
   );

@@ -6,6 +6,7 @@ import { ChevronRight, Phone, Check, Truck, Clock, Shield, Ruler, Package, Wrenc
 import { prisma } from "@/lib/prisma";
 import { QuoteForm } from "@/components/forms/QuoteForm";
 import { LocalBusinessSchema, BreadcrumbSchema, ServiceSchema, ProductSchema, FAQSchema, DumpsterProductSchema, HowToSchema } from "@/components/seo/SchemaMarkup";
+import { LastUpdated, WebPageSchema } from "@/components/seo/LastUpdated";
 import {
   SizeCard,
   LocalFAQAccordion,
@@ -223,8 +224,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       const stateSlug = slug.replace("dumpster-rental-", "");
       const state = await prisma.state.findUnique({ where: { slug: stateSlug } });
       return {
-        title: state?.metaTitle || `Dumpster Rental ${state?.name}`,
-        description: state?.metaDesc || state?.description,
+        title: state?.metaTitle || `Dumpster Rental ${state?.name} | Same-Day from $495 [2026]`,
+        description: state?.metaDesc || `Affordable dumpster rental in ${state?.name}. 10-40 yard roll-off containers from $495. Same-day delivery, flat-rate pricing, no hidden fees.`,
       };
     }
     case "city": {
@@ -246,10 +247,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       }
 
       return {
-        title: city?.metaTitle || `Dumpster Rental ${city?.name}, ${city?.state.abbr} | Same-Day Delivery`,
+        title: city?.metaTitle || `Dumpster Rental ${city?.name}, ${city?.state.abbr} | Fast from $495 [2026]`,
         description: city?.metaDesc || `Affordable dumpster rental in ${city?.name}, ${city?.state.abbr}. 10-40 yard containers starting at $495. Same-day delivery, flat-rate pricing, no hidden fees. Call (888) 860-0710.`,
         openGraph: {
-          title: `Dumpster Rental ${city?.name}, ${city?.state.abbr} | Dumpster Champs`,
+          title: `Dumpster Rental ${city?.name}, ${city?.state.abbr} | Fast from $495 [2026]`,
           description: `Fast, affordable dumpster rentals in ${city?.name}. 10-40 yard roll-off containers with same-day delivery. Flat-rate pricing from $495.`,
           url: `https://www.dumpsterchamps.com/dumpster-rental-${city?.slug}`,
           type: "website",
@@ -266,7 +267,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       const price = pricing?.price || 495;
 
       return {
-        title: `${sizeNum} Yard Dumpster Rental $${price} | Size Guide [2025]`,
+        title: `${sizeNum} Yard Dumpster Rental $${price} | Size Guide [2026]`,
         description: `Rent a ${sizeNum} yard dumpster for $${price}. Holds ${pricing?.capacity || "multiple pickup loads"}. Perfect for ${pricing?.idealFor?.[0]?.toLowerCase() || "home projects"}. Same-day delivery, 7-day rental included. No hidden fees.`,
         keywords: `${sizeNum} yard dumpster rental, ${sizeNum} yard dumpster near me, ${sizeNum} yard roll off, ${sizeNum} yard container rental`,
       };
@@ -350,6 +351,9 @@ async function StatePage({ stateSlug }: { stateSlug: string }) {
 
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
             <div>
+              {/* Last Updated - Visible timestamp for AI citation boost */}
+              <LastUpdated date={state.updatedAt} className="text-secondary-300 mb-3" />
+
               {/* Kicker */}
               <div className="flex items-center gap-2 mb-4">
                 <div className="flex -space-x-1">
@@ -647,6 +651,12 @@ async function StatePage({ stateSlug }: { stateSlug: string }) {
         ]}
       />
       <FAQSchema faqs={stateFaqs} />
+      <WebPageSchema
+        title={`Dumpster Rental ${state.name}`}
+        description={state.description || `Affordable dumpster rental services in ${state.name}.`}
+        url={`https://www.dumpsterchamps.com/dumpster-rental-${state.slug}`}
+        dateModified={state.updatedAt}
+      />
     </>
   );
 }
@@ -718,6 +728,9 @@ async function CityPage({ citySlug }: { citySlug: string }) {
 
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
             <div>
+              {/* Last Updated - Visible timestamp for AI citation boost */}
+              <LastUpdated date={city.updatedAt} className="text-secondary-300 mb-3" />
+
               {/* Kicker - Social Proof */}
               <div className="flex items-center gap-2 mb-4">
                 <div className="flex -space-x-1">
@@ -1034,6 +1047,12 @@ async function CityPage({ citySlug }: { citySlug: string }) {
           answer: f.answer.replace(/\[CITY\]/g, city.name).replace(/\[STATE\]/g, city.state.name),
         })) : []}
       />
+      <WebPageSchema
+        title={`Dumpster Rental ${city.name}, ${city.state.abbr}`}
+        description={city.description || `Affordable dumpster rental in ${city.name}, ${city.state.abbr}.`}
+        url={`https://www.dumpsterchamps.com/dumpster-rental-${city.slug}`}
+        dateModified={city.updatedAt}
+      />
     </>
   );
 }
@@ -1068,6 +1087,9 @@ async function SizePage({ sizeSlug }: { sizeSlug: string }) {
             <span className="text-white">{size.name}</span>
           </div>
 
+          {/* Last Updated - Visible timestamp for AI citation boost */}
+          <LastUpdated date={size.updatedAt} className="text-secondary-300 mb-4" />
+
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             <div>
               {/* Size Image */}
@@ -1082,7 +1104,7 @@ async function SizePage({ sizeSlug }: { sizeSlug: string }) {
                   />
                 </div>
               )}
-              <h1 className="text-4xl lg:text-5xl font-bold mb-4">{size.name} Near Me</h1>
+              <h1 className="text-4xl lg:text-5xl font-bold mb-4">{size.name} Rental from {size.priceRange?.split("-")[0] || "$495"}</h1>
               <p className="text-xl text-secondary-200 mb-6">
                 Looking for a {size.size} yard dumpster rental near you? {size.description} Same-day delivery available in most areas.
               </p>
@@ -1271,6 +1293,12 @@ async function SizePage({ sizeSlug }: { sizeSlug: string }) {
         ]}
         totalTime="PT5M"
       />
+      <WebPageSchema
+        title={size.name}
+        description={size.description || `${size.name} rental for residential and commercial projects.`}
+        url={`https://www.dumpsterchamps.com/${size.slug}`}
+        dateModified={size.updatedAt}
+      />
     </>
   );
 }
@@ -1318,6 +1346,9 @@ async function ServicePage({ serviceSlug }: { serviceSlug: string }) {
             <ChevronRight className="h-4 w-4" />
             <span className="text-white">{service.name}</span>
           </div>
+
+          {/* Last Updated - Visible timestamp for AI citation boost */}
+          <LastUpdated date={service.updatedAt} className="text-secondary-300 mb-4" />
 
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             <div>
@@ -1418,6 +1449,12 @@ async function ServicePage({ serviceSlug }: { serviceSlug: string }) {
           { name: "Services", url: "https://www.dumpsterchamps.com/services" },
           { name: service.name, url: `https://www.dumpsterchamps.com/${service.slug}` },
         ]}
+      />
+      <WebPageSchema
+        title={service.name}
+        description={service.description || `Professional ${service.name.toLowerCase()} services nationwide.`}
+        url={`https://www.dumpsterchamps.com/${service.slug}`}
+        dateModified={service.updatedAt}
       />
     </>
   );

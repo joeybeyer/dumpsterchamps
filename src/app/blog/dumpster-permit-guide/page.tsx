@@ -4,13 +4,17 @@ import Image from "next/image";
 import { ChevronRight, Check, X, AlertTriangle, FileText, MapPin, ArrowRight } from "lucide-react";
 import { FAQSchema, BreadcrumbSchema } from "@/components/seo/SchemaMarkup";
 import { AuthorBox } from "@/components/blog/AuthorBox";
+import { LastUpdated, ArticleSchema } from "@/components/seo/LastUpdated";
+
+// Content freshness date - update this when content is refreshed
+const LAST_UPDATED = new Date("2025-12-31");
 
 export const metadata: Metadata = {
-  title: "Do I Need a Permit for a Dumpster? Complete 2026 City-by-City Guide",
+  title: "Dumpster Permit Guide: City-by-City [2026]",
   description:
     "Find out if you need a dumpster permit in your city. Complete guide covering permit requirements, costs ($0-150), how to apply, and tips to avoid fines.",
   openGraph: {
-    title: "Dumpster Permit Guide 2026 | Dumpster Champs",
+    title: "Dumpster Permit Guide: City-by-City [2026]",
     description: "Complete guide to dumpster permit requirements by city and placement location.",
     type: "article",
   },
@@ -158,7 +162,7 @@ export default function DumpsterPermitGuide() {
                 The short answer: <strong>probably not if it&apos;s in your driveway, probably yes if it&apos;s on the street.</strong> Here&apos;s everything you need to know about dumpster permits in your city.
               </p>
               <div className="flex flex-wrap gap-4 text-sm text-secondary-300">
-                <span>Last Updated: January 2026</span>
+                <LastUpdated date={LAST_UPDATED} className="text-secondary-300" showIcon={false} prefix="" />
                 <span>|</span>
                 <span>10 min read</span>
               </div>
@@ -478,6 +482,12 @@ export default function DumpsterPermitGuide() {
           { name: "Blog", url: "https://www.dumpsterchamps.com/blog" },
           { name: "Dumpster Permit Guide", url: "https://www.dumpsterchamps.com/blog/dumpster-permit-guide" },
         ]}
+      />
+      <ArticleSchema
+        title="Do I Need a Permit for a Dumpster? Complete City-by-City Guide"
+        description="Find out if you need a dumpster permit in your city. Complete guide covering permit requirements, costs ($0-150), how to apply, and tips to avoid fines."
+        url="https://www.dumpsterchamps.com/blog/dumpster-permit-guide"
+        dateModified={LAST_UPDATED}
       />
     </>
   );

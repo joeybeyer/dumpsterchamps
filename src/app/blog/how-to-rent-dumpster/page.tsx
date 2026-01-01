@@ -4,6 +4,10 @@ import Image from "next/image";
 import { ChevronRight, Check, Phone, Calendar, Truck, Package, FileText, AlertTriangle, ArrowRight } from "lucide-react";
 import { FAQSchema, BreadcrumbSchema, HowToSchema } from "@/components/seo/SchemaMarkup";
 import { AuthorBox } from "@/components/blog/AuthorBox";
+import { LastUpdated, ArticleSchema } from "@/components/seo/LastUpdated";
+
+// Content freshness date - update this when content is refreshed
+const LAST_UPDATED = new Date("2025-12-31");
 
 export const metadata: Metadata = {
   title: "How to Rent a Dumpster: First-Timer's Complete Guide [2026]",
@@ -227,8 +231,8 @@ export default function HowToRentDumpster() {
               <p className="text-xl text-secondary-200 mb-6">
                 Never rented a dumpster before? No problem. This guide walks you through every step—from figuring out what size you need to scheduling pickup. By the end, you&apos;ll be a dumpster rental pro.
               </p>
-              <div className="flex flex-wrap gap-4 text-sm text-secondary-300">
-                <span>Last Updated: January 2026</span>
+              <div className="flex flex-wrap items-center gap-4 text-sm text-secondary-300">
+                <LastUpdated date={LAST_UPDATED} className="text-secondary-300" showIcon={false} prefix="" />
                 <span>|</span>
                 <span>8 min read</span>
               </div>
@@ -511,6 +515,13 @@ export default function HowToRentDumpster() {
           { name: "Schedule Pickup", text: "Call when full or at the end of your rental period. Ensure nothing sticks above the rim and clear access for the truck." },
         ]}
         totalTime="PT8M"
+      />
+      <ArticleSchema
+        title="How to Rent a Dumpster: First-Timer's Complete Guide"
+        description="First time renting a dumpster? This step-by-step guide covers everything: choosing the right size, booking, delivery prep, loading tips, and pickup scheduling."
+        url="https://www.dumpsterchamps.com/blog/how-to-rent-dumpster"
+        dateModified={LAST_UPDATED}
+        image="https://www.dumpsterchamps.com/images/blog/how-to-rent-dumpster-hero.jpg"
       />
     </>
   );

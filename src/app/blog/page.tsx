@@ -5,7 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { BLOG_TEMPLATES } from "@/data/blogTemplates";
 
 export const metadata: Metadata = {
-  title: "Dumpster Rental Blog & Guides | Expert Tips [2026] | Dumpster Champs",
+  title: "Dumpster Rental Blog & Expert Guides [2026]",
   description:
     "Expert dumpster rental guides, tips, and how-to articles for 2026. Learn about sizing, pricing, permits, loading tips, and more. Find guides for your city.",
 };

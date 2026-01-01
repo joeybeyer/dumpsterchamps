@@ -4,13 +4,17 @@ import Image from "next/image";
 import { ChevronRight, Check, AlertTriangle, DollarSign, Shield, X, ArrowRight } from "lucide-react";
 import { FAQSchema, BreadcrumbSchema } from "@/components/seo/SchemaMarkup";
 import { AuthorBox } from "@/components/blog/AuthorBox";
+import { LastUpdated, ArticleSchema } from "@/components/seo/LastUpdated";
+
+// Content freshness date - update this when content is refreshed
+const LAST_UPDATED = new Date("2025-12-31");
 
 export const metadata: Metadata = {
-  title: "How Much Does Dumpster Rental Cost? Complete 2026 Pricing Guide",
+  title: "Dumpster Rental Cost: Pricing Guide [2026]",
   description:
     "2026 dumpster rental pricing guide. Average costs by size ($495-$795), what's included, hidden fees to avoid, and how to get the best value. Flat-rate pricing explained.",
   openGraph: {
-    title: "Dumpster Rental Cost Guide 2026 | Dumpster Champs",
+    title: "Dumpster Rental Cost: Pricing Guide [2026]",
     description: "Complete breakdown of dumpster rental costs, what's included, and how to avoid hidden fees.",
     type: "article",
   },
@@ -165,8 +169,8 @@ export default function DumpsterCostGuide() {
               <p className="text-xl text-secondary-200 mb-6">
                 Understanding dumpster rental pricing doesn&apos;t have to be confusing. This guide breaks down exactly what you&apos;ll pay, what&apos;s included, and how to avoid surprise fees that can double your bill.
               </p>
-              <div className="flex flex-wrap gap-4 text-sm text-secondary-300">
-                <span>Last Updated: January 2026</span>
+              <div className="flex flex-wrap items-center gap-4 text-sm text-secondary-300">
+                <LastUpdated date={LAST_UPDATED} className="text-secondary-300" showIcon={false} prefix="" />
                 <span>|</span>
                 <span>12 min read</span>
               </div>
@@ -523,6 +527,13 @@ export default function DumpsterCostGuide() {
           { name: "Blog", url: "https://www.dumpsterchamps.com/blog" },
           { name: "Dumpster Rental Cost Guide", url: "https://www.dumpsterchamps.com/blog/dumpster-rental-cost-guide" },
         ]}
+      />
+      <ArticleSchema
+        title="How Much Does Dumpster Rental Cost? Complete Pricing Guide"
+        description="Complete dumpster rental pricing guide. Average costs by size ($495-$795), what's included, hidden fees to avoid, and how to get the best value."
+        url="https://www.dumpsterchamps.com/blog/dumpster-rental-cost-guide"
+        dateModified={LAST_UPDATED}
+        image="https://www.dumpsterchamps.com/images/blog/dumpster-pricing-guide-hero.jpg"
       />
     </>
   );
