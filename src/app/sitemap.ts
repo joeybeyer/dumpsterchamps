@@ -129,13 +129,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   // Neighborhood pages
-  const neighborhoods = await prisma.neighborhoodPage.findMany({
+  const neighborhoods = await prisma.neighborhood.findMany({
     select: { slug: true, updatedAt: true, city: { select: { slug: true } } },
   });
 
   const neighborhoodPages: MetadataRoute.Sitemap = neighborhoods.map((n) => ({
     url: `${baseUrl}/dumpster-rental-${n.city.slug}/${n.slug}`,
-    lastModified: n.updatedAt,
+    lastModified: n.createdAt,
     changeFrequency: "monthly",
     priority: 0.7,
   }));
