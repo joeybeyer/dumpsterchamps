@@ -137,6 +137,19 @@ export function NeighborhoodGrid({
             </div>
           </div>
         </div>
+
+        {/* Google Business Profile Embed */}
+        {gbpEmbed && (
+          <div className="mt-8">
+            <h3 className="text-xl font-bold text-secondary-900 mb-4 text-center">
+              Find Us on Google
+            </h3>
+            <div
+              className="w-full rounded-xl overflow-hidden shadow-lg [&>iframe]:w-full [&>iframe]:h-[400px] [&>iframe]:border-0"
+              dangerouslySetInnerHTML={{ __html: gbpEmbed }}
+            />
+          </div>
+        )}
       </div>
     </section>
   );

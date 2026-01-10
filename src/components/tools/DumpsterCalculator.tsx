@@ -5,7 +5,9 @@ import { useState, useMemo } from "react";
 const PROJECT_TYPES = [
   { id: "kitchen-remodel", name: "Kitchen Remodel", volumePerSqFt: 0.08, typicalSqFt: 150 },
   { id: "bathroom-remodel", name: "Bathroom Remodel", volumePerSqFt: 0.06, typicalSqFt: 75 },
-  { id: "roof-tearoff", name: "Roof Tear-Off", volumePerSqFt: 0.015, typicalSqFt: 2000 },
+  // Roof tear-off: 2000 sq ft single-layer = ~3 tons shingles = ~8-10 cubic yards
+  // Industry standard: 20-yard for up to 3000 sq ft, 30-yard for larger/multi-layer
+  { id: "roof-tearoff", name: "Roof Tear-Off", volumePerSqFt: 0.005, typicalSqFt: 2000 },
   { id: "garage-cleanout", name: "Garage Cleanout", volumePerSqFt: 0.04, typicalSqFt: 400 },
   { id: "basement-cleanout", name: "Basement Cleanout", volumePerSqFt: 0.03, typicalSqFt: 800 },
   { id: "whole-house-cleanout", name: "Whole House Cleanout", volumePerSqFt: 0.02, typicalSqFt: 2000 },
@@ -93,14 +95,15 @@ export function DumpsterCalculator() {
     const isOverweight = estimatedWeight > recommendedSize.weightLimit;
     const isNearLimit = estimatedWeight > weightWarningThreshold;
 
+    // Find the smallest dumpster that fits both volume AND weight
     let finalRecommendation = recommendedSize;
-    if (isOverweight) {
-      const currentIndex = DUMPSTER_SIZES.findIndex(
-        (s) => s.size === recommendedSize.size
-      );
-      if (currentIndex < DUMPSTER_SIZES.length - 1) {
-        finalRecommendation = DUMPSTER_SIZES[currentIndex + 1];
+    for (const size of DUMPSTER_SIZES) {
+      if (size.size >= volumeWithBuffer && size.weightLimit >= estimatedWeight) {
+        finalRecommendation = size;
+        break;
       }
+      // If we've checked all sizes, use the largest
+      finalRecommendation = size;
     }
 
     return {

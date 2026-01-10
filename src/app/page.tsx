@@ -82,20 +82,7 @@ export default async function HomePage() {
       <section className="bg-gradient-to-br from-secondary-900 to-secondary-800 text-white py-12 lg:py-20">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Left Column - Hero Image (Person looking right toward form) */}
-            <div className="hidden lg:block relative">
-              <div className="relative aspect-[4/5] max-w-md mx-auto">
-                <Image
-                  src="/images/hero/hero-homeowner-desktop.jpg"
-                  alt="Satisfied homeowner with dumpster rental"
-                  fill
-                  className="object-cover rounded-2xl"
-                  priority
-                />
-              </div>
-            </div>
-
-            {/* Right Column - Content & Form */}
+            {/* Left Column - Content & Form (natural left-to-right reading flow) */}
             <div>
               {/* Kicker - Social Proof */}
               <div className="flex items-center gap-2 mb-4">
@@ -138,29 +125,52 @@ export default async function HomePage() {
                 </div>
               </div>
 
-              {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3 mb-8">
+              {/* CTA Button */}
+              <div className="flex flex-col items-start mb-8">
                 <a
                   href={`tel:${phone.replace(/\D/g, "")}`}
-                  className="bg-primary-600 text-white px-8 py-4 rounded-lg font-semibold text-center hover:bg-primary-700 transition-colors flex items-center justify-center gap-2"
+                  className="bg-primary-600 text-white px-8 lg:px-10 py-4 lg:py-5 rounded-lg font-semibold text-center hover:bg-primary-700 transition-colors flex items-center justify-center gap-2 text-lg lg:text-xl"
                 >
-                  <Phone className="h-5 w-5" />
+                  <Phone className="h-5 w-5 lg:h-6 lg:w-6" />
                   Call Now: {phone}
                 </a>
-                <Link
-                  href="#quote-form"
-                  className="border-2 border-white px-8 py-4 rounded-lg font-semibold text-center hover:bg-white hover:text-secondary-900 transition-colors"
-                >
-                  Get Online Quote
-                </Link>
+                <span className="text-primary-300 text-xs mt-1.5 flex items-center gap-1">
+                  <Phone className="h-3 w-3" />
+                  Speak to a real person
+                </span>
               </div>
 
               {/* Quote Form */}
               <div id="quote-form" className="bg-white rounded-xl p-6 shadow-2xl">
                 <h2 className="text-xl font-bold text-secondary-900 mb-4">
-                  Get Your Free Quote in 60 Seconds
+                  Get Your Dumpster Price in 60 Seconds
                 </h2>
                 <QuoteForm />
+              </div>
+
+              {/* Mobile Hero Image - shown below form on small screens */}
+              <div className="lg:hidden relative mt-8">
+                <div className="relative aspect-[4/3] max-w-sm mx-auto">
+                  <Image
+                    src="/images/hero/hero-homeowner-mobile.jpg"
+                    alt="Roll-off dumpster being delivered to residential driveway"
+                    fill
+                    className="object-cover rounded-2xl"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column - Hero Image (Dumpster delivery in action) */}
+            <div className="hidden lg:block relative">
+              <div className="relative aspect-[4/5] max-w-md mx-auto">
+                <Image
+                  src="/images/hero/hero-homeowner-desktop.jpg"
+                  alt="Roll-off dumpster truck delivering dumpster to home"
+                  fill
+                  className="object-cover rounded-2xl"
+                  priority
+                />
               </div>
             </div>
           </div>
@@ -206,8 +216,15 @@ export default async function HomePage() {
               <Link
                 key={dumpster.size}
                 href={`/${dumpster.size}-yard-dumpster`}
-                className="bg-white rounded-xl p-6 shadow-sm hover:shadow-lg transition-shadow group"
+                className={`bg-white rounded-xl p-6 shadow-sm hover:shadow-lg transition-shadow group relative ${
+                  dumpster.size === 20 ? "ring-2 ring-primary-500 shadow-md" : ""
+                }`}
               >
+                {dumpster.size === 20 && (
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary-600 text-white text-xs font-bold px-3 py-1 rounded-full">
+                    Most Popular
+                  </div>
+                )}
                 <div className="text-center">
                   <div className="bg-primary-600 text-white text-3xl font-bold w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
                     {dumpster.size}

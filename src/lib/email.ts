@@ -40,6 +40,7 @@ export async function sendLeadNotification(lead: LeadEmailData) {
     const { data, error } = await client.emails.send({
       from: `Dumpster Champs <${fromEmail}>`,
       to: [adminEmail],
+      bcc: ['Garrett@primedumpster.com', 'leads@primedumpster.com'],
       subject: `New Lead: ${lead.name} - ${lead.city || "Unknown City"}`,
       html: `
         <h2>New Lead Received</h2>

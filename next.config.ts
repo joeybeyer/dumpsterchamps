@@ -3,6 +3,41 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   output: "standalone",
 
+  // Enable Turbopack for faster development (optional)
+  // turbopack: {},
+
+  // Image optimization
+  images: {
+    formats: ["image/avif", "image/webp"],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    minimumCacheTTL: 31536000, // 1 year cache for optimized images
+  },
+
+  // Enable gzip/brotli compression headers
+  compress: true,
+
+  // Power by header (reduces response size slightly)
+  poweredByHeader: false,
+
+  // Headers for caching static assets
+  async headers() {
+    return [
+      {
+        source: "/images/:path*",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
+        ],
+      },
+      {
+        source: "/_next/static/:path*",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
+        ],
+      },
+    ];
+  },
+
   async redirects() {
     return [
       // ============ OLD MILWAUKEE NEIGHBORHOOD URLS ============
@@ -27,61 +62,61 @@ const nextConfig: NextConfig = {
       { source: "/riverside-arts-market", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
       { source: "/riverside-neighborhood-jacksonville", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
 
-      // ============ FLORIDA CITIES MISSING -FL SUFFIX ============
-      { source: "/dumpster-rental-boynton-beach", destination: "/dumpster-rental-boynton-beach-fl", permanent: true },
-      { source: "/dumpster-rental-clearwater", destination: "/dumpster-rental-clearwater-fl", permanent: true },
-      { source: "/dumpster-rental-coconut-creek", destination: "/dumpster-rental-coconut-creek-fl", permanent: true },
-      { source: "/dumpster-rental-coral-gables", destination: "/dumpster-rental-coral-gables-fl", permanent: true },
-      { source: "/dumpster-rental-daytona-beach", destination: "/dumpster-rental-daytona-beach-fl", permanent: true },
-      { source: "/dumpster-rental-delray-beach", destination: "/dumpster-rental-delray-beach-fl", permanent: true },
-      { source: "/dumpster-rental-hialeah", destination: "/dumpster-rental-hialeah-fl", permanent: true },
-      { source: "/dumpster-rental-hollywood", destination: "/dumpster-rental-hollywood-fl", permanent: true },
-      { source: "/dumpster-rental-jupiter", destination: "/dumpster-rental-jupiter-fl", permanent: true },
-      { source: "/dumpster-rental-lakeland", destination: "/dumpster-rental-lakeland-fl", permanent: true },
-      { source: "/dumpster-rental-lauderdale-lakes", destination: "/dumpster-rental-lauderdale-lakes-fl", permanent: true },
-      { source: "/dumpster-rental-melbourne", destination: "/dumpster-rental-melbourne-fl", permanent: true },
-      { source: "/dumpster-rental-ocoee", destination: "/dumpster-rental-ocoee-fl", permanent: true },
-      { source: "/dumpster-rental-ormond-beach", destination: "/dumpster-rental-ormond-beach-fl", permanent: true },
-      { source: "/dumpster-rental-palm-bay", destination: "/dumpster-rental-palm-bay-fl", permanent: true },
-      { source: "/dumpster-rental-palm-beach-gardens", destination: "/dumpster-rental-palm-beach-gardens-fl", permanent: true },
-      { source: "/dumpster-rental-palm-coast", destination: "/dumpster-rental-palm-coast-fl", permanent: true },
-      { source: "/dumpster-rental-pembroke-pines", destination: "/dumpster-rental-pembroke-pines-fl", permanent: true },
-      { source: "/dumpster-rental-plantation", destination: "/dumpster-rental-plantation-fl", permanent: true },
-      { source: "/dumpster-rental-pompano-beach", destination: "/dumpster-rental-pompano-beach-fl", permanent: true },
-      { source: "/dumpster-rental-port-orange", destination: "/dumpster-rental-port-orange-fl", permanent: true },
-      { source: "/dumpster-rental-port-st-lucie", destination: "/dumpster-rental-port-st-lucie-fl", permanent: true },
-      { source: "/dumpster-rental-riviera-beach", destination: "/dumpster-rental-riviera-beach-fl", permanent: true },
-      { source: "/dumpster-rental-royal-palm-beach", destination: "/dumpster-rental-royal-palm-beach-fl", permanent: true },
-      { source: "/dumpster-rental-st-petersburg", destination: "/dumpster-rental-st-petersburg-fl", permanent: true },
-      { source: "/dumpster-rental-wellington", destination: "/dumpster-rental-wellington-fl", permanent: true },
-      { source: "/dumpster-rental-west-palm-beach", destination: "/dumpster-rental-west-palm-beach-fl", permanent: true },
-      { source: "/dumpster-rental-weston", destination: "/dumpster-rental-weston-fl", permanent: true },
-      { source: "/dumpster-rental-winter-haven", destination: "/dumpster-rental-winter-haven-fl", permanent: true },
-      { source: "/dumpster-rental-winter-springs", destination: "/dumpster-rental-winter-springs-fl", permanent: true },
+      // ============ FLORIDA CITIES WITH -FL SUFFIX → ACTUAL PAGES (without suffix) ============
+      { source: "/dumpster-rental-boynton-beach-fl", destination: "/dumpster-rental-boynton-beach", permanent: true },
+      { source: "/dumpster-rental-clearwater-fl", destination: "/dumpster-rental-clearwater", permanent: true },
+      { source: "/dumpster-rental-coconut-creek-fl", destination: "/dumpster-rental-coconut-creek", permanent: true },
+      { source: "/dumpster-rental-coral-gables-fl", destination: "/dumpster-rental-coral-gables", permanent: true },
+      { source: "/dumpster-rental-daytona-beach-fl", destination: "/dumpster-rental-daytona-beach", permanent: true },
+      { source: "/dumpster-rental-delray-beach-fl", destination: "/dumpster-rental-delray-beach", permanent: true },
+      { source: "/dumpster-rental-hialeah-fl", destination: "/dumpster-rental-hialeah", permanent: true },
+      { source: "/dumpster-rental-hollywood-fl", destination: "/dumpster-rental-hollywood", permanent: true },
+      { source: "/dumpster-rental-jupiter-fl", destination: "/dumpster-rental-jupiter", permanent: true },
+      { source: "/dumpster-rental-lakeland-fl", destination: "/dumpster-rental-lakeland", permanent: true },
+      { source: "/dumpster-rental-lauderdale-lakes-fl", destination: "/dumpster-rental-lauderdale-lakes", permanent: true },
+      { source: "/dumpster-rental-melbourne-fl", destination: "/dumpster-rental-melbourne", permanent: true },
+      { source: "/dumpster-rental-ocoee-fl", destination: "/dumpster-rental-ocoee", permanent: true },
+      { source: "/dumpster-rental-ormond-beach-fl", destination: "/dumpster-rental-ormond-beach", permanent: true },
+      { source: "/dumpster-rental-palm-bay-fl", destination: "/dumpster-rental-palm-bay", permanent: true },
+      { source: "/dumpster-rental-palm-beach-gardens-fl", destination: "/dumpster-rental-palm-beach-gardens", permanent: true },
+      { source: "/dumpster-rental-palm-coast-fl", destination: "/dumpster-rental-palm-coast", permanent: true },
+      { source: "/dumpster-rental-pembroke-pines-fl", destination: "/dumpster-rental-pembroke-pines", permanent: true },
+      { source: "/dumpster-rental-plantation-fl", destination: "/dumpster-rental-plantation", permanent: true },
+      { source: "/dumpster-rental-pompano-beach-fl", destination: "/dumpster-rental-pompano-beach", permanent: true },
+      { source: "/dumpster-rental-port-orange-fl", destination: "/dumpster-rental-port-orange", permanent: true },
+      { source: "/dumpster-rental-port-st-lucie-fl", destination: "/dumpster-rental-port-st-lucie", permanent: true },
+      { source: "/dumpster-rental-riviera-beach-fl", destination: "/dumpster-rental-riviera-beach", permanent: true },
+      { source: "/dumpster-rental-royal-palm-beach-fl", destination: "/dumpster-rental-royal-palm-beach", permanent: true },
+      { source: "/dumpster-rental-st-petersburg-fl", destination: "/dumpster-rental-st-petersburg", permanent: true },
+      { source: "/dumpster-rental-wellington-fl", destination: "/dumpster-rental-wellington", permanent: true },
+      { source: "/dumpster-rental-west-palm-beach-fl", destination: "/dumpster-rental-west-palm-beach", permanent: true },
+      { source: "/dumpster-rental-weston-fl", destination: "/dumpster-rental-weston", permanent: true },
+      { source: "/dumpster-rental-winter-haven-fl", destination: "/dumpster-rental-winter-haven", permanent: true },
+      { source: "/dumpster-rental-winter-springs-fl", destination: "/dumpster-rental-winter-springs", permanent: true },
 
       // ============ NEW JERSEY CITIES ============
-      { source: "/dumpster-rental-jersey-city", destination: "/dumpster-rental-jersey-city-nj", permanent: true },
+      { source: "/dumpster-rental-jersey-city-nj", destination: "/dumpster-rental-jersey-city", permanent: true },
 
       // ============ CORRUPTED/MALFORMED SLUGS ============
       { source: "/dumpster-rental-jackson-al81662586", destination: "/dumpster-rental-jackson-al", permanent: true },
 
-      // ============ MORE FLORIDA CITIES MISSING -FL ============
-      { source: "/dumpster-rental-miami-gardens", destination: "/dumpster-rental-miami-gardens-fl", permanent: true },
-      { source: "/dumpster-rental-altamonte-springs", destination: "/dumpster-rental-altamonte-springs-fl", permanent: true },
-      { source: "/dumpster-rental-north-miami", destination: "/dumpster-rental-north-miami-fl", permanent: true },
-      { source: "/dumpster-rental-north-lauderdale", destination: "/dumpster-rental-north-lauderdale-fl", permanent: true },
-      { source: "/dumpster-rental-pinellas-park", destination: "/dumpster-rental-pinellas-park-fl", permanent: true },
-      { source: "/dumpster-rental-pensacola", destination: "/dumpster-rental-pensacola-fl", permanent: true },
-      { source: "/dumpster-rental-ocala", destination: "/dumpster-rental-ocala-fl", permanent: true },
-      { source: "/dumpster-rental-tamarac", destination: "/dumpster-rental-tamarac-fl", permanent: true },
-      { source: "/dumpster-rental-margate", destination: "/dumpster-rental-margate-fl", permanent: true },
-      { source: "/dumpster-rental-hallandale-beach", destination: "/dumpster-rental-hallandale-beach-fl", permanent: true },
-      { source: "/dumpster-rental-davie", destination: "/dumpster-rental-davie-fl", permanent: true },
-      { source: "/dumpster-rental-coral-springs", destination: "/dumpster-rental-coral-springs-fl", permanent: true },
-      { source: "/dumpster-rental-apopka", destination: "/dumpster-rental-apopka-fl", permanent: true },
-      { source: "/dumpster-rental-north-miami-beach", destination: "/dumpster-rental-north-miami-beach-fl", permanent: true },
-      { source: "/dumpster-rental-sanford", destination: "/dumpster-rental-sanford-fl", permanent: true },
-      { source: "/dumpster-rental-bradenton", destination: "/dumpster-rental-bradenton-fl", permanent: true },
+      // ============ MORE FLORIDA CITIES WITH -FL SUFFIX ============
+      { source: "/dumpster-rental-miami-gardens-fl", destination: "/dumpster-rental-miami-gardens", permanent: true },
+      { source: "/dumpster-rental-altamonte-springs-fl", destination: "/dumpster-rental-altamonte-springs", permanent: true },
+      { source: "/dumpster-rental-north-miami-fl", destination: "/dumpster-rental-north-miami", permanent: true },
+      { source: "/dumpster-rental-north-lauderdale-fl", destination: "/dumpster-rental-north-lauderdale", permanent: true },
+      { source: "/dumpster-rental-pinellas-park-fl", destination: "/dumpster-rental-pinellas-park", permanent: true },
+      { source: "/dumpster-rental-pensacola-fl", destination: "/dumpster-rental-pensacola", permanent: true },
+      { source: "/dumpster-rental-ocala-fl", destination: "/dumpster-rental-ocala", permanent: true },
+      { source: "/dumpster-rental-tamarac-fl", destination: "/dumpster-rental-tamarac", permanent: true },
+      { source: "/dumpster-rental-margate-fl", destination: "/dumpster-rental-margate", permanent: true },
+      { source: "/dumpster-rental-hallandale-beach-fl", destination: "/dumpster-rental-hallandale-beach", permanent: true },
+      { source: "/dumpster-rental-davie-fl", destination: "/dumpster-rental-davie", permanent: true },
+      { source: "/dumpster-rental-coral-springs-fl", destination: "/dumpster-rental-coral-springs", permanent: true },
+      { source: "/dumpster-rental-apopka-fl", destination: "/dumpster-rental-apopka", permanent: true },
+      { source: "/dumpster-rental-north-miami-beach-fl", destination: "/dumpster-rental-north-miami-beach", permanent: true },
+      { source: "/dumpster-rental-sanford-fl", destination: "/dumpster-rental-sanford", permanent: true },
+      { source: "/dumpster-rental-bradenton-fl", destination: "/dumpster-rental-bradenton", permanent: true },
 
       // ============ MORE MILWAUKEE TOURISM/LANDMARKS ============
       { source: "/milwaukee-county-war-memorial-center", destination: "/dumpster-rental-milwaukee-wi", permanent: true },
@@ -103,6 +138,20 @@ const nextConfig: NextConfig = {
 
       // ============ CASE SENSITIVITY FIXES ============
       { source: "/dumpster-rental-Victorville-CA", destination: "/dumpster-rental-victorville-ca", permanent: true },
+      { source: "/Construction-dumpsters", destination: "/construction-dumpster-rental", permanent: true },
+      { source: "/construction-dumpsters", destination: "/construction-dumpster-rental", permanent: true },
+
+      // ============ NEIGHBORHOOD PAGES → PARENT CITY REDIRECTS ============
+      // Catch-all for old neighborhood URLs like /dumpster-rental-city-st/neighborhood
+      // Note: This only matches paths starting with /dumpster-rental- so service pages are safe
+      { source: "/dumpster-rental-:city/:neighborhood", destination: "/dumpster-rental-:city", permanent: true },
+
+      // ============ MISC 404 FIXES ============
+      { source: "/Brewers-Hill-Milwaukee-Wi", destination: "/dumpster-rental-milwaukee-wi", permanent: true },
+      { source: "/dumpster-rental-augusta", destination: "/dumpster-rental-augusta-ga", permanent: true },
+      { source: "/dumpster-rental-utah", destination: "/dumpster-rental-utah", permanent: false }, // State page exists
+      { source: "/cdn-cgi/:path*", destination: "/", permanent: false }, // Cloudflare paths
+      { source: "/_next/static/css/:path*", destination: "/", permanent: false }, // Old CSS paths
     ];
   },
 };

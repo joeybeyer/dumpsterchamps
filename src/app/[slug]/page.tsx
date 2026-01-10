@@ -392,22 +392,14 @@ async function StatePage({ stateSlug }: { stateSlug: string }) {
                 </div>
               </div>
 
-              {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3">
-                <a
-                  href={`tel:${phone.replace(/\D/g, "")}`}
-                  className="bg-primary-600 text-white px-8 py-4 rounded-lg font-semibold text-center hover:bg-primary-700 transition-colors flex items-center justify-center gap-2"
-                >
-                  <Phone className="h-5 w-5" />
-                  Call Now: {phone}
-                </a>
-                <Link
-                  href="#quote-form"
-                  className="border-2 border-white px-8 py-4 rounded-lg font-semibold text-center hover:bg-white hover:text-secondary-900 transition-colors"
-                >
-                  Get Online Quote
-                </Link>
-              </div>
+              {/* CTA Button */}
+              <a
+                href={`tel:${phone.replace(/\D/g, "")}`}
+                className="bg-primary-600 text-white px-8 py-4 rounded-lg font-semibold text-center hover:bg-primary-700 transition-colors flex items-center justify-center gap-2 w-fit"
+              >
+                <Phone className="h-5 w-5" />
+                Call Now: {phone}
+              </a>
             </div>
 
             {/* Quote Form */}
@@ -772,21 +764,13 @@ async function CityPage({ citySlug }: { citySlug: string }) {
               </div>
 
               {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3">
-                <a
-                  href={`tel:${phone.replace(/\D/g, "")}`}
-                  className="bg-primary-600 text-white px-8 py-4 rounded-lg font-semibold text-center hover:bg-primary-700 transition-colors flex items-center justify-center gap-2"
-                >
-                  <Phone className="h-5 w-5" />
-                  Call Now: {phone}
-                </a>
-                <Link
-                  href="#quote-form"
-                  className="border-2 border-white px-8 py-4 rounded-lg font-semibold text-center hover:bg-white hover:text-secondary-900 transition-colors"
-                >
-                  Get Online Quote
-                </Link>
-              </div>
+              <a
+                href={`tel:${phone.replace(/\D/g, "")}`}
+                className="bg-primary-600 text-white px-8 py-4 rounded-lg font-semibold text-center hover:bg-primary-700 transition-colors flex items-center justify-center gap-2 w-fit"
+              >
+                <Phone className="h-5 w-5" />
+                Call Now: {phone}
+              </a>
             </div>
 
             {/* Quote Form */}
@@ -1350,11 +1334,44 @@ async function ServicePage({ serviceSlug }: { serviceSlug: string }) {
           {/* Last Updated - Visible timestamp for AI citation boost */}
           <LastUpdated date={service.updatedAt} className="text-secondary-300 mb-4" />
 
-          <div className="grid lg:grid-cols-2 gap-12 items-start">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left Column - Content (natural reading flow) */}
             <div>
-              {/* Service Hero Image */}
+              <span className="inline-block bg-primary-600/20 text-primary-400 px-3 py-1 rounded-full text-sm font-medium mb-4">
+                {service.name}
+              </span>
+              <h1 className="text-4xl lg:text-5xl font-bold mb-4">{service.name}</h1>
+              <p className="text-xl text-secondary-200 mb-6">
+                {service.description} Prices start at <strong className="text-white">$495</strong> with everything included.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <a href={`tel:${phone.replace(/\D/g, "")}`} className="inline-flex items-center justify-center gap-2 bg-primary-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors">
+                  <Phone className="h-5 w-5" />Order Now: {phone}
+                </a>
+                <Link href="#prices" className="inline-flex items-center justify-center gap-2 border-2 border-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-secondary-900 transition-colors">
+                  View All Prices
+                </Link>
+              </div>
+
+              {/* Mobile Hero Image - shown below CTAs on small screens */}
               {content?.image && (
-                <div className="relative w-full h-64 mb-6 rounded-xl overflow-hidden">
+                <div className="lg:hidden relative mt-8">
+                  <div className="relative aspect-[4/3] max-w-sm mx-auto rounded-xl overflow-hidden">
+                    <Image
+                      src={content.image}
+                      alt={service.name}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Right Column - Hero Image (Desktop only) */}
+            <div className="hidden lg:block relative">
+              {content?.image && (
+                <div className="relative aspect-[4/3] w-full rounded-xl overflow-hidden">
                   <Image
                     src={content.image}
                     alt={service.name}
@@ -1364,14 +1381,18 @@ async function ServicePage({ serviceSlug }: { serviceSlug: string }) {
                   />
                 </div>
               )}
-              <h1 className="text-4xl lg:text-5xl font-bold mb-4">{service.name}</h1>
-              <p className="text-xl text-secondary-200 mb-6">{service.description}</p>
-              <a href={`tel:${phone.replace(/\D/g, "")}`} className="inline-flex items-center gap-2 bg-white text-secondary-900 px-6 py-3 rounded-lg font-semibold hover:bg-primary-50 transition-colors">
-                <Phone className="h-5 w-5" />Call {phone}
-              </a>
             </div>
-            <div className="bg-white rounded-xl p-6 shadow-2xl">
-              <h2 className="text-2xl font-bold text-secondary-900 mb-4">Get a Free Quote</h2>
+          </div>
+        </div>
+      </section>
+
+      {/* Quote Form Section */}
+      <section className="py-12 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-2xl mx-auto">
+            <div className="bg-secondary-50 rounded-xl p-8 shadow-lg">
+              <h2 className="text-2xl font-bold text-secondary-900 mb-2 text-center">Get Your Free Quote</h2>
+              <p className="text-secondary-600 mb-6 text-center">No hidden fees. Instant pricing.</p>
               <QuoteForm />
             </div>
           </div>
@@ -1409,9 +1430,10 @@ async function ServicePage({ serviceSlug }: { serviceSlug: string }) {
         </section>
       )}
 
-      <section className="py-16 bg-secondary-50">
+      <section id="prices" className="py-16 bg-secondary-50">
         <div className="container mx-auto px-4">
-          <h2 className="text-2xl font-bold text-secondary-900 mb-8 text-center">Available Dumpster Sizes</h2>
+          <h2 className="text-2xl font-bold text-secondary-900 mb-2 text-center">Roll Off Dumpster Sizes & Prices</h2>
+          <p className="text-secondary-600 mb-8 text-center">All prices include delivery, pickup, 7-day rental, weight allowance, and disposal.</p>
           <div className="grid md:grid-cols-3 lg:grid-cols-5 gap-6">
             {sizes.map((s) => (
               <Link key={s.id} href={`/${s.slug}`} className="bg-white rounded-xl p-6 text-center shadow-sm hover:shadow-lg transition-shadow">

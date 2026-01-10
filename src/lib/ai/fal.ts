@@ -16,7 +16,7 @@ interface FalResponse {
   has_nsfw_concepts: boolean[];
 }
 
-type ImageModel = 'flux-pro' | 'flux-dev' | 'sdxl';
+type ImageModel = 'flux-pro' | 'flux-dev' | 'sdxl' | 'nano-banana-pro';
 
 interface GenerateImageOptions {
   model?: ImageModel;
@@ -29,6 +29,7 @@ const MODEL_ENDPOINTS: Record<ImageModel, string> = {
   'flux-pro': 'fal-ai/flux-pro',
   'flux-dev': 'fal-ai/flux/dev',
   'sdxl': 'fal-ai/stable-diffusion-xl',
+  'nano-banana-pro': 'fal-ai/nano-banana-pro',
 };
 
 /**

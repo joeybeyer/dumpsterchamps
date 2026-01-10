@@ -44,13 +44,13 @@ export function Header() {
     <header className="bg-white shadow-sm sticky top-0 z-50">
       {/* Top bar */}
       <div className="bg-primary-600 text-white py-2">
-        <div className="container mx-auto px-4 flex justify-between items-center text-sm">
-          <span>Affordable Dumpster Rentals Nationwide</span>
+        <div className="container mx-auto px-4 flex justify-between items-center">
+          <span className="hidden sm:inline text-sm">Affordable Dumpster Rentals Nationwide</span>
           <a
             href={`tel:${phone.replace(/\D/g, "")}`}
-            className="flex items-center gap-2 hover:text-primary-100 transition-colors font-semibold"
+            className="flex items-center gap-2 hover:text-primary-100 transition-colors font-bold text-base lg:text-lg whitespace-nowrap"
           >
-            <Phone className="h-4 w-4" />
+            <Phone className="h-5 w-5" />
             {phone}
           </a>
         </div>

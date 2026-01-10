@@ -22,7 +22,7 @@ const GBP_CITIES: Record<string, GBPData> = {
     phone: '(209) 797-6720',
     embed: '<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d298149.20511750283!2d-121.3433894!3d38.0021317!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x223f16ea63558aff%3A0x41576859be8bb68c!2sDumpster%20Rental%20Champs!5e1!3m2!1sen!2sus!4v1767021451266!5m2!1sen!2sus" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>',
   },
-  'pompano-beach-fl': {
+  'pompano-beach': {
     phone: '(754) 305-0680',
     embed: '<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d679331.0214232776!2d-80.3154259!3d26.1409927!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xa1c47bf570e18e2f%3A0xde674290053097d5!2sDumpster%20Rental%20Champs!5e1!3m2!1sen!2sus!4v1767018767505!5m2!1sen!2sus" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>',
   },
@@ -137,6 +137,10 @@ const GBP_CITIES: Record<string, GBPData> = {
   'west-sacramento-ca': {
     phone: '(916) 222-9561',
     embed: '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4624.191831316722!2d-121.55762790000001!3d38.540222799999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x809ad3fb08414e51%3A0x9df3a7c90c04556!2sDumpster%20Rental%20Champs!5e1!3m2!1sen!2sus!4v1767015112228!5m2!1sen!2sus" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>',
+  },
+  'houston-tx': {
+    phone: '(832) 333-8297',
+    embed: '<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d884691.4077520192!2d-95.4516052!3d29.9844356!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640c70da55b0b87%3A0xf5b30461b36bf04!2sDumpster%20Rental%20Champs!5e0!3m2!1sen!2sus!4v1767966145590!5m2!1sen!2sus" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>',
   },
 };
 
