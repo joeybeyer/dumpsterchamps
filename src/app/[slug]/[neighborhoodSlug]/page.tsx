@@ -13,7 +13,8 @@ import { prisma } from '@/lib/prisma';
 import { QuoteForm } from '@/components/forms/QuoteForm';
 import { LocalBusinessSchema } from '@/components/seo/SchemaMarkup';
 import { Phone, MapPin, ArrowLeft, ChevronRight, Truck, Shield, Clock } from 'lucide-react';
-import neighborhoodRoutes from '@/lib/neighborhood-routes.json';
+import { readFileSync } from 'fs';
+import { join } from 'path';
 
 interface PageProps {
   params: Promise<{
@@ -61,7 +62,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export async function generateStaticParams() {
   // Use static JSON file instead of Prisma query at build time
-  return neighborhoodRoutes;
+  const filePath = join(process.cwd(), "src/lib/neighborhood-routes.json");
+  const fileContent = readFileSync(filePath, "utf8");
+  const routes = JSON.parse(fileContent);
+  return routes;
 }
 
 export default async function NeighborhoodPage({ params }: PageProps) {
