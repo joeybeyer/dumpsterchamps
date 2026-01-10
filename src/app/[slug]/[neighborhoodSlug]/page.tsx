@@ -13,6 +13,7 @@ import { prisma } from '@/lib/prisma';
 import { QuoteForm } from '@/components/forms/QuoteForm';
 import { LocalBusinessSchema } from '@/components/seo/SchemaMarkup';
 import { Phone, MapPin, ArrowLeft, ChevronRight, Truck, Shield, Clock } from 'lucide-react';
+import neighborhoodRoutes from '@/lib/neighborhood-routes.json';
 
 interface PageProps {
   params: Promise<{
@@ -37,21 +38,21 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     where: { slug: slug.replace('dumpster-rental-', '') },
     include: {
       state: true,
-      neighborhoodPages: {
+      neighborhoods: {
         where: { slug: neighborhoodSlug },
       },
     },
   });
 
-  if (!city || city.neighborhoodPages.length === 0) {
+  if (!city || city.neighborhoods.length === 0) {
     return {};
   }
 
-  const neighborhood = city.neighborhoodPages[0];
+  const neighborhood = city.neighborhoods[0];
 
   return {
-    title: neighborhood.metaTitle || `Dumpster Rental in ${neighborhood.name}, ${city.name} | Dumpster Champs`,
-    description: neighborhood.metaDesc || `Fast, affordable dumpster rental in ${neighborhood.name}, ${city.name}, ${city.state.abbr}. Same-day delivery available. 10-40 yard roll-off dumpsters. Call now!`,
+    title: `Dumpster Rental in ${neighborhood.name}, ${city.name} | Dumpster Champs`,
+    description: `Fast, affordable dumpster rental in ${neighborhood.name}, ${city.name}, ${city.state.abbr}. Same-day delivery available. 10-40 yard roll-off dumpsters. Call now!`,
     alternates: {
       canonical: `https://www.dumpsterchamps.com/${slug}/${neighborhoodSlug}`,
     },
@@ -59,21 +60,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export async function generateStaticParams() {
-  // Get all neighborhood pages with their city slugs
-  const neighborhoodPages = await prisma.neighborhoodPage.findMany({
-    select: {
-      slug: true,
-      city: {
-        select: { slug: true },
-      },
-    },
-    take: 500, // Limit for build performance
-  });
-
-  return neighborhoodPages.map((page) => ({
-    slug: `dumpster-rental-${page.city.slug}`,
-    neighborhoodSlug: page.slug,
-  }));
+  // Use static JSON file instead of Prisma query at build time
+  return neighborhoodRoutes;
 }
 
 export default async function NeighborhoodPage({ params }: PageProps) {
@@ -91,33 +79,20 @@ export default async function NeighborhoodPage({ params }: PageProps) {
     where: { slug: actualCitySlug },
     include: {
       state: true,
-      neighborhoodPages: {
+      neighborhoods: {
         where: { slug: neighborhoodSlug },
       },
     },
   });
 
-  if (!city || city.neighborhoodPages.length === 0) {
+  if (!city || city.neighborhoods.length === 0) {
     notFound();
   }
 
-  const neighborhood = city.neighborhoodPages[0];
+  const neighborhood = city.neighborhoods[0];
 
-  // Get neighboring neighborhoods for ACROSS linking
-  const neighborSlugs = neighborhood.neighborSlugs?.split(',').filter(Boolean) || [];
-  const neighboringAreas = await prisma.neighborhoodPage.findMany({
-    where: {
-      cityId: city.id,
-      slug: { in: neighborSlugs },
-    },
-    select: {
-      name: true,
-      slug: true,
-    },
-  });
-
-  // Get all neighborhoods for this city (for sidebar)
-  const allNeighborhoods = await prisma.neighborhoodPage.findMany({
+  // Get all neighborhoods for this city (for sidebar and nearby areas)
+  const allNeighborhoods = await prisma.neighborhood.findMany({
     where: { cityId: city.id },
     select: {
       name: true,
@@ -125,6 +100,11 @@ export default async function NeighborhoodPage({ params }: PageProps) {
     },
     orderBy: { name: 'asc' },
   });
+
+  // Get neighboring areas (first 6 that aren't this one)
+  const neighboringAreas = allNeighborhoods
+    .filter(n => n.slug !== neighborhoodSlug)
+    .slice(0, 6);
 
   // Use city-specific phone (GBP) or default
   const phone = city.phone || process.env.NEXT_PUBLIC_PHONE || '(888) 860-0710';
@@ -233,13 +213,44 @@ export default async function NeighborhoodPage({ params }: PageProps) {
           <div className="grid lg:grid-cols-3 gap-12">
             {/* Content Column */}
             <div className="lg:col-span-2">
-              {/* AI-Generated Content */}
+              {/* Main Content */}
               <article className="prose prose-lg max-w-none">
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: formatMarkdown(neighborhood.content),
-                  }}
-                />
+                <h2>Reliable Dumpster Rental Services in {neighborhood.name}</h2>
+                <p>
+                  {neighborhood.description || `Looking for dumpster rental in ${neighborhood.name}, ${city.name}? Dumpster Champs provides fast, affordable roll-off dumpster delivery to ${neighborhood.name} and surrounding neighborhoods. Whether you're tackling a home renovation, construction project, or major cleanout, we have the right size dumpster for your needs.`}
+                </p>
+
+                <h3>Why Choose Dumpster Champs in {neighborhood.name}?</h3>
+                <ul>
+                  <li><strong>Same-Day Delivery:</strong> Need a dumpster fast? We offer same-day delivery to {neighborhood.name} when you call before noon.</li>
+                  <li><strong>Flat-Rate Pricing:</strong> No hidden fees. Our prices include delivery, pickup, disposal, and a 7-day rental period.</li>
+                  <li><strong>Multiple Sizes:</strong> From 10-yard dumpsters for small cleanouts to 40-yard containers for major construction projects.</li>
+                  <li><strong>Driveway Protection:</strong> We use boards under our dumpsters to protect your driveway from damage.</li>
+                  <li><strong>Local Service:</strong> We know {city.name} and can help you navigate any permit requirements for {neighborhood.name}.</li>
+                </ul>
+
+                <h3>Dumpster Sizes Available in {neighborhood.name}</h3>
+                <p>
+                  We offer a full range of roll-off dumpster sizes to handle any project in {neighborhood.name}:
+                </p>
+                <ul>
+                  <li><strong>10 Yard Dumpster ($495):</strong> Perfect for small cleanouts, single-room renovations, or yard debris.</li>
+                  <li><strong>15 Yard Dumpster ($550):</strong> Great for medium-sized projects like garage cleanouts or small remodels.</li>
+                  <li><strong>20 Yard Dumpster ($595):</strong> Our most popular size! Ideal for whole-house cleanouts and medium construction projects.</li>
+                  <li><strong>30 Yard Dumpster ($695):</strong> Best for large renovation projects or commercial cleanouts.</li>
+                  <li><strong>40 Yard Dumpster ($795):</strong> Maximum capacity for major construction or demolition projects.</li>
+                </ul>
+
+                <h3>What Can You Put in a Dumpster?</h3>
+                <p>Our dumpsters accept most common waste materials including:</p>
+                <ul>
+                  <li>Household junk and furniture</li>
+                  <li>Construction debris (drywall, lumber, flooring)</li>
+                  <li>Yard waste and landscaping debris</li>
+                  <li>Roofing materials (shingles, underlayment)</li>
+                  <li>Appliances (without refrigerants)</li>
+                </ul>
+                <p><strong>Not accepted:</strong> Hazardous materials, paint, chemicals, tires, batteries, and refrigerants.</p>
               </article>
 
               {/* Service Type Links - ACROSS linking to non-geo service pages */}
@@ -402,41 +413,4 @@ export default async function NeighborhoodPage({ params }: PageProps) {
       </section>
     </>
   );
-}
-
-/**
- * Basic markdown to HTML conversion
- */
-function formatMarkdown(content: string): string {
-  if (!content) return '';
-
-  return content
-    // Headers
-    .replace(/^### (.*$)/gim, '<h3>$1</h3>')
-    .replace(/^## (.*$)/gim, '<h2>$1</h2>')
-    .replace(/^# (.*$)/gim, '<h1>$1</h1>')
-    // Bold and italic
-    .replace(/\*\*\*(.*)\*\*\*/gim, '<strong><em>$1</em></strong>')
-    .replace(/\*\*(.*)\*\*/gim, '<strong>$1</strong>')
-    .replace(/\*(.*)\*/gim, '<em>$1</em>')
-    // Links
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/gim, '<a href="$2" class="text-primary-600 hover:text-primary-700 underline">$1</a>')
-    // Unordered lists
-    .replace(/^\s*[-*]\s+(.*)$/gim, '<li>$1</li>')
-    .replace(/(<li>[\s\S]*<\/li>)/gim, '<ul>$1</ul>')
-    // Ordered lists
-    .replace(/^\s*\d+\.\s+(.*)$/gim, '<li>$1</li>')
-    // Tables (basic support)
-    .replace(/\|(.+)\|/gim, (match) => {
-      const cells = match.split('|').filter(Boolean);
-      const row = cells.map(cell => `<td class="border px-3 py-2">${cell.trim()}</td>`).join('');
-      return `<tr>${row}</tr>`;
-    })
-    // Paragraphs (wrap remaining text)
-    .replace(/^(?!<[hulo]|<t)(.+)$/gim, '<p>$1</p>')
-    // Clean up
-    .replace(/<ul><ul>/g, '<ul>')
-    .replace(/<\/ul><\/ul>/g, '</ul>')
-    .replace(/<p><\/p>/g, '')
-    .replace(/\n\n+/g, '\n');
 }

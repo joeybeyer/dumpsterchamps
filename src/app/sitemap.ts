@@ -82,60 +82,60 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Dumpster size pages
   const sizes = await prisma.dumpsterSize.findMany({
-    select: { slug: true, updatedAt: true },
+    select: { slug: true, createdAt: true },
   });
 
   const sizePages: MetadataRoute.Sitemap = sizes.map((size) => ({
     url: `${baseUrl}/${size.slug}`,
-    lastModified: size.updatedAt,
+    lastModified: size.createdAt,
     changeFrequency: "monthly",
     priority: 0.8,
   }));
 
   // Service pages
   const services = await prisma.service.findMany({
-    select: { slug: true, updatedAt: true },
+    select: { slug: true, createdAt: true },
   });
 
   const servicePages: MetadataRoute.Sitemap = services.map((service) => ({
     url: `${baseUrl}/${service.slug}`,
-    lastModified: service.updatedAt,
+    lastModified: service.createdAt,
     changeFrequency: "monthly",
     priority: 0.8,
   }));
 
   // State pages
   const states = await prisma.state.findMany({
-    select: { slug: true, updatedAt: true },
+    select: { slug: true, createdAt: true },
   });
 
   const statePages: MetadataRoute.Sitemap = states.map((state) => ({
     url: `${baseUrl}/dumpster-rental-${state.slug}`,
-    lastModified: state.updatedAt,
+    lastModified: state.createdAt,
     changeFrequency: "weekly",
     priority: 0.9,
   }));
 
   // City pages
   const cities = await prisma.city.findMany({
-    select: { slug: true, updatedAt: true },
+    select: { slug: true, createdAt: true },
   });
 
   const cityPages: MetadataRoute.Sitemap = cities.map((city) => ({
     url: `${baseUrl}/dumpster-rental-${city.slug}`,
-    lastModified: city.updatedAt,
+    lastModified: city.createdAt,
     changeFrequency: "weekly",
     priority: 0.9,
   }));
 
   // Neighborhood pages
-  const neighborhoods = await prisma.neighborhoodPage.findMany({
-    select: { slug: true, updatedAt: true, city: { select: { slug: true } } },
+  const neighborhoods = await prisma.neighborhood.findMany({
+    select: { slug: true, createdAt: true, city: { select: { slug: true } } },
   });
 
   const neighborhoodPages: MetadataRoute.Sitemap = neighborhoods.map((n) => ({
     url: `${baseUrl}/dumpster-rental-${n.city.slug}/${n.slug}`,
-    lastModified: n.updatedAt,
+    lastModified: n.createdAt,
     changeFrequency: "monthly",
     priority: 0.7,
   }));
