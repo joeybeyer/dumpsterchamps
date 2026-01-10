@@ -82,7 +82,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Dumpster size pages
   const sizes = await prisma.dumpsterSize.findMany({
-    select: { slug: true, updatedAt: true },
+    select: { slug: true, createdAt: true },
   });
 
   const sizePages: MetadataRoute.Sitemap = sizes.map((size) => ({
@@ -94,7 +94,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Service pages
   const services = await prisma.service.findMany({
-    select: { slug: true, updatedAt: true },
+    select: { slug: true, createdAt: true },
   });
 
   const servicePages: MetadataRoute.Sitemap = services.map((service) => ({
@@ -106,7 +106,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // State pages
   const states = await prisma.state.findMany({
-    select: { slug: true, updatedAt: true },
+    select: { slug: true, createdAt: true },
   });
 
   const statePages: MetadataRoute.Sitemap = states.map((state) => ({
@@ -118,7 +118,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // City pages
   const cities = await prisma.city.findMany({
-    select: { slug: true, updatedAt: true },
+    select: { slug: true, createdAt: true },
   });
 
   const cityPages: MetadataRoute.Sitemap = cities.map((city) => ({
@@ -130,7 +130,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Neighborhood pages
   const neighborhoods = await prisma.neighborhood.findMany({
-    select: { slug: true, updatedAt: true, city: { select: { slug: true } } },
+    select: { slug: true, createdAt: true, city: { select: { slug: true } } },
   });
 
   const neighborhoodPages: MetadataRoute.Sitemap = neighborhoods.map((n) => ({
