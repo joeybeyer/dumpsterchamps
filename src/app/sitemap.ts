@@ -87,7 +87,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const sizePages: MetadataRoute.Sitemap = sizes.map((size) => ({
     url: `${baseUrl}/${size.slug}`,
-    lastModified: size.updatedAt,
+    lastModified: size.createdAt,
     changeFrequency: "monthly",
     priority: 0.8,
   }));
@@ -99,7 +99,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const servicePages: MetadataRoute.Sitemap = services.map((service) => ({
     url: `${baseUrl}/${service.slug}`,
-    lastModified: service.updatedAt,
+    lastModified: service.createdAt,
     changeFrequency: "monthly",
     priority: 0.8,
   }));
@@ -111,7 +111,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const statePages: MetadataRoute.Sitemap = states.map((state) => ({
     url: `${baseUrl}/dumpster-rental-${state.slug}`,
-    lastModified: state.updatedAt,
+    lastModified: state.createdAt,
     changeFrequency: "weekly",
     priority: 0.9,
   }));
@@ -123,7 +123,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const cityPages: MetadataRoute.Sitemap = cities.map((city) => ({
     url: `${baseUrl}/dumpster-rental-${city.slug}`,
-    lastModified: city.updatedAt,
+    lastModified: city.createdAt,
     changeFrequency: "weekly",
     priority: 0.9,
   }));
