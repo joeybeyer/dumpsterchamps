@@ -1,6 +1,8 @@
 import { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { Phone, Check, Truck, Clock, Shield, ArrowRight, HardHat, Home, Building } from "lucide-react";
+import { LastUpdated } from "@/components/seo/LastUpdated";
 
 export const metadata: Metadata = {
   title: "Roll Off Dumpster Rental | Open-Top Container Delivery",
@@ -97,33 +99,61 @@ export default function RollOffDumpsterPage() {
 
   return (
     <>
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-secondary-900 to-secondary-800 text-white py-16">
+      {/* Breadcrumb */}
+      <div className="bg-secondary-100 border-b border-secondary-200">
+        <div className="container mx-auto px-4 py-3">
+          <nav className="flex items-center gap-2 text-sm text-secondary-600">
+            <Link href="/" className="hover:text-primary-600">Home</Link>
+            <span>›</span>
+            <Link href="/services" className="hover:text-primary-600">Services</Link>
+            <span>›</span>
+            <span className="text-secondary-900">Roll Off Dumpsters</span>
+          </nav>
+          <LastUpdated date="2025-12-28" className="mt-1" />
+        </div>
+      </div>
+
+      {/* Hero Section with Image */}
+      <section className="bg-white py-12 lg:py-16">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl">
-            <p className="text-primary-400 font-semibold mb-2">Roll Off Container Rental</p>
-            <h1 className="text-4xl lg:text-5xl font-bold mb-4">
-              Roll Off Dumpster Rental
-            </h1>
-            <p className="text-xl text-secondary-200 mb-6">
-              Open-top containers delivered directly to your location. Our roll off dumpsters are perfect for
-              construction debris, renovation waste, and large cleanout projects. Prices start at <strong className="text-white">$495</strong> with
-              everything included.
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <a
-                href={`tel:${phone.replace(/\D/g, "")}`}
-                className="bg-primary-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors flex items-center gap-2"
-              >
-                <Phone className="h-5 w-5" />
-                Order Now: {phone}
-              </a>
-              <Link
-                href="/dumpster-rental-prices"
-                className="border-2 border-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-secondary-900 transition-colors"
-              >
-                View All Prices
-              </Link>
+          <div className="grid lg:grid-cols-2 gap-8 items-center">
+            <div>
+              <span className="inline-block bg-primary-100 text-primary-700 px-3 py-1 rounded-full text-sm font-medium mb-4">
+                Roll Off Container Rental
+              </span>
+              <h1 className="text-4xl lg:text-5xl font-bold text-secondary-900 mb-4">
+                Roll Off Dumpster Rental
+              </h1>
+              <p className="text-xl text-secondary-600 mb-6">
+                Open-top containers delivered directly to your location. Our roll off dumpsters are perfect for
+                construction debris, renovation waste, and large cleanout projects. Prices start at <strong className="text-primary-600">$495</strong> with
+                everything included.
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <a
+                  href={`tel:${phone.replace(/\D/g, "")}`}
+                  className="bg-primary-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors flex items-center gap-2"
+                >
+                  <Phone className="h-5 w-5" />
+                  Order Now: {phone}
+                </a>
+                <Link
+                  href="/dumpster-rental-prices"
+                  className="border-2 border-secondary-300 text-secondary-700 px-6 py-3 rounded-lg font-semibold hover:bg-secondary-50 transition-colors"
+                >
+                  View All Prices
+                </Link>
+              </div>
+            </div>
+            <div className="relative">
+              <Image
+                src="/images/services/roll-off-dumpster-rental.jpg"
+                alt="Roll off dumpster being delivered to residential driveway"
+                width={600}
+                height={400}
+                className="rounded-xl shadow-lg w-full h-auto"
+                priority
+              />
             </div>
           </div>
         </div>

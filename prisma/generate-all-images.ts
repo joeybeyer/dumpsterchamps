@@ -131,31 +131,31 @@ const SERVICE_IMAGES = [
 const DUMPSTER_SIZE_IMAGES = [
   {
     name: '10-yard.jpg',
-    prompt: 'Professional photograph of a small 10-yard orange roll-off dumpster in a residential driveway. Compact size, about 12 feet long. Perfect for small cleanout project. Single-car garage visible for scale. Clean, sunny day. Commercial product photography style.',
+    prompt: 'Professional photograph of a small 10-yard plain yellow roll-off dumpster in a residential driveway. Compact size, about 12 feet long. No logos, no text, no branding, completely unbranded solid yellow container. Single-car garage visible for scale. Clean, sunny day. Commercial product photography style.',
     width: 800,
     height: 600,
   },
   {
     name: '15-yard.jpg',
-    prompt: 'Professional photograph of a 15-yard orange roll-off dumpster in a residential driveway. Medium-small size, good for bathroom renovation debris. House and lawn visible for scale. Clean, sunny suburban setting. Commercial product photography.',
+    prompt: 'Professional photograph of a 15-yard plain yellow roll-off dumpster in a residential driveway. Medium-small size, good for bathroom renovation debris. No logos, no text, no branding, completely unbranded solid yellow container. House and lawn visible for scale. Clean, sunny suburban setting. Commercial product photography.',
     width: 800,
     height: 600,
   },
   {
     name: '20-yard.jpg',
-    prompt: 'Professional photograph of a 20-yard orange roll-off dumpster at a home renovation site. Medium size, most popular for home projects. Construction debris visible inside. Suburban home background. Bright daylight, commercial photography style.',
+    prompt: 'Professional photograph of a 20-yard plain yellow roll-off dumpster at a home renovation site. Medium size, most popular for home projects. No logos, no text, no branding, completely unbranded solid yellow container. Construction debris visible inside. Suburban home background. Bright daylight, commercial photography style.',
     width: 800,
     height: 600,
   },
   {
     name: '30-yard.jpg',
-    prompt: 'Professional photograph of a large 30-yard orange roll-off dumpster at a major home renovation or small construction site. Larger size with high walls. Roofing shingles and construction debris inside. Commercial photography, bright day.',
+    prompt: 'Professional photograph of a large 30-yard plain yellow roll-off dumpster at a major home renovation or small construction site. Larger size with high walls. No logos, no text, no branding, completely unbranded solid yellow container. Roofing shingles and construction debris inside. Commercial photography, bright day.',
     width: 800,
     height: 600,
   },
   {
     name: '40-yard.jpg',
-    prompt: 'Professional photograph of an extra-large 40-yard orange roll-off dumpster at a commercial construction site. Largest size available, very tall walls. Major demolition debris inside. Industrial setting. Professional commercial photography.',
+    prompt: 'Professional photograph of an extra-large 40-yard plain yellow roll-off dumpster at a commercial construction site. Largest size available, very tall walls. No logos, no text, no branding, completely unbranded solid yellow container. Major demolition debris inside. Industrial setting. Professional commercial photography.',
     width: 800,
     height: 600,
   },
