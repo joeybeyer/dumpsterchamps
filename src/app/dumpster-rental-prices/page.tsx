@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { Phone, Check, AlertTriangle, Calculator, TrendingDown, Shield, Clock, Truck } from "lucide-react";
+import { Phone, Check, AlertTriangle, Calculator, TrendingDown, Shield, Clock, Truck, ShoppingCart } from "lucide-react";
 import { FAQSchema } from "@/components/seo/SchemaMarkup";
 
 export const metadata: Metadata = {
@@ -17,7 +17,7 @@ const PRICING_DATA = [
     rentalPeriod: "7 days",
     bestFor: "Small cleanouts, bathroom remodels, garage cleanouts",
     dimensions: "12' x 8' x 3.5'",
-    truckLoads: "3-4 pickup truck loads",
+    truckLoads: 4,
   },
   {
     size: 15,
@@ -26,7 +26,7 @@ const PRICING_DATA = [
     rentalPeriod: "7 days",
     bestFor: "Medium renovations, deck removal, flooring projects",
     dimensions: "16' x 7.5' x 4'",
-    truckLoads: "5-6 pickup truck loads",
+    truckLoads: 6,
   },
   {
     size: 20,
@@ -35,7 +35,7 @@ const PRICING_DATA = [
     rentalPeriod: "7 days",
     bestFor: "Kitchen remodels, roof tear-offs, large cleanouts",
     dimensions: "22' x 7.5' x 4.5'",
-    truckLoads: "7-8 pickup truck loads",
+    truckLoads: 8,
     popular: true,
   },
   {
@@ -45,7 +45,7 @@ const PRICING_DATA = [
     rentalPeriod: "7 days",
     bestFor: "Major renovations, new construction, estate cleanouts",
     dimensions: "22' x 7.5' x 6'",
-    truckLoads: "10-12 pickup truck loads",
+    truckLoads: 12,
   },
   {
     size: 40,
@@ -54,7 +54,7 @@ const PRICING_DATA = [
     rentalPeriod: "7 days",
     bestFor: "Commercial projects, whole house demos, large construction",
     dimensions: "22' x 7.5' x 8'",
-    truckLoads: "14-16 pickup truck loads",
+    truckLoads: 16,
     note: "Where available",
   },
 ];
@@ -154,10 +154,21 @@ export default function PricingPage() {
                 <div className="text-2xl font-bold text-secondary-900 mt-2">
                   {item.price}
                 </div>
-                <div className="text-xs text-secondary-500">All-inclusive</div>
+                {/* Visual truck capacity */}
+                <div className="flex items-center justify-center gap-1 text-secondary-500 text-xs mt-1">
+                  <Truck className="h-3 w-3" />
+                  <span>x {item.truckLoads} loads</span>
+                </div>
                 {item.note && (
                   <div className="text-xs text-secondary-400 mt-1">{item.note}</div>
                 )}
+                {/* Book This Size button */}
+                <a
+                  href={`tel:${phone.replace(/\D/g, "")}`}
+                  className="mt-3 block bg-primary-600 text-white text-sm py-2 px-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors"
+                >
+                  Book {item.size} Yard
+                </a>
               </div>
             ))}
           </div>
@@ -181,7 +192,7 @@ export default function PricingPage() {
                 <tr className="bg-secondary-100">
                   <th className="px-6 py-4 text-left text-secondary-900 font-semibold">Size</th>
                   <th className="px-6 py-4 text-left text-secondary-900 font-semibold">Price</th>
-                  <th className="px-6 py-4 text-left text-secondary-900 font-semibold">Weight Included</th>
+                  <th className="px-6 py-4 text-left text-secondary-900 font-semibold">Capacity</th>
                   <th className="px-6 py-4 text-left text-secondary-900 font-semibold">Best For</th>
                   <th className="px-6 py-4 text-left text-secondary-900 font-semibold"></th>
                 </tr>
@@ -201,19 +212,32 @@ export default function PricingPage() {
                     </td>
                     <td className="px-6 py-4">
                       <span className="font-bold text-xl text-primary-600">{item.price}</span>
-                      {item.note && (
-                        <span className="block text-xs text-secondary-400">{item.note}</span>
-                      )}
+                      <br />
+                      <span className="text-xs text-secondary-500">{item.weightLimit} included</span>
                     </td>
-                    <td className="px-6 py-4">{item.weightLimit}</td>
+                    <td className="px-6 py-4">
+                      {/* Visual truck capacity - scannable */}
+                      <div className="flex items-center gap-2">
+                        <Truck className="h-5 w-5 text-secondary-400" />
+                        <span className="font-medium">x {item.truckLoads}</span>
+                      </div>
+                    </td>
                     <td className="px-6 py-4 text-sm text-secondary-600">{item.bestFor}</td>
                     <td className="px-6 py-4">
-                      <Link
-                        href={`/${item.size}-yard-dumpster`}
-                        className="text-primary-600 hover:text-primary-700 font-medium"
-                      >
-                        Details →
-                      </Link>
+                      <div className="flex flex-col gap-2">
+                        <a
+                          href={`tel:${phone.replace(/\D/g, "")}`}
+                          className="bg-primary-600 text-white text-center text-sm py-2 px-4 rounded-lg font-semibold hover:bg-primary-700 transition-colors whitespace-nowrap"
+                        >
+                          Book {item.size} Yard
+                        </a>
+                        <Link
+                          href={`/${item.size}-yard-dumpster`}
+                          className="text-primary-600 hover:text-primary-700 text-center text-sm"
+                        >
+                          Details
+                        </Link>
+                      </div>
                     </td>
                   </tr>
                 ))}
