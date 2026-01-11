@@ -125,3 +125,145 @@ input::placeholder,
 textarea::placeholder {
   color: #8795ab !important;
 }
+
+/* Mobile touch target minimum sizes (44px per Apple/Google guidelines) */
+.touch-manipulation {
+  touch-action: manipulation;
+}
+
+/* Safe area padding for notched devices */
+.safe-area-inset-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+/* 320px viewport fixes - ensure content doesn't overflow on small screens */
+@media (max-width: 360px) {
+  .container {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  /* Reduce font sizes slightly for very small screens */
+  h1 {
+    font-size: 1.75rem !important;
+  }
+
+  /* Stack trust badges vertically on tiny screens */
+  .flex-wrap {
+    gap: 0.5rem;
+  }
+
+  /* Ensure buttons don't overflow */
+  .rounded-lg {
+    max-width: 100%;
+  }
+}
+
+/* Improve tap feedback for interactive elements */
+a:active,
+button:active {
+  opacity: 0.9;
+}
+
+/* Prevent text selection on CTAs for cleaner tap experience */
+.touch-manipulation {
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+/* Lazy loading placeholder styles */
+.lazy-load {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Periodic heartbeat animation for sticky CTA - draws eye without being annoying */
+/* Total cycle: 10 seconds. Pulse happens in first 15%, then rests for 85%. */
+/* This is more battery-friendly than JS-based intervals */
+@keyframes champPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(223, 95, 18, 0.7); /* primary-600 */
+  }
+  5% {
+    transform: scale(1.04);
+    box-shadow: 0 0 0 12px rgba(223, 95, 18, 0); /* The ripple effect */
+  }
+  10% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(223, 95, 18, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(223, 95, 18, 0); /* Stay still for rest of cycle */
+  }
+}
+
+.animate-champ-pulse {
+  animation: champPulse 10s ease-in-out infinite;
+  will-change: transform, box-shadow; /* Smoother mobile performance */
+}
+
+/* --- MOBILE CARD TABLE TRANSFORMATION --- */
+/* Add "mobile-card-table" class to any <table> to convert it to cards on mobile */
+/* Requires data-label attributes on <td> elements for labels */
+@media (max-width: 768px) {
+  /* Force table elements to act like block elements */
+  .mobile-card-table,
+  .mobile-card-table tbody,
+  .mobile-card-table tr,
+  .mobile-card-table td {
+    display: block;
+    width: 100%;
+  }
+
+  /* Hide desktop headers */
+  .mobile-card-table thead {
+    display: none;
+  }
+
+  /* Style each row as a card */
+  .mobile-card-table tr {
+    margin-bottom: 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    background: #ffffff;
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+
+  /* Style each cell as a row within the card */
+  .mobile-card-table td {
+    padding: 12px 16px;
+    text-align: right;
+    border-bottom: 1px solid #f1f5f9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .mobile-card-table td:last-child {
+    border-bottom: none;
+  }
+
+  /* Inject labels from data-label attribute */
+  .mobile-card-table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    color: #64748b;
+    letter-spacing: 0.03em;
+  }
+}

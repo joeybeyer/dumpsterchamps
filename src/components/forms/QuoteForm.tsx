@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
-import { ChevronRight, ChevronLeft, MapPin, ClipboardList, User } from "lucide-react";
+import { ChevronRight, ChevronLeft, MapPin, ClipboardList, User, Star } from "lucide-react";
 
 interface QuoteFormProps {
   cityName?: string;
@@ -10,6 +10,15 @@ interface QuoteFormProps {
   className?: string;
   source?: string;
 }
+
+// Testimonials for rotation in success state
+const successTestimonials = [
+  { name: "Mike R.", location: "Dallas, TX", text: "Got my quote in 15 minutes. Dumpster arrived next morning!" },
+  { name: "Sarah M.", location: "Phoenix, AZ", text: "So easy! Called back within 10 minutes with pricing." },
+  { name: "James T.", location: "Houston, TX", text: "Best dumpster service I've used. Fast response, fair prices." },
+  { name: "Linda K.", location: "Atlanta, GA", text: "They called back right away and had the dumpster same day!" },
+  { name: "Robert D.", location: "Denver, CO", text: "Quick quote, no surprises. Highly recommend these guys." },
+];
 
 const projectTypes = [
   "Home Renovation",
@@ -45,6 +54,8 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
   });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const [zipLookupLoading, setZipLookupLoading] = useState(false);
+  const [testimonialIndex, setTestimonialIndex] = useState(0);
 
   // Spam prevention: honeypot field (should remain empty)
   const [honeypot, setHoneypot] = useState("");
@@ -56,6 +67,41 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
   useEffect(() => {
     setFormTimestamp(Date.now());
   }, []);
+
+  // Rotate testimonials in success state
+  useEffect(() => {
+    if (status === "success") {
+      const interval = setInterval(() => {
+        setTestimonialIndex((prev) => (prev + 1) % successTestimonials.length);
+      }, 5000);
+      return () => clearInterval(interval);
+    }
+  }, [status]);
+
+  // Zip code auto-lookup
+  const lookupZipCode = async (zip: string) => {
+    if (zip.length !== 5 || !/^\d{5}$/.test(zip)) return;
+
+    setZipLookupLoading(true);
+    try {
+      const response = await fetch(`https://api.zippopotam.us/us/${zip}`);
+      if (response.ok) {
+        const data = await response.json();
+        if (data.places && data.places.length > 0) {
+          const place = data.places[0];
+          setFormData((prev) => ({
+            ...prev,
+            city: place["place name"],
+            state: place["state abbreviation"],
+          }));
+        }
+      }
+    } catch {
+      // Silently fail - user can still proceed without auto-fill
+    } finally {
+      setZipLookupLoading(false);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -115,7 +161,7 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
 
   if (status === "success") {
     return (
-      <div className={cn("bg-green-50 border border-green-200 rounded-lg p-6 text-center", className)}>
+      <div className={cn("bg-green-50 border border-green-200 rounded-lg p-6", className)}>
         {/* Success confirmation */}
         <div className="flex items-center justify-center gap-2 mb-3">
           <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
@@ -126,19 +172,43 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
           <h3 className="text-xl font-semibold text-green-800">Request Received!</h3>
         </div>
 
-        <p className="text-green-700 mb-2">
-          We&apos;re calculating your quote now.
+        <p className="text-green-700 mb-4 text-center">
+          We&apos;re calculating your personalized quote now.
         </p>
 
-        <p className="text-green-600 text-sm mb-4">
-          ⏱️ Expect a callback within 15 minutes during business hours.
-        </p>
+        {/* What happens next timeline */}
+        <div className="bg-white rounded-lg p-4 mb-4">
+          <p className="text-sm font-semibold text-secondary-700 mb-3">What happens next:</p>
+          <div className="space-y-3">
+            <div className="flex items-start gap-3">
+              <div className="w-6 h-6 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">1</div>
+              <div>
+                <p className="text-sm font-medium text-secondary-900">Quote calculation</p>
+                <p className="text-xs text-secondary-500">We&apos;re reviewing your project details now</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="w-6 h-6 bg-secondary-100 text-secondary-600 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">2</div>
+              <div>
+                <p className="text-sm font-medium text-secondary-900">Call from our team</p>
+                <p className="text-xs text-secondary-500">Within 15 min during business hours</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="w-6 h-6 bg-secondary-100 text-secondary-600 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">3</div>
+              <div>
+                <p className="text-sm font-medium text-secondary-900">Schedule delivery</p>
+                <p className="text-xs text-secondary-500">Often available same-day or next-day</p>
+              </div>
+            </div>
+          </div>
+        </div>
 
         {/* Divider */}
         <div className="border-t border-green-200 my-4" />
 
         {/* Double-dip CTA */}
-        <p className="text-secondary-700 font-medium mb-3">
+        <p className="text-secondary-700 font-medium mb-3 text-center">
           In a rush? Skip the wait!
         </p>
 
@@ -152,8 +222,25 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
           Call {phone} for Instant Quote
         </a>
 
+        {/* Rotating testimonial */}
+        <div className="bg-secondary-50 rounded-lg p-3 mt-4">
+          <div className="flex items-start gap-2">
+            <div className="flex gap-0.5 flex-shrink-0">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="h-3 w-3 text-yellow-400 fill-yellow-400" />
+              ))}
+            </div>
+          </div>
+          <p className="text-secondary-700 text-sm mt-2 italic">
+            &ldquo;{successTestimonials[testimonialIndex].text}&rdquo;
+          </p>
+          <p className="text-secondary-500 text-xs mt-1">
+            — {successTestimonials[testimonialIndex].name}, {successTestimonials[testimonialIndex].location}
+          </p>
+        </div>
+
         {/* Social proof */}
-        <p className="text-secondary-500 text-xs mt-4 flex items-center justify-center gap-1">
+        <p className="text-secondary-500 text-xs mt-3 flex items-center justify-center gap-1">
           ⭐ Rated 4.9/5 by 10,000+ Customers
         </p>
       </div>
@@ -238,16 +325,38 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
             <label htmlFor="zipCode" className="block text-sm font-medium text-secondary-700 mb-1">
               Enter Your Zip Code *
             </label>
-            <input
-              type="text"
-              id="zipCode"
-              required
-              maxLength={10}
-              value={formData.zipCode}
-              onChange={(e) => setFormData({ ...formData, zipCode: e.target.value })}
-              className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors text-lg text-center font-medium"
-              placeholder="Enter zip code"
-            />
+            <div className="relative">
+              <input
+                type="text"
+                id="zipCode"
+                required
+                maxLength={5}
+                value={formData.zipCode}
+                onChange={(e) => {
+                  const zip = e.target.value.replace(/\D/g, "");
+                  setFormData({ ...formData, zipCode: zip });
+                  if (zip.length === 5) {
+                    lookupZipCode(zip);
+                  }
+                }}
+                className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors text-lg text-center font-medium"
+                placeholder="Enter zip code"
+              />
+              {zipLookupLoading && (
+                <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                  <svg className="animate-spin h-5 w-5 text-primary-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                </div>
+              )}
+            </div>
+            {formData.city && formData.state && (
+              <p className="text-sm text-green-600 mt-1 flex items-center gap-1">
+                <MapPin className="h-4 w-4" />
+                {formData.city}, {formData.state}
+              </p>
+            )}
           </div>
           <button
             type="button"
@@ -267,7 +376,7 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
           {/* Urgency message after zip code entry */}
           <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 text-center">
             <p className="text-amber-800 text-sm font-medium">
-              🚚 Only 3 delivery slots left for tomorrow in your area!
+              🚚 Same-day and next-day delivery available in your area
             </p>
           </div>
 
@@ -336,6 +445,13 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
       {/* Step 3: Contact Info */}
       {step === 3 && (
         <div className="space-y-4">
+          {/* Almost done encouragement */}
+          <div className="bg-green-50 border border-green-200 rounded-lg p-3 text-center">
+            <p className="text-green-800 text-sm font-medium">
+              Almost done! Just need your contact info to send your quote.
+            </p>
+          </div>
+
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-secondary-700 mb-1">
               First Name *

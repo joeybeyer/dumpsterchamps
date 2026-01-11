@@ -17,6 +17,7 @@ import {
   WhyChooseUs,
 } from "@/components/city";
 import { DUMPSTER_PRICING, DUMPSTER_SIZES } from "@/data/pricing";
+import { DeliveryCounter } from "@/components/ui/TrustBadges";
 
 /**
  * Convert markdown content to HTML with proper formatting
@@ -419,9 +420,13 @@ async function StatePage({ stateSlug }: { stateSlug: string }) {
           <h2 className="text-3xl font-bold text-secondary-900 mb-4 text-center">
             Dumpster Sizes & Pricing in {state.name}
           </h2>
-          <p className="text-secondary-600 text-center mb-8 max-w-2xl mx-auto">
+          <p className="text-secondary-600 text-center mb-4 max-w-2xl mx-auto">
             Flat-rate pricing includes delivery, pickup, 7-day rental, and weight allowance. No hidden fees or surprise charges.
           </p>
+          {/* Delivery Counter */}
+          <div className="text-center mb-8">
+            <DeliveryCounter />
+          </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
             {DUMPSTER_SIZES.map((d) => (
               <SizeCard
@@ -790,10 +795,14 @@ async function CityPage({ citySlug }: { citySlug: string }) {
           <h2 className="text-3xl font-bold text-secondary-900 mb-4 text-center">
             Dumpster Sizes & Pricing in {city.name}
           </h2>
-          <p className="text-secondary-600 text-center mb-8 max-w-2xl mx-auto">
+          <p className="text-secondary-600 text-center mb-4 max-w-2xl mx-auto">
             Flat-rate pricing includes delivery, pickup, 7-day rental, and weight allowance.
             No hidden fees or surprise charges.
           </p>
+          {/* Delivery Counter */}
+          <div className="text-center mb-8">
+            <DeliveryCounter />
+          </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
             {DUMPSTER_SIZES.map((d) => (
               <SizeCard
@@ -958,9 +967,48 @@ async function CityPage({ citySlug }: { citySlug: string }) {
         </div>
       </section>
 
+      {/* Related Resources Section - Internal Linking for SEO */}
+      <section className="py-12 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-xl font-bold text-secondary-900 mb-6 text-center">
+            Helpful Resources
+          </h2>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto">
+            <Link
+              href="/dumpster-rental-prices"
+              className="p-4 bg-secondary-50 rounded-lg hover:bg-primary-50 transition-colors group"
+            >
+              <p className="font-semibold text-secondary-900 group-hover:text-primary-600">Pricing Guide</p>
+              <p className="text-sm text-secondary-500">See all sizes & prices</p>
+            </Link>
+            <Link
+              href="/calculator"
+              className="p-4 bg-secondary-50 rounded-lg hover:bg-primary-50 transition-colors group"
+            >
+              <p className="font-semibold text-secondary-900 group-hover:text-primary-600">Size Calculator</p>
+              <p className="text-sm text-secondary-500">Find your perfect size</p>
+            </Link>
+            <Link
+              href="/what-size-dumpster-do-i-need"
+              className="p-4 bg-secondary-50 rounded-lg hover:bg-primary-50 transition-colors group"
+            >
+              <p className="font-semibold text-secondary-900 group-hover:text-primary-600">Size Guide</p>
+              <p className="text-sm text-secondary-500">Which size is right?</p>
+            </Link>
+            <Link
+              href="/do-i-need-permit-for-dumpster"
+              className="p-4 bg-secondary-50 rounded-lg hover:bg-primary-50 transition-colors group"
+            >
+              <p className="font-semibold text-secondary-900 group-hover:text-primary-600">Permit Info</p>
+              <p className="text-sm text-secondary-500">Do you need one?</p>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Nearby Cities Section - Internal Linking for SEO */}
       {nearbyCities.length > 0 && (
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-secondary-50">
           <div className="container mx-auto px-4">
             <h2 className="text-2xl font-bold text-secondary-900 mb-2 text-center">
               Dumpster Rental in Nearby {city.state.name} Cities
@@ -973,7 +1021,7 @@ async function CityPage({ citySlug }: { citySlug: string }) {
                 <Link
                   key={nc.id}
                   href={`/dumpster-rental-${nc.slug}`}
-                  className="p-4 bg-secondary-50 rounded-lg text-center text-secondary-800 hover:bg-primary-50 hover:text-primary-600 transition-colors font-medium"
+                  className="p-4 bg-white rounded-lg text-center text-secondary-800 hover:bg-primary-50 hover:text-primary-600 transition-colors font-medium"
                 >
                   {nc.name}
                 </Link>
@@ -1184,6 +1232,28 @@ async function SizePage({ sizeSlug }: { sizeSlug: string }) {
                 ))}
               </tbody>
             </table>
+          </div>
+
+          {/* Cross-linking for SEO - "Need a different size?" */}
+          <div className="mt-8 flex flex-wrap justify-center gap-4">
+            {size.size > 10 && (
+              <Link
+                href={`/${size.size === 15 ? 10 : size.size === 20 ? 15 : size.size === 30 ? 20 : 30}-yard-dumpster`}
+                className="inline-flex items-center gap-2 text-secondary-600 hover:text-primary-600 transition-colors"
+              >
+                <ChevronRight className="h-4 w-4 rotate-180" />
+                Need smaller? Try {size.size === 15 ? 10 : size.size === 20 ? 15 : size.size === 30 ? 20 : 30} Yard
+              </Link>
+            )}
+            {size.size < 40 && (
+              <Link
+                href={`/${size.size === 10 ? 15 : size.size === 15 ? 20 : size.size === 20 ? 30 : 40}-yard-dumpster`}
+                className="inline-flex items-center gap-2 text-secondary-600 hover:text-primary-600 transition-colors"
+              >
+                Need bigger? Try {size.size === 10 ? 15 : size.size === 15 ? 20 : size.size === 20 ? 30 : 40} Yard
+                <ChevronRight className="h-4 w-4" />
+              </Link>
+            )}
           </div>
         </div>
       </section>

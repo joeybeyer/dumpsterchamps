@@ -2,10 +2,11 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { Phone, Check, AlertTriangle, Calculator, TrendingDown, Shield, Clock, Truck, ShoppingCart } from "lucide-react";
 import { FAQSchema } from "@/components/seo/SchemaMarkup";
+import { TrustBadgesInline, DeliveryCounter } from "@/components/ui/TrustBadges";
 
 export const metadata: Metadata = {
-  title: "Dumpster Rental Prices 2025 | How Much Does a Dumpster Cost?",
-  description: "Dumpster rental prices from $495-$795. See 2025 pricing for 10, 15, 20, 30 & 40 yard dumpsters. Flat-rate pricing includes weight, delivery & pickup. No hidden fees.",
+  title: "Dumpster Rental Prices 2026 | How Much Does a Dumpster Cost?",
+  description: "Dumpster rental prices from $495-$795. See 2026 pricing for 10, 15, 20, 30 & 40 yard dumpsters. Flat-rate pricing includes weight, delivery & pickup. No hidden fees.",
   keywords: "dumpster rental prices, dumpster rental cost, how much is a dumpster rental, cheap dumpster rental, dumpster rental prices near me",
 };
 
@@ -105,7 +106,7 @@ export default function PricingPage() {
       <section className="bg-gradient-to-br from-secondary-900 to-secondary-800 text-white py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl">
-            <p className="text-primary-400 font-semibold mb-2">2025 Pricing Guide</p>
+            <p className="text-primary-400 font-semibold mb-2">2026 Pricing Guide</p>
             <h1 className="text-4xl lg:text-5xl font-bold mb-4">
               How Much Does a Dumpster Rental Cost?
             </h1>
@@ -113,7 +114,7 @@ export default function PricingPage() {
               Dumpster rental prices range from <strong className="text-white">$495 to $795</strong> for 
               all-inclusive flat-rate pricing. Our price includes delivery, pickup, 7-day rental, AND weight allowance — no surprises.
             </p>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-4 mb-6">
               <a
                 href={`tel:${phone.replace(/\D/g, "")}`}
                 className="bg-primary-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors flex items-center gap-2"
@@ -129,6 +130,9 @@ export default function PricingPage() {
                 Size & Price Calculator
               </Link>
             </div>
+
+            {/* Trust signals */}
+            <TrustBadgesInline variant="dark" />
           </div>
         </div>
       </section>
@@ -136,6 +140,11 @@ export default function PricingPage() {
       {/* Quick Price Summary */}
       <section className="py-12 bg-primary-50">
         <div className="container mx-auto px-4">
+          {/* Delivery Counter */}
+          <div className="text-center mb-6">
+            <DeliveryCounter />
+          </div>
+
           <div className="grid md:grid-cols-5 gap-4">
             {PRICING_DATA.map((item) => (
               <div
@@ -179,7 +188,7 @@ export default function PricingPage() {
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-secondary-900 mb-4 text-center">
-            2025 Dumpster Rental Price Comparison
+            2026 Dumpster Rental Price Comparison
           </h2>
           <p className="text-secondary-600 text-center mb-8 max-w-2xl mx-auto">
             All prices include delivery, pickup, 7-day rental, weight allowance, and disposal. 
@@ -187,7 +196,7 @@ export default function PricingPage() {
           </p>
 
           <div className="overflow-x-auto">
-            <table className="w-full bg-white rounded-xl shadow-lg">
+            <table className="w-full bg-white rounded-xl shadow-lg mobile-card-table">
               <thead>
                 <tr className="bg-secondary-100">
                   <th className="px-6 py-4 text-left text-secondary-900 font-semibold">Size</th>
@@ -202,32 +211,36 @@ export default function PricingPage() {
                   <tr
                     key={item.size}
                     className={`border-b ${idx % 2 === 0 ? "bg-white" : "bg-secondary-50"} ${
-                      item.popular ? "bg-primary-50" : ""
+                      item.popular ? "bg-primary-50 md:bg-primary-50" : ""
                     }`}
                   >
-                    <td className="px-6 py-4">
-                      <span className="font-bold text-lg">{item.size} Yard</span>
-                      <br />
-                      <span className="text-sm text-secondary-500">{item.dimensions}</span>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span className="font-bold text-xl text-primary-600">{item.price}</span>
-                      <br />
-                      <span className="text-xs text-secondary-500">{item.weightLimit} included</span>
-                    </td>
-                    <td className="px-6 py-4">
-                      {/* Visual truck capacity - scannable */}
-                      <div className="flex items-center gap-2">
-                        <Truck className="h-5 w-5 text-secondary-400" />
-                        <span className="font-medium">x {item.truckLoads}</span>
+                    <td className="px-6 py-4" data-label="Size">
+                      <div>
+                        <span className="font-bold text-lg">{item.size} Yard</span>
+                        {item.popular && <span className="ml-2 text-xs bg-primary-500 text-white px-2 py-0.5 rounded-full">Popular</span>}
+                        <br />
+                        <span className="text-sm text-secondary-500">{item.dimensions}</span>
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-sm text-secondary-600">{item.bestFor}</td>
-                    <td className="px-6 py-4">
-                      <div className="flex flex-col gap-2">
+                    <td className="px-6 py-4" data-label="Price">
+                      <div>
+                        <span className="font-bold text-xl text-primary-600">{item.price}</span>
+                        <br />
+                        <span className="text-xs text-secondary-500">{item.weightLimit} included</span>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4" data-label="Capacity">
+                      <div className="flex items-center gap-2">
+                        <Truck className="h-5 w-5 text-secondary-400" />
+                        <span className="font-medium">x {item.truckLoads} loads</span>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 text-sm text-secondary-600" data-label="Best For">{item.bestFor}</td>
+                    <td className="px-6 py-4" data-label="">
+                      <div className="flex flex-col gap-2 w-full">
                         <a
                           href={`tel:${phone.replace(/\D/g, "")}`}
-                          className="bg-primary-600 text-white text-center text-sm py-2 px-4 rounded-lg font-semibold hover:bg-primary-700 transition-colors whitespace-nowrap"
+                          className="bg-primary-600 text-white text-center text-sm py-3 px-4 rounded-lg font-semibold hover:bg-primary-700 transition-colors whitespace-nowrap min-h-[44px] flex items-center justify-center"
                         >
                           Book {item.size} Yard
                         </a>

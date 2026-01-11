@@ -4,8 +4,8 @@ import { Phone, Mail } from "lucide-react";
 const footerLinks = {
   services: [
     { name: "Roll Off Dumpster Rental", href: "/roll-off-dumpster-rental" },
-    { name: "Construction Dumpsters", href: "/construction-dumpsters" },
-    { name: "Residential Dumpsters", href: "/residential-dumpsters" },
+    { name: "Construction Dumpsters", href: "/construction-dumpster-rental" },
+    { name: "Residential Dumpsters", href: "/residential-dumpster-rental" },
   ],
   sizes: [
     { name: "10 Yard Dumpster", href: "/10-yard-dumpster" },
@@ -13,6 +13,13 @@ const footerLinks = {
     { name: "20 Yard Dumpster", href: "/20-yard-dumpster" },
     { name: "30 Yard Dumpster", href: "/30-yard-dumpster" },
     { name: "40 Yard Dumpster", href: "/40-yard-dumpster" },
+  ],
+  resources: [
+    { name: "2026 Cost Guide", href: "/how-much-does-dumpster-rental-cost" },
+    { name: "Size Guide", href: "/what-size-dumpster-do-i-need" },
+    { name: "Permit Guide", href: "/do-i-need-permit-for-dumpster" },
+    { name: "Size Calculator", href: "/calculator" },
+    { name: "Pricing", href: "/dumpster-rental-prices" },
   ],
   company: [
     { name: "About Us", href: "/about" },
@@ -31,7 +38,7 @@ export function Footer() {
   return (
     <footer className="bg-secondary-900 text-white">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Brand */}
           <div>
             <Link href="/" className="inline-block mb-4">
@@ -153,6 +160,23 @@ export function Footer() {
             <h3 className="text-lg font-semibold mb-4">Dumpster Sizes</h3>
             <ul className="space-y-2">
               {footerLinks.sizes.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    href={link.href}
+                    className="text-secondary-300 hover:text-primary-400 transition-colors text-sm"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Helpful Guides - PAA Pages */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Helpful Guides</h3>
+            <ul className="space-y-2">
+              {footerLinks.resources.map((link) => (
                 <li key={link.name}>
                   <Link
                     href={link.href}

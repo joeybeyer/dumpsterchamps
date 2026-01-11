@@ -90,16 +90,17 @@ export function SizeCard({
       </Link>
 
       {/* Book This Size CTA - captures intent at decision moment */}
+      {/* Min heights ensure 44px touch targets for mobile accessibility */}
       <div className="mt-4 pt-4 border-t border-secondary-100 space-y-2">
         <a
           href="#quote-form"
-          className="block w-full bg-primary-600 text-white text-center py-3 px-4 rounded-lg font-semibold hover:bg-primary-700 transition-colors"
+          className="flex items-center justify-center w-full bg-primary-600 text-white text-center py-3.5 px-4 rounded-lg font-semibold hover:bg-primary-700 transition-colors min-h-[48px] touch-manipulation active:scale-[0.98]"
         >
           Book {size} Yard
         </a>
         <Link
           href={`/${size}-yard-dumpster`}
-          className="block text-center text-secondary-500 text-sm hover:text-primary-600 transition-colors"
+          className="flex items-center justify-center text-center text-secondary-500 text-sm hover:text-primary-600 transition-colors py-2 min-h-[44px]"
         >
           View Details
         </Link>

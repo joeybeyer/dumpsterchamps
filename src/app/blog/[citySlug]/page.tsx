@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!city) return { title: "Blog Not Found" };
 
   return {
-    title: `Dumpster Rental Guides for ${city.name}, ${city.state.abbr} | Expert Tips [2025]`,
+    title: `Dumpster Rental Guides for ${city.name}, ${city.state.abbr} | Expert Tips [2026]`,
     description: `Expert dumpster rental guides for ${city.name}. Learn about sizing, pricing, permits, and best practices. ${BLOG_TEMPLATES.length} comprehensive guides available.`,
   };
 }

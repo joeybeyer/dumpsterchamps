@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Phone, X } from 'lucide-react';
+import { Phone, X, MessageCircle } from 'lucide-react';
 
 interface StickyCallButtonProps {
   phone?: string;
@@ -14,22 +14,31 @@ export function StickyCallButton({
 }: StickyCallButtonProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
-  const [isPulsing, setIsPulsing] = useState(true);
+  const [isNearForm, setIsNearForm] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsVisible(window.scrollY > showAfterScroll);
+
+      // Check if near a form to avoid overlap
+      const forms = document.querySelectorAll('form');
+      let nearForm = false;
+      forms.forEach((form) => {
+        const rect = form.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+        // If form is in bottom 200px of viewport, hide mobile bar
+        if (rect.bottom > viewportHeight - 200 && rect.top < viewportHeight) {
+          nearForm = true;
+        }
+      });
+      setIsNearForm(nearForm);
     };
 
     window.addEventListener('scroll', handleScroll);
     handleScroll(); // Check initial position
 
-    // Stop pulsing after 5 seconds
-    const pulseTimer = setTimeout(() => setIsPulsing(false), 5000);
-
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      clearTimeout(pulseTimer);
     };
   }, [showAfterScroll]);
 
@@ -39,11 +48,15 @@ export function StickyCallButton({
 
   return (
     <>
-      {/* Mobile: Bottom sticky bar */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 safe-area-inset-bottom">
+      {/* Mobile: Bottom sticky bar - hides when near forms to avoid overlap */}
+      <div
+        className={`md:hidden fixed bottom-0 left-0 right-0 z-50 safe-area-inset-bottom transition-transform duration-300 ${
+          isNearForm ? 'translate-y-full' : 'translate-y-0'
+        }`}
+      >
         <a
           href={`tel:${phoneDigits}`}
-          className="flex items-center justify-center gap-3 bg-gradient-to-r from-primary-600 to-primary-500 text-white py-4 px-6 shadow-2xl"
+          className="flex items-center justify-center gap-3 bg-gradient-to-r from-primary-600 to-primary-500 text-white py-4 px-6 shadow-2xl min-h-[64px] touch-manipulation"
         >
           <div className="relative">
             <Phone className="h-6 w-6" />
@@ -54,7 +67,7 @@ export function StickyCallButton({
             <div className="text-xs font-medium text-primary-100">Tap to Call Now</div>
             <div className="text-lg font-bold tracking-wide">{phone}</div>
           </div>
-          <div className="ml-auto bg-white/20 rounded-full px-3 py-1 text-sm font-semibold">
+          <div className="ml-auto bg-white/20 rounded-full px-3 py-1.5 text-sm font-semibold">
             Free Quote
           </div>
         </a>
@@ -101,9 +114,7 @@ export function StickyCallButton({
           /* Collapsed floating button */
           <button
             onClick={() => setIsExpanded(true)}
-            className={`group relative bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-700 hover:to-primary-600 text-white rounded-full shadow-2xl transition-all duration-300 hover:scale-105 ${
-              isPulsing ? 'animate-bounce' : ''
-            }`}
+            className="group relative bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-700 hover:to-primary-600 text-white rounded-full shadow-2xl transition-all duration-300 hover:scale-105 animate-champ-pulse"
           >
             {/* Pulse ring effect */}
             <span className="absolute inset-0 rounded-full bg-primary-500 animate-ping opacity-25" />

@@ -95,7 +95,7 @@ export default function ConstructionDumpsterPage() {
             <span>›</span>
             <span className="text-secondary-900">Construction Dumpsters</span>
           </nav>
-          <LastUpdated date="2025-12-28" className="mt-1" />
+          <LastUpdated date="2026-01-11" className="mt-1" />
         </div>
       </div>
 

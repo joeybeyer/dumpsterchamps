@@ -7,7 +7,7 @@ import { AuthorBox } from "@/components/blog/AuthorBox";
 import { LastUpdated, ArticleSchema } from "@/components/seo/LastUpdated";
 
 // Content freshness date - update this when content is refreshed
-const LAST_UPDATED = new Date("2025-12-31");
+const LAST_UPDATED = new Date("2026-01-11");
 
 export const metadata: Metadata = {
   title: "Dumpster Permit Guide: City-by-City [2026]",

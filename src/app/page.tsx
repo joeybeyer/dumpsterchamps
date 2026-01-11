@@ -1,10 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Phone, Truck, Clock, Shield, Star, ChevronRight } from "lucide-react";
+import { Phone, Truck, Clock, Shield, Star, ChevronRight, HelpCircle, Calculator, FileText } from "lucide-react";
 import { QuoteForm } from "@/components/forms/QuoteForm";
 import { prisma } from "@/lib/prisma";
-import { LocalBusinessSchema, FAQSchema, AggregateRatingSchema } from "@/components/seo/SchemaMarkup";
+import { LocalBusinessSchema, FAQSchema, AggregateRatingSchema, ReviewSchema } from "@/components/seo/SchemaMarkup";
 import { TestimonialStrip } from "@/components/ui/TestimonialStrip";
+import { DeliveryCounter, ResponseTimeStat } from "@/components/ui/TrustBadges";
 
 const dumpsterSizes = [
   {
@@ -138,6 +139,12 @@ export default async function HomePage() {
                   <Phone className="h-3 w-3" />
                   Speak to a real person
                 </span>
+              </div>
+
+              {/* Delivery Counter & Response Time - Social proof */}
+              <div className="flex flex-wrap gap-3 mb-4">
+                <DeliveryCounter variant="dark" />
+                <ResponseTimeStat variant="dark" />
               </div>
 
               {/* Quote Form */}
@@ -334,6 +341,64 @@ export default async function HomePage() {
         </section>
       )}
 
+      {/* Helpful Guides Section - Internal Linking for PAA Pages */}
+      <section className="py-12 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-bold text-secondary-900 mb-2">
+              Helpful Dumpster Rental Guides
+            </h2>
+            <p className="text-secondary-600">
+              Everything you need to know before renting a dumpster
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            <Link
+              href="/what-size-dumpster-do-i-need"
+              className="group bg-secondary-50 hover:bg-primary-50 rounded-xl p-6 transition-colors"
+            >
+              <div className="bg-primary-100 w-12 h-12 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary-200 transition-colors">
+                <Calculator className="h-6 w-6 text-primary-600" />
+              </div>
+              <h3 className="font-bold text-secondary-900 mb-2 group-hover:text-primary-600">
+                What Size Dumpster Do I Need?
+              </h3>
+              <p className="text-sm text-secondary-600">
+                Find the perfect dumpster size for your project with our size guide and calculator.
+              </p>
+            </Link>
+            <Link
+              href="/how-much-does-dumpster-rental-cost"
+              className="group bg-secondary-50 hover:bg-primary-50 rounded-xl p-6 transition-colors"
+            >
+              <div className="bg-primary-100 w-12 h-12 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary-200 transition-colors">
+                <FileText className="h-6 w-6 text-primary-600" />
+              </div>
+              <h3 className="font-bold text-secondary-900 mb-2 group-hover:text-primary-600">
+                How Much Does It Cost?
+              </h3>
+              <p className="text-sm text-secondary-600">
+                Complete pricing breakdown for 10-40 yard dumpsters with no hidden fees.
+              </p>
+            </Link>
+            <Link
+              href="/do-i-need-permit-for-dumpster"
+              className="group bg-secondary-50 hover:bg-primary-50 rounded-xl p-6 transition-colors"
+            >
+              <div className="bg-primary-100 w-12 h-12 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary-200 transition-colors">
+                <HelpCircle className="h-6 w-6 text-primary-600" />
+              </div>
+              <h3 className="font-bold text-secondary-900 mb-2 group-hover:text-primary-600">
+                Do I Need a Permit?
+              </h3>
+              <p className="text-sm text-secondary-600">
+                When permits are required and how to get one for your dumpster placement.
+              </p>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-16 bg-primary-600 text-white">
         <div className="container mx-auto px-4 text-center">
@@ -365,6 +430,15 @@ export default async function HomePage() {
       {/* Schema Markup */}
       <LocalBusinessSchema />
       <AggregateRatingSchema ratingValue={4.9} reviewCount={500} />
+      <ReviewSchema
+        reviews={[
+          { author: "Mike R.", reviewBody: "Ordered Monday, delivered Tuesday. Couldn't be easier! Great price and the driver was super careful with my driveway.", ratingValue: 5 },
+          { author: "Sarah M.", reviewBody: "Used them for my kitchen remodel. The 15-yard was perfect. No hidden fees like other companies tried to charge me.", ratingValue: 5 },
+          { author: "James T.", reviewBody: "As a contractor, I've used many dumpster companies. These guys are reliable and their pricing is transparent. Highly recommend.", ratingValue: 5 },
+          { author: "Linda K.", reviewBody: "Cleaned out my parents' house after 40 years. The team was compassionate and made a hard time easier. Thank you!", ratingValue: 5 },
+          { author: "Robert D.", reviewBody: "Same-day delivery when I needed it most. My roof was leaking and I needed debris gone ASAP. Lifesavers!", ratingValue: 5 },
+        ]}
+      />
       <FAQSchema
         faqs={[
           { question: "How much does a dumpster rental cost?", answer: "Dumpster rental prices start at $495 for a 10-yard container, with all-inclusive pricing that covers delivery, pickup, 7-day rental, and weight allowance. Our 15-yard is $550, 20-yard is $595, 30-yard is $695, and 40-yard is $795. No hidden fees." },

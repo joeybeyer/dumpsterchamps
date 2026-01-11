@@ -1,7 +1,8 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { FAQSchema, BreadcrumbSchema } from "@/components/seo/SchemaMarkup";
-import { Phone, Calculator, Home, Hammer, Wrench, Package, Trash2 } from "lucide-react";
+import { Phone, Calculator, Home, Hammer, Wrench, Package, Trash2, Ruler, Truck } from "lucide-react";
+import { QuoteForm } from "@/components/forms/QuoteForm";
 
 export const metadata: Metadata = {
   title: "What Size Dumpster Do I Need? [2026] Size Guide + Calculator",
@@ -41,8 +42,10 @@ const faqs = [
 const sizeData = [
   {
     size: "10 Yard",
+    nickname: "The Starter",
     dimensions: '12\' L x 8\' W x 3.5\' H',
     capacity: "2-3 pickup truck loads",
+    truckLoads: 3,
     weight: "2-3 tons",
     icon: Package,
     color: "bg-blue-100 text-blue-700",
@@ -50,8 +53,10 @@ const sizeData = [
   },
   {
     size: "15 Yard",
+    nickname: "The Mid-Size",
     dimensions: '14\' L x 8\' W x 4\' H',
     capacity: "4-5 pickup truck loads",
+    truckLoads: 5,
     weight: "3-4 tons",
     icon: Home,
     color: "bg-green-100 text-green-700",
@@ -59,18 +64,22 @@ const sizeData = [
   },
   {
     size: "20 Yard",
+    nickname: "The Homeowner Special",
     dimensions: '22\' L x 8\' W x 4\' H',
     capacity: "6 pickup truck loads",
+    truckLoads: 6,
     weight: "4 tons",
     icon: Hammer,
-    color: "bg-yellow-100 text-yellow-700",
+    color: "bg-primary-100 text-primary-700",
     popular: true,
     projects: ["Kitchen remodel", "Full bathroom gut", "Roofing (up to 3,000 sq ft)", "Multiple room renovation"],
   },
   {
     size: "30 Yard",
+    nickname: "The Remodeler",
     dimensions: '22\' L x 8\' W x 6\' H',
     capacity: "9 pickup truck loads",
+    truckLoads: 9,
     weight: "5 tons",
     icon: Wrench,
     color: "bg-orange-100 text-orange-700",
@@ -78,8 +87,10 @@ const sizeData = [
   },
   {
     size: "40 Yard",
+    nickname: "The Monster",
     dimensions: '22\' L x 8\' W x 8\' H',
     capacity: "12 pickup truck loads",
+    truckLoads: 12,
     weight: "6 tons",
     icon: Trash2,
     color: "bg-red-100 text-red-700",
@@ -114,74 +125,210 @@ export default function WhatSizeDumpsterDoINeedPage() {
       />
 
       <main className="min-h-screen bg-white">
-        {/* Breadcrumb */}
-        <div className="bg-secondary-50 border-b border-secondary-200">
-          <div className="max-w-4xl mx-auto px-4 py-3">
-            <nav className="text-sm text-secondary-600">
-              <Link href="/" className="hover:text-primary-600">Home</Link>
+        {/* HERO SECTION - Two Column with Quote Form */}
+        <section className="relative bg-gradient-to-br from-secondary-900 to-secondary-800 py-16 md:py-20">
+          <div className="container mx-auto px-4">
+            {/* Breadcrumb */}
+            <nav className="text-sm text-secondary-400 mb-6">
+              <Link href="/" className="hover:text-white">Home</Link>
               <span className="mx-2">/</span>
-              <span className="text-secondary-900">What Size Dumpster Do I Need</span>
+              <span className="text-white">What Size Dumpster Do I Need</span>
             </nav>
-          </div>
-        </div>
 
-        <div className="max-w-4xl mx-auto px-4 py-8">
-          {/* Quick Answer Box - Critical for PAA */}
-          <div className="bg-blue-50 border-l-4 border-blue-500 p-6 mb-8 rounded-r-lg">
-            <h2 className="text-lg font-bold text-blue-900 mb-2">Quick Answer</h2>
-            <p className="text-blue-800 mb-2">
-              <strong>What size dumpster do I need?</strong>
-            </p>
-            <p className="text-blue-700">
-              Most homeowners need a <strong>15-20 yard dumpster</strong>. A 10-yard handles single room cleanouts,
-              while 30-40 yard is for major renovations or estate cleanouts. Not sure?{" "}
-              <Link href="/calculator" className="text-blue-600 font-semibold hover:underline">
-                Use our free calculator
-              </Link>{" "}
-              for a personalized recommendation.
-            </p>
-          </div>
+            <div className="grid lg:grid-cols-2 gap-12 items-start">
+              {/* Left Column: Text & Glass Answer Box */}
+              <div>
+                <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
+                  What Size Dumpster Do I Need?
+                </h1>
 
-          {/* H1 with year for freshness */}
-          <h1 className="text-3xl md:text-4xl font-bold text-secondary-900 mb-6">
-            What Size Dumpster Do I Need? [2026] Complete Size Guide
-          </h1>
+                {/* GLASS MORPHISM Quick Answer Box */}
+                <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-6 shadow-2xl mb-8">
+                  <div className="flex items-start gap-3">
+                    <div className="bg-primary-500 p-2 rounded-full mt-1 flex-shrink-0">
+                      <Ruler className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <h2 className="text-lg font-bold text-white mb-2">Quick Answer</h2>
+                      <p className="text-secondary-200 leading-relaxed">
+                        For most residential projects, the <span className="font-bold text-white">20-Yard Dumpster</span> is
+                        the universal standard. It fits a 2-car garage cleanout, a medium kitchen remodel, or a large deck
+                        removal without taking up too much space.
+                      </p>
+                    </div>
+                  </div>
+                </div>
 
-          <p className="text-lg text-secondary-700 mb-8">
-            Choosing the right dumpster size saves you money. Too small and you'll need a second haul.
-            Too big and you're paying for space you don't need. Use this guide to find the perfect size
-            for your project.
-          </p>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Link
+                    href="/calculator"
+                    className="inline-flex justify-center items-center gap-2 px-6 py-3 bg-white text-secondary-900 font-bold rounded-lg hover:bg-secondary-100 transition-colors"
+                  >
+                    <Calculator className="w-5 h-5" />
+                    Use Size Calculator
+                  </Link>
+                  <a
+                    href="tel:8888600710"
+                    className="inline-flex justify-center items-center gap-2 px-6 py-3 border-2 border-primary-500 text-primary-400 font-bold rounded-lg hover:bg-primary-500 hover:text-white transition-colors"
+                  >
+                    <Phone className="w-5 h-5" />
+                    Ask an Expert
+                  </a>
+                </div>
+              </div>
 
-          {/* Calculator CTA */}
-          <div className="bg-primary-50 border border-primary-200 rounded-xl p-6 mb-12 flex flex-col md:flex-row items-center gap-4">
-            <Calculator className="w-12 h-12 text-primary-600 flex-shrink-0" />
-            <div className="flex-1 text-center md:text-left">
-              <h2 className="text-xl font-bold text-secondary-900 mb-1">Not Sure? Use Our Free Calculator</h2>
-              <p className="text-secondary-600">Answer a few questions and get a personalized size recommendation in 30 seconds.</p>
+              {/* Right Column: Quote Form */}
+              <div className="bg-white p-6 rounded-2xl shadow-2xl border-t-4 border-primary-500">
+                <h3 className="text-2xl font-bold text-secondary-900 mb-2">Check Availability</h3>
+                <p className="text-secondary-600 mb-6">Find out which sizes are in stock near you.</p>
+                <QuoteForm />
+              </div>
             </div>
-            <Link
-              href="/calculator"
-              className="bg-primary-600 text-white font-bold px-6 py-3 rounded-lg hover:bg-primary-700 transition-colors whitespace-nowrap"
-            >
-              Open Calculator
-            </Link>
           </div>
+        </section>
 
-          {/* Size Cards */}
+        {/* SIZE COMPARISON GRID - Visual Cards */}
+        <section className="py-16 bg-secondary-50">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold text-secondary-900 mb-4 text-center">Dumpster Sizes at a Glance</h2>
+            <p className="text-secondary-600 text-center mb-12 max-w-2xl mx-auto">
+              Compare sizes side-by-side. The pickup truck loads indicator shows how much each size holds.
+            </p>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
+              {sizeData.map((size) => (
+                <div
+                  key={size.size}
+                  className={`relative bg-white rounded-xl p-6 shadow-sm hover:shadow-lg transition-all ${
+                    size.popular
+                      ? 'border-2 border-primary-500 ring-2 ring-primary-100 transform lg:-translate-y-2'
+                      : 'border border-secondary-200'
+                  }`}
+                >
+                  {/* BEST SELLER Badge */}
+                  {size.popular && (
+                    <div className="absolute top-0 right-0 bg-primary-600 text-white text-xs font-bold px-3 py-1 rounded-bl-lg shadow-sm">
+                      BEST SELLER
+                    </div>
+                  )}
+
+                  <h3 className="text-2xl font-bold text-secondary-900 mb-1">{size.size}</h3>
+                  <p className="text-primary-600 font-semibold text-sm mb-4">&quot;{size.nickname}&quot;</p>
+
+                  {/* Visual Truck Loads Indicator */}
+                  <div className="flex items-center gap-2 mb-4 text-secondary-600">
+                    <Truck className="w-5 h-5" />
+                    <span className="font-bold text-secondary-900">~{size.truckLoads} Pickup Loads</span>
+                  </div>
+
+                  <ul className="space-y-2 text-sm text-secondary-600 mb-6">
+                    {size.projects.slice(0, 3).map((project, idx) => (
+                      <li key={idx} className="flex items-start gap-2">
+                        <span className="w-1.5 h-1.5 bg-primary-500 rounded-full mt-1.5 flex-shrink-0"></span>
+                        {project}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <a
+                    href="#quote-form"
+                    className={`block text-center py-2.5 px-4 rounded-lg font-bold transition-colors ${
+                      size.popular
+                        ? 'bg-primary-600 hover:bg-primary-700 text-white'
+                        : 'bg-secondary-100 hover:bg-secondary-200 text-secondary-900'
+                    }`}
+                  >
+                    Select {size.size}
+                  </a>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* REST OF CONTENT */}
+        <div className="max-w-4xl mx-auto px-4 py-12">
+          {/* Project Guide - Cards on Mobile, Table on Desktop */}
           <section className="mb-12">
             <h2 className="text-2xl font-bold text-secondary-900 mb-6">
-              Dumpster Sizes Explained
+              Dumpster Size by Project Type
+            </h2>
+
+            {/* Mobile: Stacked Cards */}
+            <div className="md:hidden space-y-3">
+              {projectGuide.map((item) => (
+                <div key={item.project} className="bg-white rounded-lg p-4 shadow-sm border border-secondary-100">
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="font-semibold text-secondary-900">{item.project}</h3>
+                    <span className="bg-primary-100 text-primary-700 text-sm font-bold px-2 py-1 rounded">
+                      {item.recommended}
+                    </span>
+                  </div>
+                  <p className="text-sm text-secondary-500">{item.notes}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Desktop: Table */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full border-collapse bg-white rounded-lg overflow-hidden shadow-sm">
+                <thead className="bg-primary-600 text-white">
+                  <tr>
+                    <th className="px-4 py-3 text-left font-semibold">Project</th>
+                    <th className="px-4 py-3 text-left font-semibold">Recommended Size</th>
+                    <th className="px-4 py-3 text-left font-semibold">Notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {projectGuide.map((item, index) => (
+                    <tr key={item.project} className={index % 2 === 0 ? "bg-white" : "bg-secondary-50"}>
+                      <td className="px-4 py-3 font-medium text-secondary-900">{item.project}</td>
+                      <td className="px-4 py-3 text-primary-600 font-semibold">{item.recommended}</td>
+                      <td className="px-4 py-3 text-secondary-600">{item.notes}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          {/* Weight Warning */}
+          <section className="mb-12">
+            <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-6">
+              <h2 className="text-xl font-bold text-yellow-800 mb-4">
+                Weight Matters More Than Size for Heavy Materials
+              </h2>
+              <p className="text-yellow-700 mb-4">
+                Heavy materials like concrete, brick, dirt, and roofing shingles can hit weight limits
+                before filling the dumpster. Here&apos;s how much common materials weigh:
+              </p>
+              <ul className="space-y-2 text-yellow-700">
+                <li><strong>Concrete/Asphalt:</strong> 4,000 lbs per cubic yard</li>
+                <li><strong>Brick/Block:</strong> 3,000 lbs per cubic yard</li>
+                <li><strong>Dirt/Sand:</strong> 2,200 lbs per cubic yard</li>
+                <li><strong>Roofing Shingles:</strong> 250 lbs per roofing square (100 sq ft)</li>
+              </ul>
+              <p className="text-yellow-700 mt-4">
+                <Link href="/calculator" className="font-semibold underline">Our calculator</Link>{" "}
+                accounts for weight to recommend the right size.
+              </p>
+            </div>
+          </section>
+
+          {/* Detailed Size Cards */}
+          <section className="mb-12">
+            <h2 className="text-2xl font-bold text-secondary-900 mb-6">
+              Dumpster Sizes Explained in Detail
             </h2>
 
             <div className="space-y-6">
               {sizeData.map((size) => (
                 <div
                   key={size.size}
-                  className={`border rounded-xl p-6 ${size.popular ? 'border-primary-500 ring-2 ring-primary-100' : 'border-secondary-200'}`}
+                  className={`relative border rounded-xl p-6 ${size.popular ? 'border-primary-500 ring-2 ring-primary-100' : 'border-secondary-200'}`}
                 >
                   {size.popular && (
-                    <div className="inline-block bg-primary-600 text-white text-xs font-bold px-3 py-1 rounded-full mb-4">
+                    <div className="absolute top-0 right-0 bg-primary-600 text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-xl">
                       MOST POPULAR
                     </div>
                   )}
@@ -215,57 +362,6 @@ export default function WhatSizeDumpsterDoINeedPage() {
                   </div>
                 </div>
               ))}
-            </div>
-          </section>
-
-          {/* Project Guide Table */}
-          <section className="mb-12">
-            <h2 className="text-2xl font-bold text-secondary-900 mb-6">
-              Dumpster Size by Project Type
-            </h2>
-
-            <div className="overflow-x-auto">
-              <table className="w-full border-collapse bg-white rounded-lg overflow-hidden shadow-sm">
-                <thead className="bg-primary-600 text-white">
-                  <tr>
-                    <th className="px-4 py-3 text-left font-semibold">Project</th>
-                    <th className="px-4 py-3 text-left font-semibold">Recommended Size</th>
-                    <th className="px-4 py-3 text-left font-semibold hidden sm:table-cell">Notes</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {projectGuide.map((item, index) => (
-                    <tr key={item.project} className={index % 2 === 0 ? "bg-white" : "bg-secondary-50"}>
-                      <td className="px-4 py-3 font-medium text-secondary-900">{item.project}</td>
-                      <td className="px-4 py-3 text-primary-600 font-semibold">{item.recommended}</td>
-                      <td className="px-4 py-3 text-secondary-600 hidden sm:table-cell">{item.notes}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </section>
-
-          {/* Weight Warning */}
-          <section className="mb-12">
-            <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-6">
-              <h2 className="text-xl font-bold text-yellow-800 mb-4">
-                ⚠️ Weight Matters More Than Size for Heavy Materials
-              </h2>
-              <p className="text-yellow-700 mb-4">
-                Heavy materials like concrete, brick, dirt, and roofing shingles can hit weight limits
-                before filling the dumpster. Here's how much common materials weigh:
-              </p>
-              <ul className="space-y-2 text-yellow-700">
-                <li><strong>Concrete/Asphalt:</strong> 4,000 lbs per cubic yard</li>
-                <li><strong>Brick/Block:</strong> 3,000 lbs per cubic yard</li>
-                <li><strong>Dirt/Sand:</strong> 2,200 lbs per cubic yard</li>
-                <li><strong>Roofing Shingles:</strong> 250 lbs per roofing square (100 sq ft)</li>
-              </ul>
-              <p className="text-yellow-700 mt-4">
-                <Link href="/calculator" className="font-semibold underline">Our calculator</Link>{" "}
-                accounts for weight to recommend the right size.
-              </p>
             </div>
           </section>
 
@@ -328,12 +424,12 @@ export default function WhatSizeDumpsterDoINeedPage() {
           </section>
 
           {/* CTA Section */}
-          <section className="bg-primary-600 text-white rounded-xl p-8 text-center">
+          <section id="quote-form" className="bg-primary-600 text-white rounded-xl p-8 text-center">
             <h2 className="text-2xl font-bold mb-4">
-              Still Not Sure? We'll Help You Choose
+              Still Not Sure? We&apos;ll Help You Choose
             </h2>
             <p className="text-primary-100 mb-6">
-              Call us and describe your project. We'll recommend the perfect size—no upselling, guaranteed.
+              Call us and describe your project. We&apos;ll recommend the perfect size—no upselling, guaranteed.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

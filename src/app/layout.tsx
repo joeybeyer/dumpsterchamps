@@ -66,6 +66,18 @@ export default function RootLayout({
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+
+        {/* Theme color for mobile browser chrome */}
+        <meta name="theme-color" content="#df5f12" />
+
+        {/* Preload critical hero images for LCP improvement */}
+        <link
+          rel="preload"
+          href="/images/hero/hero-homeowner-desktop.jpg"
+          as="image"
+          type="image/jpeg"
+          media="(min-width: 1024px)"
+        />
       </head>
       <body className={`${inter.variable} antialiased`}>
         {/* GTM - Load after page is interactive for better LCP */}

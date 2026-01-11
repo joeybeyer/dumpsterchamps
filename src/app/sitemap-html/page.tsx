@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { ChevronRight, MapPin, Package, Truck, FileText } from "lucide-react";
+import { ChevronRight, MapPin, Package, Truck, FileText, HelpCircle } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 
 export const metadata: Metadata = {
@@ -107,7 +107,67 @@ export default async function SitemapPage() {
                     Terms of Service
                   </Link>
                 </li>
+                <li>
+                  <Link
+                    href="/calculator"
+                    className="text-secondary-600 hover:text-primary-600 transition-colors"
+                  >
+                    Dumpster Size Calculator
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/dumpster-rental-prices"
+                    className="text-secondary-600 hover:text-primary-600 transition-colors"
+                  >
+                    Pricing
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/blog"
+                    className="text-secondary-600 hover:text-primary-600 transition-colors"
+                  >
+                    Blog
+                  </Link>
+                </li>
               </ul>
+
+              {/* Helpful Guides (PAA Pages) */}
+              <div className="mt-8">
+                <div className="flex items-center gap-2 mb-4">
+                  <HelpCircle className="h-5 w-5 text-primary-600" />
+                  <h2 className="text-xl font-bold text-secondary-900">
+                    Helpful Guides
+                  </h2>
+                </div>
+                <ul className="space-y-2">
+                  <li>
+                    <Link
+                      href="/how-much-does-dumpster-rental-cost"
+                      className="text-secondary-600 hover:text-primary-600 transition-colors"
+                    >
+                      2026 Dumpster Rental Cost Guide
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/what-size-dumpster-do-i-need"
+                      className="text-secondary-600 hover:text-primary-600 transition-colors"
+                    >
+                      What Size Dumpster Do I Need?
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/do-i-need-permit-for-dumpster"
+                      className="text-secondary-600 hover:text-primary-600 transition-colors"
+                    >
+                      Dumpster Permit Guide
+                    </Link>
+                  </li>
+                </ul>
+              </div>
 
               {/* Dumpster Sizes */}
               <div className="mt-8">

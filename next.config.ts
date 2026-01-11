@@ -141,11 +141,6 @@ const nextConfig: NextConfig = {
       { source: "/Construction-dumpsters", destination: "/construction-dumpster-rental", permanent: true },
       { source: "/construction-dumpsters", destination: "/construction-dumpster-rental", permanent: true },
 
-      // ============ NEIGHBORHOOD PAGES → PARENT CITY REDIRECTS ============
-      // Catch-all for old neighborhood URLs like /dumpster-rental-city-st/neighborhood
-      // Note: This only matches paths starting with /dumpster-rental- so service pages are safe
-      { source: "/dumpster-rental-:city/:neighborhood", destination: "/dumpster-rental-:city", permanent: true },
-
       // ============ MISC 404 FIXES ============
       { source: "/Brewers-Hill-Milwaukee-Wi", destination: "/dumpster-rental-milwaukee-wi", permanent: true },
       { source: "/dumpster-rental-augusta", destination: "/dumpster-rental-augusta-ga", permanent: true },
