@@ -320,44 +320,113 @@ export default async function NeighborhoodPage({ params }: PageProps) {
 
             {/* Sidebar */}
             <aside className="lg:col-span-1">
-              {/* Pricing Card */}
-              <div className="bg-primary-50 rounded-xl p-6 mb-8">
-                <h3 className="text-xl font-bold text-secondary-900 mb-4">
-                  {neighborhood.name} Pricing
-                </h3>
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-primary-200">
-                      <th className="text-left py-2">Size</th>
-                      <th className="text-right py-2">Price</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="border-b border-primary-100">
-                      <td className="py-2">10 Yard</td>
-                      <td className="text-right font-semibold">$495</td>
-                    </tr>
-                    <tr className="border-b border-primary-100">
-                      <td className="py-2">15 Yard</td>
-                      <td className="text-right font-semibold">$550</td>
-                    </tr>
-                    <tr className="border-b border-primary-100 bg-primary-100">
-                      <td className="py-2 font-medium">20 Yard ⭐</td>
-                      <td className="text-right font-bold text-primary-700">$595</td>
-                    </tr>
-                    <tr className="border-b border-primary-100">
-                      <td className="py-2">30 Yard</td>
-                      <td className="text-right font-semibold">$695</td>
-                    </tr>
-                    <tr>
-                      <td className="py-2">40 Yard</td>
-                      <td className="text-right font-semibold">$795</td>
-                    </tr>
-                  </tbody>
-                </table>
-                <p className="text-xs text-secondary-600 mt-3">
-                  Includes delivery, pickup, and disposal. 7-day rental included.
-                </p>
+              {/* Pricing Card - Enhanced for scannability */}
+              <div className="bg-white rounded-xl shadow-lg border border-secondary-200 overflow-hidden mb-8">
+                <div className="bg-secondary-900 text-white px-6 py-4">
+                  <h3 className="text-xl font-bold">
+                    {neighborhood.name} Pricing
+                  </h3>
+                  <p className="text-secondary-300 text-sm">Flat-rate, all-inclusive</p>
+                </div>
+
+                <div className="divide-y divide-secondary-100">
+                  {/* 10 Yard */}
+                  <div className="px-6 py-4 hover:bg-secondary-50 transition-colors">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="font-bold text-secondary-900">10 Yard</span>
+                      <span className="text-xl font-bold text-primary-600">$495</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-secondary-500 text-sm mb-3">
+                      <Truck className="h-4 w-4" />
+                      <span>x 4 pickup loads</span>
+                    </div>
+                    <a
+                      href={`tel:${phone.replace(/[^0-9]/g, '')}`}
+                      className="block w-full text-center bg-secondary-100 text-secondary-700 py-2 rounded-lg text-sm font-medium hover:bg-primary-600 hover:text-white transition-colors"
+                    >
+                      Book 10 Yard
+                    </a>
+                  </div>
+
+                  {/* 15 Yard */}
+                  <div className="px-6 py-4 hover:bg-secondary-50 transition-colors">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="font-bold text-secondary-900">15 Yard</span>
+                      <span className="text-xl font-bold text-primary-600">$550</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-secondary-500 text-sm mb-3">
+                      <Truck className="h-4 w-4" />
+                      <span>x 6 pickup loads</span>
+                    </div>
+                    <a
+                      href={`tel:${phone.replace(/[^0-9]/g, '')}`}
+                      className="block w-full text-center bg-secondary-100 text-secondary-700 py-2 rounded-lg text-sm font-medium hover:bg-primary-600 hover:text-white transition-colors"
+                    >
+                      Book 15 Yard
+                    </a>
+                  </div>
+
+                  {/* 20 Yard - Most Popular */}
+                  <div className="px-6 py-4 bg-primary-50 border-l-4 border-primary-500">
+                    <div className="flex justify-between items-center mb-1">
+                      <div>
+                        <span className="font-bold text-secondary-900">20 Yard</span>
+                        <span className="ml-2 text-xs bg-primary-500 text-white px-2 py-0.5 rounded-full">Most Popular</span>
+                      </div>
+                      <span className="text-xl font-bold text-primary-600">$595</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-secondary-500 text-sm mb-3">
+                      <Truck className="h-4 w-4" />
+                      <span>x 8 pickup loads</span>
+                    </div>
+                    <a
+                      href={`tel:${phone.replace(/[^0-9]/g, '')}`}
+                      className="block w-full text-center bg-primary-600 text-white py-2 rounded-lg text-sm font-semibold hover:bg-primary-700 transition-colors"
+                    >
+                      Book 20 Yard
+                    </a>
+                  </div>
+
+                  {/* 30 Yard */}
+                  <div className="px-6 py-4 hover:bg-secondary-50 transition-colors">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="font-bold text-secondary-900">30 Yard</span>
+                      <span className="text-xl font-bold text-primary-600">$695</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-secondary-500 text-sm mb-3">
+                      <Truck className="h-4 w-4" />
+                      <span>x 12 pickup loads</span>
+                    </div>
+                    <a
+                      href={`tel:${phone.replace(/[^0-9]/g, '')}`}
+                      className="block w-full text-center bg-secondary-100 text-secondary-700 py-2 rounded-lg text-sm font-medium hover:bg-primary-600 hover:text-white transition-colors"
+                    >
+                      Book 30 Yard
+                    </a>
+                  </div>
+
+                  {/* 40 Yard */}
+                  <div className="px-6 py-4 hover:bg-secondary-50 transition-colors">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="font-bold text-secondary-900">40 Yard</span>
+                      <span className="text-xl font-bold text-primary-600">$795</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-secondary-500 text-sm mb-3">
+                      <Truck className="h-4 w-4" />
+                      <span>x 16 pickup loads</span>
+                    </div>
+                    <a
+                      href={`tel:${phone.replace(/[^0-9]/g, '')}`}
+                      className="block w-full text-center bg-secondary-100 text-secondary-700 py-2 rounded-lg text-sm font-medium hover:bg-primary-600 hover:text-white transition-colors"
+                    >
+                      Book 40 Yard
+                    </a>
+                  </div>
+                </div>
+
+                <div className="px-6 py-3 bg-secondary-50 text-xs text-secondary-600">
+                  Includes delivery, pickup, disposal & 7-day rental
+                </div>
               </div>
 
               {/* All Neighborhoods */}
