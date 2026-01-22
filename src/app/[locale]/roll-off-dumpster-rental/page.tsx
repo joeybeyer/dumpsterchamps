@@ -3,6 +3,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { Phone, Check, Truck, Clock, Shield, ArrowRight, HardHat, Home, Building } from "lucide-react";
 import { LastUpdated } from "@/components/seo/LastUpdated";
+import { setRequestLocale } from "next-intl/server";
+
+interface PageProps {
+  params: Promise<{ locale: string }>;
+}
 
 export const metadata: Metadata = {
   title: "Roll Off Dumpster Rental | Open-Top Container Delivery",
@@ -94,7 +99,10 @@ const USE_CASES = [
   },
 ];
 
-export default function RollOffDumpsterPage() {
+export default async function RollOffDumpsterPage({ params }: PageProps) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
   const phone = process.env.NEXT_PUBLIC_PHONE || "(888) 860-0710";
 
   return (

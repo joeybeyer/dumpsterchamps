@@ -4,6 +4,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ChevronRight, Phone, Check, Truck, Clock, Shield, Ruler, Package, Wrench, MapPin, HardHat, Home, Star } from "lucide-react";
 import { prisma } from "@/lib/prisma";
+import { setRequestLocale } from "next-intl/server";
 
 // Force dynamic rendering to prevent DB access at build time
 export const dynamic = "force-dynamic";
@@ -168,7 +169,7 @@ function formatMarkdownContent(content: string): string {
 }
 
 interface PageProps {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; locale: string }>;
 }
 
 // Define valid slugs
@@ -1541,7 +1542,9 @@ async function ServicePage({ serviceSlug }: { serviceSlug: string }) {
 
 // ============ MAIN PAGE COMPONENT ============
 export default async function DynamicPage({ params }: PageProps) {
-  const { slug } = await params;
+  const { slug, locale } = await params;
+  setRequestLocale(locale);
+
   const pageType = await getPageType(slug);
 
   if (!pageType) {

@@ -2,6 +2,11 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { ChevronRight, Phone, Mail, Clock } from "lucide-react";
 import { QuoteForm } from "@/components/forms/QuoteForm";
+import { setRequestLocale } from "next-intl/server";
+
+interface PageProps {
+  params: Promise<{ locale: string }>;
+}
 
 export const metadata: Metadata = {
   title: "Contact Us | Dumpster Champs",
@@ -9,7 +14,10 @@ export const metadata: Metadata = {
     "Contact Dumpster Champs for a free quote. Call us at (888) 860-0710 or fill out our contact form for fast, affordable dumpster rental.",
 };
 
-export default function ContactPage() {
+export default async function ContactPage({ params }: PageProps) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
   const phone = process.env.NEXT_PUBLIC_PHONE || "(888) 860-0710";
   const email = "contact@dumpsterchamps.com";
 

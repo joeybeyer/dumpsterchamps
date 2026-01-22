@@ -4,12 +4,13 @@ import { notFound } from "next/navigation";
 import { ChevronRight, ArrowRight } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { BLOG_TEMPLATES, processContent } from "@/data/blogTemplates";
+import { setRequestLocale } from "next-intl/server";
 
 // Force dynamic rendering to prevent DB access at build time
 export const dynamic = "force-dynamic";
 
 interface PageProps {
-  params: Promise<{ citySlug: string }>;
+  params: Promise<{ citySlug: string; locale: string }>;
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -36,7 +37,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 // generateStaticParams removed - using force-dynamic instead
 
 export default async function CityBlogIndex({ params }: PageProps) {
-  const { citySlug } = await params;
+  const { citySlug, locale } = await params;
+  setRequestLocale(locale);
 
   const city = await prisma.city.findFirst({
     where: {

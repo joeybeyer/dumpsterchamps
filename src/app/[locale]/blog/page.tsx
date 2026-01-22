@@ -3,6 +3,11 @@ import Link from "next/link";
 import { ChevronRight, MapPin, FileText, ArrowRight, Ruler, DollarSign, Trash2, BookOpen } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { BLOG_TEMPLATES } from "@/data/blogTemplates";
+import { setRequestLocale } from "next-intl/server";
+
+interface PageProps {
+  params: Promise<{ locale: string }>;
+}
 
 // Force dynamic rendering to prevent DB access at build time
 export const dynamic = "force-dynamic";
@@ -48,7 +53,10 @@ const pillarPages = [
   },
 ];
 
-export default async function BlogIndex() {
+export default async function BlogIndex({ params }: PageProps) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
   const states = await prisma.state.findMany({
     include: {
       cities: {

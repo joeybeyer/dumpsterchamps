@@ -5,6 +5,11 @@ import { ChevronRight, Check, X, AlertTriangle, Recycle, Info, ArrowRight } from
 import { FAQSchema, BreadcrumbSchema } from "@/components/seo/SchemaMarkup";
 import { AuthorBox } from "@/components/blog/AuthorBox";
 import { LastUpdated, ArticleSchema } from "@/components/seo/LastUpdated";
+import { setRequestLocale } from "next-intl/server";
+
+interface PageProps {
+  params: Promise<{ locale: string }>;
+}
 
 // Content freshness date - update this when content is refreshed
 const LAST_UPDATED = new Date("2026-01-11");
@@ -205,7 +210,9 @@ const faqs = [
   },
 ];
 
-export default function WhatCanGoInDumpster() {
+export default async function WhatCanGoInDumpster({ params }: PageProps) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   return (
     <>
       {/* Hero Section */}

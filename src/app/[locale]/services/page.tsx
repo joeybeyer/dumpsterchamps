@@ -2,6 +2,11 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { ChevronRight, Truck, HardHat, Home, Check } from "lucide-react";
 import { prisma } from "@/lib/prisma";
+import { setRequestLocale } from "next-intl/server";
+
+interface PageProps {
+  params: Promise<{ locale: string }>;
+}
 
 export const metadata: Metadata = {
   title: "Dumpster Rental Services | Dumpster Champs",
@@ -42,7 +47,10 @@ const serviceDetails = [
   },
 ];
 
-export default async function ServicesPage() {
+export default async function ServicesPage({ params }: PageProps) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
   const services = await prisma.service.findMany({
     orderBy: { name: "asc" },
   });

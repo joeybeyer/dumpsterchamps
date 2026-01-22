@@ -1,6 +1,11 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { ChevronRight, Users, Target, Award, Heart } from "lucide-react";
+import { setRequestLocale } from "next-intl/server";
+
+interface PageProps {
+  params: Promise<{ locale: string }>;
+}
 
 export const metadata: Metadata = {
   title: "About Us | Dumpster Champs",
@@ -35,7 +40,10 @@ const values = [
   },
 ];
 
-export default function AboutPage() {
+export default async function AboutPage({ params }: PageProps) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
   return (
     <>
       {/* Hero */}

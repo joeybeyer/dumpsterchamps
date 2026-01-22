@@ -2,6 +2,11 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { FAQSchema, BreadcrumbSchema } from "@/components/seo/SchemaMarkup";
 import { Phone, CheckCircle, DollarSign, Truck, Clock, Shield } from "lucide-react";
+import { setRequestLocale } from "next-intl/server";
+
+interface PageProps {
+  params: Promise<{ locale: string }>;
+}
 
 export const metadata: Metadata = {
   title: "How Much Does It Cost to Rent a Dumpster? [2026] Pricing Guide",
@@ -55,7 +60,10 @@ const includedFeatures = [
   { icon: CheckCircle, text: "No hidden fuel surcharges" },
 ];
 
-export default function HowMuchDoesDumpsterRentalCostPage() {
+export default async function HowMuchDoesDumpsterRentalCostPage({ params }: PageProps) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
   return (
     <>
       {/* Schema Markup */}

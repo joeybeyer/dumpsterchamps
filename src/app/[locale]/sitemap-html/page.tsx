@@ -2,6 +2,11 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { ChevronRight, MapPin, Package, Truck, FileText, HelpCircle } from "lucide-react";
 import { prisma } from "@/lib/prisma";
+import { setRequestLocale } from "next-intl/server";
+
+interface PageProps {
+  params: Promise<{ locale: string }>;
+}
 
 export const metadata: Metadata = {
   title: "Sitemap | Dumpster Champs",
@@ -9,7 +14,10 @@ export const metadata: Metadata = {
     "Browse all pages on Dumpster Champs. Find dumpster rental services, sizes, and locations across the United States.",
 };
 
-export default async function SitemapPage() {
+export default async function SitemapPage({ params }: PageProps) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
   const [states, sizes, services] = await Promise.all([
     prisma.state.findMany({
       include: { cities: { orderBy: { name: "asc" } } },

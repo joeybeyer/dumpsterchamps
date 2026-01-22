@@ -2,6 +2,11 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { ChevronRight, Ruler, Package } from "lucide-react";
 import { prisma } from "@/lib/prisma";
+import { setRequestLocale } from "next-intl/server";
+
+interface PageProps {
+  params: Promise<{ locale: string }>;
+}
 
 export const metadata: Metadata = {
   title: "Dumpster Sizes Guide | Dumpster Champs",
@@ -9,7 +14,10 @@ export const metadata: Metadata = {
     "Compare dumpster sizes from 10 to 40 yards. Find the right size for your project with our comprehensive size guide.",
 };
 
-export default async function DumpsterSizesPage() {
+export default async function DumpsterSizesPage({ params }: PageProps) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
   const sizes = await prisma.dumpsterSize.findMany({
     orderBy: { size: "asc" },
   });

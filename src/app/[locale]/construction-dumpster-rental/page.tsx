@@ -3,6 +3,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { Phone, Check, Truck, HardHat, Clock, Shield, Recycle, AlertTriangle } from "lucide-react";
 import { LastUpdated } from "@/components/seo/LastUpdated";
+import { setRequestLocale } from "next-intl/server";
+
+interface PageProps {
+  params: Promise<{ locale: string }>;
+}
 
 export const metadata: Metadata = {
   title: "Construction Dumpster Rental | Contractor Waste Solutions",
@@ -80,7 +85,9 @@ const CONTRACTOR_BENEFITS = [
   },
 ];
 
-export default function ConstructionDumpsterPage() {
+export default async function ConstructionDumpsterPage({ params }: PageProps) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const phone = process.env.NEXT_PUBLIC_PHONE || "(888) 860-0710";
 
   return (

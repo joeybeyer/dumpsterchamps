@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { ChevronRight, Phone, ArrowRight, Calendar, Clock } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { QuoteForm } from "@/components/forms/QuoteForm";
+import { setRequestLocale } from "next-intl/server";
 
 // Force dynamic rendering to prevent DB access at build time
 export const dynamic = "force-dynamic";
@@ -18,7 +19,7 @@ import {
 } from "@/data/blogTemplates";
 
 interface PageProps {
-  params: Promise<{ citySlug: string; blogSlug: string }>;
+  params: Promise<{ citySlug: string; blogSlug: string; locale: string }>;
 }
 
 // Find template by matching slug pattern
@@ -70,7 +71,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 // generateStaticParams removed - using force-dynamic instead
 
 export default async function CityBlogPost({ params }: PageProps) {
-  const { citySlug, blogSlug } = await params;
+  const { citySlug, blogSlug, locale } = await params;
+  setRequestLocale(locale);
 
   // Get city info
   const city = await prisma.city.findFirst({

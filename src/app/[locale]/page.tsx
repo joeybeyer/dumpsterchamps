@@ -6,9 +6,16 @@ import { prisma } from "@/lib/prisma";
 import { LocalBusinessSchema, FAQSchema, AggregateRatingSchema, ReviewSchema } from "@/components/seo/SchemaMarkup";
 import { TestimonialStrip } from "@/components/ui/TestimonialStrip";
 import { DeliveryCounter, ResponseTimeStat } from "@/components/ui/TrustBadges";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
-export default async function HomePage() {
+interface PageProps {
+  params: Promise<{ locale: string }>;
+}
+
+export default async function HomePage({ params }: PageProps) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
   // Get translations
   const t = await getTranslations();
 

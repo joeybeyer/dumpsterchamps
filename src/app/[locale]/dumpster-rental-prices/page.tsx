@@ -3,6 +3,11 @@ import Link from "next/link";
 import { Phone, Check, AlertTriangle, Calculator, TrendingDown, Shield, Clock, Truck, ShoppingCart } from "lucide-react";
 import { FAQSchema } from "@/components/seo/SchemaMarkup";
 import { TrustBadgesInline, DeliveryCounter } from "@/components/ui/TrustBadges";
+import { setRequestLocale } from "next-intl/server";
+
+interface PageProps {
+  params: Promise<{ locale: string }>;
+}
 
 export const metadata: Metadata = {
   title: "Dumpster Rental Prices 2026 | How Much Does a Dumpster Cost?",
@@ -97,7 +102,10 @@ const FACTORS_AFFECTING_PRICE = [
   },
 ];
 
-export default function PricingPage() {
+export default async function PricingPage({ params }: PageProps) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
   const phone = process.env.NEXT_PUBLIC_PHONE || "(888) 860-0710";
 
   return (

@@ -3,6 +3,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { Phone, Check, Truck, Home, Clock, Shield, Sparkles, TreeDeciduous } from "lucide-react";
 import { LastUpdated } from "@/components/seo/LastUpdated";
+import { setRequestLocale } from "next-intl/server";
+
+interface PageProps {
+  params: Promise<{ locale: string }>;
+}
 
 export const metadata: Metadata = {
   title: "Residential Dumpster Rental | Home Cleanout & Renovation",
@@ -87,7 +92,9 @@ const HOMEOWNER_TIPS = [
   },
 ];
 
-export default function ResidentialDumpsterPage() {
+export default async function ResidentialDumpsterPage({ params }: PageProps) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const phone = process.env.NEXT_PUBLIC_PHONE || "(888) 860-0710";
 
   return (

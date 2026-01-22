@@ -3,6 +3,11 @@ import Link from "next/link";
 import { FAQSchema, BreadcrumbSchema } from "@/components/seo/SchemaMarkup";
 import { Phone, Calculator, Home, Hammer, Wrench, Package, Trash2, Ruler, Truck } from "lucide-react";
 import { QuoteForm } from "@/components/forms/QuoteForm";
+import { setRequestLocale } from "next-intl/server";
+
+interface PageProps {
+  params: Promise<{ locale: string }>;
+}
 
 export const metadata: Metadata = {
   title: "What Size Dumpster Do I Need? [2026] Size Guide + Calculator",
@@ -112,7 +117,10 @@ const projectGuide = [
   { project: "New construction", recommended: "30-40 Yard", notes: "Depends on project scope" },
 ];
 
-export default function WhatSizeDumpsterDoINeedPage() {
+export default async function WhatSizeDumpsterDoINeedPage({ params }: PageProps) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
   return (
     <>
       {/* Schema Markup */}

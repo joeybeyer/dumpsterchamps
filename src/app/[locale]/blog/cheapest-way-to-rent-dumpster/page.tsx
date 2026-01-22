@@ -5,6 +5,11 @@ import { ChevronRight, Check, DollarSign, X, AlertTriangle, Lightbulb, ArrowRigh
 import { FAQSchema, BreadcrumbSchema } from "@/components/seo/SchemaMarkup";
 import { AuthorBox } from "@/components/blog/AuthorBox";
 import { LastUpdated, ArticleSchema } from "@/components/seo/LastUpdated";
+import { setRequestLocale } from "next-intl/server";
+
+interface PageProps {
+  params: Promise<{ locale: string }>;
+}
 
 // Content freshness date - update this when content is refreshed
 const LAST_UPDATED = new Date("2026-01-11");
@@ -135,7 +140,9 @@ const faqs = [
   },
 ];
 
-export default function CheapestDumpsterRental() {
+export default async function CheapestDumpsterRental({ params }: PageProps) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   return (
     <>
       {/* Hero Section */}

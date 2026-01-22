@@ -1,6 +1,11 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { Phone, Check, Truck, Clock, Shield, Ruler, ArrowRight } from "lucide-react";
+import { setRequestLocale } from "next-intl/server";
+
+interface PageProps {
+  params: Promise<{ locale: string }>;
+}
 
 export const metadata: Metadata = {
   title: "Small Dumpster Rental | 10 & 15 Yard Containers",
@@ -77,7 +82,10 @@ const WHEN_SMALL = [
   },
 ];
 
-export default function SmallDumpsterPage() {
+export default async function SmallDumpsterPage({ params }: PageProps) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
   const phone = process.env.NEXT_PUBLIC_PHONE || "(888) 860-0710";
 
   return (

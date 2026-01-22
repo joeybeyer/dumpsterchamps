@@ -1,6 +1,11 @@
 import { Metadata } from "next";
 import { DumpsterCalculator } from "@/components/tools/DumpsterCalculator";
 import { FAQSchema } from "@/components/seo/SchemaMarkup";
+import { setRequestLocale } from "next-intl/server";
+
+interface PageProps {
+  params: Promise<{ locale: string }>;
+}
 
 export const metadata: Metadata = {
   title: "Dumpster Size Calculator - What Size Dumpster Do I Need?",
@@ -15,7 +20,10 @@ export const metadata: Metadata = {
   ],
 };
 
-export default function CalculatorPage() {
+export default async function CalculatorPage({ params }: PageProps) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Hero Section */}

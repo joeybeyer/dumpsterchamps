@@ -2,6 +2,11 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { FAQSchema, BreadcrumbSchema } from "@/components/seo/SchemaMarkup";
 import { Phone, CheckCircle, AlertTriangle, FileText, MapPin, Building, Home } from "lucide-react";
+import { setRequestLocale } from "next-intl/server";
+
+interface PageProps {
+  params: Promise<{ locale: string }>;
+}
 
 export const metadata: Metadata = {
   title: "Do I Need a Permit for a Dumpster? [2026] Complete Guide",
@@ -102,7 +107,10 @@ const permitSteps = [
   },
 ];
 
-export default function DoINeedPermitForDumpsterPage() {
+export default async function DoINeedPermitForDumpsterPage({ params }: PageProps) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
   return (
     <>
       {/* Schema Markup */}

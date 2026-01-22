@@ -10,6 +10,7 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { prisma } from '@/lib/prisma';
+import { setRequestLocale } from "next-intl/server";
 
 // Force dynamic rendering to prevent DB access at build time
 export const dynamic = "force-dynamic";
@@ -21,6 +22,7 @@ interface PageProps {
   params: Promise<{
     slug: string;
     neighborhoodSlug: string;
+    locale: string;
   }>;
 }
 
@@ -64,7 +66,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 // generateStaticParams removed - using force-dynamic instead
 
 export default async function NeighborhoodPage({ params }: PageProps) {
-  const { slug, neighborhoodSlug } = await params;
+  const { slug, neighborhoodSlug, locale } = await params;
+  setRequestLocale(locale);
 
   // Validate city slug format
   if (!isValidCitySlug(slug)) {
