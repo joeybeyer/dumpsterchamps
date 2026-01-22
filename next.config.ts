@@ -1,7 +1,14 @@
 import type { NextConfig } from "next";
+import createNextIntlPlugin from "next-intl/plugin";
+
+const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
   output: "standalone",
+
+  // Fix workspace root detection on server - prevents Next.js from
+  // looking for modules in /home/admin instead of the project directory
+  outputFileTracingRoot: __dirname,
 
   // Enable Turbopack for faster development (optional)
   // turbopack: {},
@@ -131,6 +138,15 @@ const nextConfig: NextConfig = {
       { source: "/avondale-neighborhood-jacksonville", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
       { source: "/jacksonville-zoo-and-gardens", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
       { source: "/kingsley-plantation", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
+      { source: "/beaches-neighborhood-jacksonville", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
+      { source: "/ortega-neighborhood-jacksonville", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
+      { source: "/five-points-neighborhood-jacksonville", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
+      { source: "/fishing-st-johns-river", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
+      { source: "/cummer-museum-of-art-and-gardens", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
+      { source: "/springfield-neighborhood-jacksonville", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
+
+      // ============ MORE MILWAUKEE TOURISM/LANDMARKS ============
+      { source: "/milwaukee-riverwalk", destination: "/dumpster-rental-milwaukee-wi", permanent: true },
 
       // ============ SYSTEM/FEED PAGES ============
       { source: "/tos", destination: "/", permanent: true },
@@ -144,11 +160,52 @@ const nextConfig: NextConfig = {
       // ============ MISC 404 FIXES ============
       { source: "/Brewers-Hill-Milwaukee-Wi", destination: "/dumpster-rental-milwaukee-wi", permanent: true },
       { source: "/dumpster-rental-augusta", destination: "/dumpster-rental-augusta-ga", permanent: true },
-      { source: "/dumpster-rental-utah", destination: "/dumpster-rental-utah", permanent: false }, // State page exists
+      { source: "/dumpster-rental-kansas-city", destination: "/dumpster-rental-kansas-city-mo", permanent: true },
       { source: "/cdn-cgi/:path*", destination: "/", permanent: false }, // Cloudflare paths
       { source: "/_next/static/css/:path*", destination: "/", permanent: false }, // Old CSS paths
+
+      // ============ MALFORMED/CASE URLS ============
+      { source: "/dumpster-rental-Costa-Mesa-CA", destination: "/dumpster-rental-costa-mesa-ca", permanent: true },
+      { source: "/dumpster-rental-in-weston--fl", destination: "/dumpster-rental-weston", permanent: true },
+      { source: "/dumpster-rental-in-weston-fl", destination: "/dumpster-rental-weston", permanent: true },
+      { source: "/dumpster-rental-nationwide", destination: "/locations", permanent: true },
+
+      // ============ CATCH-ALL: "in-" PREFIX PATTERN ============
+      // Redirects /dumpster-rental-in-{city}-{state} to /dumpster-rental-{city}
+      // This catches URLs like /dumpster-rental-in-miami-fl → /dumpster-rental-miami
+      { source: "/dumpster-rental-in-:city-fl", destination: "/dumpster-rental-:city", permanent: true },
+      { source: "/dumpster-rental-in-:city-ca", destination: "/dumpster-rental-:city", permanent: true },
+      { source: "/dumpster-rental-in-:city-tx", destination: "/dumpster-rental-:city", permanent: true },
+      { source: "/dumpster-rental-in-:city-ny", destination: "/dumpster-rental-:city", permanent: true },
+      { source: "/dumpster-rental-in-:city-ga", destination: "/dumpster-rental-:city", permanent: true },
+      { source: "/dumpster-rental-in-:city-az", destination: "/dumpster-rental-:city", permanent: true },
+      { source: "/dumpster-rental-in-:city-nc", destination: "/dumpster-rental-:city", permanent: true },
+      { source: "/dumpster-rental-in-:city-oh", destination: "/dumpster-rental-:city", permanent: true },
+      { source: "/dumpster-rental-in-:city-pa", destination: "/dumpster-rental-:city", permanent: true },
+      { source: "/dumpster-rental-in-:city-il", destination: "/dumpster-rental-:city", permanent: true },
+      { source: "/dumpster-rental-in-:city-mi", destination: "/dumpster-rental-:city", permanent: true },
+      { source: "/dumpster-rental-in-:city-nj", destination: "/dumpster-rental-:city", permanent: true },
+      { source: "/dumpster-rental-in-:city-va", destination: "/dumpster-rental-:city", permanent: true },
+      { source: "/dumpster-rental-in-:city-wa", destination: "/dumpster-rental-:city", permanent: true },
+      { source: "/dumpster-rental-in-:city-co", destination: "/dumpster-rental-:city", permanent: true },
+      { source: "/dumpster-rental-in-:city-tn", destination: "/dumpster-rental-:city", permanent: true },
+      { source: "/dumpster-rental-in-:city-wi", destination: "/dumpster-rental-:city", permanent: true },
+      { source: "/dumpster-rental-in-:city-ma", destination: "/dumpster-rental-:city", permanent: true },
+      { source: "/dumpster-rental-in-:city-md", destination: "/dumpster-rental-:city", permanent: true },
+      { source: "/dumpster-rental-in-:city-mn", destination: "/dumpster-rental-:city", permanent: true },
+      { source: "/dumpster-rental-in-:city-mo", destination: "/dumpster-rental-:city", permanent: true },
+      { source: "/dumpster-rental-in-:city-in", destination: "/dumpster-rental-:city", permanent: true },
+      { source: "/dumpster-rental-in-:city-sc", destination: "/dumpster-rental-:city", permanent: true },
+      { source: "/dumpster-rental-in-:city-al", destination: "/dumpster-rental-:city", permanent: true },
+      { source: "/dumpster-rental-in-:city-la", destination: "/dumpster-rental-:city", permanent: true },
+      { source: "/dumpster-rental-in-:city-ky", destination: "/dumpster-rental-:city", permanent: true },
+      { source: "/dumpster-rental-in-:city-or", destination: "/dumpster-rental-:city", permanent: true },
+      { source: "/dumpster-rental-in-:city-ok", destination: "/dumpster-rental-:city", permanent: true },
+      { source: "/dumpster-rental-in-:city-ct", destination: "/dumpster-rental-:city", permanent: true },
+      { source: "/dumpster-rental-in-:city-nv", destination: "/dumpster-rental-:city", permanent: true },
+      { source: "/dumpster-rental-in-:city-ut", destination: "/dumpster-rental-:city", permanent: true },
     ];
   },
 };
 
-export default nextConfig;
+export default withNextIntl(nextConfig);
