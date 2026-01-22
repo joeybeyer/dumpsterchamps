@@ -1,42 +1,45 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 import { Menu, X, Phone, ChevronDown } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
-
-const navigation = [
-  { name: "Home", href: "/" },
-  {
-    name: "Services",
-    href: "/services",
-    children: [
-      { name: "Roll Off Dumpster Rental", href: "/roll-off-dumpster-rental" },
-      { name: "Construction Dumpsters", href: "/construction-dumpsters" },
-      { name: "Residential Dumpsters", href: "/residential-dumpsters" },
-    ],
-  },
-  {
-    name: "Dumpster Sizes",
-    href: "/dumpster-sizes",
-    children: [
-      { name: "10 Yard Dumpster", href: "/10-yard-dumpster" },
-      { name: "15 Yard Dumpster", href: "/15-yard-dumpster" },
-      { name: "20 Yard Dumpster", href: "/20-yard-dumpster" },
-      { name: "30 Yard Dumpster", href: "/30-yard-dumpster" },
-      { name: "40 Yard Dumpster", href: "/40-yard-dumpster" },
-    ],
-  },
-  { name: "Calculator", href: "/calculator" },
-  { name: "Locations", href: "/locations" },
-  { name: "Blog", href: "/blog" },
-  { name: "About", href: "/about" },
-  { name: "Contact", href: "/contact" },
-];
+import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const t = useTranslations();
+
+  const navigation = [
+    { name: t("navigation.home"), href: "/" },
+    {
+      name: t("navigation.services"),
+      href: "/services",
+      children: [
+        { name: t("services.rollOff"), href: "/roll-off-dumpster-rental" },
+        { name: t("services.construction"), href: "/construction-dumpster-rental" },
+        { name: t("services.residential"), href: "/residential-dumpster-rental" },
+      ],
+    },
+    {
+      name: t("navigation.dumpsterSizes"),
+      href: "/dumpster-sizes",
+      children: [
+        { name: t("sizes.10yard"), href: "/10-yard-dumpster" },
+        { name: t("sizes.15yard"), href: "/15-yard-dumpster" },
+        { name: t("sizes.20yard"), href: "/20-yard-dumpster" },
+        { name: t("sizes.30yard"), href: "/30-yard-dumpster" },
+        { name: t("sizes.40yard"), href: "/40-yard-dumpster" },
+      ],
+    },
+    { name: t("navigation.calculator"), href: "/calculator" },
+    { name: t("navigation.locations"), href: "/locations" },
+    { name: t("navigation.blog"), href: "/blog" },
+    { name: t("navigation.about"), href: "/about" },
+    { name: t("navigation.contact"), href: "/contact" },
+  ];
 
   const phone = process.env.NEXT_PUBLIC_PHONE || "(888) 860-0710";
 
@@ -45,7 +48,7 @@ export function Header() {
       {/* Top bar */}
       <div className="bg-primary-600 text-white py-2">
         <div className="container mx-auto px-4 flex justify-between items-center">
-          <span className="hidden sm:inline text-sm">Affordable Dumpster Rentals Nationwide</span>
+          <span className="hidden sm:inline text-sm">{t("common.tagline")}</span>
           <a
             href={`tel:${phone.replace(/\D/g, "")}`}
             className="flex items-center gap-2 hover:text-primary-100 transition-colors font-bold text-base lg:text-lg whitespace-nowrap"
@@ -102,28 +105,32 @@ export function Header() {
             ))}
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden lg:block">
+          {/* Right side: Language Switcher + CTA */}
+          <div className="hidden lg:flex items-center gap-3">
+            <LanguageSwitcher />
             <Link
               href="/contact"
               className="bg-primary-600 text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-primary-700 transition-colors whitespace-nowrap text-sm"
             >
-              Get a Free Quote
+              {t("navigation.getQuote")}
             </Link>
           </div>
 
-          {/* Mobile menu button */}
-          <button
-            type="button"
-            className="lg:hidden p-2 text-secondary-700"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            {mobileMenuOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
-              <Menu className="h-6 w-6" />
-            )}
-          </button>
+          {/* Mobile: Language switcher + menu button */}
+          <div className="lg:hidden flex items-center gap-2">
+            <LanguageSwitcher />
+            <button
+              type="button"
+              className="p-2 text-secondary-700"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              {mobileMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Mobile menu */}
@@ -159,7 +166,7 @@ export function Header() {
               className="block mt-4 bg-primary-600 text-white px-6 py-3 rounded-lg font-semibold text-center hover:bg-primary-700 transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
-              Get a Free Quote
+              {t("navigation.getQuote")}
             </Link>
           </div>
         )}
