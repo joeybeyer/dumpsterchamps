@@ -3,12 +3,15 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
-const nextConfig: NextConfig = {
-  output: "standalone",
+// Only use standalone output for self-hosted servers, not Vercel
+const isVercel = process.env.VERCEL === "1";
 
-  // Fix workspace root detection on server - prevents Next.js from
-  // looking for modules in /home/admin instead of the project directory
-  outputFileTracingRoot: __dirname,
+const nextConfig: NextConfig = {
+  // Standalone output only for self-hosted deployment
+  ...(isVercel ? {} : {
+    output: "standalone",
+    outputFileTracingRoot: __dirname,
+  }),
 
   // Enable Turbopack for faster development (optional)
   // turbopack: {},
