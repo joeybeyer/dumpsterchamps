@@ -6,69 +6,72 @@ import { prisma } from "@/lib/prisma";
 import { LocalBusinessSchema, FAQSchema, AggregateRatingSchema, ReviewSchema } from "@/components/seo/SchemaMarkup";
 import { TestimonialStrip } from "@/components/ui/TestimonialStrip";
 import { DeliveryCounter, ResponseTimeStat } from "@/components/ui/TrustBadges";
-
-const dumpsterSizes = [
-  {
-    size: 10,
-    name: "10 Yard",
-    dimensions: "12' x 8' x 3.5'",
-    ideal: "Small cleanouts, bathroom remodels",
-    price: "$495",
-  },
-  {
-    size: 15,
-    name: "15 Yard",
-    dimensions: "16' x 7.5' x 4'",
-    ideal: "Medium renovations, yard debris",
-    price: "$550",
-  },
-  {
-    size: 20,
-    name: "20 Yard",
-    dimensions: "22' x 7.5' x 4.5'",
-    ideal: "Roofing, large cleanouts",
-    price: "$595",
-  },
-  {
-    size: 30,
-    name: "30 Yard",
-    dimensions: "22' x 7.5' x 6'",
-    ideal: "Construction, demolition",
-    price: "$695",
-  },
-  {
-    size: 40,
-    name: "40 Yard",
-    dimensions: "22' x 7.5' x 8'",
-    ideal: "Large commercial projects",
-    price: "$795",
-  },
-];
-
-const features = [
-  {
-    icon: Truck,
-    title: "Fast Delivery",
-    description: "Same-day or next-day delivery available in most areas.",
-  },
-  {
-    icon: Clock,
-    title: "Flexible Rentals",
-    description: "Keep your dumpster as long as you need. Extensions available.",
-  },
-  {
-    icon: Shield,
-    title: "No Hidden Fees",
-    description: "Transparent pricing with no surprise charges.",
-  },
-  {
-    icon: Star,
-    title: "5-Star Service",
-    description: "Trusted by thousands of homeowners and contractors.",
-  },
-];
+import { getTranslations } from "next-intl/server";
 
 export default async function HomePage() {
+  // Get translations
+  const t = await getTranslations();
+
+  const dumpsterSizes = [
+    {
+      size: 10,
+      name: t("sizes.10yard"),
+      dimensions: t("dimensions.10yard"),
+      ideal: t("dumpsterIdealFor.10yard"),
+      price: "$495",
+    },
+    {
+      size: 15,
+      name: t("sizes.15yard"),
+      dimensions: t("dimensions.15yard"),
+      ideal: t("dumpsterIdealFor.15yard"),
+      price: "$550",
+    },
+    {
+      size: 20,
+      name: t("sizes.20yard"),
+      dimensions: t("dimensions.20yard"),
+      ideal: t("dumpsterIdealFor.20yard"),
+      price: "$595",
+    },
+    {
+      size: 30,
+      name: t("sizes.30yard"),
+      dimensions: t("dimensions.30yard"),
+      ideal: t("dumpsterIdealFor.30yard"),
+      price: "$695",
+    },
+    {
+      size: 40,
+      name: t("sizes.40yard"),
+      dimensions: t("dimensions.40yard"),
+      ideal: t("dumpsterIdealFor.40yard"),
+      price: "$795",
+    },
+  ];
+
+  const features = [
+    {
+      icon: Truck,
+      title: t("features.fastDelivery"),
+      description: t("features.fastDeliveryDesc"),
+    },
+    {
+      icon: Clock,
+      title: t("features.flexibleRentals"),
+      description: t("features.flexibleRentalsDesc"),
+    },
+    {
+      icon: Shield,
+      title: t("features.noHiddenFees"),
+      description: t("features.noHiddenFeesDesc"),
+    },
+    {
+      icon: Star,
+      title: t("features.fiveStarService"),
+      description: t("features.fiveStarServiceDesc"),
+    },
+  ];
   // Get featured states for the locations section
   const states = await prisma.state.findMany({
     take: 12,
@@ -95,34 +98,33 @@ export default async function HomePage() {
                   <Star className="h-5 w-5 text-yellow-400 fill-yellow-400" />
                 </div>
                 <span className="text-primary-400 font-medium text-sm">
-                  Trusted by 10,000+ Homeowners & Contractors
+                  {t("hero.trustedBy")}
                 </span>
               </div>
 
               {/* Headline - Problem-focused with action verb */}
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 leading-tight">
-                Dumpster Rental — Fast Delivery from $495
+                {t("hero.headline")}
               </h1>
 
               {/* Description - Addresses pain points */}
               <p className="text-lg text-secondary-200 mb-6 leading-relaxed">
-                Need a dumpster? We deliver roll-off containers to your driveway as soon as tomorrow.
-                All-inclusive pricing starts at <strong className="text-white">$495</strong> — no hidden fees, no surprises.
+                {t("hero.description")} <strong className="text-white">$495</strong> — {t("hero.noHiddenFees")}
               </p>
 
               {/* Trust Badges */}
               <div className="flex flex-wrap gap-3 mb-6">
                 <div className="flex items-center gap-2 bg-secondary-800/60 px-3 py-2 rounded-lg text-sm">
                   <Clock className="h-4 w-4 text-primary-400" />
-                  <span>Same-Day Delivery</span>
+                  <span>{t("hero.sameDayDelivery")}</span>
                 </div>
                 <div className="flex items-center gap-2 bg-secondary-800/60 px-3 py-2 rounded-lg text-sm">
                   <Shield className="h-4 w-4 text-primary-400" />
-                  <span>No Hidden Fees</span>
+                  <span>{t("hero.noHiddenFeesShort")}</span>
                 </div>
                 <div className="flex items-center gap-2 bg-secondary-800/60 px-3 py-2 rounded-lg text-sm">
                   <Star className="h-4 w-4 text-yellow-400 fill-yellow-400" />
-                  <span>4.9 Google Rating</span>
+                  <span>{t("hero.googleRating")}</span>
                 </div>
               </div>
 
@@ -133,11 +135,11 @@ export default async function HomePage() {
                   className="bg-primary-600 text-white px-8 lg:px-10 py-4 lg:py-5 rounded-lg font-semibold text-center hover:bg-primary-700 transition-colors flex items-center justify-center gap-2 text-lg lg:text-xl"
                 >
                   <Phone className="h-5 w-5 lg:h-6 lg:w-6" />
-                  Call Now: {phone}
+                  {t("hero.callNow")} {phone}
                 </a>
                 <span className="text-primary-300 text-xs mt-1.5 flex items-center gap-1">
                   <Phone className="h-3 w-3" />
-                  Speak to a real person
+                  {t("hero.speakRealPerson")}
                 </span>
               </div>
 
@@ -150,7 +152,7 @@ export default async function HomePage() {
               {/* Quote Form */}
               <div id="quote-form" className="bg-white rounded-xl p-6 shadow-2xl">
                 <h2 className="text-xl font-bold text-secondary-900 mb-4">
-                  Get Your Dumpster Price in 60 Seconds
+                  {t("hero.getYourPrice")}
                 </h2>
                 <QuoteForm />
               </div>
@@ -211,11 +213,10 @@ export default async function HomePage() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold text-secondary-900 mb-4">
-              Choose the Right Dumpster Size
+              {t("sizeSection.title")}
             </h2>
             <p className="text-xl text-secondary-600 max-w-2xl mx-auto">
-              We offer a variety of dumpster sizes to fit any project. Not sure
-              which size you need? Give us a call!
+              {t("sizeSection.description")}
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
@@ -229,7 +230,7 @@ export default async function HomePage() {
               >
                 {dumpster.size === 20 && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary-600 text-white text-xs font-bold px-3 py-1 rounded-full">
-                    Most Popular
+                    {t("sizes.mostPopular")}
                   </div>
                 )}
                 <div className="text-center">
@@ -237,7 +238,7 @@ export default async function HomePage() {
                     {dumpster.size}
                   </div>
                   <h3 className="text-lg font-semibold text-secondary-900 mb-2">
-                    {dumpster.name} Dumpster
+                    {dumpster.name}
                   </h3>
                   <p className="text-sm text-secondary-500 mb-2">
                     {dumpster.dimensions}
@@ -249,7 +250,7 @@ export default async function HomePage() {
                     {dumpster.price}
                   </p>
                   <span className="inline-flex items-center text-sm text-primary-600 mt-3 group-hover:gap-2 transition-all">
-                    Learn More <ChevronRight className="h-4 w-4" />
+                    {t("sizeSection.learnMore")} <ChevronRight className="h-4 w-4" />
                   </span>
                 </div>
               </Link>
@@ -263,31 +264,28 @@ export default async function HomePage() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold text-secondary-900 mb-4">
-              How It Works
+              {t("howItWorks.title")}
             </h2>
             <p className="text-xl text-secondary-600">
-              Renting a dumpster is easy with Dumpster Champs
+              {t("howItWorks.subtitle")}
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
                 step: 1,
-                title: "Get a Quote",
-                description:
-                  "Tell us about your project and get an instant quote. No hidden fees.",
+                title: t("howItWorks.step1Title"),
+                description: t("howItWorks.step1Desc"),
               },
               {
                 step: 2,
-                title: "Schedule Delivery",
-                description:
-                  "Choose a convenient delivery date. We'll drop off your dumpster on time.",
+                title: t("howItWorks.step2Title"),
+                description: t("howItWorks.step2Desc"),
               },
               {
                 step: 3,
-                title: "Fill & We Haul",
-                description:
-                  "Fill up your dumpster and give us a call. We'll pick it up and dispose of everything.",
+                title: t("howItWorks.step3Title"),
+                description: t("howItWorks.step3Desc"),
               },
             ].map((item) => (
               <div key={item.step} className="text-center">
@@ -310,10 +308,10 @@ export default async function HomePage() {
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <h2 className="text-3xl lg:text-4xl font-bold text-secondary-900 mb-4">
-                We Serve Locations Nationwide
+                {t("locations.title")}
               </h2>
               <p className="text-xl text-secondary-600">
-                Find dumpster rentals in your area
+                {t("locations.subtitle")}
               </p>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -334,7 +332,7 @@ export default async function HomePage() {
                 href="/locations"
                 className="inline-flex items-center gap-2 text-primary-600 font-semibold hover:gap-3 transition-all"
               >
-                View All Locations <ChevronRight className="h-5 w-5" />
+                {t("locations.viewAll")} <ChevronRight className="h-5 w-5" />
               </Link>
             </div>
           </div>
@@ -346,10 +344,10 @@ export default async function HomePage() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-8">
             <h2 className="text-2xl font-bold text-secondary-900 mb-2">
-              Helpful Dumpster Rental Guides
+              {t("guides.title")}
             </h2>
             <p className="text-secondary-600">
-              Everything you need to know before renting a dumpster
+              {t("guides.subtitle")}
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
@@ -361,10 +359,10 @@ export default async function HomePage() {
                 <Calculator className="h-6 w-6 text-primary-600" />
               </div>
               <h3 className="font-bold text-secondary-900 mb-2 group-hover:text-primary-600">
-                What Size Dumpster Do I Need?
+                {t("guides.sizeGuideTitle")}
               </h3>
               <p className="text-sm text-secondary-600">
-                Find the perfect dumpster size for your project with our size guide and calculator.
+                {t("guides.sizeGuideDesc")}
               </p>
             </Link>
             <Link
@@ -375,10 +373,10 @@ export default async function HomePage() {
                 <FileText className="h-6 w-6 text-primary-600" />
               </div>
               <h3 className="font-bold text-secondary-900 mb-2 group-hover:text-primary-600">
-                How Much Does It Cost?
+                {t("guides.costGuideTitle")}
               </h3>
               <p className="text-sm text-secondary-600">
-                Complete pricing breakdown for 10-40 yard dumpsters with no hidden fees.
+                {t("guides.costGuideDesc")}
               </p>
             </Link>
             <Link
@@ -389,10 +387,10 @@ export default async function HomePage() {
                 <HelpCircle className="h-6 w-6 text-primary-600" />
               </div>
               <h3 className="font-bold text-secondary-900 mb-2 group-hover:text-primary-600">
-                Do I Need a Permit?
+                {t("guides.permitGuideTitle")}
               </h3>
               <p className="text-sm text-secondary-600">
-                When permits are required and how to get one for your dumpster placement.
+                {t("guides.permitGuideDesc")}
               </p>
             </Link>
           </div>
@@ -403,18 +401,17 @@ export default async function HomePage() {
       <section className="py-16 bg-primary-600 text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl lg:text-4xl font-bold mb-4">
-            Ready to Get Started?
+            {t("cta.readyToStart")}
           </h2>
           <p className="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
-            Get a free quote today and have your dumpster delivered as soon as
-            tomorrow!
+            {t("cta.ctaDescription")}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/contact"
               className="bg-white text-primary-600 px-8 py-4 rounded-lg font-semibold hover:bg-primary-50 transition-colors"
             >
-              Get a Free Quote
+              {t("cta.getFreeQuote")}
             </Link>
             <a
               href={`tel:${phone.replace(/\D/g, "")}`}
