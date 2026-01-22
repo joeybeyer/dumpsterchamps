@@ -1,0 +1,214 @@
+{
+  "common": {
+    "phone": "(888) 860-0710",
+    "email": "contact@dumpsterchamps.com",
+    "companyName": "Dumpster Champs",
+    "tagline": "Alquiler de Contenedores Asequibles en Todo el País"
+  },
+  "navigation": {
+    "home": "Inicio",
+    "services": "Servicios",
+    "dumpsterSizes": "Tamaños de Contenedor",
+    "calculator": "Calculadora",
+    "locations": "Ubicaciones",
+    "blog": "Blog",
+    "about": "Nosotros",
+    "contact": "Contacto",
+    "getQuote": "Cotización Gratis"
+  },
+  "services": {
+    "rollOff": "Alquiler de Contenedores Roll Off",
+    "construction": "Contenedores para Construcción",
+    "residential": "Contenedores Residenciales"
+  },
+  "sizes": {
+    "10yard": "Contenedor de 10 Yardas",
+    "15yard": "Contenedor de 15 Yardas",
+    "20yard": "Contenedor de 20 Yardas",
+    "30yard": "Contenedor de 30 Yardas",
+    "40yard": "Contenedor de 40 Yardas",
+    "mostPopular": "Más Popular"
+  },
+  "footer": {
+    "description": "Su socio de confianza para alquiler de contenedores asequibles. Servimos a clientes residenciales y comerciales en todo el país.",
+    "services": "Servicios",
+    "sizes": "Tamaños de Contenedor",
+    "helpfulGuides": "Guías Útiles",
+    "company": "Empresa",
+    "costGuide": "Guía de Precios 2026",
+    "sizeGuide": "Guía de Tamaños",
+    "permitGuide": "Guía de Permisos",
+    "sizeCalculator": "Calculadora de Tamaño",
+    "pricing": "Precios",
+    "aboutUs": "Sobre Nosotros",
+    "termsOfService": "Términos de Servicio",
+    "privacyPolicy": "Política de Privacidad",
+    "sitemap": "Mapa del Sitio",
+    "allRightsReserved": "Todos los derechos reservados.",
+    "followFacebook": "Síguenos en Facebook",
+    "followInstagram": "Síguenos en Instagram",
+    "followTwitter": "Síguenos en X (Twitter)",
+    "followLinkedIn": "Síguenos en LinkedIn",
+    "subscribeYouTube": "Suscríbete en YouTube",
+    "followTikTok": "Síguenos en TikTok"
+  },
+  "hero": {
+    "trustedBy": "Confianza de Más de 10,000 Propietarios y Contratistas",
+    "headline": "Alquiler de Contenedores — Entrega Rápida desde $495",
+    "description": "¿Necesita un contenedor? Entregamos contenedores roll-off en su entrada tan pronto como mañana. Precios todo incluido desde",
+    "noHiddenFees": "sin cargos ocultos, sin sorpresas.",
+    "sameDayDelivery": "Entrega el Mismo Día",
+    "noHiddenFeesShort": "Sin Cargos Ocultos",
+    "googleRating": "4.9 en Google",
+    "callNow": "Llame Ahora:",
+    "speakRealPerson": "Hable con una persona real",
+    "getYourPrice": "Obtenga Su Precio en 60 Segundos"
+  },
+  "features": {
+    "fastDelivery": "Entrega Rápida",
+    "fastDeliveryDesc": "Entrega el mismo día o al día siguiente disponible en la mayoría de las áreas.",
+    "flexibleRentals": "Alquileres Flexibles",
+    "flexibleRentalsDesc": "Mantenga su contenedor el tiempo que necesite. Extensiones disponibles.",
+    "noHiddenFees": "Sin Cargos Ocultos",
+    "noHiddenFeesDesc": "Precios transparentes sin cargos sorpresa.",
+    "fiveStarService": "Servicio 5 Estrellas",
+    "fiveStarServiceDesc": "Confianza de miles de propietarios y contratistas."
+  },
+  "sizeSection": {
+    "title": "Elija el Tamaño de Contenedor Correcto",
+    "description": "Ofrecemos una variedad de tamaños de contenedores para cualquier proyecto. ¿No está seguro de qué tamaño necesita? ¡Llámenos!",
+    "learnMore": "Más Información"
+  },
+  "howItWorks": {
+    "title": "Cómo Funciona",
+    "subtitle": "Alquilar un contenedor es fácil con Dumpster Champs",
+    "step1Title": "Obtenga una Cotización",
+    "step1Desc": "Cuéntenos sobre su proyecto y obtenga una cotización instantánea. Sin cargos ocultos.",
+    "step2Title": "Programe la Entrega",
+    "step2Desc": "Elija una fecha de entrega conveniente. Entregaremos su contenedor a tiempo.",
+    "step3Title": "Llene y Recogemos",
+    "step3Desc": "Llene su contenedor y llámenos. Lo recogeremos y nos desharemos de todo."
+  },
+  "locations": {
+    "title": "Servimos Ubicaciones en Todo el País",
+    "subtitle": "Encuentre alquiler de contenedores en su área",
+    "viewAll": "Ver Todas las Ubicaciones"
+  },
+  "guides": {
+    "title": "Guías Útiles de Alquiler de Contenedores",
+    "subtitle": "Todo lo que necesita saber antes de alquilar un contenedor",
+    "sizeGuideTitle": "¿Qué Tamaño de Contenedor Necesito?",
+    "sizeGuideDesc": "Encuentre el tamaño de contenedor perfecto para su proyecto con nuestra guía y calculadora.",
+    "costGuideTitle": "¿Cuánto Cuesta?",
+    "costGuideDesc": "Desglose completo de precios para contenedores de 10-40 yardas sin cargos ocultos.",
+    "permitGuideTitle": "¿Necesito un Permiso?",
+    "permitGuideDesc": "Cuándo se requieren permisos y cómo obtener uno para la colocación de su contenedor."
+  },
+  "cta": {
+    "readyToStart": "¿Listo para Comenzar?",
+    "ctaDescription": "¡Obtenga una cotización gratis hoy y reciba su contenedor tan pronto como mañana!",
+    "getFreeQuote": "Obtenga una Cotización Gratis"
+  },
+  "quoteForm": {
+    "enterZipCode": "Ingrese Su Código Postal",
+    "enterZipCodePlaceholder": "Ingrese código postal",
+    "checkAvailability": "Verificar Disponibilidad",
+    "stepLocation": "Ubicación",
+    "stepProject": "Proyecto",
+    "stepContact": "Contacto",
+    "stepOf": "Paso {step} de {total}:",
+    "sameDayAvailable": "Entrega el mismo día y al día siguiente disponible en su área",
+    "projectType": "Tipo de Proyecto",
+    "selectProjectType": "Seleccione su tipo de proyecto",
+    "dumpsterSize": "Tamaño del Contenedor",
+    "selectSize": "Seleccione un tamaño",
+    "back": "Atrás",
+    "continue": "Continuar",
+    "almostDone": "¡Casi listo! Solo necesitamos su información de contacto para enviar su cotización.",
+    "firstName": "Nombre",
+    "firstNamePlaceholder": "Juan",
+    "emailAddress": "Correo Electrónico",
+    "emailPlaceholder": "juan@ejemplo.com",
+    "phoneNumber": "Número de Teléfono",
+    "phonePlaceholder": "(555) 123-4567",
+    "getMyQuote": "Obtener Mi Cotización",
+    "processing": "Procesando...",
+    "requestReceived": "¡Solicitud Recibida!",
+    "calculatingQuote": "Estamos calculando su cotización personalizada.",
+    "whatHappensNext": "Qué sigue:",
+    "quoteCalculation": "Cálculo de cotización",
+    "reviewingDetails": "Estamos revisando los detalles de su proyecto",
+    "callFromTeam": "Llamada de nuestro equipo",
+    "within15Min": "Dentro de 15 minutos en horario laboral",
+    "scheduleDelivery": "Programar entrega",
+    "oftenAvailable": "A menudo disponible el mismo día o al día siguiente",
+    "inARush": "¿Tiene prisa? ¡Sáltese la espera!",
+    "callForInstant": "Llame al {phone} para Cotización Instantánea",
+    "rated": "Calificado 4.9/5 por Más de 10,000 Clientes",
+    "somethingWentWrong": "Algo salió mal. Por favor intente de nuevo o llámenos directamente."
+  },
+  "projectTypes": {
+    "homeRenovation": "Renovación del Hogar",
+    "constructionProject": "Proyecto de Construcción",
+    "yardCleanup": "Limpieza de Jardín",
+    "movingCleanout": "Mudanza/Limpieza",
+    "roofingProject": "Proyecto de Techo",
+    "commercialProject": "Proyecto Comercial",
+    "other": "Otro"
+  },
+  "dumpsterSizes": {
+    "10Yard": "10 Yardas",
+    "15Yard": "15 Yardas",
+    "20YardPopular": "20 Yardas (Más Popular)",
+    "30Yard": "30 Yardas",
+    "40Yard": "40 Yardas",
+    "notSure": "No Estoy Seguro"
+  },
+  "trustBadges": {
+    "licensedInsured": "Licenciado y Asegurado",
+    "fullCoverage": "Cobertura completa",
+    "satisfactionGuaranteed": "Satisfacción Garantizada",
+    "orWeMakeItRight": "O lo corregimos",
+    "deliveredCount": "500+ Entregados",
+    "thisWeek": "Esta semana",
+    "deliveredThisWeek": "Más de 500 contenedores entregados esta semana",
+    "averageResponse": "Respuesta promedio:",
+    "minutes": "12 minutos"
+  },
+  "testimonials": {
+    "title": "Lo Que Dicen Nuestros Clientes",
+    "subtitle": "Reseñas reales de clientes verificados de Google",
+    "reviewsOnGoogle": "Más de 500 Reseñas en Google"
+  },
+  "stickyCall": {
+    "tapToCall": "Toque para Llamar",
+    "freeQuote": "Cotización Gratis",
+    "readyToHelp": "¡Listos para ayudar!",
+    "callNow": "Llamar Ahora",
+    "sameDayAvailable": "Entrega el mismo día disponible",
+    "callForFreeQuote": "Llame para Cotización Gratis"
+  },
+  "languageSwitcher": {
+    "selectLanguage": "Seleccionar Idioma",
+    "english": "English",
+    "spanish": "Español"
+  },
+  "seo": {
+    "defaultTitle": "Alquiler de Contenedores Cerca de Mí desde $495 [2026] | Dumpster Champs",
+    "defaultDescription": "Alquiler de contenedores cerca de mí desde $495. Entrega el mismo día en contenedores roll-off de 10, 15, 20, 30 y 40 yardas. Precios todo incluido, sin cargos ocultos. ¡Obtenga una cotización gratis!"
+  },
+  "dumpsterIdealFor": {
+    "10yard": "Limpiezas pequeñas, remodelaciones de baño",
+    "15yard": "Renovaciones medianas, escombros de jardín",
+    "20yard": "Techos, limpiezas grandes",
+    "30yard": "Construcción, demolición",
+    "40yard": "Grandes proyectos comerciales"
+  },
+  "dimensions": {
+    "10yard": "3.7m x 2.4m x 1.1m",
+    "15yard": "4.9m x 2.3m x 1.2m",
+    "20yard": "6.7m x 2.3m x 1.4m",
+    "30yard": "6.7m x 2.3m x 1.8m",
+    "40yard": "6.7m x 2.3m x 2.4m"
+  }
+}

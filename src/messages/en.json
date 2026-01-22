@@ -1,0 +1,214 @@
+{
+  "common": {
+    "phone": "(888) 860-0710",
+    "email": "contact@dumpsterchamps.com",
+    "companyName": "Dumpster Champs",
+    "tagline": "Affordable Dumpster Rentals Nationwide"
+  },
+  "navigation": {
+    "home": "Home",
+    "services": "Services",
+    "dumpsterSizes": "Dumpster Sizes",
+    "calculator": "Calculator",
+    "locations": "Locations",
+    "blog": "Blog",
+    "about": "About",
+    "contact": "Contact",
+    "getQuote": "Get a Free Quote"
+  },
+  "services": {
+    "rollOff": "Roll Off Dumpster Rental",
+    "construction": "Construction Dumpsters",
+    "residential": "Residential Dumpsters"
+  },
+  "sizes": {
+    "10yard": "10 Yard Dumpster",
+    "15yard": "15 Yard Dumpster",
+    "20yard": "20 Yard Dumpster",
+    "30yard": "30 Yard Dumpster",
+    "40yard": "40 Yard Dumpster",
+    "mostPopular": "Most Popular"
+  },
+  "footer": {
+    "description": "Your trusted partner for affordable dumpster rentals. We serve residential and commercial customers nationwide.",
+    "services": "Services",
+    "sizes": "Dumpster Sizes",
+    "helpfulGuides": "Helpful Guides",
+    "company": "Company",
+    "costGuide": "2026 Cost Guide",
+    "sizeGuide": "Size Guide",
+    "permitGuide": "Permit Guide",
+    "sizeCalculator": "Size Calculator",
+    "pricing": "Pricing",
+    "aboutUs": "About Us",
+    "termsOfService": "Terms of Service",
+    "privacyPolicy": "Privacy Policy",
+    "sitemap": "Sitemap",
+    "allRightsReserved": "All rights reserved.",
+    "followFacebook": "Follow us on Facebook",
+    "followInstagram": "Follow us on Instagram",
+    "followTwitter": "Follow us on X (Twitter)",
+    "followLinkedIn": "Follow us on LinkedIn",
+    "subscribeYouTube": "Subscribe on YouTube",
+    "followTikTok": "Follow us on TikTok"
+  },
+  "hero": {
+    "trustedBy": "Trusted by 10,000+ Homeowners & Contractors",
+    "headline": "Dumpster Rental — Fast Delivery from $495",
+    "description": "Need a dumpster? We deliver roll-off containers to your driveway as soon as tomorrow. All-inclusive pricing starts at",
+    "noHiddenFees": "no hidden fees, no surprises.",
+    "sameDayDelivery": "Same-Day Delivery",
+    "noHiddenFeesShort": "No Hidden Fees",
+    "googleRating": "4.9 Google Rating",
+    "callNow": "Call Now:",
+    "speakRealPerson": "Speak to a real person",
+    "getYourPrice": "Get Your Dumpster Price in 60 Seconds"
+  },
+  "features": {
+    "fastDelivery": "Fast Delivery",
+    "fastDeliveryDesc": "Same-day or next-day delivery available in most areas.",
+    "flexibleRentals": "Flexible Rentals",
+    "flexibleRentalsDesc": "Keep your dumpster as long as you need. Extensions available.",
+    "noHiddenFees": "No Hidden Fees",
+    "noHiddenFeesDesc": "Transparent pricing with no surprise charges.",
+    "fiveStarService": "5-Star Service",
+    "fiveStarServiceDesc": "Trusted by thousands of homeowners and contractors."
+  },
+  "sizeSection": {
+    "title": "Choose the Right Dumpster Size",
+    "description": "We offer a variety of dumpster sizes to fit any project. Not sure which size you need? Give us a call!",
+    "learnMore": "Learn More"
+  },
+  "howItWorks": {
+    "title": "How It Works",
+    "subtitle": "Renting a dumpster is easy with Dumpster Champs",
+    "step1Title": "Get a Quote",
+    "step1Desc": "Tell us about your project and get an instant quote. No hidden fees.",
+    "step2Title": "Schedule Delivery",
+    "step2Desc": "Choose a convenient delivery date. We'll drop off your dumpster on time.",
+    "step3Title": "Fill & We Haul",
+    "step3Desc": "Fill up your dumpster and give us a call. We'll pick it up and dispose of everything."
+  },
+  "locations": {
+    "title": "We Serve Locations Nationwide",
+    "subtitle": "Find dumpster rentals in your area",
+    "viewAll": "View All Locations"
+  },
+  "guides": {
+    "title": "Helpful Dumpster Rental Guides",
+    "subtitle": "Everything you need to know before renting a dumpster",
+    "sizeGuideTitle": "What Size Dumpster Do I Need?",
+    "sizeGuideDesc": "Find the perfect dumpster size for your project with our size guide and calculator.",
+    "costGuideTitle": "How Much Does It Cost?",
+    "costGuideDesc": "Complete pricing breakdown for 10-40 yard dumpsters with no hidden fees.",
+    "permitGuideTitle": "Do I Need a Permit?",
+    "permitGuideDesc": "When permits are required and how to get one for your dumpster placement."
+  },
+  "cta": {
+    "readyToStart": "Ready to Get Started?",
+    "ctaDescription": "Get a free quote today and have your dumpster delivered as soon as tomorrow!",
+    "getFreeQuote": "Get a Free Quote"
+  },
+  "quoteForm": {
+    "enterZipCode": "Enter Your Zip Code",
+    "enterZipCodePlaceholder": "Enter zip code",
+    "checkAvailability": "Check Availability",
+    "stepLocation": "Location",
+    "stepProject": "Project",
+    "stepContact": "Contact",
+    "stepOf": "Step {step} of {total}:",
+    "sameDayAvailable": "Same-day and next-day delivery available in your area",
+    "projectType": "Project Type",
+    "selectProjectType": "Select your project type",
+    "dumpsterSize": "Dumpster Size",
+    "selectSize": "Select a size",
+    "back": "Back",
+    "continue": "Continue",
+    "almostDone": "Almost done! Just need your contact info to send your quote.",
+    "firstName": "First Name",
+    "firstNamePlaceholder": "John",
+    "emailAddress": "Email Address",
+    "emailPlaceholder": "john@example.com",
+    "phoneNumber": "Phone Number",
+    "phonePlaceholder": "(555) 123-4567",
+    "getMyQuote": "Get My Quote",
+    "processing": "Processing...",
+    "requestReceived": "Request Received!",
+    "calculatingQuote": "We're calculating your personalized quote now.",
+    "whatHappensNext": "What happens next:",
+    "quoteCalculation": "Quote calculation",
+    "reviewingDetails": "We're reviewing your project details now",
+    "callFromTeam": "Call from our team",
+    "within15Min": "Within 15 min during business hours",
+    "scheduleDelivery": "Schedule delivery",
+    "oftenAvailable": "Often available same-day or next-day",
+    "inARush": "In a rush? Skip the wait!",
+    "callForInstant": "Call {phone} for Instant Quote",
+    "rated": "Rated 4.9/5 by 10,000+ Customers",
+    "somethingWentWrong": "Something went wrong. Please try again or call us directly."
+  },
+  "projectTypes": {
+    "homeRenovation": "Home Renovation",
+    "constructionProject": "Construction Project",
+    "yardCleanup": "Yard Cleanup",
+    "movingCleanout": "Moving/Cleanout",
+    "roofingProject": "Roofing Project",
+    "commercialProject": "Commercial Project",
+    "other": "Other"
+  },
+  "dumpsterSizes": {
+    "10Yard": "10 Yard",
+    "15Yard": "15 Yard",
+    "20YardPopular": "20 Yard (Most Popular)",
+    "30Yard": "30 Yard",
+    "40Yard": "40 Yard",
+    "notSure": "Not Sure"
+  },
+  "trustBadges": {
+    "licensedInsured": "Licensed & Insured",
+    "fullCoverage": "Full coverage",
+    "satisfactionGuaranteed": "Satisfaction Guaranteed",
+    "orWeMakeItRight": "Or we make it right",
+    "deliveredCount": "500+ Delivered",
+    "thisWeek": "This week",
+    "deliveredThisWeek": "500+ dumpsters delivered this week",
+    "averageResponse": "Average response:",
+    "minutes": "12 minutes"
+  },
+  "testimonials": {
+    "title": "What Our Customers Say",
+    "subtitle": "Real reviews from verified Google customers",
+    "reviewsOnGoogle": "500+ Reviews on Google"
+  },
+  "stickyCall": {
+    "tapToCall": "Tap to Call Now",
+    "freeQuote": "Free Quote",
+    "readyToHelp": "Ready to help!",
+    "callNow": "Call Now",
+    "sameDayAvailable": "Same-day delivery available",
+    "callForFreeQuote": "Call for Free Quote"
+  },
+  "languageSwitcher": {
+    "selectLanguage": "Select Language",
+    "english": "English",
+    "spanish": "Espanol"
+  },
+  "seo": {
+    "defaultTitle": "Dumpster Rental Near Me from $495 [2026] | Dumpster Champs",
+    "defaultDescription": "Dumpster rental near me from $495. Same-day delivery on 10, 15, 20, 30 & 40 yard roll-off dumpsters. All-inclusive pricing, no hidden fees. Get a free quote!"
+  },
+  "dumpsterIdealFor": {
+    "10yard": "Small cleanouts, bathroom remodels",
+    "15yard": "Medium renovations, yard debris",
+    "20yard": "Roofing, large cleanouts",
+    "30yard": "Construction, demolition",
+    "40yard": "Large commercial projects"
+  },
+  "dimensions": {
+    "10yard": "12' x 8' x 3.5'",
+    "15yard": "16' x 7.5' x 4'",
+    "20yard": "22' x 7.5' x 4.5'",
+    "30yard": "22' x 7.5' x 6'",
+    "40yard": "22' x 7.5' x 8'"
+  }
+}
