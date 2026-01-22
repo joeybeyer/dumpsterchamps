@@ -4,6 +4,8 @@
  *
  * Route: /dumpster-rental-{city-slug}/{neighborhood-slug}/
  * Example: /dumpster-rental-los-angeles-ca/hollywood/
+ *
+ * FALLBACK SUPPORT: If no NeighborhoodPage exists, renders from Neighborhood table data
  */
 
 import { Metadata } from 'next';
@@ -24,6 +26,88 @@ interface PageProps {
     neighborhoodSlug: string;
     locale: string;
   }>;
+}
+
+// Types for our data
+interface NeighborhoodData {
+  name: string;
+  slug: string;
+  content: string;
+  zipCodes: string | null;
+  metaTitle: string | null;
+  metaDesc: string | null;
+  isFallback: boolean;
+}
+
+/**
+ * Generate fallback content for neighborhoods without NeighborhoodPage records
+ */
+function generateFallbackContent(
+  neighborhood: { name: string; slug: string; description: string | null; zipCodes: string | null },
+  city: { name: string; slug: string; phone: string | null; state: { abbr: string; name: string } }
+): string {
+  const phone = city.phone || process.env.NEXT_PUBLIC_PHONE || '(888) 860-0710';
+  const zipDisplay = neighborhood.zipCodes || 'surrounding areas';
+
+  return `## Dumpster Rental in ${neighborhood.name}, ${city.name}
+
+Looking for reliable [dumpster rental in ${city.name}](/dumpster-rental-${city.slug})? We deliver roll-off containers directly to ${neighborhood.name} and surrounding areas. Whether you're tackling a home renovation, construction project, or major cleanout, our team provides fast, affordable service with transparent pricing.
+
+## ${neighborhood.name} Service Area
+
+We serve ${neighborhood.name} and nearby neighborhoods throughout ${city.name}, ${city.state.abbr}. Our service area includes ZIP codes ${zipDisplay}. Same-day delivery is available for most locations when you call before noon.
+
+${neighborhood.description ? `${neighborhood.description}\n\n` : ''}Our local drivers know ${neighborhood.name} well, ensuring efficient delivery and pickup for your project. We navigate residential streets, commercial areas, and construction sites throughout the neighborhood.
+
+## Common Projects in ${neighborhood.name}
+
+Our [roll-off dumpster rental](/roll-off-dumpster-rental) service handles a variety of projects in ${neighborhood.name}:
+
+- **Home Renovations**: Kitchen remodels, bathroom updates, flooring replacement
+- **Construction Projects**: New builds, additions, demolition debris
+- **Cleanouts**: Estate cleanouts, garage cleaning, basement decluttering
+- **Yard Work**: Landscaping debris, tree trimming, seasonal cleanup
+- **Roofing**: Shingle removal and replacement projects
+
+Whether you need a small [10-yard dumpster](/10-yard-dumpster) for a garage cleanout or a large [40-yard container](/40-yard-dumpster) for a major construction project, we have the right size for your ${neighborhood.name} project.
+
+## Dumpster Sizes & Pricing for ${neighborhood.name}
+
+| Size | Price | Weight Included | Best For |
+|------|-------|-----------------|----------|
+| 10 Yard | $495 | 2 tons | Small cleanouts, single room remodels |
+| 15 Yard | $550 | 2.5 tons | Garage cleanouts, small renovations |
+| 20 Yard | $595 | 3 tons | Kitchen/bath remodels, roofing (Most Popular) |
+| 30 Yard | $695 | 4 tons | Large renovations, construction |
+| 40 Yard | $795 | 5 tons | Major construction, commercial projects |
+
+All prices include delivery, pickup, disposal, and a 7-day rental period. No hidden fees.
+
+## Why Choose Us for ${neighborhood.name} Dumpster Rental
+
+- **Same-Day Delivery**: Call before noon for same-day service in ${neighborhood.name}
+- **Flat-Rate Pricing**: The price we quote is the price you pay
+- **Driveway Protection**: We place boards under the container to protect your property
+- **Flexible Rentals**: Standard 7-day rentals with easy extensions available
+- **Local Service**: Our drivers know ${neighborhood.name} and ${city.name}
+
+## Frequently Asked Questions
+
+**How much does a dumpster rental cost in ${neighborhood.name}?**
+Dumpster rental in ${neighborhood.name} starts at $495 for a 10-yard container. Our most popular 20-yard dumpster is $595, which works well for most home renovation projects.
+
+**Do I need a permit for a dumpster in ${neighborhood.name}?**
+If the dumpster is placed on your private property (driveway or yard), you typically don't need a permit. Street placement may require a permit from ${city.name}. We can help guide you through local requirements.
+
+**How fast can you deliver a dumpster to ${neighborhood.name}?**
+We offer same-day delivery to ${neighborhood.name} when you call before noon. Next-day delivery is available for afternoon orders.
+
+**What can I put in a dumpster?**
+Most household and construction debris is accepted, including furniture, appliances (without refrigerants), drywall, lumber, roofing shingles, and general junk. We cannot accept hazardous materials, paint, batteries, or tires.
+
+## Ready to Rent a Dumpster in ${neighborhood.name}?
+
+Call us at [PHONE] for immediate service or fill out the quote form above. We're ready to help with your ${neighborhood.name} project today.`;
 }
 
 /**
@@ -171,53 +255,6 @@ function formatNeighborhoodContent(content: string): string {
   return result.join('\n');
 }
 
-/**
- * Generate fallback content for neighborhoods without AI-generated content
- */
-function generateFallbackContent(
-  neighborhoodName: string,
-  cityName: string,
-  stateAbbr: string,
-  description: string | null,
-  zipCodes: string | null,
-  citySlug: string
-): string {
-  const phone = process.env.NEXT_PUBLIC_PHONE || '(888) 860-0710';
-  const zipList = zipCodes ? zipCodes.split(',').map(z => z.trim()).join(', ') : '';
-
-  return `## Professional Dumpster Rental in ${neighborhoodName}
-
-Dumpster Champs provides fast, reliable [dumpster rental in ${cityName}](/${citySlug}) with service to ${neighborhoodName} and surrounding areas. Whether you are tackling a home renovation, construction project, or major cleanout, we have the right size dumpster for your needs.
-
-${description || `${neighborhoodName} is a vibrant community in ${cityName}, ${stateAbbr}. Our local team provides prompt delivery and pickup throughout the area.`}
-
-## Dumpster Sizes Available
-
-We offer a full range of [roll-off dumpster](/roll-off-dumpster-rental) sizes to match any project:
-
-- **10 Yard Dumpster** - Perfect for small cleanouts and minor renovations
-- **15 Yard Dumpster** - Great for medium-sized projects and garage cleanouts
-- **20 Yard Dumpster** - Our most popular size for home renovations
-- **30 Yard Dumpster** - Ideal for large construction projects
-- **40 Yard Dumpster** - Maximum capacity for commercial jobs
-
-## Why Choose Dumpster Champs in ${neighborhoodName}?
-
-- **Same-Day Delivery** - Need a dumpster fast? We can often deliver the same day you call
-- **Flat-Rate Pricing** - No hidden fees or surprise charges
-- **Driveway Protection** - We use boards to protect your property
-- **Flexible Rental Periods** - Standard 7-14 day rentals with extensions available
-- **Local Service** - Our drivers know ${neighborhoodName} and ${cityName}
-
-## Service Area Information
-
-${zipList ? `We deliver to all addresses in ${neighborhoodName} including ZIP codes: ${zipList}.` : `We deliver throughout ${neighborhoodName} and the greater ${cityName} area.`}
-
-## Ready to Get Started?
-
-Call us today at [PHONE] for a free quote. Our team is ready to help you choose the right dumpster size and schedule delivery at your convenience.`;
-}
-
 // Only valid city slugs (starting with dumpster-rental-)
 function isValidCitySlug(slug: string): boolean {
   return slug.startsWith('dumpster-rental-') && slug.length > 16;
@@ -232,6 +269,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const actualCitySlug = slug.replace('dumpster-rental-', '');
 
+  // First try NeighborhoodPage
   const city = await prisma.city.findUnique({
     where: { slug: actualCitySlug },
     include: {
@@ -249,7 +287,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return {};
   }
 
-  // Try NeighborhoodPage first, fall back to Neighborhood
+  // Check for NeighborhoodPage first, then fall back to Neighborhood
   const neighborhoodPage = city.neighborhoodPages[0];
   const neighborhood = city.neighborhoods[0];
 
@@ -257,18 +295,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return {};
   }
 
-  const name = neighborhoodPage?.name || neighborhood?.name || '';
+  const name = neighborhoodPage?.name || neighborhood?.name || neighborhoodSlug;
 
   return {
-    title: neighborhoodPage?.metaTitle || `Dumpster Rental in ${name}, ${city.name} | Dumpster Champs`,
-    description: neighborhoodPage?.metaDesc || `Fast, affordable dumpster rental in ${name}, ${city.name}, ${city.state.abbr}. Same-day delivery available. 10-40 yard roll-off dumpsters. Call now!`,
+    title: neighborhoodPage?.metaTitle || `Dumpster Rental in ${name}, ${city.name} | From $495 | Dumpster Champs`,
+    description: neighborhoodPage?.metaDesc || `Fast, affordable dumpster rental in ${name}, ${city.name}, ${city.state.abbr}. Same-day delivery available. 10-40 yard roll-off dumpsters starting at $495. Call now!`,
     alternates: {
       canonical: `https://www.dumpsterchamps.com/${slug}/${neighborhoodSlug}`,
     },
   };
 }
-
-// generateStaticParams removed - using force-dynamic instead
 
 export default async function NeighborhoodPage({ params }: PageProps) {
   const { slug, neighborhoodSlug, locale } = await params;
@@ -281,8 +317,7 @@ export default async function NeighborhoodPage({ params }: PageProps) {
 
   const actualCitySlug = slug.replace('dumpster-rental-', '');
 
-  // Get city and neighborhood page data (NeighborhoodPage has AI-generated content)
-  // Also fetch from Neighborhood table as fallback
+  // Get city with both NeighborhoodPage and Neighborhood data
   const city = await prisma.city.findUnique({
     where: { slug: actualCitySlug },
     include: {
@@ -296,22 +331,46 @@ export default async function NeighborhoodPage({ params }: PageProps) {
     },
   });
 
-  // Check if we have either a NeighborhoodPage or a Neighborhood
-  const neighborhoodPage = city?.neighborhoodPages[0];
-  const neighborhoodBasic = city?.neighborhoods[0];
-
-  if (!city || (!neighborhoodPage && !neighborhoodBasic)) {
+  if (!city) {
     notFound();
   }
 
-  // Use NeighborhoodPage if available, otherwise create a fallback object from Neighborhood
-  const hasDetailedContent = !!neighborhoodPage;
-  const neighborhoodData = neighborhoodPage || {
-    name: neighborhoodBasic!.name,
-    slug: neighborhoodBasic!.slug,
-    content: generateFallbackContent(neighborhoodBasic!.name, city.name, city.state.abbr, neighborhoodBasic!.description, neighborhoodBasic!.zipCodes, slug),
-    zipCodes: neighborhoodBasic!.zipCodes,
-  };
+  // Try NeighborhoodPage first (has AI-generated content)
+  const neighborhoodPage = city.neighborhoodPages[0];
+  // Fall back to basic Neighborhood record
+  const neighborhood = city.neighborhoods[0];
+
+  // Must have at least one
+  if (!neighborhoodPage && !neighborhood) {
+    notFound();
+  }
+
+  // Build unified data object
+  let pageData: NeighborhoodData;
+
+  if (neighborhoodPage) {
+    // Use rich NeighborhoodPage content
+    pageData = {
+      name: neighborhoodPage.name,
+      slug: neighborhoodPage.slug,
+      content: neighborhoodPage.content,
+      zipCodes: neighborhoodPage.zipCodes,
+      metaTitle: neighborhoodPage.metaTitle,
+      metaDesc: neighborhoodPage.metaDesc,
+      isFallback: false,
+    };
+  } else {
+    // Generate fallback content from Neighborhood data
+    pageData = {
+      name: neighborhood!.name,
+      slug: neighborhood!.slug,
+      content: generateFallbackContent(neighborhood!, city),
+      zipCodes: neighborhood!.zipCodes,
+      metaTitle: null,
+      metaDesc: null,
+      isFallback: true,
+    };
+  }
 
   // Get all neighborhoods for this city (for sidebar and nearby areas)
   const allNeighborhoods = await prisma.neighborhood.findMany({
@@ -334,8 +393,8 @@ export default async function NeighborhoodPage({ params }: PageProps) {
   return (
     <>
       <LocalBusinessSchema
-        name={`Dumpster Rental Champs - ${neighborhoodData.name}`}
-        description={`Dumpster rental services in ${neighborhoodData.name}, ${city.name}, ${city.state.abbr}`}
+        name={`Dumpster Rental Champs - ${pageData.name}`}
+        description={`Dumpster rental services in ${pageData.name}, ${city.name}, ${city.state.abbr}`}
         phone={phone}
         city={city.name}
         state={city.state.abbr}
@@ -363,7 +422,7 @@ export default async function NeighborhoodPage({ params }: PageProps) {
             </li>
             <ChevronRight className="h-4 w-4 text-secondary-400" />
             <li className="text-secondary-900 font-medium">
-              {neighborhoodData.name}
+              {pageData.name}
             </li>
           </ol>
         </div>
@@ -383,13 +442,13 @@ export default async function NeighborhoodPage({ params }: PageProps) {
               </Link>
 
               <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                Dumpster Rental in {neighborhoodData.name}, {city.name}
+                Dumpster Rental in {pageData.name}, {city.name}
               </h1>
 
               <p className="text-xl text-secondary-200 mb-8">
                 Looking for <Link href={`/${slug}`} className="text-primary-300 hover:text-primary-200 underline">dumpster rental in {city.name}</Link>?
                 We offer fast, reliable <Link href="/roll-off-dumpster-rental" className="text-primary-300 hover:text-primary-200 underline">roll-off dumpster</Link> delivery
-                to {neighborhoodData.name} and surrounding areas. Same-day service available with flat-rate pricing starting at $495.
+                to {pageData.name} and surrounding areas. Same-day service available with flat-rate pricing starting at $495.
               </p>
 
               {/* Trust Badges */}
@@ -435,18 +494,18 @@ export default async function NeighborhoodPage({ params }: PageProps) {
           <div className="grid lg:grid-cols-3 gap-12">
             {/* Content Column */}
             <div className="lg:col-span-2">
-              {/* Main Content - Render AI-generated content with proper formatting */}
+              {/* Main Content - Render content with proper formatting */}
               <article
                 className="prose prose-lg max-w-none prose-headings:text-secondary-900 prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4 prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3 prose-p:text-secondary-700 prose-li:text-secondary-700 prose-strong:text-secondary-900"
                 dangerouslySetInnerHTML={{
-                  __html: formatNeighborhoodContent(neighborhoodData.content)
+                  __html: formatNeighborhoodContent(pageData.content)
                 }}
               />
 
               {/* Service Type Links - ACROSS linking to non-geo service pages */}
               <div className="mt-12 p-6 bg-primary-50 rounded-xl">
                 <h3 className="text-xl font-bold text-secondary-900 mb-4">
-                  Dumpster Types Available in {neighborhoodData.name}
+                  Dumpster Types Available in {pageData.name}
                 </h3>
                 <p className="text-secondary-600 mb-4">
                   We offer a variety of dumpster rental options to match your project needs:
@@ -510,7 +569,7 @@ export default async function NeighborhoodPage({ params }: PageProps) {
               <div className="bg-white rounded-xl shadow-lg border border-secondary-200 overflow-hidden mb-8">
                 <div className="bg-secondary-900 text-white px-6 py-4">
                   <h3 className="text-xl font-bold">
-                    {neighborhoodData.name} Pricing
+                    {pageData.name} Pricing
                   </h3>
                   <p className="text-secondary-300 text-sm">Flat-rate, all-inclusive</p>
                 </div>
@@ -647,7 +706,7 @@ export default async function NeighborhoodPage({ params }: PageProps) {
       <section className="bg-primary-500 py-16">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            Ready to Rent a Dumpster in {neighborhoodData.name}?
+            Ready to Rent a Dumpster in {pageData.name}?
           </h2>
           <p className="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
             Same-day delivery available. Flat-rate pricing with no hidden fees.
@@ -673,4 +732,3 @@ export default async function NeighborhoodPage({ params }: PageProps) {
     </>
   );
 }
-// Force rebuild Sat Jan 10 19:01:57 UTC 2026
