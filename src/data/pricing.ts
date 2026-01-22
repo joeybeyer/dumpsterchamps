@@ -3,7 +3,7 @@ export const DUMPSTER_PRICING = {
   10: {
     size: 10,
     price: 495,
-    weight: "2 tons",
+    weight: "1 ton",
     dimensions: "12' x 8' x 3.5'",
     capacity: "2-3 pickup truck loads",
     idealFor: [
@@ -16,7 +16,7 @@ export const DUMPSTER_PRICING = {
   15: {
     size: 15,
     price: 550,
-    weight: "2.5 tons",
+    weight: "1 ton",
     dimensions: "16' x 7.5' x 4'",
     capacity: "4-5 pickup truck loads",
     idealFor: [
@@ -29,7 +29,7 @@ export const DUMPSTER_PRICING = {
   20: {
     size: 20,
     price: 595,
-    weight: "3 tons",
+    weight: "2 tons",
     dimensions: "22' x 7.5' x 4.5'",
     capacity: "6-8 pickup truck loads",
     popular: true,
@@ -43,7 +43,7 @@ export const DUMPSTER_PRICING = {
   30: {
     size: 30,
     price: 695,
-    weight: "4 tons",
+    weight: "3 tons",
     dimensions: "22' x 7.5' x 6'",
     capacity: "9-12 pickup truck loads",
     idealFor: [
@@ -56,7 +56,7 @@ export const DUMPSTER_PRICING = {
   40: {
     size: 40,
     price: 795,
-    weight: "5 tons",
+    weight: "4 tons",
     dimensions: "22' x 7.5' x 8'",
     capacity: "12-16 pickup truck loads",
     idealFor: [

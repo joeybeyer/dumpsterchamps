@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import { ChevronRight, ChevronLeft, MapPin, ClipboardList, User, Star } from "lucide-react";
 
@@ -20,26 +21,8 @@ const successTestimonials = [
   { name: "Robert D.", location: "Denver, CO", text: "Quick quote, no surprises. Highly recommend these guys." },
 ];
 
-const projectTypes = [
-  "Home Renovation",
-  "Construction Project",
-  "Yard Cleanup",
-  "Moving/Cleanout",
-  "Roofing Project",
-  "Commercial Project",
-  "Other",
-];
-
-const dumpsterSizes = [
-  "10 Yard",
-  "15 Yard",
-  "20 Yard (Most Popular)",
-  "30 Yard",
-  "40 Yard",
-  "Not Sure",
-];
-
 export function QuoteForm({ cityName, stateName, className, source }: QuoteFormProps) {
+  const t = useTranslations();
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     zipCode: "",
@@ -62,6 +45,25 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
 
   // Spam prevention: timestamp when form was loaded
   const [formTimestamp, setFormTimestamp] = useState<number>(0);
+
+  const projectTypes = [
+    { value: "Home Renovation", label: t("projectTypes.homeRenovation") },
+    { value: "Construction Project", label: t("projectTypes.constructionProject") },
+    { value: "Yard Cleanup", label: t("projectTypes.yardCleanup") },
+    { value: "Moving/Cleanout", label: t("projectTypes.movingCleanout") },
+    { value: "Roofing Project", label: t("projectTypes.roofingProject") },
+    { value: "Commercial Project", label: t("projectTypes.commercialProject") },
+    { value: "Other", label: t("projectTypes.other") },
+  ];
+
+  const dumpsterSizes = [
+    { value: "10 Yard", label: t("dumpsterSizes.10Yard") },
+    { value: "15 Yard", label: t("dumpsterSizes.15Yard") },
+    { value: "20 Yard (Most Popular)", label: t("dumpsterSizes.20YardPopular") },
+    { value: "30 Yard", label: t("dumpsterSizes.30Yard") },
+    { value: "40 Yard", label: t("dumpsterSizes.40Yard") },
+    { value: "Not Sure", label: t("dumpsterSizes.notSure") },
+  ];
 
   // Set timestamp when component mounts
   useEffect(() => {
@@ -142,7 +144,7 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
       setStep(1);
     } catch (error) {
       setStatus("error");
-      setErrorMessage("Something went wrong. Please try again or call us directly.");
+      setErrorMessage(t("quoteForm.somethingWentWrong"));
     }
   };
 
@@ -169,36 +171,36 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h3 className="text-xl font-semibold text-green-800">Request Received!</h3>
+          <h3 className="text-xl font-semibold text-green-800">{t("quoteForm.requestReceived")}</h3>
         </div>
 
         <p className="text-green-700 mb-4 text-center">
-          We&apos;re calculating your personalized quote now.
+          {t("quoteForm.calculatingQuote")}
         </p>
 
         {/* What happens next timeline */}
         <div className="bg-white rounded-lg p-4 mb-4">
-          <p className="text-sm font-semibold text-secondary-700 mb-3">What happens next:</p>
+          <p className="text-sm font-semibold text-secondary-700 mb-3">{t("quoteForm.whatHappensNext")}</p>
           <div className="space-y-3">
             <div className="flex items-start gap-3">
               <div className="w-6 h-6 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">1</div>
               <div>
-                <p className="text-sm font-medium text-secondary-900">Quote calculation</p>
-                <p className="text-xs text-secondary-500">We&apos;re reviewing your project details now</p>
+                <p className="text-sm font-medium text-secondary-900">{t("quoteForm.quoteCalculation")}</p>
+                <p className="text-xs text-secondary-500">{t("quoteForm.reviewingDetails")}</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
               <div className="w-6 h-6 bg-secondary-100 text-secondary-600 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">2</div>
               <div>
-                <p className="text-sm font-medium text-secondary-900">Call from our team</p>
-                <p className="text-xs text-secondary-500">Within 15 min during business hours</p>
+                <p className="text-sm font-medium text-secondary-900">{t("quoteForm.callFromTeam")}</p>
+                <p className="text-xs text-secondary-500">{t("quoteForm.within15Min")}</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
               <div className="w-6 h-6 bg-secondary-100 text-secondary-600 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">3</div>
               <div>
-                <p className="text-sm font-medium text-secondary-900">Schedule delivery</p>
-                <p className="text-xs text-secondary-500">Often available same-day or next-day</p>
+                <p className="text-sm font-medium text-secondary-900">{t("quoteForm.scheduleDelivery")}</p>
+                <p className="text-xs text-secondary-500">{t("quoteForm.oftenAvailable")}</p>
               </div>
             </div>
           </div>
@@ -209,7 +211,7 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
 
         {/* Double-dip CTA */}
         <p className="text-secondary-700 font-medium mb-3 text-center">
-          In a rush? Skip the wait!
+          {t("quoteForm.inARush")}
         </p>
 
         <a
@@ -219,7 +221,7 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
           </svg>
-          Call {phone} for Instant Quote
+          {t("quoteForm.callForInstant", { phone })}
         </a>
 
         {/* Rotating testimonial */}
@@ -241,7 +243,7 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
 
         {/* Social proof */}
         <p className="text-secondary-500 text-xs mt-3 flex items-center justify-center gap-1">
-          ⭐ Rated 4.9/5 by 10,000+ Customers
+          {t("quoteForm.rated")}
         </p>
       </div>
     );
@@ -280,15 +282,15 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
   // Step labels
   const StepLabel = () => {
     const labels = [
-      { icon: MapPin, text: "Location" },
-      { icon: ClipboardList, text: "Project" },
-      { icon: User, text: "Contact" },
+      { icon: MapPin, text: t("quoteForm.stepLocation") },
+      { icon: ClipboardList, text: t("quoteForm.stepProject") },
+      { icon: User, text: t("quoteForm.stepContact") },
     ];
     const current = labels[step - 1];
     return (
       <div className="flex items-center justify-center gap-2 text-secondary-600 text-sm mb-4">
         <current.icon className="h-4 w-4" />
-        <span>Step {step} of 3: {current.text}</span>
+        <span>{t("quoteForm.stepOf", { step, total: 3 })} {current.text}</span>
       </div>
     );
   };
@@ -323,7 +325,7 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
         <div className="space-y-4">
           <div>
             <label htmlFor="zipCode" className="block text-sm font-medium text-secondary-700 mb-1">
-              Enter Your Zip Code *
+              {t("quoteForm.enterZipCode")} *
             </label>
             <div className="relative">
               <input
@@ -340,7 +342,7 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
                   }
                 }}
                 className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors text-lg text-center font-medium"
-                placeholder="Enter zip code"
+                placeholder={t("quoteForm.enterZipCodePlaceholder")}
               />
               {zipLookupLoading && (
                 <div className="absolute right-3 top-1/2 -translate-y-1/2">
@@ -364,7 +366,7 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
             disabled={!formData.zipCode}
             className="w-full bg-primary-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
-            Check Availability
+            {t("quoteForm.checkAvailability")}
             <ChevronRight className="h-5 w-5" />
           </button>
         </div>
@@ -376,13 +378,13 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
           {/* Urgency message after zip code entry */}
           <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 text-center">
             <p className="text-amber-800 text-sm font-medium">
-              🚚 Same-day and next-day delivery available in your area
+              {t("quoteForm.sameDayAvailable")}
             </p>
           </div>
 
           <div>
             <label htmlFor="projectType" className="block text-sm font-medium text-secondary-700 mb-1">
-              Project Type *
+              {t("quoteForm.projectType")} *
             </label>
             <select
               id="projectType"
@@ -391,10 +393,10 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
               onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
               className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors bg-white text-secondary-900"
             >
-              <option value="" className="text-secondary-500">Select your project type</option>
+              <option value="" className="text-secondary-500">{t("quoteForm.selectProjectType")}</option>
               {projectTypes.map((type) => (
-                <option key={type} value={type} className="text-secondary-900 bg-white">
-                  {type}
+                <option key={type.value} value={type.value} className="text-secondary-900 bg-white">
+                  {type.label}
                 </option>
               ))}
             </select>
@@ -402,7 +404,7 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
 
           <div>
             <label htmlFor="dumpsterSize" className="block text-sm font-medium text-secondary-700 mb-1">
-              Dumpster Size *
+              {t("quoteForm.dumpsterSize")} *
             </label>
             <select
               id="dumpsterSize"
@@ -411,10 +413,10 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
               onChange={(e) => setFormData({ ...formData, dumpsterSize: e.target.value })}
               className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors bg-white text-secondary-900"
             >
-              <option value="" className="text-secondary-500">Select a size</option>
+              <option value="" className="text-secondary-500">{t("quoteForm.selectSize")}</option>
               {dumpsterSizes.map((size) => (
-                <option key={size} value={size} className="text-secondary-900 bg-white">
-                  {size}
+                <option key={size.value} value={size.value} className="text-secondary-900 bg-white">
+                  {size.label}
                 </option>
               ))}
             </select>
@@ -427,7 +429,7 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
               className="flex-1 border-2 border-secondary-300 text-secondary-700 py-3 px-6 rounded-lg font-semibold hover:bg-secondary-50 transition-colors flex items-center justify-center gap-2"
             >
               <ChevronLeft className="h-5 w-5" />
-              Back
+              {t("quoteForm.back")}
             </button>
             <button
               type="button"
@@ -435,7 +437,7 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
               disabled={!formData.projectType || !formData.dumpsterSize}
               className="flex-1 bg-primary-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
-              Continue
+              {t("quoteForm.continue")}
               <ChevronRight className="h-5 w-5" />
             </button>
           </div>
@@ -448,13 +450,13 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
           {/* Almost done encouragement */}
           <div className="bg-green-50 border border-green-200 rounded-lg p-3 text-center">
             <p className="text-green-800 text-sm font-medium">
-              Almost done! Just need your contact info to send your quote.
+              {t("quoteForm.almostDone")}
             </p>
           </div>
 
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-secondary-700 mb-1">
-              First Name *
+              {t("quoteForm.firstName")} *
             </label>
             <input
               type="text"
@@ -463,13 +465,13 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
-              placeholder="John"
+              placeholder={t("quoteForm.firstNamePlaceholder")}
             />
           </div>
 
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-secondary-700 mb-1">
-              Email Address *
+              {t("quoteForm.emailAddress")} *
             </label>
             <input
               type="email"
@@ -478,13 +480,13 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
-              placeholder="john@example.com"
+              placeholder={t("quoteForm.emailPlaceholder")}
             />
           </div>
 
           <div>
             <label htmlFor="phone" className="block text-sm font-medium text-secondary-700 mb-1">
-              Phone Number *
+              {t("quoteForm.phoneNumber")} *
             </label>
             <input
               type="tel"
@@ -493,7 +495,7 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
               value={formData.phone}
               onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
               className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
-              placeholder="(555) 123-4567"
+              placeholder={t("quoteForm.phonePlaceholder")}
             />
           </div>
 
@@ -504,7 +506,7 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
               className="flex-1 border-2 border-secondary-300 text-secondary-700 py-3 px-6 rounded-lg font-semibold hover:bg-secondary-50 transition-colors flex items-center justify-center gap-2"
             >
               <ChevronLeft className="h-5 w-5" />
-              Back
+              {t("quoteForm.back")}
             </button>
             <button
               type="submit"
@@ -517,10 +519,10 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
-                  Processing...
+                  {t("quoteForm.processing")}
                 </>
               ) : (
-                "Get My Quote"
+                t("quoteForm.getMyQuote")
               )}
             </button>
           </div>

@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Phone, X, MessageCircle } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { Phone, X } from 'lucide-react';
 
 interface StickyCallButtonProps {
   phone?: string;
@@ -12,6 +13,7 @@ export function StickyCallButton({
   phone = '(888) 860-0710',
   showAfterScroll = 300,
 }: StickyCallButtonProps) {
+  const t = useTranslations('stickyCall');
   const [isVisible, setIsVisible] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isNearForm, setIsNearForm] = useState(false);
@@ -64,11 +66,11 @@ export function StickyCallButton({
             <span className="absolute -top-1 -right-1 h-3 w-3 bg-green-400 rounded-full" />
           </div>
           <div className="text-left">
-            <div className="text-xs font-medium text-primary-100">Tap to Call Now</div>
+            <div className="text-xs font-medium text-primary-100">{t('tapToCall')}</div>
             <div className="text-lg font-bold tracking-wide">{phone}</div>
           </div>
           <div className="ml-auto bg-white/20 rounded-full px-3 py-1.5 text-sm font-semibold">
-            Free Quote
+            {t('freeQuote')}
           </div>
         </a>
       </div>
@@ -85,7 +87,7 @@ export function StickyCallButton({
                     <Phone className="h-5 w-5" />
                   </div>
                   <div>
-                    <div className="text-sm font-medium text-primary-100">Ready to help!</div>
+                    <div className="text-sm font-medium text-primary-100">{t('readyToHelp')}</div>
                     <div className="text-lg font-bold">{phone}</div>
                   </div>
                 </div>
@@ -103,10 +105,10 @@ export function StickyCallButton({
                 className="flex items-center justify-center gap-2 bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-6 rounded-xl transition-colors w-full"
               >
                 <Phone className="h-5 w-5" />
-                Call Now
+                {t('callNow')}
               </a>
               <div className="text-center text-sm text-secondary-500">
-                Same-day delivery available
+                {t('sameDayAvailable')}
               </div>
             </div>
           </div>
@@ -128,7 +130,7 @@ export function StickyCallButton({
               </div>
               <div className="text-left pr-2">
                 <div className="text-xs font-medium text-primary-100 group-hover:text-white transition-colors">
-                  Call for Free Quote
+                  {t('callForFreeQuote')}
                 </div>
                 <div className="text-base font-bold tracking-wide">
                   {phone}

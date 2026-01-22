@@ -1,0 +1,313 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model State {
+  id          String   @id @default(cuid())
+  name        String   // "California"
+  slug        String   @unique // "california"
+  abbr        String   // "CA"
+  description String?
+  metaTitle   String?
+  metaDesc    String?
+  cities      City[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model City {
+  id          String   @id @default(cuid())
+  name        String   // "Los Angeles"
+  slug        String   @unique // "los-angeles-ca"
+  stateId     String
+  state       State    @relation(fields: [stateId], references: [id])
+  description String?
+  metaTitle   String?
+  metaDesc    String?
+  content     String?
+  phone       String?
+  // Enhanced local fields
+  latitude    Float?
+  longitude   Float?
+  county      String?
+  population  String?
+  climate     String?  // Climate/weather considerations
+  permits     String?  // Local permit info
+  whyChooseUs String?  // Localized value props
+  // AI Content Generation
+  aiDescription   String?   // AI-generated 800-1000 word description
+  aiGeneratedAt   DateTime? // When AI content was generated
+  heroImageUrl    String?   // AI-generated hero image
+  // Google Business Profile
+  gbpEmbed        String?   // Google Maps embed iframe for GBP locations
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  neighborhoods     Neighborhood[]
+  neighborhoodPages NeighborhoodPage[] // Hub & Spoke pages
+  faqs              CityFAQ[]
+  blogs             CityBlog[]
+
+  @@index([stateId])
+}
+
+model Neighborhood {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String
+  cityId      String
+  city        City     @relation(fields: [cityId], references: [id])
+  description String?
+  zipCodes    String?  // Comma-separated
+  createdAt   DateTime @default(now())
+
+  @@unique([cityId, slug])
+  @@index([cityId])
+}
+
+model CityFAQ {
+  id        String   @id @default(cuid())
+  cityId    String
+  city      City     @relation(fields: [cityId], references: [id])
+  question  String
+  answer    String
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+
+  @@index([cityId])
+}
+
+model CityBlog {
+  id            String    @id @default(cuid())
+  cityId        String
+  city          City      @relation(fields: [cityId], references: [id])
+  title         String
+  slug          String    @unique
+  content       String
+  excerpt       String?
+  nextBlogId    String?   // For circular Ferris Wheel linking
+  prevBlogId    String?   // Previous in Ferris Wheel
+  metaTitle     String?
+  metaDesc      String?
+  published     Boolean   @default(true)
+  // AI Generation
+  isAiGenerated Boolean   @default(false)
+  aiGeneratedAt DateTime?
+  templateId    Int?      // Reference to blog topic template
+  heroImageUrl  String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([cityId])
+}
+
+// Hub & Spoke Neighborhood Pages (for S2 cell targeting)
+model NeighborhoodPage {
+  id              String    @id @default(cuid())
+  cityId          String
+  city            City      @relation(fields: [cityId], references: [id])
+  name            String    // "Hollywood"
+  slug            String    // "hollywood"
+  content         String    // AI-generated 1000-1500 word content
+  zipCodes        String?   // Comma-separated ZIP codes
+  landmarks       String?   // Comma-separated local landmarks
+  neighborSlugs   String?   // Comma-separated neighbor slugs for ACROSS linking
+  metaTitle       String?
+  metaDesc        String?
+  heroImageUrl    String?
+  aiGeneratedAt   DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@unique([cityId, slug])
+  @@index([cityId])
+}
+
+model DumpsterSize {
+  id          String   @id @default(cuid())
+  size        Int      // 10, 15, 20, 30, 40
+  slug        String   @unique // "10-yard-dumpster"
+  name        String   // "10 Yard Dumpster"
+  description String?
+  dimensions  String?  // "12' x 8' x 3.5'"
+  capacity    String?  // "2-3 pickup truck loads"
+  idealFor    String?
+  priceRange  String?  // "$350-$450"
+  content     String?
+  metaTitle   String?
+  metaDesc    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Service {
+  id          String   @id @default(cuid())
+  name        String   // "Roll Off Dumpster Rental"
+  slug        String   @unique // "roll-off-dumpster-rental"
+  description String?
+  content     String?
+  metaTitle   String?
+  metaDesc    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model BlogPost {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  excerpt     String?
+  content     String
+  published   Boolean  @default(false)
+  metaTitle   String?
+  metaDesc    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Lead {
+  id           String   @id @default(cuid())
+  type         String   // "quote", "contact"
+  name         String
+  email        String
+  phone        String?
+  city         String?
+  state        String?
+  projectType  String?
+  dumpsterSize String?
+  message      String?
+  source       String?
+  spam         Boolean  @default(false)
+  spamReason   String?  // Why it was flagged: "honeypot", "fake_phone", "disposable_email", etc.
+  createdAt    DateTime @default(now())
+
+  @@index([email])
+  @@index([phone])
+  @@index([createdAt])
+}
+
+model Page {
+  id        String   @id @default(cuid())
+  slug      String   @unique // "about", "contact", "tos"
+  title     String
+  content   String
+  metaTitle String?
+  metaDesc  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Business Locations (for multi-location GBP)
+model BusinessLocation {
+  id              String   @id @default(cuid())
+  name            String   // "North Hollywood" or "West Sacramento"
+  slug            String   @unique // "north-hollywood" or "west-sacramento"
+  address         String
+  city            String
+  state           String
+  stateAbbr       String
+  zip             String
+  phone           String
+  latitude        Float
+  longitude       Float
+  googleMapsEmbed String?  // Full embed URL
+  googlePlaceId   String?  // For reviews/API
+  isPrimary       Boolean  @default(false)
+  serviceRadius   Int      @default(50) // Miles
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+// ============ TRANSLATION MODELS FOR SPANISH SUPPORT ============
+
+// City translations for Spanish locale
+model CityTranslation {
+  id            String    @id @default(cuid())
+  cityId        String
+  locale        String    // "es"
+  description   String?
+  metaTitle     String?
+  metaDesc      String?
+  content       String?
+  aiDescription String?   // Translated AI-generated description
+  climate       String?   // Translated climate info
+  permits       String?   // Translated permit info
+  whyChooseUs   String?   // Translated value props
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@unique([cityId, locale])
+  @@index([cityId])
+  @@index([locale])
+}
+
+// State translations for Spanish locale
+model StateTranslation {
+  id          String    @id @default(cuid())
+  stateId     String
+  locale      String    // "es"
+  description String?
+  metaTitle   String?
+  metaDesc    String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([stateId, locale])
+  @@index([stateId])
+  @@index([locale])
+}
+
+// CityFAQ translations for Spanish locale
+model CityFAQTranslation {
+  id        String    @id @default(cuid())
+  faqId     String
+  locale    String    // "es"
+  question  String
+  answer    String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@unique([faqId, locale])
+  @@index([faqId])
+  @@index([locale])
+}
+
+// CityBlog translations for Spanish locale
+model CityBlogTranslation {
+  id        String    @id @default(cuid())
+  blogId    String
+  locale    String    // "es"
+  title     String
+  content   String
+  excerpt   String?
+  metaTitle String?
+  metaDesc  String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@unique([blogId, locale])
+  @@index([blogId])
+  @@index([locale])
+}
+
+// NeighborhoodPage translations for Spanish locale
+model NeighborhoodPageTranslation {
+  id        String    @id @default(cuid())
+  pageId    String
+  locale    String    // "es"
+  content   String    // Translated content
+  metaTitle String?
+  metaDesc  String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@unique([pageId, locale])
+  @@index([pageId])
+  @@index([locale])
+}

@@ -7,6 +7,9 @@ export const routing = defineRouting({
   defaultLocale,
   // Don't show the locale prefix for the default locale (English)
   localePrefix: 'as-needed',
+  // Disable automatic locale detection from browser Accept-Language header
+  // Users will see English by default, can manually switch to Spanish
+  localeDetection: false,
 });
 
 // Lightweight wrappers around Next.js' navigation APIs
