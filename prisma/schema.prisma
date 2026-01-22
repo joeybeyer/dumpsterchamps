@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
 datasource db {
@@ -222,4 +223,92 @@ model BusinessLocation {
   serviceRadius   Int      @default(50) // Miles
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
+}
+
+// ============ TRANSLATION MODELS FOR SPANISH SUPPORT ============
+
+// City translations for Spanish locale
+model CityTranslation {
+  id            String    @id @default(cuid())
+  cityId        String
+  locale        String    // "es"
+  description   String?
+  metaTitle     String?
+  metaDesc      String?
+  content       String?
+  aiDescription String?   // Translated AI-generated description
+  climate       String?   // Translated climate info
+  permits       String?   // Translated permit info
+  whyChooseUs   String?   // Translated value props
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@unique([cityId, locale])
+  @@index([cityId])
+  @@index([locale])
+}
+
+// State translations for Spanish locale
+model StateTranslation {
+  id          String    @id @default(cuid())
+  stateId     String
+  locale      String    // "es"
+  description String?
+  metaTitle   String?
+  metaDesc    String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([stateId, locale])
+  @@index([stateId])
+  @@index([locale])
+}
+
+// CityFAQ translations for Spanish locale
+model CityFAQTranslation {
+  id        String    @id @default(cuid())
+  faqId     String
+  locale    String    // "es"
+  question  String
+  answer    String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@unique([faqId, locale])
+  @@index([faqId])
+  @@index([locale])
+}
+
+// CityBlog translations for Spanish locale
+model CityBlogTranslation {
+  id        String    @id @default(cuid())
+  blogId    String
+  locale    String    // "es"
+  title     String
+  content   String
+  excerpt   String?
+  metaTitle String?
+  metaDesc  String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@unique([blogId, locale])
+  @@index([blogId])
+  @@index([locale])
+}
+
+// NeighborhoodPage translations for Spanish locale
+model NeighborhoodPageTranslation {
+  id        String    @id @default(cuid())
+  pageId    String
+  locale    String    // "es"
+  content   String    // Translated content
+  metaTitle String?
+  metaDesc  String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@unique([pageId, locale])
+  @@index([pageId])
+  @@index([locale])
 }
