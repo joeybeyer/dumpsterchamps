@@ -296,12 +296,32 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   const name = neighborhoodPage?.name || neighborhood?.name || neighborhoodSlug;
+  const canonicalUrl = `https://www.dumpsterchamps.com/${slug}/${neighborhoodSlug}`;
+
+  // Strip "| Dumpster Champs" from metaTitle if present (layout template adds it)
+  let pageTitle = neighborhoodPage?.metaTitle || `Dumpster Rental in ${name}, ${city.name} | From $495`;
+  pageTitle = pageTitle.replace(/\s*\|\s*Dumpster Champs\s*$/i, '');
+
+  const pageDescription = neighborhoodPage?.metaDesc || `Fast, affordable dumpster rental in ${name}, ${city.name}, ${city.state.abbr}. Same-day delivery available. 10-40 yard roll-off dumpsters starting at $495. Call now!`;
 
   return {
-    title: neighborhoodPage?.metaTitle || `Dumpster Rental in ${name}, ${city.name} | From $495 | Dumpster Champs`,
-    description: neighborhoodPage?.metaDesc || `Fast, affordable dumpster rental in ${name}, ${city.name}, ${city.state.abbr}. Same-day delivery available. 10-40 yard roll-off dumpsters starting at $495. Call now!`,
+    title: pageTitle,
+    description: pageDescription,
     alternates: {
-      canonical: `https://www.dumpsterchamps.com/${slug}/${neighborhoodSlug}`,
+      canonical: canonicalUrl,
+    },
+    openGraph: {
+      title: `${pageTitle} | Dumpster Champs`,
+      description: pageDescription,
+      url: canonicalUrl,
+      siteName: 'Dumpster Champs',
+      locale: 'en_US',
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${pageTitle} | Dumpster Champs`,
+      description: pageDescription,
     },
   };
 }
