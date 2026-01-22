@@ -26,43 +26,149 @@ interface PageProps {
   }>;
 }
 
-// Format AI-generated content to proper HTML
+/**
+ * Convert markdown content to HTML with proper formatting
+ */
 function formatNeighborhoodContent(content: string): string {
   if (!content) return '';
 
-  // Convert markdown-style content to HTML
-  let html = content
-    // Escape HTML entities first
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    // Convert headers (## and ###)
-    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
-    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
-    // Convert bold (**text**)
-    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-    // Convert bullet points (* item or - item)
-    .replace(/^\* (.+)$/gm, '<li>$1</li>')
-    .replace(/^- (.+)$/gm, '<li>$1</li>')
-    // Wrap consecutive <li> items in <ul>
-    .replace(/(<li>.*<\/li>\n?)+/g, (match) => `<ul>${match}</ul>`)
-    // Convert double newlines to paragraphs
-    .split(/\n\n+/)
-    .map(para => {
-      para = para.trim();
-      // Don't wrap if already wrapped in a tag
-      if (para.startsWith('<h') || para.startsWith('<ul') || para.startsWith('<li')) {
-        return para;
-      }
-      // Wrap plain text in <p> tags
-      if (para && !para.startsWith('<')) {
-        return `<p>${para}</p>`;
-      }
-      return para;
-    })
-    .join('\n');
+  const phone = process.env.NEXT_PUBLIC_PHONE || '(888) 860-0710';
 
-  return html;
+  // Split content into lines for processing
+  const lines = content.split('\n');
+  const result: string[] = [];
+  let inList = false;
+  let inTable = false;
+  let tableRows: string[] = [];
+
+  for (let i = 0; i < lines.length; i++) {
+    let line = lines[i];
+
+    // Replace phone placeholder
+    line = line.replace(/\[PHONE\]/g, phone);
+
+    // Process markdown links FIRST (before other processing)
+    line = line.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-primary-600 hover:text-primary-700 underline font-medium">$1</a>');
+
+    // Process bold and italic
+    line = line.replace(/\*\*\*([^*]+)\*\*\*/g, '<strong><em>$1</em></strong>');
+    line = line.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    line = line.replace(/(?<!\*)\*([^*]+)\*(?!\*)/g, '<em>$1</em>');
+
+    // Check for headers
+    if (line.startsWith('### ')) {
+      if (inList) { result.push('</ul>'); inList = false; }
+      if (inTable) { finishTable(); }
+      result.push(`<h3 class="text-xl font-bold text-secondary-900 mt-8 mb-4">${line.slice(4)}</h3>`);
+      continue;
+    }
+    if (line.startsWith('## ')) {
+      if (inList) { result.push('</ul>'); inList = false; }
+      if (inTable) { finishTable(); }
+      result.push(`<h2 class="text-2xl font-bold text-secondary-900 mt-10 mb-4">${line.slice(3)}</h2>`);
+      continue;
+    }
+    if (line.startsWith('# ')) {
+      if (inList) { result.push('</ul>'); inList = false; }
+      if (inTable) { finishTable(); }
+      result.push(`<h1 class="text-3xl font-bold text-secondary-900 mt-10 mb-4">${line.slice(2)}</h1>`);
+      continue;
+    }
+
+    // Check for table rows
+    if (line.trim().startsWith('|') && line.trim().endsWith('|')) {
+      if (inList) { result.push('</ul>'); inList = false; }
+
+      // Check if it's a separator row (|---|---|)
+      const cells = line.split('|').filter(c => c.trim());
+      const isSeparator = cells.every(cell => /^[-:]+$/.test(cell.trim()));
+
+      if (isSeparator) {
+        // Mark previous row as header
+        if (tableRows.length > 0) {
+          tableRows[tableRows.length - 1] = tableRows[tableRows.length - 1].replace(/<td/g, '<th').replace(/<\/td>/g, '</th>');
+        }
+        inTable = true;
+        continue;
+      }
+
+      // Regular table row
+      const cellHtml = cells.map(cell => `<td class="border border-secondary-200 px-4 py-3">${cell.trim()}</td>`).join('');
+      tableRows.push(`<tr>${cellHtml}</tr>`);
+      inTable = true;
+      continue;
+    } else if (inTable) {
+      finishTable();
+    }
+
+    // Check for unordered list items
+    const listMatch = line.match(/^[-*]\s+(.*)$/);
+    if (listMatch) {
+      if (!inList) {
+        result.push('<ul class="list-disc list-inside space-y-2 my-4 text-secondary-700">');
+        inList = true;
+      }
+      result.push(`<li>${listMatch[1]}</li>`);
+      continue;
+    }
+
+    // Check for ordered list items
+    const orderedMatch = line.match(/^\d+\.\s+(.*)$/);
+    if (orderedMatch) {
+      if (!inList) {
+        result.push('<ol class="list-decimal list-inside space-y-2 my-4 text-secondary-700">');
+        inList = true;
+      }
+      result.push(`<li>${orderedMatch[1]}</li>`);
+      continue;
+    }
+
+    // Close list if we're no longer in one
+    if (inList && line.trim() !== '') {
+      result.push('</ul>');
+      inList = false;
+    }
+
+    // Empty lines
+    if (line.trim() === '') {
+      continue;
+    }
+
+    // Italic text that starts with *
+    if (line.startsWith('*') && line.endsWith('*') && !line.startsWith('**')) {
+      result.push(`<p class="text-secondary-600 italic my-4">${line.slice(1, -1)}</p>`);
+      continue;
+    }
+
+    // Regular paragraphs
+    result.push(`<p class="text-secondary-700 leading-relaxed my-4">${line}</p>`);
+  }
+
+  // Close any open tags
+  if (inList) result.push('</ul>');
+  if (inTable) finishTable();
+
+  function finishTable() {
+    if (tableRows.length > 0) {
+      result.push('<div class="overflow-x-auto my-8">');
+      result.push('<table class="w-full border-collapse bg-white rounded-lg shadow-sm">');
+      result.push('<tbody>');
+      tableRows.forEach((row, idx) => {
+        if (row.includes('<th')) {
+          result.push(row.replace('<tr>', '<tr class="bg-secondary-100">').replace(/<th/g, '<th class="border border-secondary-200 px-4 py-3 text-left font-semibold text-secondary-900"'));
+        } else {
+          result.push(row.replace('<tr>', `<tr class="${idx % 2 === 0 ? 'bg-white' : 'bg-secondary-50'}">`));
+        }
+      });
+      result.push('</tbody>');
+      result.push('</table>');
+      result.push('</div>');
+      tableRows = [];
+      inTable = false;
+    }
+  }
+
+  return result.join('\n');
 }
 
 // Only valid city slugs (starting with dumpster-rental-)
