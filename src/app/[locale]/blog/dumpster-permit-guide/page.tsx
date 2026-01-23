@@ -176,7 +176,7 @@ export default async function DumpsterPermitGuide({ params }: PageProps) {
             </div>
             <div className="hidden lg:block">
               <Image
-                src="/images/blog/dumpster-permit-guide.jpg"
+                src="/images/blog/dumpster-sizes-guide-hero.jpg"
                 alt="Dumpster with permit displayed on residential street"
                 width={600}
                 height={400}

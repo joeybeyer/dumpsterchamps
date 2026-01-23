@@ -177,7 +177,7 @@ export default async function HiddenFeesGuide({ params }: PageProps) {
             </div>
             <div className="hidden lg:block">
               <Image
-                src="/images/blog/hidden-fees-hero.jpg"
+                src="/images/blog/dumpster-pricing-guide-hero.jpg"
                 alt="Invoice with hidden fees highlighted"
                 width={600}
                 height={400}

@@ -175,7 +175,7 @@ export default async function CheapestDumpsterRental({ params }: PageProps) {
             </div>
             <div className="hidden lg:block">
               <Image
-                src="/images/blog/cheapest-dumpster-rental.jpg"
+                src="/images/blog/dumpster-pricing-guide-hero.jpg"
                 alt="Money saved on dumpster rental"
                 width={600}
                 height={400}
