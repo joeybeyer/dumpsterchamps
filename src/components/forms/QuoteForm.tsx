@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import { ChevronRight, ChevronLeft, MapPin, ClipboardList, User, Star, Home, Building2, Hammer, TreePine, Trash2, Briefcase } from "lucide-react";
@@ -23,6 +23,7 @@ const successTestimonials = [
 
 export function QuoteForm({ cityName, stateName, className, source }: QuoteFormProps) {
   const t = useTranslations();
+  const formRef = useRef<HTMLFormElement>(null);
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     zipCode: "",
@@ -79,6 +80,16 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
       return () => clearInterval(interval);
     }
   }, [status]);
+
+  // Scroll form into view when step changes (important for mobile UX)
+  useEffect(() => {
+    if (step > 1 && formRef.current) {
+      // Small delay to let DOM update, then scroll
+      setTimeout(() => {
+        formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 100);
+    }
+  }, [step]);
 
   // Zip code auto-lookup
   const lookupZipCode = async (zip: string) => {
@@ -296,7 +307,7 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
   };
 
   return (
-    <form onSubmit={handleSubmit} className={cn("relative z-50", className)}>
+    <form ref={formRef} onSubmit={handleSubmit} className={cn("relative z-50", className)}>
       {status === "error" && (
         <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700 text-sm mb-4">
           {errorMessage}
