@@ -241,21 +241,31 @@ export default async function BlogIndex({ params }: PageProps) {
           </h2>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {BLOG_TEMPLATES.slice(0, 8).map((template) => (
-              <div
-                key={template.id}
-                className="bg-white rounded-xl p-6 border border-secondary-200"
+            {[
+              { category: "Sizing Guides", title: "How to Choose the Right Dumpster Rental Size in Your City", excerpt: "Choosing the wrong dumpster size can cost you money. Learn how to select the perfect size for your project.", href: "/blog/dumpster-sizes-guide" },
+              { category: "Pricing Guides", title: "How to Compare Dumpster Rental Prices in Your City", excerpt: "Don't get caught by hidden fees. Learn what to look for when comparing dumpster rental prices.", href: "/blog/dumpster-rental-cost-guide" },
+              { category: "How-To Guides", title: "Step-by-Step Guide to Renting a Dumpster in Your City", excerpt: "Everything you need to know about renting a dumpster in your city, from start to finish.", href: "/blog/how-to-rent-dumpster" },
+              { category: "Scheduling", title: "How to Schedule a Dumpster Delivery and Pickup in Your City", excerpt: "Get your dumpster when you need it. Here's how to schedule delivery and pickup in your area.", href: "/blog/how-to-rent-dumpster" },
+              { category: "Preparation", title: "Tips for Preparing Your Driveway for Dumpster Delivery", excerpt: "Don't let a dumpster damage your driveway. Here's how to prepare for delivery in your city.", href: "/blog/how-to-rent-dumpster" },
+              { category: "Comparisons", title: "How to Compare Dumpster Service Features in Your City", excerpt: "Beyond price, here's what else matters when choosing a dumpster rental company in your area.", href: "/blog/roll-off-vs-front-load-dumpster" },
+              { category: "Disposal Info", title: "What Items Can and Can't Be Disposed of in a Dumpster in Your City", excerpt: "Putting the wrong items in your dumpster can result in extra fees. Here's what's allowed in your area.", href: "/blog/what-can-go-in-dumpster" },
+              { category: "Regulations", title: "Guide to Your City Dumpster Rental Regulations and Permits", excerpt: "Know the rules before you rent. Here's what your city requires for dumpster rentals.", href: "/blog/dumpster-permit-guide" },
+            ].map((article) => (
+              <Link
+                key={article.href + article.category}
+                href={article.href}
+                className="bg-white rounded-xl p-6 border border-secondary-200 hover:border-primary-300 hover:shadow-lg transition-all group"
               >
                 <span className="text-xs font-semibold text-primary-600 uppercase">
-                  {categoryLabels[template.category]}
+                  {article.category}
                 </span>
-                <h3 className="text-lg font-semibold text-secondary-900 mt-2">
-                  {template.titleTemplate.replace("[CITY]", "Your City")}
+                <h3 className="text-lg font-semibold text-secondary-900 mt-2 group-hover:text-primary-600 transition-colors">
+                  {article.title}
                 </h3>
                 <p className="text-sm text-secondary-600 mt-2 line-clamp-2">
-                  {template.excerptTemplate.replace("[CITY]", "your city")}
+                  {article.excerpt}
                 </p>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
