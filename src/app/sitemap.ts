@@ -3,6 +3,25 @@ import { prisma } from "@/lib/prisma";
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.dumpsterchamps.com";
 
+// pSEO: Size slugs to generate pages for
+const SIZE_SLUGS = [
+  '10-yard-dumpster',
+  '15-yard-dumpster',
+  '20-yard-dumpster',
+  '30-yard-dumpster',
+  '40-yard-dumpster',
+];
+
+// pSEO: Use case slugs to generate pages for
+const USE_CASE_SLUGS = [
+  'roofing-dumpster',
+  'construction-dumpster',
+  'renovation-dumpster',
+  'cleanout-dumpster',
+  'estate-cleanout-dumpster',
+  'yard-waste-dumpster',
+];
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Static pages
   const staticPages: MetadataRoute.Sitemap = [
@@ -226,6 +245,32 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Skip city-specific blog posts from sitemap - focus on quality pages only
   // City blog indexes and individual posts are generated on-demand but not in sitemap
 
+  // pSEO: Generate size and use case pages for each city
+  const pseoPages: MetadataRoute.Sitemap = [];
+  for (const city of cities) {
+    const citySlug = `dumpster-rental-${city.slug}`;
+
+    // Add size pages for this city
+    for (const sizeSlug of SIZE_SLUGS) {
+      pseoPages.push({
+        url: `${baseUrl}/${citySlug}/${sizeSlug}`,
+        lastModified: city.createdAt,
+        changeFrequency: "weekly",
+        priority: 0.8,
+      });
+    }
+
+    // Add use case pages for this city
+    for (const useCaseSlug of USE_CASE_SLUGS) {
+      pseoPages.push({
+        url: `${baseUrl}/${citySlug}/${useCaseSlug}`,
+        lastModified: city.createdAt,
+        changeFrequency: "weekly",
+        priority: 0.8,
+      });
+    }
+  }
+
   return [
     ...staticPages,
     ...sizePages,
@@ -234,5 +279,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...cityPages,
     ...neighborhoodPages,
     ...blogPillarPages,
+    ...pseoPages,
   ];
 }
