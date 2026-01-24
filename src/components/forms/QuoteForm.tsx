@@ -24,6 +24,7 @@ const successTestimonials = [
 export function QuoteForm({ cityName, stateName, className, source }: QuoteFormProps) {
   const t = useTranslations();
   const formRef = useRef<HTMLFormElement>(null);
+  const successRef = useRef<HTMLDivElement>(null);
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     zipCode: "",
@@ -90,6 +91,15 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
       }, 100);
     }
   }, [step]);
+
+  // Scroll to success message when form is submitted
+  useEffect(() => {
+    if (status === "success" && successRef.current) {
+      setTimeout(() => {
+        successRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 100);
+    }
+  }, [status]);
 
   // Zip code auto-lookup
   const lookupZipCode = async (zip: string) => {
@@ -174,7 +184,7 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
 
   if (status === "success") {
     return (
-      <div className={cn("bg-green-50 border border-green-200 rounded-lg p-6", className)}>
+      <div ref={successRef} className={cn("bg-green-50 border border-green-200 rounded-lg p-6", className)}>
         {/* Success confirmation */}
         <div className="flex items-center justify-center gap-2 mb-3">
           <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
