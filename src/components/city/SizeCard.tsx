@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Check, Truck } from "lucide-react";
+import { Check, Truck, User } from "lucide-react";
 
 interface SizeCardProps {
   size: number;
@@ -11,6 +11,24 @@ interface SizeCardProps {
   idealFor: readonly string[];
   isPopular?: boolean;
 }
+
+// Size-specific labels for quick decision making
+const sizeLabels: Record<number, string> = {
+  10: "Garage Cleanouts",
+  15: "Room Renovations",
+  20: "Full Home Projects",
+  30: "Large Construction",
+  40: "Major Demolition",
+};
+
+// Truck load equivalents for mental anchoring
+const truckLoads: Record<number, number> = {
+  10: 4,
+  15: 6,
+  20: 8,
+  30: 12,
+  40: 16,
+};
 
 // Extract truck load number from capacity string (e.g., "~6 pickup truck loads" -> 6)
 function getTruckLoads(capacity: string): number | null {
@@ -27,7 +45,8 @@ export function SizeCard({
   idealFor,
   isPopular = false,
 }: SizeCardProps) {
-  const truckLoads = getTruckLoads(capacity);
+  const truckLoadCount = truckLoads[size] || getTruckLoads(capacity);
+  const sizeLabel = sizeLabels[size] || "";
 
   return (
     <div
@@ -56,9 +75,18 @@ export function SizeCard({
             } text-white text-sm font-bold px-2 py-1 rounded-md`}>
               {size} YD
             </div>
+            {/* Scale reference - person silhouette */}
+            <div className="absolute bottom-2 left-2 flex items-end gap-0.5 opacity-60">
+              <User className="h-4 w-4 text-secondary-600" />
+              <span className="text-[10px] text-secondary-600">5&apos;10&quot;</span>
+            </div>
           </div>
           <h3 className="text-xl font-bold text-secondary-900">{size} Yard Dumpster</h3>
-          <p className="text-sm text-secondary-500">{dimensions}</p>
+          {/* Project-based label for quick decision */}
+          {sizeLabel && (
+            <p className="text-sm font-medium text-primary-600">Best for {sizeLabel}</p>
+          )}
+          <p className="text-xs text-secondary-500">{dimensions}</p>
         </div>
 
         <div className="text-center mb-4">
@@ -66,16 +94,12 @@ export function SizeCard({
           <p className="text-sm text-secondary-500">Flat rate • {weight} included</p>
         </div>
 
-        {/* Visual truck capacity indicator */}
-        <div className="mb-4">
-          {truckLoads ? (
-            <div className="flex items-center justify-center gap-2 text-secondary-600">
-              <Truck className="h-5 w-5 text-secondary-500" />
-              <span className="text-sm font-medium">x {truckLoads} pickup loads</span>
-            </div>
-          ) : (
-            <p className="text-sm text-secondary-600 text-center">{capacity}</p>
-          )}
+        {/* Visual truck capacity indicator - more prominent */}
+        <div className="mb-4 bg-secondary-50 rounded-lg py-2 px-3">
+          <div className="flex items-center justify-center gap-2 text-secondary-700">
+            <Truck className="h-5 w-5 text-primary-600" />
+            <span className="text-sm font-semibold">= {truckLoadCount} pickup truck loads</span>
+          </div>
         </div>
 
         <div className="space-y-2">

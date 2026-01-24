@@ -7,6 +7,7 @@ import { getMessages, setRequestLocale } from "next-intl/server";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { StickyCallButton } from "@/components/ui/StickyCallButton";
+import { StickyMobileFooter } from "@/components/ui/StickyMobileFooter";
 import { locales, type Locale } from "@/i18n/config";
 
 const GTM_ID = "GTM-WSW4PWX";
@@ -130,9 +131,10 @@ export default async function LocaleLayout({
         </noscript>
         <NextIntlClientProvider messages={messages}>
           <Header />
-          <main className="min-h-screen">{children}</main>
+          <main className="min-h-screen pb-20 lg:pb-0">{children}</main>
           <Footer />
           <StickyCallButton phone={phone} />
+          <StickyMobileFooter />
         </NextIntlClientProvider>
       </body>
     </html>

@@ -210,5 +210,30 @@
     "20yard": "6.7m x 2.3m x 1.4m",
     "30yard": "6.7m x 2.3m x 1.8m",
     "40yard": "6.7m x 2.3m x 2.4m"
+  },
+  "sizeLabels": {
+    "10yard": "Ideal para Limpiezas de Garaje",
+    "15yard": "Perfecto para Renovaciones",
+    "20yard": "La Opción Más Popular",
+    "30yard": "Trabajos de Construcción Grandes",
+    "40yard": "Proyectos de Demolición Mayor"
+  },
+  "truckLoads": {
+    "10yard": "4 cargas de camioneta pickup",
+    "15yard": "6 cargas de camioneta pickup",
+    "20yard": "8 cargas de camioneta pickup",
+    "30yard": "12 cargas de camioneta pickup",
+    "40yard": "16 cargas de camioneta pickup"
+  },
+  "heroWithCity": "El Campeón de Alquiler de Contenedores en {city}",
+  "stickyFooter": {
+    "callNow": "Llamar Ahora",
+    "getQuote": "Cotización",
+    "talkToExpert": "Habla con un Experto"
+  },
+  "trustBar": {
+    "sameDayDelivery": "Entrega el Mismo Día",
+    "noHiddenFees": "Sin Cargos Ocultos",
+    "localSupport": "Soporte Local"
   }
 }

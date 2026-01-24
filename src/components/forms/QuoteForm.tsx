@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
-import { ChevronRight, ChevronLeft, MapPin, ClipboardList, User, Star } from "lucide-react";
+import { ChevronRight, ChevronLeft, MapPin, ClipboardList, User, Star, Home, Building2, Hammer, TreePine, Trash2, Briefcase } from "lucide-react";
 
 interface QuoteFormProps {
   cityName?: string;
@@ -46,23 +46,23 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
   // Spam prevention: timestamp when form was loaded
   const [formTimestamp, setFormTimestamp] = useState<number>(0);
 
+  // Project types with icons for visual selection
   const projectTypes = [
-    { value: "Home Renovation", label: t("projectTypes.homeRenovation") },
-    { value: "Construction Project", label: t("projectTypes.constructionProject") },
-    { value: "Yard Cleanup", label: t("projectTypes.yardCleanup") },
-    { value: "Moving/Cleanout", label: t("projectTypes.movingCleanout") },
-    { value: "Roofing Project", label: t("projectTypes.roofingProject") },
-    { value: "Commercial Project", label: t("projectTypes.commercialProject") },
-    { value: "Other", label: t("projectTypes.other") },
+    { value: "Home Renovation", label: t("projectTypes.homeRenovation"), icon: Home, emoji: "🏠" },
+    { value: "Construction Project", label: t("projectTypes.constructionProject"), icon: Building2, emoji: "🏗️" },
+    { value: "Yard Cleanup", label: t("projectTypes.yardCleanup"), icon: TreePine, emoji: "🌿" },
+    { value: "Moving/Cleanout", label: t("projectTypes.movingCleanout"), icon: Trash2, emoji: "📦" },
+    { value: "Roofing Project", label: t("projectTypes.roofingProject"), icon: Hammer, emoji: "🔨" },
+    { value: "Commercial Project", label: t("projectTypes.commercialProject"), icon: Briefcase, emoji: "🏢" },
   ];
 
+  // Dumpster sizes with truck load equivalents
   const dumpsterSizes = [
-    { value: "10 Yard", label: t("dumpsterSizes.10Yard") },
-    { value: "15 Yard", label: t("dumpsterSizes.15Yard") },
-    { value: "20 Yard (Most Popular)", label: t("dumpsterSizes.20YardPopular") },
-    { value: "30 Yard", label: t("dumpsterSizes.30Yard") },
-    { value: "40 Yard", label: t("dumpsterSizes.40Yard") },
-    { value: "Not Sure", label: t("dumpsterSizes.notSure") },
+    { value: "10 Yard", label: t("dumpsterSizes.10Yard"), trucks: 4, bestFor: "Small cleanouts" },
+    { value: "15 Yard", label: t("dumpsterSizes.15Yard"), trucks: 6, bestFor: "Medium projects" },
+    { value: "20 Yard (Most Popular)", label: t("dumpsterSizes.20YardPopular"), trucks: 8, bestFor: "Renovations", popular: true },
+    { value: "30 Yard", label: t("dumpsterSizes.30Yard"), trucks: 12, bestFor: "Large jobs" },
+    { value: "40 Yard", label: t("dumpsterSizes.40Yard"), trucks: 16, bestFor: "Major projects" },
   ];
 
   // Set timestamp when component mounts
@@ -372,55 +372,117 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
         </div>
       )}
 
-      {/* Step 2: Project Details */}
+      {/* Step 2: Project Details - Icon-based selection for reduced friction */}
       {step === 2 && (
         <div className="space-y-4">
-          {/* Urgency message after zip code entry */}
+          {/* Urgency message + sunk cost messaging */}
           <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 text-center">
             <p className="text-amber-800 text-sm font-medium">
               {t("quoteForm.sameDayAvailable")}
             </p>
           </div>
 
+          {/* Project Type - Icon Grid */}
           <div>
-            <label htmlFor="projectType" className="block text-sm font-medium text-secondary-700 mb-1">
+            <label className="block text-sm font-medium text-secondary-700 mb-2">
               {t("quoteForm.projectType")} *
             </label>
-            <select
-              id="projectType"
-              required
-              value={formData.projectType}
-              onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
-              className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors bg-white text-secondary-900"
-            >
-              <option value="" className="text-secondary-500">{t("quoteForm.selectProjectType")}</option>
-              {projectTypes.map((type) => (
-                <option key={type.value} value={type.value} className="text-secondary-900 bg-white">
-                  {type.label}
-                </option>
-              ))}
-            </select>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              {projectTypes.map((type) => {
+                const IconComponent = type.icon;
+                const isSelected = formData.projectType === type.value;
+                return (
+                  <button
+                    key={type.value}
+                    type="button"
+                    onClick={() => setFormData({ ...formData, projectType: type.value })}
+                    className={cn(
+                      "flex flex-col items-center p-3 border-2 rounded-xl transition-all active:scale-[0.98]",
+                      isSelected
+                        ? "border-primary-500 bg-primary-50 ring-2 ring-primary-200"
+                        : "border-secondary-200 hover:border-primary-300 hover:bg-primary-50/50"
+                    )}
+                  >
+                    <IconComponent className={cn(
+                      "h-6 w-6 mb-1",
+                      isSelected ? "text-primary-600" : "text-secondary-500"
+                    )} />
+                    <span className={cn(
+                      "text-xs font-medium text-center leading-tight",
+                      isSelected ? "text-primary-700" : "text-secondary-700"
+                    )}>
+                      {type.label}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
+          {/* Dumpster Size - Visual Selection */}
           <div>
-            <label htmlFor="dumpsterSize" className="block text-sm font-medium text-secondary-700 mb-1">
+            <label className="block text-sm font-medium text-secondary-700 mb-2">
               {t("quoteForm.dumpsterSize")} *
             </label>
-            <select
-              id="dumpsterSize"
-              required
-              value={formData.dumpsterSize}
-              onChange={(e) => setFormData({ ...formData, dumpsterSize: e.target.value })}
-              className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors bg-white text-secondary-900"
-            >
-              <option value="" className="text-secondary-500">{t("quoteForm.selectSize")}</option>
-              {dumpsterSizes.map((size) => (
-                <option key={size.value} value={size.value} className="text-secondary-900 bg-white">
-                  {size.label}
-                </option>
-              ))}
-            </select>
+            <div className="grid grid-cols-1 gap-2">
+              {dumpsterSizes.map((size) => {
+                const isSelected = formData.dumpsterSize === size.value;
+                return (
+                  <button
+                    key={size.value}
+                    type="button"
+                    onClick={() => setFormData({ ...formData, dumpsterSize: size.value })}
+                    className={cn(
+                      "flex items-center justify-between p-3 border-2 rounded-xl transition-all active:scale-[0.99]",
+                      isSelected
+                        ? "border-primary-500 bg-primary-50 ring-2 ring-primary-200"
+                        : "border-secondary-200 hover:border-primary-300 hover:bg-primary-50/50",
+                      size.popular && !isSelected && "border-primary-200 bg-primary-50/30"
+                    )}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className={cn(
+                        "w-10 h-10 rounded-lg flex items-center justify-center font-bold text-sm",
+                        isSelected ? "bg-primary-600 text-white" : "bg-secondary-100 text-secondary-700"
+                      )}>
+                        {size.value.split(" ")[0]}
+                      </div>
+                      <div className="text-left">
+                        <div className="flex items-center gap-2">
+                          <span className={cn(
+                            "font-semibold text-sm",
+                            isSelected ? "text-primary-700" : "text-secondary-900"
+                          )}>
+                            {size.label}
+                          </span>
+                          {size.popular && (
+                            <span className="text-xs bg-primary-600 text-white px-2 py-0.5 rounded-full">
+                              Popular
+                            </span>
+                          )}
+                        </div>
+                        <span className="text-xs text-secondary-500">
+                          ≈ {size.trucks} pickup truck loads • {size.bestFor}
+                        </span>
+                      </div>
+                    </div>
+                    {isSelected && (
+                      <div className="w-5 h-5 bg-primary-600 rounded-full flex items-center justify-center">
+                        <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
           </div>
+
+          {/* Progress messaging */}
+          <p className="text-xs text-secondary-500 text-center">
+            Step 2 of 3 — Just a few more details for your flat-rate quote
+          </p>
 
           <div className="flex gap-3">
             <button

@@ -210,5 +210,30 @@
     "20yard": "22' x 7.5' x 4.5'",
     "30yard": "22' x 7.5' x 6'",
     "40yard": "22' x 7.5' x 8'"
+  },
+  "sizeLabels": {
+    "10yard": "Best for Garage Cleanouts",
+    "15yard": "Perfect for Renovations",
+    "20yard": "Most Popular Choice",
+    "30yard": "Large Construction Jobs",
+    "40yard": "Major Demolition Projects"
+  },
+  "truckLoads": {
+    "10yard": "4 pickup truck loads",
+    "15yard": "6 pickup truck loads",
+    "20yard": "8 pickup truck loads",
+    "30yard": "12 pickup truck loads",
+    "40yard": "16 pickup truck loads"
+  },
+  "heroWithCity": "Dumpster Rental Champion in {city}",
+  "stickyFooter": {
+    "callNow": "Call Now",
+    "getQuote": "Get Quote",
+    "talkToExpert": "Talk to an Expert"
+  },
+  "trustBar": {
+    "sameDayDelivery": "Same-Day Delivery",
+    "noHiddenFees": "No Hidden Fees",
+    "localSupport": "Local Support"
   }
 }

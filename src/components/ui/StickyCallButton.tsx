@@ -50,30 +50,7 @@ export function StickyCallButton({
 
   return (
     <>
-      {/* Mobile: Bottom sticky bar - hides when near forms to avoid overlap */}
-      <div
-        className={`md:hidden fixed bottom-0 left-0 right-0 z-50 safe-area-inset-bottom transition-transform duration-300 ${
-          isNearForm ? 'translate-y-full' : 'translate-y-0'
-        }`}
-      >
-        <a
-          href={`tel:${phoneDigits}`}
-          className="flex items-center justify-center gap-3 bg-gradient-to-r from-primary-600 to-primary-500 text-white py-4 px-6 shadow-2xl min-h-[64px] touch-manipulation"
-        >
-          <div className="relative">
-            <Phone className="h-6 w-6" />
-            <span className="absolute -top-1 -right-1 h-3 w-3 bg-green-400 rounded-full animate-ping" />
-            <span className="absolute -top-1 -right-1 h-3 w-3 bg-green-400 rounded-full" />
-          </div>
-          <div className="text-left">
-            <div className="text-xs font-medium text-primary-100">{t('tapToCall')}</div>
-            <div className="text-lg font-bold tracking-wide">{phone}</div>
-          </div>
-          <div className="ml-auto bg-white/20 rounded-full px-3 py-1.5 text-sm font-semibold">
-            {t('freeQuote')}
-          </div>
-        </a>
-      </div>
+      {/* Mobile: Replaced by StickyMobileFooter component for dual Call/Quote CTAs */}
 
       {/* Desktop: Floating button */}
       <div className="hidden md:block fixed bottom-8 right-8 z-50">
@@ -146,14 +123,7 @@ export function StickyCallButton({
         )}
       </div>
 
-      {/* Add padding to body for mobile sticky bar */}
-      <style jsx global>{`
-        @media (max-width: 767px) {
-          body {
-            padding-bottom: 72px;
-          }
-        }
-      `}</style>
+      {/* Mobile padding handled by layout pb-20 class */}
     </>
   );
 }
