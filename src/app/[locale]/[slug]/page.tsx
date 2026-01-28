@@ -19,6 +19,7 @@ import {
   ClimateSection,
   PermitsSection,
   WhyChooseUs,
+  ReviewsSection,
 } from "@/components/city";
 import { DUMPSTER_PRICING, DUMPSTER_SIZES } from "@/data/pricing";
 import { DeliveryCounter } from "@/components/ui/TrustBadges";
@@ -654,6 +655,7 @@ async function CityPage({ citySlug }: { citySlug: string }) {
       state: true,
       neighborhoods: { orderBy: { name: "asc" } },
       faqs: { orderBy: { sortOrder: "asc" } },
+      reviews: { orderBy: { createdAt: "desc" }, take: 5 },
     },
   });
 
@@ -903,6 +905,20 @@ async function CityPage({ citySlug }: { citySlug: string }) {
           </div>
         </section>
       )}
+
+      {/* Customer Reviews Section */}
+      <ReviewsSection
+        cityName={city.name}
+        stateAbbr={city.state.abbr}
+        googleReviewUrl={city.googleReviewUrl || undefined}
+        reviews={city.reviews && city.reviews.length > 0 ? city.reviews.map(r => ({
+          name: r.author,
+          location: city.name,
+          rating: r.rating,
+          text: r.text,
+          date: r.date || undefined
+        })) : undefined}
+      />
 
       {/* Neighborhoods Section */}
       <NeighborhoodGrid
