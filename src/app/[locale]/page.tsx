@@ -4,6 +4,7 @@ import { Phone, Truck, Clock, Shield, Star, ChevronRight, HelpCircle, Calculator
 import { QuoteForm } from "@/components/forms/QuoteForm";
 import { prisma } from "@/lib/prisma";
 import { LocalBusinessSchema, FAQSchema, AggregateRatingSchema, ReviewSchema } from "@/components/seo/SchemaMarkup";
+import { LocalFAQAccordion, DEFAULT_CITY_FAQS } from "@/components/city/LocalFAQAccordion";
 import { TestimonialStrip } from "@/components/ui/TestimonialStrip";
 import { DeliveryCounter, ResponseTimeStat } from "@/components/ui/TrustBadges";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -404,6 +405,27 @@ export default async function HomePage({ params }: PageProps) {
         </div>
       </section>
 
+
+      {/* FAQ Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl lg:text-4xl font-bold mb-4 text-secondary-900">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-xl text-secondary-600 max-w-3xl mx-auto">
+              Get answers to the most common questions about dumpster rental costs, sizing, and delivery.
+            </p>
+          </div>
+          <div className="max-w-4xl mx-auto">
+            <LocalFAQAccordion 
+              faqs={DEFAULT_CITY_FAQS}
+              cityName="your area"
+              stateName="your state"
+            />
+          </div>
+        </div>
+      </section>
       {/* CTA Section */}
       <section className="py-16 bg-primary-600 text-white">
         <div className="container mx-auto px-4 text-center">
