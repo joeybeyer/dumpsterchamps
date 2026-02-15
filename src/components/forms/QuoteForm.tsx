@@ -150,6 +150,10 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
       }
 
       setStatus("success");
+      // Fire Facebook Pixel Lead event
+      if (typeof window !== "undefined" && (window as any).fbq) {
+        (window as any).fbq("track", "Lead");
+      }
       setFormData({
         zipCode: "",
         name: "",

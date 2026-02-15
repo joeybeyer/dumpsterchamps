@@ -12,6 +12,8 @@
     "db:studio": "prisma studio"
   },
   "dependencies": {
+    "@libsql/client": "^0.17.0",
+    "@prisma/adapter-libsql": "^7.4.0",
     "@prisma/client": "^6.19.1",
     "@tailwindcss/postcss": "^4.1.18",
     "@types/node": "^25.0.3",
