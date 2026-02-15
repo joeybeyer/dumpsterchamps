@@ -209,6 +209,11 @@ const nextConfig = {
       { source: "/dumpster-rental-in-:city-ct", destination: "/dumpster-rental-:city", permanent: true },
       { source: "/dumpster-rental-in-:city-nv", destination: "/dumpster-rental-:city", permanent: true },
       { source: "/dumpster-rental-in-:city-ut", destination: "/dumpster-rental-:city", permanent: true },
+
+      // ============ 404 FIXES FROM GOOGLE SEARCH CONSOLE ============
+      // Invalid format URLs (missing city prefix or incomplete structure)
+      { source: "/st-johns-town-center", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
+      { source: "/dumpster-rental-fairfield", destination: "/locations", permanent: false }, // Ambiguous - multiple Fairfield cities
     ];
   },
 };

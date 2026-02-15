@@ -145,7 +145,7 @@ export function ResponseTimeStat({
     <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border ${bgStyles} ${className}`}>
       <Clock className={`h-4 w-4 ${iconStyles}`} />
       <span className={`text-sm ${textStyles}`}>
-        Average response: <span className={highlightStyles}>12 minutes</span>
+        Average response: <span className={highlightStyles}>2 minutes</span>
       </span>
     </div>
   );

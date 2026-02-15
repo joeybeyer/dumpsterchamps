@@ -91,13 +91,13 @@ export default async function HomePage({ params }: PageProps) {
   return (
     <>
       {/* Hero Section - Optimized for Conversion */}
-      <section className="bg-gradient-to-br from-secondary-900 to-secondary-800 text-white py-12 lg:py-20">
+      <section className="bg-gradient-to-br from-secondary-900 to-secondary-800 text-white py-6 lg:py-10">
         <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-center">
             {/* Left Column - Content & Form (natural left-to-right reading flow) */}
             <div>
               {/* Kicker - Social Proof */}
-              <div className="flex items-center gap-2 mb-4">
+              <div className="flex items-center gap-2 mb-3">
                 <div className="flex -space-x-1">
                   <Star className="h-5 w-5 text-yellow-400 fill-yellow-400" />
                   <Star className="h-5 w-5 text-yellow-400 fill-yellow-400" />
@@ -111,17 +111,17 @@ export default async function HomePage({ params }: PageProps) {
               </div>
 
               {/* Headline - Problem-focused with action verb */}
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 leading-tight">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3 leading-tight">
                 {t("hero.headline")}
               </h1>
 
               {/* Description - Addresses pain points */}
-              <p className="text-lg text-secondary-200 mb-6 leading-relaxed">
+              <p className="text-lg text-secondary-200 mb-4 leading-relaxed">
                 {t("hero.description")} <strong className="text-white">$495</strong> — {t("hero.noHiddenFees")}
               </p>
 
               {/* Trust Badges */}
-              <div className="flex flex-wrap gap-3 mb-6">
+              <div className="flex flex-wrap gap-3 mb-4">
                 <div className="flex items-center gap-2 bg-secondary-800/60 px-3 py-2 rounded-lg text-sm">
                   <Clock className="h-4 w-4 text-primary-400" />
                   <span>{t("hero.sameDayDelivery")}</span>
@@ -137,7 +137,7 @@ export default async function HomePage({ params }: PageProps) {
               </div>
 
               {/* CTA Button */}
-              <div className="flex flex-col items-start mb-8">
+              <div className="flex flex-col items-start mb-4">
                 <a
                   href={`tel:${phone.replace(/\D/g, "")}`}
                   className="bg-primary-600 text-white px-8 lg:px-10 py-4 lg:py-5 rounded-lg font-semibold text-center hover:bg-primary-700 transition-colors flex items-center justify-center gap-2 text-lg lg:text-xl"
@@ -152,14 +152,14 @@ export default async function HomePage({ params }: PageProps) {
               </div>
 
               {/* Delivery Counter & Response Time - Social proof */}
-              <div className="flex flex-wrap gap-3 mb-4">
+              <div className="flex flex-wrap gap-3 mb-3">
                 <DeliveryCounter variant="dark" />
                 <ResponseTimeStat variant="dark" />
               </div>
 
               {/* Quote Form */}
-              <div id="quote-form" className="bg-white rounded-xl p-6 shadow-2xl">
-                <h2 className="text-xl font-bold text-secondary-900 mb-4">
+              <div id="quote-form" className="bg-white rounded-xl p-5 shadow-2xl">
+                <h2 className="text-xl font-bold text-secondary-900 mb-3">
                   {t("hero.getYourPrice")}
                 </h2>
                 <QuoteForm />
