@@ -20,6 +20,25 @@ import { QuoteForm } from '@/components/forms/QuoteForm';
 import { LocalBusinessSchema } from '@/components/seo/SchemaMarkup';
 import { Phone, MapPin, ArrowLeft, ChevronRight, Truck, Shield, Clock } from 'lucide-react';
 
+// pSEO: Size slugs (must match sitemap.ts)
+const SIZE_SLUGS = [
+  '10-yard-dumpster',
+  '15-yard-dumpster',
+  '20-yard-dumpster',
+  '30-yard-dumpster',
+  '40-yard-dumpster',
+];
+
+// pSEO: Use case slugs (must match sitemap.ts)
+const USE_CASE_SLUGS = [
+  'roofing-dumpster',
+  'construction-dumpster',
+  'renovation-dumpster',
+  'cleanout-dumpster',
+  'estate-cleanout-dumpster',
+  'yard-waste-dumpster',
+];
+
 interface PageProps {
   params: Promise<{
     slug: string;
@@ -108,6 +127,192 @@ Most household and construction debris is accepted, including furniture, applian
 ## Ready to Rent a Dumpster in ${neighborhood.name}?
 
 Call us at [PHONE] for immediate service or fill out the quote form above. We're ready to help with your ${neighborhood.name} project today.`;
+}
+
+/**
+ * Generate content for SIZE pages (e.g., 10-yard-dumpster, 20-yard-dumpster)
+ */
+function generateSizePageContent(
+  sizeSlug: string,
+  city: { name: string; slug: string; phone: string | null; state: { abbr: string; name: string } }
+): string {
+  const phone = city.phone || process.env.NEXT_PUBLIC_PHONE || '(888) 860-0710';
+  const sizeMap: Record<string, { size: string; price: string; capacity: string; bestFor: string }> = {
+    '10-yard-dumpster': { size: '10 Yard', price: '$495', capacity: '4 pickup loads', bestFor: 'Small cleanouts, single room remodels' },
+    '15-yard-dumpster': { size: '15 Yard', price: '$550', capacity: '6 pickup loads', bestFor: 'Garage cleanouts, small renovations' },
+    '20-yard-dumpster': { size: '20 Yard', price: '$595', capacity: '8 pickup loads', bestFor: 'Kitchen/bath remodels, roofing' },
+    '30-yard-dumpster': { size: '30 Yard', price: '$695', capacity: '12 pickup loads', bestFor: 'Large renovations, construction' },
+    '40-yard-dumpster': { size: '40 Yard', price: '$795', capacity: '16 pickup loads', bestFor: 'Major construction, commercial projects' },
+  };
+
+  const sizeData = sizeMap[sizeSlug] || sizeMap['20-yard-dumpster'];
+
+  return `## ${sizeData.size} Dumpster Rental in ${city.name}, ${city.state.abbr}
+
+Looking for a [${sizeData.size.toLowerCase()} dumpster rental in ${city.name}](/dumpster-rental-${city.slug})? We deliver ${sizeData.size.toLowerCase()} roll-off containers throughout ${city.name} and surrounding areas. Perfect for ${sizeData.bestFor.toLowerCase()}, our ${sizeData.size.toLowerCase()} dumpster provides reliable waste disposal with flat-rate pricing starting at ${sizeData.price}.
+
+## ${sizeData.size} Dumpster Specifications
+
+Our ${sizeData.size.toLowerCase()} dumpster holds approximately ${sizeData.capacity} of waste, making it ideal for ${sizeData.bestFor.toLowerCase()}. The container dimensions provide ample space while fitting in most driveways and construction sites.
+
+**Key Features:**
+- **Capacity**: ${sizeData.capacity}
+- **Pricing**: ${sizeData.price} all-inclusive
+- **Rental Period**: 7 days (extensions available)
+- **Weight Allowance**: Included in price
+- **Delivery**: Same-day available in ${city.name}
+
+## What Can You Put in a ${sizeData.size} Dumpster?
+
+Our ${sizeData.size.toLowerCase()} dumpsters accept most common waste materials:
+
+- **Construction Debris**: Lumber, drywall, flooring, tiles
+- **Household Items**: Furniture, appliances, carpeting
+- **Yard Waste**: Branches, leaves, landscaping debris
+- **Renovation Waste**: Cabinets, fixtures, siding
+
+We cannot accept hazardous materials, paint, chemicals, batteries, or tires.
+
+## ${sizeData.size} Dumpster Rental Pricing in ${city.name}
+
+| Size | Price | Capacity | Rental Period | Best For |
+|------|-------|----------|---------------|----------|
+| 10 Yard | $495 | 4 pickup loads | 7 days | Small cleanouts, single room remodels |
+| 15 Yard | $550 | 6 pickup loads | 7 days | Garage cleanouts, small renovations |
+| 20 Yard | $595 | 8 pickup loads | 7 days | Kitchen/bath remodels, roofing (Most Popular) |
+| 30 Yard | $695 | 12 pickup loads | 7 days | Large renovations, construction |
+| 40 Yard | $795 | 16 pickup loads | 7 days | Major construction, commercial projects |
+
+All prices include delivery, pickup, disposal, and weight allowance. No hidden fees.
+
+## Why Choose Our ${sizeData.size} Dumpster Rental in ${city.name}
+
+- **Same-Day Delivery**: Call before noon for same-day service in ${city.name}
+- **Flat-Rate Pricing**: The price we quote is the price you pay
+- **Driveway Protection**: We place boards under the container to protect your property
+- **Flexible Rentals**: Standard 7-day rentals with easy extensions available
+- **Local Service**: Our drivers know ${city.name} well
+
+## Frequently Asked Questions
+
+**How much does a ${sizeData.size.toLowerCase()} dumpster cost in ${city.name}?**
+A ${sizeData.size.toLowerCase()} dumpster rental in ${city.name} costs ${sizeData.price}, which includes delivery, pickup, disposal, and a 7-day rental period. No hidden fees or surprise charges.
+
+**How big is a ${sizeData.size.toLowerCase()} dumpster?**
+A ${sizeData.size.toLowerCase()} dumpster holds approximately ${sizeData.capacity}, making it perfect for ${sizeData.bestFor.toLowerCase()}. It fits comfortably in most driveways.
+
+**Do I need a permit for a ${sizeData.size.toLowerCase()} dumpster in ${city.name}?**
+If the dumpster is placed on your private property (driveway or yard), you typically don't need a permit. Street placement may require a permit from ${city.name}. We can help guide you through local requirements.
+
+**How fast can you deliver a ${sizeData.size.toLowerCase()} dumpster to ${city.name}?**
+We offer same-day delivery to ${city.name} when you call before noon. Next-day delivery is available for afternoon orders.
+
+## Ready to Rent a ${sizeData.size} Dumpster in ${city.name}?
+
+Call us at [PHONE] for immediate service or fill out the quote form above. We're ready to help with your ${city.name} project today.`;
+}
+
+/**
+ * Generate content for USE CASE pages (e.g., construction-dumpster, roofing-dumpster)
+ */
+function generateUseCasePageContent(
+  useCaseSlug: string,
+  city: { name: string; slug: string; phone: string | null; state: { abbr: string; name: string } }
+): string {
+  const phone = city.phone || process.env.NEXT_PUBLIC_PHONE || '(888) 860-0710';
+  const useCaseMap: Record<string, { name: string; description: string; materials: string[]; recommendedSizes: string }> = {
+    'construction-dumpster': {
+      name: 'Construction',
+      description: 'construction projects, new builds, demolition, and site cleanup',
+      materials: ['Lumber and wood', 'Drywall and sheetrock', 'Metal scraps', 'Concrete and brick', 'Roofing shingles', 'Siding and trim'],
+      recommendedSizes: '20-yard or 30-yard dumpsters'
+    },
+    'roofing-dumpster': {
+      name: 'Roofing',
+      description: 'roof replacement, shingle removal, and roofing debris',
+      materials: ['Asphalt shingles', 'Wood shakes', 'Underlayment', 'Flashing and gutters', 'Roofing nails', 'Old roof decking'],
+      recommendedSizes: '20-yard dumpster'
+    },
+    'renovation-dumpster': {
+      name: 'Renovation',
+      description: 'home renovations, remodels, and improvement projects',
+      materials: ['Old cabinets and countertops', 'Flooring materials', 'Drywall and plaster', 'Fixtures and appliances', 'Doors and windows', 'Carpeting and padding'],
+      recommendedSizes: '15-yard or 20-yard dumpsters'
+    },
+    'cleanout-dumpster': {
+      name: 'Cleanout',
+      description: 'estate cleanouts, garage cleaning, basement decluttering, and hoarding cleanup',
+      materials: ['Furniture and mattresses', 'Appliances', 'Boxes and household items', 'Clothing and textiles', 'Books and papers', 'General household junk'],
+      recommendedSizes: '10-yard or 15-yard dumpsters'
+    },
+    'estate-cleanout-dumpster': {
+      name: 'Estate Cleanout',
+      description: 'estate cleanouts, property cleanouts, and downsizing',
+      materials: ['Furniture and antiques', 'Household items', 'Appliances', 'Personal belongings', 'Outdoor equipment', 'General estate items'],
+      recommendedSizes: '15-yard or 20-yard dumpsters'
+    },
+    'yard-waste-dumpster': {
+      name: 'Yard Waste',
+      description: 'landscaping projects, tree removal, and yard cleanup',
+      materials: ['Tree branches and limbs', 'Leaves and grass clippings', 'Brush and shrubs', 'Soil and sod', 'Garden waste', 'Landscaping debris'],
+      recommendedSizes: '10-yard or 20-yard dumpsters'
+    },
+  };
+
+  const useCaseData = useCaseMap[useCaseSlug] || useCaseMap['construction-dumpster'];
+
+  return `## ${useCaseData.name} Dumpster Rental in ${city.name}, ${city.state.abbr}
+
+Looking for [${useCaseData.name.toLowerCase()} dumpster rental in ${city.name}](/dumpster-rental-${city.slug})? We deliver roll-off containers specifically designed for ${useCaseData.description}. Our team provides fast, affordable service throughout ${city.name} and surrounding areas with transparent flat-rate pricing.
+
+## ${useCaseData.name} Projects We Handle in ${city.name}
+
+Our [roll-off dumpster rental](/roll-off-dumpster-rental) service is perfect for ${useCaseData.description}. We understand the unique waste disposal needs of ${useCaseData.name.toLowerCase()} projects and provide the right container size for efficient debris removal.
+
+**What You Can Dispose Of:**
+${useCaseData.materials.map(m => `- ${m}`).join('\n')}
+
+We cannot accept hazardous materials, paint, chemicals, batteries, or tires.
+
+## Recommended Dumpster Sizes for ${useCaseData.name} Projects
+
+For most ${useCaseData.name.toLowerCase()} projects in ${city.name}, we recommend our ${useCaseData.recommendedSizes}. These sizes provide optimal capacity while fitting in standard driveways and work sites.
+
+| Size | Price | Capacity | Best For |
+|------|-------|----------|----------|
+| 10 Yard | $495 | 4 pickup loads | Small ${useCaseData.name.toLowerCase()} projects |
+| 15 Yard | $550 | 6 pickup loads | Medium ${useCaseData.name.toLowerCase()} projects |
+| 20 Yard | $595 | 8 pickup loads | Most ${useCaseData.name.toLowerCase()} projects (Most Popular) |
+| 30 Yard | $695 | 12 pickup loads | Large ${useCaseData.name.toLowerCase()} projects |
+| 40 Yard | $795 | 16 pickup loads | Commercial ${useCaseData.name.toLowerCase()} projects |
+
+All prices include delivery, pickup, disposal, and a 7-day rental period. No hidden fees.
+
+## Why Choose Us for ${useCaseData.name} Dumpster Rental in ${city.name}
+
+- **Same-Day Delivery**: Call before noon for same-day service in ${city.name}
+- **Flat-Rate Pricing**: The price we quote is the price you pay
+- **Driveway Protection**: We place boards under the container to protect your property
+- **Flexible Rentals**: Standard 7-day rentals with easy extensions available
+- **Local Expertise**: Our drivers know ${city.name} and handle ${useCaseData.name.toLowerCase()} debris daily
+
+## Frequently Asked Questions
+
+**How much does a ${useCaseData.name.toLowerCase()} dumpster cost in ${city.name}?**
+${useCaseData.name} dumpster rental in ${city.name} starts at $495 for a 10-yard container. Our most popular 20-yard dumpster is $595, which works well for most ${useCaseData.name.toLowerCase()} projects.
+
+**What size dumpster do I need for my ${useCaseData.name.toLowerCase()} project?**
+For most ${useCaseData.name.toLowerCase()} projects in ${city.name}, we recommend ${useCaseData.recommendedSizes}. Call us and we'll help you determine the right size based on your project scope.
+
+**Do I need a permit for a dumpster in ${city.name}?**
+If the dumpster is placed on your private property (driveway or yard), you typically don't need a permit. Street placement may require a permit from ${city.name}. We can help guide you through local requirements.
+
+**How fast can you deliver a dumpster to ${city.name}?**
+We offer same-day delivery to ${city.name} when you call before noon. Next-day delivery is available for afternoon orders.
+
+## Ready to Rent a ${useCaseData.name} Dumpster in ${city.name}?
+
+Call us at [PHONE] for immediate service or fill out the quote form above. We're ready to help with your ${city.name} ${useCaseData.name.toLowerCase()} project today.`;
 }
 
 /**
@@ -269,7 +474,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const actualCitySlug = slug.replace('dumpster-rental-', '');
 
-  // First try NeighborhoodPage
+  // Get city data
   const city = await prisma.city.findUnique({
     where: { slug: actualCitySlug },
     include: {
@@ -287,6 +492,71 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return {};
   }
 
+  const canonicalUrl = `https://www.dumpsterchamps.com/${slug}/${neighborhoodSlug}`;
+
+  // Check if this is a SIZE page
+  if (SIZE_SLUGS.includes(neighborhoodSlug)) {
+    const sizeMap: Record<string, string> = {
+      '10-yard-dumpster': '10 Yard',
+      '15-yard-dumpster': '15 Yard',
+      '20-yard-dumpster': '20 Yard',
+      '30-yard-dumpster': '30 Yard',
+      '40-yard-dumpster': '40 Yard',
+    };
+    const sizeName = sizeMap[neighborhoodSlug] || '20 Yard';
+
+    return {
+      title: `${sizeName} Dumpster Rental in ${city.name}, ${city.state.abbr} | From $495`,
+      description: `Rent a ${sizeName.toLowerCase()} dumpster in ${city.name}, ${city.state.abbr}. Same-day delivery available. Flat-rate pricing with no hidden fees. Call now for immediate service!`,
+      alternates: { canonical: canonicalUrl },
+      openGraph: {
+        title: `${sizeName} Dumpster Rental in ${city.name}, ${city.state.abbr} | Dumpster Champs`,
+        description: `Rent a ${sizeName.toLowerCase()} dumpster in ${city.name}. Fast delivery, flat-rate pricing.`,
+        url: canonicalUrl,
+        siteName: 'Dumpster Champs',
+        locale: 'en_US',
+        type: 'website',
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: `${sizeName} Dumpster Rental in ${city.name}, ${city.state.abbr}`,
+        description: `Rent a ${sizeName.toLowerCase()} dumpster in ${city.name}. Same-day delivery available.`,
+      },
+    };
+  }
+
+  // Check if this is a USE CASE page
+  if (USE_CASE_SLUGS.includes(neighborhoodSlug)) {
+    const useCaseMap: Record<string, string> = {
+      'construction-dumpster': 'Construction',
+      'roofing-dumpster': 'Roofing',
+      'renovation-dumpster': 'Renovation',
+      'cleanout-dumpster': 'Cleanout',
+      'estate-cleanout-dumpster': 'Estate Cleanout',
+      'yard-waste-dumpster': 'Yard Waste',
+    };
+    const useCaseName = useCaseMap[neighborhoodSlug] || 'Construction';
+
+    return {
+      title: `${useCaseName} Dumpster Rental in ${city.name}, ${city.state.abbr} | From $495`,
+      description: `${useCaseName} dumpster rental in ${city.name}, ${city.state.abbr}. Fast delivery for ${useCaseName.toLowerCase()} projects. Flat-rate pricing with no hidden fees. Call now!`,
+      alternates: { canonical: canonicalUrl },
+      openGraph: {
+        title: `${useCaseName} Dumpster Rental in ${city.name}, ${city.state.abbr} | Dumpster Champs`,
+        description: `${useCaseName} dumpster rental in ${city.name}. Fast delivery, flat-rate pricing.`,
+        url: canonicalUrl,
+        siteName: 'Dumpster Champs',
+        locale: 'en_US',
+        type: 'website',
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: `${useCaseName} Dumpster Rental in ${city.name}, ${city.state.abbr}`,
+        description: `${useCaseName} dumpster rental in ${city.name}. Same-day delivery available.`,
+      },
+    };
+  }
+
   // Check for NeighborhoodPage first, then fall back to Neighborhood
   const neighborhoodPage = city.neighborhoodPages[0];
   const neighborhood = city.neighborhoods[0];
@@ -296,7 +566,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   const name = neighborhoodPage?.name || neighborhood?.name || neighborhoodSlug;
-  const canonicalUrl = `https://www.dumpsterchamps.com/${slug}/${neighborhoodSlug}`;
 
   // Strip "| Dumpster Champs" from metaTitle if present (layout template adds it)
   let pageTitle = neighborhoodPage?.metaTitle || `Dumpster Rental in ${name}, ${city.name} | From $495`;
@@ -355,41 +624,82 @@ export default async function NeighborhoodPage({ params }: PageProps) {
     notFound();
   }
 
-  // Try NeighborhoodPage first (has AI-generated content)
-  const neighborhoodPage = city.neighborhoodPages[0];
-  // Fall back to basic Neighborhood record
-  const neighborhood = city.neighborhoods[0];
-
-  // Must have at least one
-  if (!neighborhoodPage && !neighborhood) {
-    notFound();
-  }
-
   // Build unified data object
   let pageData: NeighborhoodData;
 
-  if (neighborhoodPage) {
-    // Use rich NeighborhoodPage content
-    pageData = {
-      name: neighborhoodPage.name,
-      slug: neighborhoodPage.slug,
-      content: neighborhoodPage.content,
-      zipCodes: neighborhoodPage.zipCodes,
-      metaTitle: neighborhoodPage.metaTitle,
-      metaDesc: neighborhoodPage.metaDesc,
-      isFallback: false,
+  // Check if this is a SIZE page
+  if (SIZE_SLUGS.includes(neighborhoodSlug)) {
+    const sizeMap: Record<string, string> = {
+      '10-yard-dumpster': '10 Yard Dumpster',
+      '15-yard-dumpster': '15 Yard Dumpster',
+      '20-yard-dumpster': '20 Yard Dumpster',
+      '30-yard-dumpster': '30 Yard Dumpster',
+      '40-yard-dumpster': '40 Yard Dumpster',
     };
-  } else {
-    // Generate fallback content from Neighborhood data
     pageData = {
-      name: neighborhood!.name,
-      slug: neighborhood!.slug,
-      content: generateFallbackContent(neighborhood!, city),
-      zipCodes: neighborhood!.zipCodes,
+      name: sizeMap[neighborhoodSlug] || '20 Yard Dumpster',
+      slug: neighborhoodSlug,
+      content: generateSizePageContent(neighborhoodSlug, city),
+      zipCodes: null,
       metaTitle: null,
       metaDesc: null,
       isFallback: true,
     };
+  }
+  // Check if this is a USE CASE page
+  else if (USE_CASE_SLUGS.includes(neighborhoodSlug)) {
+    const useCaseMap: Record<string, string> = {
+      'construction-dumpster': 'Construction Dumpster',
+      'roofing-dumpster': 'Roofing Dumpster',
+      'renovation-dumpster': 'Renovation Dumpster',
+      'cleanout-dumpster': 'Cleanout Dumpster',
+      'estate-cleanout-dumpster': 'Estate Cleanout Dumpster',
+      'yard-waste-dumpster': 'Yard Waste Dumpster',
+    };
+    pageData = {
+      name: useCaseMap[neighborhoodSlug] || 'Construction Dumpster',
+      slug: neighborhoodSlug,
+      content: generateUseCasePageContent(neighborhoodSlug, city),
+      zipCodes: null,
+      metaTitle: null,
+      metaDesc: null,
+      isFallback: true,
+    };
+  }
+  // Try NeighborhoodPage first (has AI-generated content)
+  else {
+    const neighborhoodPage = city.neighborhoodPages[0];
+    // Fall back to basic Neighborhood record
+    const neighborhood = city.neighborhoods[0];
+
+    // Must have at least one
+    if (!neighborhoodPage && !neighborhood) {
+      notFound();
+    }
+
+    if (neighborhoodPage) {
+      // Use rich NeighborhoodPage content
+      pageData = {
+        name: neighborhoodPage.name,
+        slug: neighborhoodPage.slug,
+        content: neighborhoodPage.content,
+        zipCodes: neighborhoodPage.zipCodes,
+        metaTitle: neighborhoodPage.metaTitle,
+        metaDesc: neighborhoodPage.metaDesc,
+        isFallback: false,
+      };
+    } else {
+      // Generate fallback content from Neighborhood data
+      pageData = {
+        name: neighborhood!.name,
+        slug: neighborhood!.slug,
+        content: generateFallbackContent(neighborhood!, city),
+        zipCodes: neighborhood!.zipCodes,
+        metaTitle: null,
+        metaDesc: null,
+        isFallback: true,
+      };
+    }
   }
 
   // Get all neighborhoods for this city (for sidebar and nearby areas)
@@ -409,6 +719,19 @@ export default async function NeighborhoodPage({ params }: PageProps) {
 
   // Use city-specific phone (GBP) or default
   const phone = city.phone || process.env.NEXT_PUBLIC_PHONE || '(888) 860-0710';
+
+  // Determine if this is a size/use case page or neighborhood page
+  const isSizeOrUseCasePage = SIZE_SLUGS.includes(neighborhoodSlug) || USE_CASE_SLUGS.includes(neighborhoodSlug);
+
+  // Generate appropriate H1 title
+  const h1Title = isSizeOrUseCasePage
+    ? `${pageData.name} in ${city.name}, ${city.state.abbr}`
+    : `Dumpster Rental in ${pageData.name}, ${city.name}`;
+
+  // Generate appropriate subtitle
+  const subtitle = isSizeOrUseCasePage
+    ? `Looking for ${pageData.name.toLowerCase()} in ${city.name}? We offer fast, reliable roll-off dumpster delivery throughout ${city.name} and surrounding areas. Same-day service available with flat-rate pricing starting at $495.`
+    : `Looking for dumpster rental in ${city.name}? We offer fast, reliable roll-off dumpster delivery to ${pageData.name} and surrounding areas. Same-day service available with flat-rate pricing starting at $495.`;
 
   return (
     <>
@@ -462,13 +785,11 @@ export default async function NeighborhoodPage({ params }: PageProps) {
               </Link>
 
               <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                Dumpster Rental in {pageData.name}, {city.name}
+                {h1Title}
               </h1>
 
               <p className="text-xl text-secondary-200 mb-8">
-                Looking for <Link href={`/${slug}`} className="text-primary-300 hover:text-primary-200 underline">dumpster rental in {city.name}</Link>?
-                We offer fast, reliable <Link href="/roll-off-dumpster-rental" className="text-primary-300 hover:text-primary-200 underline">roll-off dumpster</Link> delivery
-                to {pageData.name} and surrounding areas. Same-day service available with flat-rate pricing starting at $495.
+                {subtitle}
               </p>
 
               {/* Trust Badges */}
