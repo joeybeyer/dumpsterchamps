@@ -216,7 +216,7 @@ const nextConfig = {
       { source: "/dumpster-rental-fairfield", destination: "/locations", permanent: false }, // Ambiguous - multiple Fairfield cities
 
       // ============ GSC AUDIT FEB 2026 - BULK 404 FIXES ============
-      
+
       // OLD CHIMNEY SWEEP SITE PAGES (domain was repurposed)
       { source: "/chimney-sweeping", destination: "/", permanent: true },
       { source: "/chimney-repair", destination: "/", permanent: true },
@@ -227,58 +227,23 @@ const nextConfig = {
       { source: "/creosote-removal", destination: "/", permanent: true },
       { source: "/bird-guard-installation", destination: "/", permanent: true },
       { source: "/privacy-policy", destination: "/", permanent: true },
-      
+
       // OLD /location/:city STRUCTURE → NEW STRUCTURE
       { source: "/location/:city", destination: "/locations", permanent: true },
-      
-      // SPANISH PAGES → ENGLISH HOMEPAGE
-      { source: "/es/:path*", destination: "/", permanent: true },
-      
-      // SERVICE/SIZE SUBPAGES → PARENT CITY PAGE
-      // Pattern: /dumpster-rental-{city}-{state}/{service} → /dumpster-rental-{city}-{state}
-      { source: "/dumpster-rental-:city-al/:service", destination: "/dumpster-rental-:city-al", permanent: true },
-      { source: "/dumpster-rental-:city-az/:service", destination: "/dumpster-rental-:city-az", permanent: true },
-      { source: "/dumpster-rental-:city-ca/:service", destination: "/dumpster-rental-:city-ca", permanent: true },
-      { source: "/dumpster-rental-:city-co/:service", destination: "/dumpster-rental-:city-co", permanent: true },
-      { source: "/dumpster-rental-:city-ct/:service", destination: "/dumpster-rental-:city-ct", permanent: true },
-      { source: "/dumpster-rental-:city-fl/:service", destination: "/dumpster-rental-:city-fl", permanent: true },
-      { source: "/dumpster-rental-:city-ga/:service", destination: "/dumpster-rental-:city-ga", permanent: true },
-      { source: "/dumpster-rental-:city-ia/:service", destination: "/dumpster-rental-:city-ia", permanent: true },
-      { source: "/dumpster-rental-:city-id/:service", destination: "/dumpster-rental-:city-id", permanent: true },
-      { source: "/dumpster-rental-:city-il/:service", destination: "/dumpster-rental-:city-il", permanent: true },
-      { source: "/dumpster-rental-:city-in/:service", destination: "/dumpster-rental-:city-in", permanent: true },
-      { source: "/dumpster-rental-:city-ks/:service", destination: "/dumpster-rental-:city-ks", permanent: true },
-      { source: "/dumpster-rental-:city-ky/:service", destination: "/dumpster-rental-:city-ky", permanent: true },
-      { source: "/dumpster-rental-:city-la/:service", destination: "/dumpster-rental-:city-la", permanent: true },
-      { source: "/dumpster-rental-:city-ma/:service", destination: "/dumpster-rental-:city-ma", permanent: true },
-      { source: "/dumpster-rental-:city-md/:service", destination: "/dumpster-rental-:city-md", permanent: true },
-      { source: "/dumpster-rental-:city-mi/:service", destination: "/dumpster-rental-:city-mi", permanent: true },
-      { source: "/dumpster-rental-:city-mn/:service", destination: "/dumpster-rental-:city-mn", permanent: true },
-      { source: "/dumpster-rental-:city-mo/:service", destination: "/dumpster-rental-:city-mo", permanent: true },
-      { source: "/dumpster-rental-:city-nc/:service", destination: "/dumpster-rental-:city-nc", permanent: true },
-      { source: "/dumpster-rental-:city-ne/:service", destination: "/dumpster-rental-:city-ne", permanent: true },
-      { source: "/dumpster-rental-:city-nh/:service", destination: "/dumpster-rental-:city-nh", permanent: true },
-      { source: "/dumpster-rental-:city-nj/:service", destination: "/dumpster-rental-:city-nj", permanent: true },
-      { source: "/dumpster-rental-:city-nm/:service", destination: "/dumpster-rental-:city-nm", permanent: true },
-      { source: "/dumpster-rental-:city-nv/:service", destination: "/dumpster-rental-:city-nv", permanent: true },
-      { source: "/dumpster-rental-:city-ny/:service", destination: "/dumpster-rental-:city-ny", permanent: true },
-      { source: "/dumpster-rental-:city-oh/:service", destination: "/dumpster-rental-:city-oh", permanent: true },
-      { source: "/dumpster-rental-:city-ok/:service", destination: "/dumpster-rental-:city-ok", permanent: true },
-      { source: "/dumpster-rental-:city-or/:service", destination: "/dumpster-rental-:city-or", permanent: true },
-      { source: "/dumpster-rental-:city-pa/:service", destination: "/dumpster-rental-:city-pa", permanent: true },
-      { source: "/dumpster-rental-:city-sc/:service", destination: "/dumpster-rental-:city-sc", permanent: true },
-      { source: "/dumpster-rental-:city-tn/:service", destination: "/dumpster-rental-:city-tn", permanent: true },
-      { source: "/dumpster-rental-:city-tx/:service", destination: "/dumpster-rental-:city-tx", permanent: true },
-      { source: "/dumpster-rental-:city-ut/:service", destination: "/dumpster-rental-:city-ut", permanent: true },
-      { source: "/dumpster-rental-:city-va/:service", destination: "/dumpster-rental-:city-va", permanent: true },
-      { source: "/dumpster-rental-:city-wa/:service", destination: "/dumpster-rental-:city-wa", permanent: true },
-      { source: "/dumpster-rental-:city-wi/:service", destination: "/dumpster-rental-:city-wi", permanent: true },
-      
-      // FLORIDA CITIES WITHOUT STATE SUFFIX (catches /dumpster-rental-miami/10-yard-dumpster etc)
-      { source: "/dumpster-rental-:city/:service", destination: "/dumpster-rental-:city", permanent: true },
-      
+
+      // SPANISH PAGES → /locations
+      { source: "/es/:path*", destination: "/locations", permanent: true },
+
       // NEIGHBORHOOD PAGES → PARENT CITY (Jacksonville examples)
       { source: "/murray-hill-neighborhood-jacksonville", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
+
+      // ============ SLASH-SEPARATED DUMPSTER RENTAL URLS ============
+      // Fix: /dumpster-rental/texas → /dumpster-rental-texas
+      { source: "/dumpster-rental/:state", destination: "/dumpster-rental-:state", permanent: true },
+
+      // ============ GENERIC NEIGHBORHOOD-CITY PATTERN ============
+      // Fix: /{slug}-neighborhood-{city} → /locations
+      { source: "/:slug*-neighborhood-:city", destination: "/locations", permanent: true },
     ];
   },
 };

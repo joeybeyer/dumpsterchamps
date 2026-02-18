@@ -207,6 +207,19 @@ const nextConfig: NextConfig = {
       { source: "/dumpster-rental-in-:city-ct", destination: "/dumpster-rental-:city", permanent: true },
       { source: "/dumpster-rental-in-:city-nv", destination: "/dumpster-rental-:city", permanent: true },
       { source: "/dumpster-rental-in-:city-ut", destination: "/dumpster-rental-:city", permanent: true },
+
+      // ============ 404 FIXES FROM GOOGLE SEARCH CONSOLE ============
+      { source: "/st-johns-town-center", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
+      { source: "/dumpster-rental-fairfield", destination: "/locations", permanent: false },
+
+      // ============ SLASH-SEPARATED DUMPSTER RENTAL URLS ============
+      { source: "/dumpster-rental/:state", destination: "/dumpster-rental-:state", permanent: true },
+
+      // ============ SPANISH LOCALE PAGES ============
+      { source: "/es/:path*", destination: "/locations", permanent: true },
+
+      // ============ GENERIC NEIGHBORHOOD-CITY PATTERN ============
+      { source: "/:slug*-neighborhood-:city", destination: "/locations", permanent: true },
     ];
   },
 };
