@@ -101,6 +101,7 @@ export default async function CityBlogPost({ params }: PageProps) {
   const excerpt = processContent(template.excerptTemplate, city.name, city.state.name, city.state.abbr);
 
   const phone = process.env.NEXT_PUBLIC_PHONE || "(888) 860-0710";
+  const isEs = locale === 'es';
 
   // Money page URL (city page) - blogs link UP to money page
   const moneyPageUrl = `/dumpster-rental-${city.slug}`;
@@ -125,7 +126,7 @@ export default async function CityBlogPost({ params }: PageProps) {
           <div className="container mx-auto px-4">
             {/* Breadcrumb */}
             <nav className="flex items-center gap-2 text-secondary-300 text-sm mb-6">
-              <Link href="/" className="hover:text-white">Home</Link>
+              <Link href="/" className="hover:text-white">{isEs ? 'Inicio' : 'Home'}</Link>
               <ChevronRight className="h-4 w-4" />
               <Link href={moneyPageUrl} className="hover:text-white">{city.name}</Link>
               <ChevronRight className="h-4 w-4" />
@@ -139,11 +140,11 @@ export default async function CityBlogPost({ params }: PageProps) {
                 </span>
                 <span className="flex items-center gap-1">
                   <Calendar className="h-4 w-4" />
-                  {new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" })}
+                  {new Date().toLocaleDateString(isEs ? "es-ES" : "en-US", { month: "long", year: "numeric" })}
                 </span>
                 <span className="flex items-center gap-1">
                   <Clock className="h-4 w-4" />
-                  8 min read
+                  {isEs ? '8 min de lectura' : '8 min read'}
                 </span>
               </div>
 
@@ -275,23 +276,23 @@ export default async function CityBlogPost({ params }: PageProps) {
                   {/* Link UP to Money Page (City Page) */}
                   <div className="bg-primary-50 rounded-xl p-6 mb-6">
                     <h3 className="text-lg font-semibold text-secondary-900 mb-2">
-                      Ready to Get Started?
+                      {isEs ? '¿Listo para Comenzar?' : 'Ready to Get Started?'}
                     </h3>
                     <p className="text-secondary-600 mb-4">
-                      Get a free quote for{" "}
+                      {isEs ? 'Obtenga una cotización gratis para ' : 'Get a free quote for '}
                       <Link
                         href={moneyPageUrl}
                         className="text-primary-600 font-semibold hover:underline"
                       >
-                        {moneyPageAnchor}
+                        {isEs ? `alquiler de contenedor en ${city.name}` : moneyPageAnchor}
                       </Link>
-                      . Same-day delivery available!
+                      {isEs ? '. ¡Entrega el mismo día disponible!' : '. Same-day delivery available!'}
                     </p>
                     <Link
                       href={moneyPageUrl}
                       className="inline-flex items-center gap-2 bg-primary-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors"
                     >
-                      Get Your Free Quote
+                      {isEs ? 'Obtener Cotización Gratis' : 'Get Your Free Quote'}
                       <ArrowRight className="h-4 w-4" />
                     </Link>
                   </div>
@@ -300,7 +301,7 @@ export default async function CityBlogPost({ params }: PageProps) {
                   {nextBlogUrl && nextBlogTitle && (
                     <div className="bg-secondary-50 rounded-xl p-6">
                       <span className="text-sm font-semibold text-secondary-500 uppercase tracking-wide">
-                        Continue Reading
+                        {isEs ? 'Seguir Leyendo' : 'Continue Reading'}
                       </span>
                       <Link
                         href={nextBlogUrl}
@@ -330,16 +331,18 @@ export default async function CityBlogPost({ params }: PageProps) {
                   {/* Quote Form */}
                   <div className="bg-white rounded-xl shadow-lg p-6 border border-secondary-200">
                     <h3 className="text-xl font-bold text-secondary-900 mb-4">
-                      Get a Free Quote
+                      {isEs ? 'Cotización Gratis' : 'Get a Free Quote'}
                     </h3>
                     <QuoteForm cityName={city.name} stateName={city.state.name} />
                   </div>
 
                   {/* Call CTA */}
                   <div className="bg-primary-600 text-white rounded-xl p-6">
-                    <h3 className="text-lg font-semibold mb-2">Need Help Now?</h3>
+                    <h3 className="text-lg font-semibold mb-2">{isEs ? '¿Necesita Ayuda Ahora?' : 'Need Help Now?'}</h3>
                     <p className="text-primary-100 text-sm mb-4">
-                      Call for immediate assistance with your {city.name} project.
+                      {isEs
+                        ? `Llame para asistencia inmediata con su proyecto en ${city.name}.`
+                        : `Call for immediate assistance with your ${city.name} project.`}
                     </p>
                     <a
                       href={`tel:${phone.replace(/\D/g, "")}`}
@@ -353,7 +356,7 @@ export default async function CityBlogPost({ params }: PageProps) {
                   {/* Pricing Quick Reference */}
                   <div className="bg-secondary-50 rounded-xl p-6">
                     <h3 className="text-lg font-semibold text-secondary-900 mb-4">
-                      {city.name} Pricing
+                      {isEs ? `Precios en ${city.name}` : `${city.name} Pricing`}
                     </h3>
                     <div className="space-y-3 text-sm">
                       <div className="flex justify-between">
@@ -381,7 +384,7 @@ export default async function CityBlogPost({ params }: PageProps) {
                       href={moneyPageUrl}
                       className="block mt-4 text-center text-primary-600 font-semibold text-sm hover:underline"
                     >
-                      View All Sizes →
+                      {isEs ? 'Ver Todos los Tamaños →' : 'View All Sizes →'}
                     </Link>
                   </div>
 

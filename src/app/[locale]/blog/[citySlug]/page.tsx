@@ -65,7 +65,27 @@ export default async function CityBlogIndex({ params }: PageProps) {
     {} as Record<string, typeof BLOG_TEMPLATES>
   );
 
-  const categoryLabels: Record<string, string> = {
+  const isEs = locale === 'es';
+
+  const categoryLabels: Record<string, string> = isEs ? {
+    "sizing-guide": "Guías de Tamaño",
+    "pricing-guide": "Guías de Precios",
+    "how-to-guide": "Guías Prácticas",
+    "scheduling-guide": "Programación",
+    "preparation-guide": "Preparación",
+    "comparison-guide": "Comparaciones",
+    "disposal-guide": "Info de Eliminación",
+    "regulations-guide": "Reglamentos y Permisos",
+    "money-saving": "Consejos para Ahorrar",
+    "loading-tips": "Consejos de Carga",
+    "eco-friendly": "Ecológico",
+    "mistakes-guide": "Evitar Errores",
+    "faq": "Preguntas Frecuentes",
+    "booking-guide": "Ayuda para Reservar",
+    "home-improvement": "Mejoras del Hogar",
+    "construction-guide": "Construcción",
+    "consumer-protection": "Protección al Consumidor",
+  } : {
     "sizing-guide": "Sizing Guides",
     "pricing-guide": "Pricing Guides",
     "how-to-guide": "How-To Guides",
@@ -91,7 +111,7 @@ export default async function CityBlogIndex({ params }: PageProps) {
       <section className="bg-gradient-to-br from-secondary-900 to-secondary-800 text-white py-12">
         <div className="container mx-auto px-4">
           <nav className="flex items-center gap-2 text-secondary-300 text-sm mb-6">
-            <Link href="/" className="hover:text-white">Home</Link>
+            <Link href="/" className="hover:text-white">{isEs ? 'Inicio' : 'Home'}</Link>
             <ChevronRight className="h-4 w-4" />
             <Link href={moneyPageUrl} className="hover:text-white">{city.name}</Link>
             <ChevronRight className="h-4 w-4" />
@@ -99,11 +119,14 @@ export default async function CityBlogIndex({ params }: PageProps) {
           </nav>
 
           <h1 className="text-3xl lg:text-4xl font-bold mb-4">
-            Dumpster Rental Guides for {city.name}, {city.state.abbr}
+            {isEs
+              ? `Guías de Alquiler de Contenedores en ${city.name}, ${city.state.abbr}`
+              : `Dumpster Rental Guides for ${city.name}, ${city.state.abbr}`}
           </h1>
           <p className="text-xl text-secondary-200 max-w-3xl">
-            {BLOG_TEMPLATES.length} expert guides to help you with your dumpster rental project.
-            From choosing the right size to avoiding common mistakes.
+            {isEs
+              ? `${BLOG_TEMPLATES.length} guías expertas para ayudarle con su proyecto de alquiler de contenedores. Desde elegir el tamaño correcto hasta evitar errores comunes.`
+              : `${BLOG_TEMPLATES.length} expert guides to help you with your dumpster rental project. From choosing the right size to avoiding common mistakes.`}
           </p>
         </div>
       </section>
@@ -146,7 +169,7 @@ export default async function CityBlogIndex({ params }: PageProps) {
                       </h3>
                       <p className="text-sm text-secondary-600 line-clamp-2">{excerpt}</p>
                       <span className="inline-flex items-center gap-1 text-primary-600 text-sm font-semibold mt-4 group-hover:gap-2 transition-all">
-                        Read Guide <ArrowRight className="h-4 w-4" />
+                        {isEs ? 'Leer Guía' : 'Read Guide'} <ArrowRight className="h-4 w-4" />
                       </span>
                     </Link>
                   );
@@ -161,16 +184,18 @@ export default async function CityBlogIndex({ params }: PageProps) {
       <section className="py-12 bg-primary-600 text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-2xl font-bold mb-4">
-            Ready to Rent a Dumpster in {city.name}?
+            {isEs ? `¿Listo para Alquilar un Contenedor en ${city.name}?` : `Ready to Rent a Dumpster in ${city.name}?`}
           </h2>
           <p className="text-primary-100 mb-6 max-w-xl mx-auto">
-            Get your free quote today! Same-day delivery available with flat-rate pricing.
+            {isEs
+              ? '¡Obtenga su cotización gratis hoy! Entrega el mismo día disponible con precios fijos.'
+              : 'Get your free quote today! Same-day delivery available with flat-rate pricing.'}
           </p>
           <Link
             href={moneyPageUrl}
             className="inline-flex items-center gap-2 bg-white text-primary-600 px-8 py-4 rounded-lg font-semibold hover:bg-primary-50 transition-colors"
           >
-            Get a Free Quote in {city.name}
+            {isEs ? `Cotización Gratis en ${city.name}` : `Get a Free Quote in ${city.name}`}
             <ArrowRight className="h-5 w-5" />
           </Link>
         </div>
