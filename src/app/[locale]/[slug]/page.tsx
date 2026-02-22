@@ -263,6 +263,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       return {
         title: metaTitle || `Dumpster Rental ${city?.name}, ${city?.state.abbr} | Fast from $495 [2026]`,
         description: metaDesc || `Affordable dumpster rental in ${city?.name}, ${city?.state.abbr}. 10-40 yard containers starting at $495. Same-day delivery, flat-rate pricing, no hidden fees. Call (888) 860-0710.`,
+        alternates: {
+          canonical: `https://www.dumpsterchamps.com/${isEs ? 'es/' : ''}dumpster-rental-${city?.slug}`,
+          languages: {
+            'en': `https://www.dumpsterchamps.com/dumpster-rental-${city?.slug}`,
+            'es': `https://www.dumpsterchamps.com/es/dumpster-rental-${city?.slug}`,
+          },
+        },
         openGraph: {
           title: metaTitle || `Dumpster Rental ${city?.name}, ${city?.state.abbr} | Fast from $495 [2026]`,
           description: metaDesc || `Fast, affordable dumpster rentals in ${city?.name}. 10-40 yard roll-off containers with same-day delivery. Flat-rate pricing from $495.`,

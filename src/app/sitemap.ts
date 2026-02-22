@@ -156,7 +156,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // City pages
   const cities = await prisma.city.findMany({
-    select: { slug: true, createdAt: true },
+    select: { slug: true, createdAt: true, aiDescriptionEs: true },
   });
 
   const cityPages: MetadataRoute.Sitemap = cities.map((city) => ({
@@ -165,6 +165,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     changeFrequency: "weekly",
     priority: 0.9,
   }));
+
+  // Spanish city pages (only cities with Spanish content)
+  const spanishCityPages: MetadataRoute.Sitemap = cities
+    .filter((city) => city.aiDescriptionEs)
+    .map((city) => ({
+      url: `${baseUrl}/es/dumpster-rental-${city.slug}`,
+      lastModified: city.createdAt,
+      changeFrequency: "weekly",
+      priority: 0.7,
+    }));
 
   // Neighborhood pages
   const neighborhoods = await prisma.neighborhood.findMany({
@@ -176,6 +186,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: n.createdAt,
     changeFrequency: "monthly",
     priority: 0.7,
+  }));
+
+  // Spanish neighborhood pages (NeighborhoodPage records with Spanish content)
+  const spanishNeighborhoodPages_raw = await prisma.neighborhoodPage.findMany({
+    where: { contentEs: { not: null } },
+    select: { slug: true, updatedAt: true, city: { select: { slug: true } } },
+  });
+
+  const spanishNeighborhoodPages: MetadataRoute.Sitemap = spanishNeighborhoodPages_raw.map((n) => ({
+    url: `${baseUrl}/es/dumpster-rental-${n.city.slug}/${n.slug}`,
+    lastModified: n.updatedAt,
+    changeFrequency: "monthly",
+    priority: 0.6,
   }));
 
   // Blog pillar pages
@@ -277,7 +300,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...servicePages,
     ...statePages,
     ...cityPages,
+    ...spanishCityPages,
     ...neighborhoodPages,
+    ...spanishNeighborhoodPages,
     ...blogPillarPages,
     ...pseoPages,
   ];

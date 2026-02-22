@@ -580,16 +580,23 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     : neighborhoodPage?.metaDesc;
   const pageDescription = rawDesc || `Fast, affordable dumpster rental in ${name}, ${city.name}, ${city.state.abbr}. Same-day delivery available. 10-40 yard roll-off dumpsters starting at $495. Call now!`;
 
+  const enUrl = `https://www.dumpsterchamps.com/${slug}/${neighborhoodSlug}`;
+  const esUrl = `https://www.dumpsterchamps.com/es/${slug}/${neighborhoodSlug}`;
+
   return {
     title: pageTitle,
     description: pageDescription,
     alternates: {
-      canonical: canonicalUrl,
+      canonical: isEs ? esUrl : enUrl,
+      languages: {
+        'en': enUrl,
+        'es': esUrl,
+      },
     },
     openGraph: {
       title: `${pageTitle} | Dumpster Champs`,
       description: pageDescription,
-      url: canonicalUrl,
+      url: isEs ? esUrl : enUrl,
       siteName: 'Dumpster Champs',
       locale: isEs ? 'es_ES' : 'en_US',
       type: 'website',
