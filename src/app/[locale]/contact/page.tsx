@@ -17,6 +17,7 @@ export const metadata: Metadata = {
 export default async function ContactPage({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const isEs = locale === 'es';
 
   const phone = process.env.NEXT_PUBLIC_PHONE || "(888) 860-0710";
   const email = "contact@dumpsterchamps.com";
@@ -28,15 +29,18 @@ export default async function ContactPage({ params }: PageProps) {
         <div className="container mx-auto px-4">
           <div className="flex items-center gap-2 text-secondary-300 text-sm mb-4">
             <Link href="/" className="hover:text-white">
-              Home
+              {isEs ? 'Inicio' : 'Home'}
             </Link>
             <ChevronRight className="h-4 w-4" />
-            <span className="text-white">Contact</span>
+            <span className="text-white">{isEs ? 'Contacto' : 'Contact'}</span>
           </div>
-          <h1 className="text-4xl lg:text-5xl font-bold mb-4">Contact Us</h1>
+          <h1 className="text-4xl lg:text-5xl font-bold mb-4">
+            {isEs ? 'Contáctenos' : 'Contact Us'}
+          </h1>
           <p className="text-xl text-secondary-200 max-w-3xl">
-            Ready to rent a dumpster? Get in touch with our team for a free
-            quote and fast service.
+            {isEs
+              ? '¿Listo para alquilar un contenedor? Comuníquese con nuestro equipo para obtener una cotización gratuita y servicio rápido.'
+              : 'Ready to rent a dumpster? Get in touch with our team for a free quote and fast service.'}
           </p>
         </div>
       </section>
@@ -48,7 +52,7 @@ export default async function ContactPage({ params }: PageProps) {
             {/* Contact Info */}
             <div className="lg:col-span-1">
               <h2 className="text-2xl font-bold text-secondary-900 mb-6">
-                Get in Touch
+                {isEs ? 'Póngase en Contacto' : 'Get in Touch'}
               </h2>
 
               <div className="space-y-6">
@@ -57,7 +61,7 @@ export default async function ContactPage({ params }: PageProps) {
                     <Phone className="h-6 w-6 text-primary-600" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-secondary-900">Phone</h3>
+                    <h3 className="font-semibold text-secondary-900">{isEs ? 'Teléfono' : 'Phone'}</h3>
                     <a
                       href={`tel:${phone.replace(/\D/g, "")}`}
                       className="text-primary-600 hover:underline text-lg"
@@ -65,7 +69,7 @@ export default async function ContactPage({ params }: PageProps) {
                       {phone}
                     </a>
                     <p className="text-sm text-secondary-500">
-                      Call for immediate assistance
+                      {isEs ? 'Llame para asistencia inmediata' : 'Call for immediate assistance'}
                     </p>
                   </div>
                 </div>
@@ -75,7 +79,7 @@ export default async function ContactPage({ params }: PageProps) {
                     <Mail className="h-6 w-6 text-primary-600" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-secondary-900">Email</h3>
+                    <h3 className="font-semibold text-secondary-900">{isEs ? 'Correo Electrónico' : 'Email'}</h3>
                     <a
                       href={`mailto:${email}`}
                       className="text-primary-600 hover:underline"
@@ -83,7 +87,7 @@ export default async function ContactPage({ params }: PageProps) {
                       {email}
                     </a>
                     <p className="text-sm text-secondary-500">
-                      We respond within 24 hours
+                      {isEs ? 'Respondemos en 24 horas' : 'We respond within 24 hours'}
                     </p>
                   </div>
                 </div>
@@ -93,28 +97,29 @@ export default async function ContactPage({ params }: PageProps) {
                     <Clock className="h-6 w-6 text-primary-600" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-secondary-900">Hours</h3>
-                    <p className="text-secondary-700">Monday - Friday: 7am - 6pm</p>
-                    <p className="text-secondary-700">Saturday: 8am - 4pm</p>
-                    <p className="text-secondary-700">Sunday: Closed</p>
+                    <h3 className="font-semibold text-secondary-900">{isEs ? 'Horario' : 'Hours'}</h3>
+                    <p className="text-secondary-700">{isEs ? 'Lunes - Viernes: 7am - 6pm' : 'Monday - Friday: 7am - 6pm'}</p>
+                    <p className="text-secondary-700">{isEs ? 'Sábado: 8am - 4pm' : 'Saturday: 8am - 4pm'}</p>
+                    <p className="text-secondary-700">{isEs ? 'Domingo: Cerrado' : 'Sunday: Closed'}</p>
                   </div>
                 </div>
               </div>
 
               <div className="mt-8 p-6 bg-secondary-50 rounded-xl">
                 <h3 className="font-semibold text-secondary-900 mb-2">
-                  Need Immediate Assistance?
+                  {isEs ? '¿Necesita Asistencia Inmediata?' : 'Need Immediate Assistance?'}
                 </h3>
                 <p className="text-secondary-600 text-sm mb-4">
-                  For urgent requests or same-day delivery inquiries, please
-                  call us directly.
+                  {isEs
+                    ? 'Para solicitudes urgentes o consultas de entrega el mismo día, llámenos directamente.'
+                    : 'For urgent requests or same-day delivery inquiries, please call us directly.'}
                 </p>
                 <a
                   href={`tel:${phone.replace(/\D/g, "")}`}
                   className="inline-flex items-center gap-2 bg-primary-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors"
                 >
                   <Phone className="h-5 w-5" />
-                  Call Now
+                  {isEs ? 'Llame Ahora' : 'Call Now'}
                 </a>
               </div>
             </div>
@@ -123,11 +128,12 @@ export default async function ContactPage({ params }: PageProps) {
             <div className="lg:col-span-2">
               <div className="bg-white rounded-xl shadow-lg p-8">
                 <h2 className="text-2xl font-bold text-secondary-900 mb-2">
-                  Request a Free Quote
+                  {isEs ? 'Solicite una Cotización Gratis' : 'Request a Free Quote'}
                 </h2>
                 <p className="text-secondary-600 mb-6">
-                  Fill out the form below and we&apos;ll get back to you with a
-                  quote for your dumpster rental.
+                  {isEs
+                    ? 'Complete el formulario a continuación y le responderemos con una cotización para su alquiler de contenedor.'
+                    : "Fill out the form below and we'll get back to you with a quote for your dumpster rental."}
                 </p>
                 <QuoteForm />
               </div>
