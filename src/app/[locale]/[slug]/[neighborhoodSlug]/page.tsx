@@ -739,15 +739,19 @@ export default async function NeighborhoodPage({ params }: PageProps) {
   // Determine if this is a size/use case page or neighborhood page
   const isSizeOrUseCasePage = SIZE_SLUGS.includes(neighborhoodSlug) || USE_CASE_SLUGS.includes(neighborhoodSlug);
 
-  // Generate appropriate H1 title
+  // Generate appropriate H1 title (locale-aware)
   const h1Title = isSizeOrUseCasePage
     ? `${pageData.name} in ${city.name}, ${city.state.abbr}`
-    : `Dumpster Rental in ${pageData.name}, ${city.name}`;
+    : (isEs
+        ? `Alquiler de Contenedores en ${pageData.name}, ${city.name}`
+        : `Dumpster Rental in ${pageData.name}, ${city.name}`);
 
-  // Generate appropriate subtitle
+  // Generate appropriate subtitle (locale-aware)
   const subtitle = isSizeOrUseCasePage
     ? `Looking for ${pageData.name.toLowerCase()} in ${city.name}? We offer fast, reliable roll-off dumpster delivery throughout ${city.name} and surrounding areas. Same-day service available with flat-rate pricing starting at $495.`
-    : `Looking for dumpster rental in ${city.name}? We offer fast, reliable roll-off dumpster delivery to ${pageData.name} and surrounding areas. Same-day service available with flat-rate pricing starting at $495.`;
+    : (isEs
+        ? `¿Busca alquiler de contenedores en ${city.name}? Ofrecemos entrega rápida y confiable de contenedores roll-off en ${pageData.name} y zonas cercanas. Servicio el mismo día con precios fijos desde $495.`
+        : `Looking for dumpster rental in ${city.name}? We offer fast, reliable roll-off dumpster delivery to ${pageData.name} and surrounding areas. Same-day service available with flat-rate pricing starting at $495.`);
 
   return (
     <>
@@ -767,7 +771,7 @@ export default async function NeighborhoodPage({ params }: PageProps) {
           <ol className="flex items-center gap-2 text-sm">
             <li>
               <Link href="/" className="text-secondary-600 hover:text-primary-600">
-                Home
+                {isEs ? 'Inicio' : 'Home'}
               </Link>
             </li>
             <ChevronRight className="h-4 w-4 text-secondary-400" />
@@ -776,7 +780,7 @@ export default async function NeighborhoodPage({ params }: PageProps) {
                 href={`/${slug}`}
                 className="text-secondary-600 hover:text-primary-600"
               >
-                {city.name} Dumpster Rental
+                {isEs ? `Contenedores en ${city.name}` : `${city.name} Dumpster Rental`}
               </Link>
             </li>
             <ChevronRight className="h-4 w-4 text-secondary-400" />
@@ -812,15 +816,15 @@ export default async function NeighborhoodPage({ params }: PageProps) {
               <div className="flex flex-wrap gap-4 mb-8">
                 <div className="flex items-center gap-2 bg-white/10 rounded-lg px-4 py-2">
                   <Truck className="h-5 w-5 text-primary-400" />
-                  <span>Same-Day Delivery</span>
+                  <span>{isEs ? 'Entrega el Mismo Día' : 'Same-Day Delivery'}</span>
                 </div>
                 <div className="flex items-center gap-2 bg-white/10 rounded-lg px-4 py-2">
                   <Shield className="h-5 w-5 text-primary-400" />
-                  <span>Driveway Protection</span>
+                  <span>{isEs ? 'Protección de Entrada' : 'Driveway Protection'}</span>
                 </div>
                 <div className="flex items-center gap-2 bg-white/10 rounded-lg px-4 py-2">
                   <Clock className="h-5 w-5 text-primary-400" />
-                  <span>7-14 Day Rentals</span>
+                  <span>{isEs ? 'Alquiler de 7-14 Días' : '7-14 Day Rentals'}</span>
                 </div>
               </div>
 
@@ -830,14 +834,14 @@ export default async function NeighborhoodPage({ params }: PageProps) {
                 className="inline-flex items-center gap-3 bg-primary-500 hover:bg-primary-600 text-white font-bold py-4 px-8 rounded-lg text-lg transition-colors"
               >
                 <Phone className="h-6 w-6" />
-                Call {phone}
+                {isEs ? `Llamar ${phone}` : `Call ${phone}`}
               </a>
             </div>
 
             {/* Quote Form */}
             <div className="bg-white rounded-xl shadow-2xl p-8">
               <h2 className="text-2xl font-bold text-secondary-900 mb-6">
-                Get a Free Quote
+                {isEs ? 'Obtenga una Cotización Gratis' : 'Get a Free Quote'}
               </h2>
               <QuoteForm source={`/${slug}/${neighborhoodSlug}`} />
             </div>
