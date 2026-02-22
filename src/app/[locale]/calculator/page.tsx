@@ -23,6 +23,7 @@ export const metadata: Metadata = {
 export default async function CalculatorPage({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const isEs = locale === 'es';
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -30,11 +31,12 @@ export default async function CalculatorPage({ params }: PageProps) {
       <section className="bg-gray-900 text-white py-16">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-3xl md:text-5xl font-bold mb-4">
-            What Size Dumpster Do I Need?
+            {isEs ? '¿Qué Tamaño de Contenedor Necesito?' : 'What Size Dumpster Do I Need?'}
           </h1>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            Use our free calculator to find the right dumpster size and avoid 
-            costly weight overage fees. Takes just 30 seconds.
+            {isEs
+              ? 'Use nuestra calculadora gratuita para encontrar el tamaño correcto y evitar cargos adicionales por exceso de peso. Solo toma 30 segundos.'
+              : 'Use our free calculator to find the right dumpster size and avoid costly weight overage fees. Takes just 30 seconds.'}
           </p>
         </div>
       </section>

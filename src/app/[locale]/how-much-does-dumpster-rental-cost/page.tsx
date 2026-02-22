@@ -63,6 +63,7 @@ const includedFeatures = [
 export default async function HowMuchDoesDumpsterRentalCostPage({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const isEs = locale === 'es';
 
   return (
     <>
@@ -80,9 +81,9 @@ export default async function HowMuchDoesDumpsterRentalCostPage({ params }: Page
         <div className="bg-secondary-50 border-b border-secondary-200">
           <div className="max-w-4xl mx-auto px-4 py-3">
             <nav className="text-sm text-secondary-600">
-              <Link href="/" className="hover:text-primary-600">Home</Link>
+              <Link href="/" className="hover:text-primary-600">{isEs ? 'Inicio' : 'Home'}</Link>
               <span className="mx-2">/</span>
-              <span className="text-secondary-900">Dumpster Rental Cost</span>
+              <span className="text-secondary-900">{isEs ? 'Costo de Alquiler de Contenedor' : 'Dumpster Rental Cost'}</span>
             </nav>
           </div>
         </div>
@@ -103,7 +104,7 @@ export default async function HowMuchDoesDumpsterRentalCostPage({ params }: Page
 
           {/* H1 with year for freshness */}
           <h1 className="text-3xl md:text-4xl font-bold text-secondary-900 mb-6">
-            How Much Does It Cost to Rent a Dumpster? [2026] Pricing Guide
+            {isEs ? '¿Cuánto Cuesta Alquilar un Contenedor? [2026] Guía de Precios' : 'How Much Does It Cost to Rent a Dumpster? [2026] Pricing Guide'}
           </h1>
 
           <p className="text-lg text-secondary-700 mb-8">

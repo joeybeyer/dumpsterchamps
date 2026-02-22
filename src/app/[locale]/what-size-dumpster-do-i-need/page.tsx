@@ -120,6 +120,7 @@ const projectGuide = [
 export default async function WhatSizeDumpsterDoINeedPage({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const isEs = locale === 'es';
 
   return (
     <>
@@ -138,16 +139,16 @@ export default async function WhatSizeDumpsterDoINeedPage({ params }: PageProps)
           <div className="container mx-auto px-4">
             {/* Breadcrumb */}
             <nav className="text-sm text-secondary-400 mb-6">
-              <Link href="/" className="hover:text-white">Home</Link>
+              <Link href="/" className="hover:text-white">{isEs ? 'Inicio' : 'Home'}</Link>
               <span className="mx-2">/</span>
-              <span className="text-white">What Size Dumpster Do I Need</span>
+              <span className="text-white">{isEs ? '¿Qué Tamaño de Contenedor Necesito?' : 'What Size Dumpster Do I Need'}</span>
             </nav>
 
             <div className="grid lg:grid-cols-2 gap-12 items-start">
               {/* Left Column: Text & Glass Answer Box */}
               <div>
                 <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
-                  What Size Dumpster Do I Need?
+                  {isEs ? '¿Qué Tamaño de Contenedor Necesito?' : 'What Size Dumpster Do I Need?'}
                 </h1>
 
                 {/* GLASS MORPHISM Quick Answer Box */}

@@ -110,6 +110,7 @@ const permitSteps = [
 export default async function DoINeedPermitForDumpsterPage({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const isEs = locale === 'es';
 
   return (
     <>
@@ -127,9 +128,9 @@ export default async function DoINeedPermitForDumpsterPage({ params }: PageProps
         <div className="bg-secondary-50 border-b border-secondary-200">
           <div className="max-w-4xl mx-auto px-4 py-3">
             <nav className="text-sm text-secondary-600">
-              <Link href="/" className="hover:text-primary-600">Home</Link>
+              <Link href="/" className="hover:text-primary-600">{isEs ? 'Inicio' : 'Home'}</Link>
               <span className="mx-2">/</span>
-              <span className="text-secondary-900">Dumpster Permit Guide</span>
+              <span className="text-secondary-900">{isEs ? 'Guía de Permisos de Contenedores' : 'Dumpster Permit Guide'}</span>
             </nav>
           </div>
         </div>
@@ -150,7 +151,7 @@ export default async function DoINeedPermitForDumpsterPage({ params }: PageProps
 
           {/* H1 with year for freshness */}
           <h1 className="text-3xl md:text-4xl font-bold text-secondary-900 mb-6">
-            Do I Need a Permit for a Dumpster? [2026] Complete Guide
+            {isEs ? '¿Necesito un Permiso para un Contenedor? [2026] Guía Completa' : 'Do I Need a Permit for a Dumpster? [2026] Complete Guide'}
           </h1>
 
           <p className="text-lg text-secondary-700 mb-8">

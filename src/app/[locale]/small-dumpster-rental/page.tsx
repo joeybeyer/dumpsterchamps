@@ -85,6 +85,7 @@ const WHEN_SMALL = [
 export default async function SmallDumpsterPage({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const isEs = locale === 'es';
 
   const phone = process.env.NEXT_PUBLIC_PHONE || "(888) 860-0710";
 
@@ -94,14 +95,14 @@ export default async function SmallDumpsterPage({ params }: PageProps) {
       <section className="bg-gradient-to-br from-secondary-900 to-secondary-800 text-white py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl">
-            <p className="text-primary-400 font-semibold mb-2">Compact Containers</p>
+            <p className="text-primary-400 font-semibold mb-2">{isEs ? 'Contenedores Compactos' : 'Compact Containers'}</p>
             <h1 className="text-4xl lg:text-5xl font-bold mb-4">
-              Small Dumpster Rental
+              {isEs ? 'Alquiler de Contenedores Pequeños' : 'Small Dumpster Rental'}
             </h1>
             <p className="text-xl text-secondary-200 mb-6">
-              Don&apos;t pay for more than you need. Our 10 and 15-yard dumpsters are perfect for
-              smaller projects — garage cleanouts, bathroom remodels, and yard cleanup.
-              Starting at just <strong className="text-white">$495</strong>.
+              {isEs
+                ? <>No pague más de lo que necesita. Nuestros contenedores de 10 y 15 yardas son perfectos para proyectos más pequeños — limpieza de garaje, remodelación de baño y limpieza de jardín. Desde solo <strong className="text-white">$495</strong>.</>
+                : <>Don&apos;t pay for more than you need. Our 10 and 15-yard dumpsters are perfect for smaller projects — garage cleanouts, bathroom remodels, and yard cleanup. Starting at just <strong className="text-white">$495</strong>.</>}
             </p>
             <div className="flex flex-wrap gap-4">
               <a
@@ -109,7 +110,7 @@ export default async function SmallDumpsterPage({ params }: PageProps) {
                 className="bg-primary-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors flex items-center gap-2"
               >
                 <Phone className="h-5 w-5" />
-                Order Now: {phone}
+                {isEs ? `Ordenar Ahora: ${phone}` : `Order Now: ${phone}`}
               </a>
               <Link
                 href="/calculator"
