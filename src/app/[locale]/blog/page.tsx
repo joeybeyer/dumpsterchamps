@@ -18,44 +18,78 @@ export const metadata: Metadata = {
     "Expert dumpster rental guides, tips, and how-to articles for 2026. Learn about sizing, pricing, permits, loading tips, and more. Find guides for your city.",
 };
 
-const pillarPages = [
-  {
-    title: "Complete Dumpster Size Guide",
-    subtitle: "10, 15, 20, 30 & 40 Yard Explained",
-    description: "Not sure which size you need? Our comprehensive guide breaks down every dumpster size with dimensions, capacity, and project recommendations.",
-    href: "/blog/dumpster-sizes-guide",
-    icon: Ruler,
-    badge: "Most Popular",
-  },
-  {
-    title: "Dumpster Rental Cost Guide",
-    subtitle: "2026 Pricing Breakdown",
-    description: "Understand exactly what you'll pay. Complete pricing breakdown including hidden fees to avoid and money-saving tips.",
-    href: "/blog/dumpster-rental-cost-guide",
-    icon: DollarSign,
-    badge: "Updated for 2026",
-  },
-  {
-    title: "What Can Go in a Dumpster?",
-    subtitle: "Complete Disposal Guide",
-    description: "Know what's allowed before you load. Complete list of accepted and prohibited items with disposal alternatives for hazardous materials.",
-    href: "/blog/what-can-go-in-dumpster",
-    icon: Trash2,
-    badge: "Essential Reading",
-  },
-  {
-    title: "How to Rent a Dumpster",
-    subtitle: "First-Timer's Complete Guide",
-    description: "New to dumpster rental? Our step-by-step guide walks you through the entire process from quote to pickup.",
-    href: "/blog/how-to-rent-dumpster",
-    icon: BookOpen,
-    badge: "Start Here",
-  },
-];
-
 export default async function BlogIndex({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const isEs = locale === 'es';
+
+  const pillarPages = isEs ? [
+    {
+      title: "Guía Completa de Tamaños de Contenedores",
+      subtitle: "10, 15, 20, 30 y 40 Yardas Explicadas",
+      description: "¿No sabe qué tamaño necesita? Nuestra guía completa describe cada tamaño de contenedor con dimensiones, capacidad y recomendaciones por proyecto.",
+      href: "/blog/dumpster-sizes-guide",
+      icon: Ruler,
+      badge: "Más Popular",
+    },
+    {
+      title: "Guía de Costos de Alquiler de Contenedores",
+      subtitle: "Desglose de Precios 2026",
+      description: "Comprenda exactamente lo que pagará. Desglose completo de precios, incluyendo cargos ocultos que evitar y consejos para ahorrar dinero.",
+      href: "/blog/dumpster-rental-cost-guide",
+      icon: DollarSign,
+      badge: "Actualizado para 2026",
+    },
+    {
+      title: "¿Qué Puede Ir en un Contenedor?",
+      subtitle: "Guía Completa de Eliminación",
+      description: "Sepa qué está permitido antes de cargar. Lista completa de artículos aceptados y prohibidos con alternativas de eliminación para materiales peligrosos.",
+      href: "/blog/what-can-go-in-dumpster",
+      icon: Trash2,
+      badge: "Lectura Esencial",
+    },
+    {
+      title: "Cómo Alquilar un Contenedor",
+      subtitle: "Guía Completa para Principiantes",
+      description: "¿Nuevo en el alquiler de contenedores? Nuestra guía paso a paso le guía por todo el proceso desde la cotización hasta la recogida.",
+      href: "/blog/how-to-rent-dumpster",
+      icon: BookOpen,
+      badge: "Empiece Aquí",
+    },
+  ] : [
+    {
+      title: "Complete Dumpster Size Guide",
+      subtitle: "10, 15, 20, 30 & 40 Yard Explained",
+      description: "Not sure which size you need? Our comprehensive guide breaks down every dumpster size with dimensions, capacity, and project recommendations.",
+      href: "/blog/dumpster-sizes-guide",
+      icon: Ruler,
+      badge: "Most Popular",
+    },
+    {
+      title: "Dumpster Rental Cost Guide",
+      subtitle: "2026 Pricing Breakdown",
+      description: "Understand exactly what you'll pay. Complete pricing breakdown including hidden fees to avoid and money-saving tips.",
+      href: "/blog/dumpster-rental-cost-guide",
+      icon: DollarSign,
+      badge: "Updated for 2026",
+    },
+    {
+      title: "What Can Go in a Dumpster?",
+      subtitle: "Complete Disposal Guide",
+      description: "Know what's allowed before you load. Complete list of accepted and prohibited items with disposal alternatives for hazardous materials.",
+      href: "/blog/what-can-go-in-dumpster",
+      icon: Trash2,
+      badge: "Essential Reading",
+    },
+    {
+      title: "How to Rent a Dumpster",
+      subtitle: "First-Timer's Complete Guide",
+      description: "New to dumpster rental? Our step-by-step guide walks you through the entire process from quote to pickup.",
+      href: "/blog/how-to-rent-dumpster",
+      icon: BookOpen,
+      badge: "Start Here",
+    },
+  ];
 
   const states = await prisma.state.findMany({
     include: {
@@ -74,7 +108,25 @@ export default async function BlogIndex({ params }: PageProps) {
     categoryCount[t.category] = (categoryCount[t.category] || 0) + 1;
   });
 
-  const categoryLabels: Record<string, string> = {
+  const categoryLabels: Record<string, string> = isEs ? {
+    "sizing-guide": "Guías de Tamaño",
+    "pricing-guide": "Guías de Precios",
+    "how-to-guide": "Guías Prácticas",
+    "scheduling-guide": "Programación",
+    "preparation-guide": "Preparación",
+    "comparison-guide": "Comparaciones",
+    "disposal-guide": "Info de Eliminación",
+    "regulations-guide": "Regulaciones",
+    "money-saving": "Ahorro de Dinero",
+    "loading-tips": "Consejos de Carga",
+    "eco-friendly": "Ecológico",
+    "mistakes-guide": "Evitar Errores",
+    "faq": "Preguntas Frecuentes",
+    "booking-guide": "Ayuda para Reservar",
+    "home-improvement": "Mejoras del Hogar",
+    "construction-guide": "Construcción",
+    "consumer-protection": "Protección al Consumidor",
+  } : {
     "sizing-guide": "Sizing Guides",
     "pricing-guide": "Pricing Guides",
     "how-to-guide": "How-To Guides",
@@ -94,24 +146,45 @@ export default async function BlogIndex({ params }: PageProps) {
     "consumer-protection": "Consumer Protection",
   };
 
+  const featuredTopics = isEs ? [
+    { category: "Guías de Tamaño", title: "Cómo Elegir el Tamaño Correcto de Contenedor en Su Ciudad", excerpt: "Elegir el tamaño incorrecto puede costarle dinero. Aprenda a seleccionar el tamaño perfecto para su proyecto.", href: "/blog/dumpster-sizes-guide" },
+    { category: "Guías de Precios", title: "Cómo Comparar Precios de Alquiler de Contenedores en Su Ciudad", excerpt: "No se deje sorprender por cargos ocultos. Sepa qué buscar al comparar precios de alquiler.", href: "/blog/dumpster-rental-cost-guide" },
+    { category: "Guías Prácticas", title: "Guía Paso a Paso para Alquilar un Contenedor en Su Ciudad", excerpt: "Todo lo que necesita saber sobre alquilar un contenedor en su ciudad, de principio a fin.", href: "/blog/how-to-rent-dumpster" },
+    { category: "Programación", title: "Cómo Programar Entrega y Recogida de Contenedor en Su Ciudad", excerpt: "Obtenga su contenedor cuando lo necesite. Así es como programar entrega y recogida en su área.", href: "/blog/how-to-rent-dumpster" },
+    { category: "Preparación", title: "Consejos para Preparar Su Entrada para la Entrega de Contenedor", excerpt: "No deje que un contenedor dañe su entrada. Así es como prepararse para la entrega en su ciudad.", href: "/blog/how-to-rent-dumpster" },
+    { category: "Comparaciones", title: "Cómo Comparar Servicios de Contenedores en Su Ciudad", excerpt: "Más allá del precio, esto es lo que importa al elegir una empresa de alquiler de contenedores.", href: "/blog/roll-off-vs-front-load-dumpster" },
+    { category: "Info de Eliminación", title: "Qué Artículos Se Pueden Desechar en un Contenedor en Su Ciudad", excerpt: "Poner artículos incorrectos puede resultar en cargos adicionales. Esto es lo permitido en su área.", href: "/blog/what-can-go-in-dumpster" },
+    { category: "Regulaciones", title: "Guía de Regulaciones y Permisos de Contenedores en Su Ciudad", excerpt: "Conozca las reglas antes de alquilar. Esto es lo que su ciudad requiere para alquiler de contenedores.", href: "/blog/dumpster-permit-guide" },
+  ] : [
+    { category: "Sizing Guides", title: "How to Choose the Right Dumpster Rental Size in Your City", excerpt: "Choosing the wrong dumpster size can cost you money. Learn how to select the perfect size for your project.", href: "/blog/dumpster-sizes-guide" },
+    { category: "Pricing Guides", title: "How to Compare Dumpster Rental Prices in Your City", excerpt: "Don't get caught by hidden fees. Learn what to look for when comparing dumpster rental prices.", href: "/blog/dumpster-rental-cost-guide" },
+    { category: "How-To Guides", title: "Step-by-Step Guide to Renting a Dumpster in Your City", excerpt: "Everything you need to know about renting a dumpster in your city, from start to finish.", href: "/blog/how-to-rent-dumpster" },
+    { category: "Scheduling", title: "How to Schedule a Dumpster Delivery and Pickup in Your City", excerpt: "Get your dumpster when you need it. Here's how to schedule delivery and pickup in your area.", href: "/blog/how-to-rent-dumpster" },
+    { category: "Preparation", title: "Tips for Preparing Your Driveway for Dumpster Delivery", excerpt: "Don't let a dumpster damage your driveway. Here's how to prepare for delivery in your city.", href: "/blog/how-to-rent-dumpster" },
+    { category: "Comparisons", title: "How to Compare Dumpster Service Features in Your City", excerpt: "Beyond price, here's what else matters when choosing a dumpster rental company in your area.", href: "/blog/roll-off-vs-front-load-dumpster" },
+    { category: "Disposal Info", title: "What Items Can and Can't Be Disposed of in a Dumpster in Your City", excerpt: "Putting the wrong items in your dumpster can result in extra fees. Here's what's allowed in your area.", href: "/blog/what-can-go-in-dumpster" },
+    { category: "Regulations", title: "Guide to Your City Dumpster Rental Regulations and Permits", excerpt: "Know the rules before you rent. Here's what your city requires for dumpster rentals.", href: "/blog/dumpster-permit-guide" },
+  ];
+
   return (
     <>
       {/* Hero */}
       <section className="bg-gradient-to-br from-secondary-900 to-secondary-800 text-white py-16">
         <div className="container mx-auto px-4">
           <nav className="flex items-center gap-2 text-secondary-300 text-sm mb-6">
-            <Link href="/" className="hover:text-white">Home</Link>
+            <Link href="/" className="hover:text-white">{isEs ? 'Inicio' : 'Home'}</Link>
             <ChevronRight className="h-4 w-4" />
-            <span className="text-white">Blog</span>
+            <span className="text-white">{isEs ? 'Blog' : 'Blog'}</span>
           </nav>
 
           <div className="max-w-3xl">
             <h1 className="text-4xl lg:text-5xl font-bold mb-4">
-              Dumpster Rental Guides & Tips
+              {isEs ? 'Guías y Consejos de Alquiler de Contenedores' : 'Dumpster Rental Guides & Tips'}
             </h1>
             <p className="text-xl text-secondary-200">
-              Expert guides to help you with your dumpster rental project.
-              Find local tips for sizing, pricing, permits, and more.
+              {isEs
+                ? 'Guías expertas para ayudarle con su proyecto de alquiler de contenedores. Encuentre consejos locales sobre tamaños, precios, permisos y más.'
+                : 'Expert guides to help you with your dumpster rental project. Find local tips for sizing, pricing, permits, and more.'}
             </p>
           </div>
         </div>
@@ -122,14 +195,15 @@ export default async function BlogIndex({ params }: PageProps) {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <span className="text-primary-600 font-semibold text-sm uppercase tracking-wide">
-              Essential Guides for 2026
+              {isEs ? 'Guías Esenciales para 2026' : 'Essential Guides for 2026'}
             </span>
             <h2 className="text-3xl font-bold text-secondary-900 mt-2">
-              Start With Our Complete Guides
+              {isEs ? 'Comience con Nuestras Guías Completas' : 'Start With Our Complete Guides'}
             </h2>
             <p className="text-secondary-600 mt-3 max-w-2xl mx-auto">
-              Everything you need to know about dumpster rental in one place.
-              These comprehensive guides answer the most common questions.
+              {isEs
+                ? 'Todo lo que necesita saber sobre alquiler de contenedores en un solo lugar. Estas guías completas responden las preguntas más comunes.'
+                : 'Everything you need to know about dumpster rental in one place. These comprehensive guides answer the most common questions.'}
             </p>
           </div>
 
@@ -154,7 +228,7 @@ export default async function BlogIndex({ params }: PageProps) {
                     <p className="text-sm text-primary-600 font-medium">{page.subtitle}</p>
                     <p className="text-secondary-600 mt-2 text-sm">{page.description}</p>
                     <span className="inline-flex items-center gap-1 text-primary-600 font-medium mt-3 text-sm group-hover:gap-2 transition-all">
-                      Read Guide <ArrowRight className="h-4 w-4" />
+                      {isEs ? 'Leer Guía' : 'Read Guide'} <ArrowRight className="h-4 w-4" />
                     </span>
                   </div>
                 </div>
@@ -168,7 +242,7 @@ export default async function BlogIndex({ params }: PageProps) {
       <section className="py-12 bg-secondary-50">
         <div className="container mx-auto px-4">
           <h2 className="text-2xl font-bold text-secondary-900 mb-6 text-center">
-            {BLOG_TEMPLATES.length} City-Specific Guides Available
+            {BLOG_TEMPLATES.length} {isEs ? 'Guías Específicas por Ciudad Disponibles' : 'City-Specific Guides Available'}
           </h2>
           <div className="flex flex-wrap justify-center gap-3">
             {Object.entries(categoryLabels).map(([key, label]) => (
@@ -187,7 +261,7 @@ export default async function BlogIndex({ params }: PageProps) {
       <section className="py-12 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-2xl font-bold text-secondary-900 mb-8 text-center">
-            Find Guides for Your City
+            {isEs ? 'Encuentre Guías para Su Ciudad' : 'Find Guides for Your City'}
           </h2>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -208,14 +282,14 @@ export default async function BlogIndex({ params }: PageProps) {
                           className="text-secondary-600 hover:text-primary-600 transition-colors flex items-center gap-1"
                         >
                           <FileText className="h-4 w-4" />
-                          {city.name} Guides
+                          {city.name} {isEs ? 'Guías' : 'Guides'}
                         </Link>
                       </li>
                     ))}
                   </ul>
                 ) : (
                   <p className="text-secondary-500 text-sm">
-                    Contact us for guides in {state.name}
+                    {isEs ? `Contáctenos para guías en ${state.name}` : `Contact us for guides in ${state.name}`}
                   </p>
                 )}
               </div>
@@ -227,7 +301,7 @@ export default async function BlogIndex({ params }: PageProps) {
               href="/locations"
               className="inline-flex items-center gap-2 text-primary-600 font-semibold hover:underline"
             >
-              View All Locations <ArrowRight className="h-4 w-4" />
+              {isEs ? 'Ver Todas las Ubicaciones' : 'View All Locations'} <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         </div>
@@ -237,20 +311,11 @@ export default async function BlogIndex({ params }: PageProps) {
       <section className="py-12 bg-secondary-50">
         <div className="container mx-auto px-4">
           <h2 className="text-2xl font-bold text-secondary-900 mb-8 text-center">
-            Popular Guide Topics
+            {isEs ? 'Temas de Guías Populares' : 'Popular Guide Topics'}
           </h2>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { category: "Sizing Guides", title: "How to Choose the Right Dumpster Rental Size in Your City", excerpt: "Choosing the wrong dumpster size can cost you money. Learn how to select the perfect size for your project.", href: "/blog/dumpster-sizes-guide" },
-              { category: "Pricing Guides", title: "How to Compare Dumpster Rental Prices in Your City", excerpt: "Don't get caught by hidden fees. Learn what to look for when comparing dumpster rental prices.", href: "/blog/dumpster-rental-cost-guide" },
-              { category: "How-To Guides", title: "Step-by-Step Guide to Renting a Dumpster in Your City", excerpt: "Everything you need to know about renting a dumpster in your city, from start to finish.", href: "/blog/how-to-rent-dumpster" },
-              { category: "Scheduling", title: "How to Schedule a Dumpster Delivery and Pickup in Your City", excerpt: "Get your dumpster when you need it. Here's how to schedule delivery and pickup in your area.", href: "/blog/how-to-rent-dumpster" },
-              { category: "Preparation", title: "Tips for Preparing Your Driveway for Dumpster Delivery", excerpt: "Don't let a dumpster damage your driveway. Here's how to prepare for delivery in your city.", href: "/blog/how-to-rent-dumpster" },
-              { category: "Comparisons", title: "How to Compare Dumpster Service Features in Your City", excerpt: "Beyond price, here's what else matters when choosing a dumpster rental company in your area.", href: "/blog/roll-off-vs-front-load-dumpster" },
-              { category: "Disposal Info", title: "What Items Can and Can't Be Disposed of in a Dumpster in Your City", excerpt: "Putting the wrong items in your dumpster can result in extra fees. Here's what's allowed in your area.", href: "/blog/what-can-go-in-dumpster" },
-              { category: "Regulations", title: "Guide to Your City Dumpster Rental Regulations and Permits", excerpt: "Know the rules before you rent. Here's what your city requires for dumpster rentals.", href: "/blog/dumpster-permit-guide" },
-            ].map((article) => (
+            {featuredTopics.map((article) => (
               <Link
                 key={article.href + article.category}
                 href={article.href}
@@ -275,16 +340,18 @@ export default async function BlogIndex({ params }: PageProps) {
       <section className="py-12 bg-primary-600 text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-2xl font-bold mb-4">
-            Ready to Rent a Dumpster?
+            {isEs ? '¿Listo para Alquilar un Contenedor?' : 'Ready to Rent a Dumpster?'}
           </h2>
           <p className="text-primary-100 mb-6">
-            Get a free quote with same-day delivery available.
+            {isEs
+              ? 'Obtenga una cotización gratis con entrega el mismo día disponible.'
+              : 'Get a free quote with same-day delivery available.'}
           </p>
           <Link
             href="/contact"
             className="inline-flex items-center gap-2 bg-white text-primary-600 px-8 py-4 rounded-lg font-semibold hover:bg-primary-50 transition-colors"
           >
-            Get a Free Quote <ArrowRight className="h-5 w-5" />
+            {isEs ? 'Obtener Cotización Gratis' : 'Get a Free Quote'} <ArrowRight className="h-5 w-5" />
           </Link>
         </div>
       </section>
