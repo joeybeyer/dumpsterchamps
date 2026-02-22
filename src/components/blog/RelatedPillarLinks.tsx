@@ -7,7 +7,9 @@ const pillarPages = [
   {
     id: "sizes",
     title: "Complete Dumpster Size Guide",
+    titleEs: "Guía Completa de Tamaños de Contenedores",
     description: "Find the perfect size for your project",
+    descriptionEs: "Encuentra el tamaño perfecto para tu proyecto",
     href: "/blog/dumpster-sizes-guide",
     icon: Ruler,
     categories: ["sizing-guide", "home-improvement", "construction-guide"],
@@ -15,7 +17,9 @@ const pillarPages = [
   {
     id: "pricing",
     title: "2026 Pricing Guide",
+    titleEs: "Guía de Precios 2026",
     description: "Understand costs and avoid hidden fees",
+    descriptionEs: "Entiende los costos y evita cargos ocultos",
     href: "/blog/dumpster-rental-cost-guide",
     icon: DollarSign,
     categories: ["pricing-guide", "money-saving", "comparison-guide", "consumer-protection"],
@@ -23,7 +27,9 @@ const pillarPages = [
   {
     id: "disposal",
     title: "What Can Go in a Dumpster",
+    titleEs: "¿Qué Se Puede Poner en un Contenedor?",
     description: "Know what's accepted and prohibited",
+    descriptionEs: "Conoce qué se acepta y qué está prohibido",
     href: "/blog/what-can-go-in-dumpster",
     icon: Trash2,
     categories: ["disposal-guide", "eco-friendly", "regulations-guide"],
@@ -31,7 +37,9 @@ const pillarPages = [
   {
     id: "how-to",
     title: "First-Timer's Rental Guide",
+    titleEs: "Guía para Principiantes de Alquiler",
     description: "Step-by-step rental process",
+    descriptionEs: "Proceso de alquiler paso a paso",
     href: "/blog/how-to-rent-dumpster",
     icon: BookOpen,
     categories: ["how-to-guide", "booking-guide", "scheduling-guide", "preparation-guide", "loading-tips", "mistakes-guide", "faq"],
@@ -42,9 +50,11 @@ interface RelatedPillarLinksProps {
   currentCategory: string;
   cityName?: string;
   variant?: "full" | "compact";
+  locale?: string;
 }
 
-export function RelatedPillarLinks({ currentCategory, cityName, variant = "full" }: RelatedPillarLinksProps) {
+export function RelatedPillarLinks({ currentCategory, cityName, variant = "full", locale }: RelatedPillarLinksProps) {
+  const isEs = locale === 'es';
   // Find the most relevant pillar page based on category
   const primaryPillar = pillarPages.find((p) => p.categories.includes(currentCategory));
 
@@ -55,7 +65,7 @@ export function RelatedPillarLinks({ currentCategory, cityName, variant = "full"
     return (
       <div className="bg-secondary-50 rounded-xl p-6">
         <h3 className="text-lg font-semibold text-secondary-900 mb-4">
-          Related Guides
+          {isEs ? 'Guías Relacionadas' : 'Related Guides'}
         </h3>
         <div className="space-y-3">
           {primaryPillar && (
@@ -64,7 +74,7 @@ export function RelatedPillarLinks({ currentCategory, cityName, variant = "full"
               className="flex items-center gap-3 text-primary-600 hover:text-primary-700 font-medium"
             >
               <primaryPillar.icon className="h-5 w-5" />
-              {primaryPillar.title}
+              {isEs ? primaryPillar.titleEs : primaryPillar.title}
             </Link>
           )}
           {otherPillars.map((pillar) => (
@@ -74,7 +84,7 @@ export function RelatedPillarLinks({ currentCategory, cityName, variant = "full"
               className="flex items-center gap-3 text-secondary-600 hover:text-primary-600"
             >
               <pillar.icon className="h-5 w-5" />
-              {pillar.title}
+              {isEs ? pillar.titleEs : pillar.title}
             </Link>
           ))}
         </div>
@@ -86,14 +96,14 @@ export function RelatedPillarLinks({ currentCategory, cityName, variant = "full"
     <div className="bg-gradient-to-br from-secondary-50 to-white rounded-xl p-6 border border-secondary-200">
       <div className="text-center mb-6">
         <span className="text-primary-600 text-sm font-semibold uppercase tracking-wide">
-          Learn More
+          {isEs ? 'Aprende Más' : 'Learn More'}
         </span>
         <h3 className="text-xl font-bold text-secondary-900 mt-1">
-          Essential Dumpster Rental Guides
+          {isEs ? 'Guías Esenciales de Alquiler de Contenedores' : 'Essential Dumpster Rental Guides'}
         </h3>
         {cityName && (
           <p className="text-secondary-600 text-sm mt-1">
-            Expert resources for {cityName} residents
+            {isEs ? `Recursos expertos para residentes de ${cityName}` : `Expert resources for ${cityName} residents`}
           </p>
         )}
       </div>
@@ -122,9 +132,9 @@ export function RelatedPillarLinks({ currentCategory, cityName, variant = "full"
                   ? "text-primary-900"
                   : "text-secondary-900"
               }`}>
-                {pillar.title}
+                {isEs ? pillar.titleEs : pillar.title}
               </h4>
-              <p className="text-sm text-secondary-600">{pillar.description}</p>
+              <p className="text-sm text-secondary-600">{isEs ? pillar.descriptionEs : pillar.description}</p>
             </div>
           </Link>
         ))}
@@ -136,7 +146,7 @@ export function RelatedPillarLinks({ currentCategory, cityName, variant = "full"
             href={primaryPillar.href}
             className="inline-flex items-center gap-2 text-primary-600 font-semibold hover:gap-3 transition-all"
           >
-            Read the Complete {primaryPillar.title.split(" ").slice(-2).join(" ")}
+            {isEs ? `Leer la Guía Completa de ${(primaryPillar.titleEs ?? primaryPillar.title).split(" ").slice(-2).join(" ")}` : `Read the Complete ${primaryPillar.title.split(" ").slice(-2).join(" ")}`}
             <ArrowRight className="h-4 w-4" />
           </Link>
         </div>

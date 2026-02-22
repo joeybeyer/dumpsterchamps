@@ -317,12 +317,13 @@ export default async function CityBlogPost({ params }: PageProps) {
                     <RelatedPillarLinks
                       currentCategory={template.category}
                       cityName={city.name}
+                      locale={locale}
                     />
                   </div>
                 </div>
 
                 {/* Author Box - Reusable container per SOP */}
-                <AuthorBox cityName={city.name} stateName={city.state.name} />
+                <AuthorBox cityName={city.name} stateName={city.state.name} locale={locale} />
               </div>
 
               {/* Sidebar */}
@@ -392,6 +393,7 @@ export default async function CityBlogPost({ params }: PageProps) {
                   <RelatedPillarLinks
                     currentCategory={template.category}
                     variant="compact"
+                    locale={locale}
                   />
                 </div>
               </aside>

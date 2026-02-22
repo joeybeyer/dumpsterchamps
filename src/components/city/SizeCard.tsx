@@ -10,6 +10,7 @@ interface SizeCardProps {
   capacity: string;
   idealFor: readonly string[];
   isPopular?: boolean;
+  locale?: string;
 }
 
 // Size-specific labels for quick decision making
@@ -19,6 +20,14 @@ const sizeLabels: Record<number, string> = {
   20: "Full Home Projects",
   30: "Large Construction",
   40: "Major Demolition",
+};
+
+const sizeLabelsEs: Record<number, string> = {
+  10: "Limpieza de Garaje",
+  15: "Renovaciones de Cuartos",
+  20: "Proyectos de Hogar Completo",
+  30: "Construcción Grande",
+  40: "Demolición Mayor",
 };
 
 // Truck load equivalents for mental anchoring
@@ -44,9 +53,11 @@ export function SizeCard({
   capacity,
   idealFor,
   isPopular = false,
+  locale,
 }: SizeCardProps) {
+  const isEs = locale === 'es';
   const truckLoadCount = truckLoads[size] || getTruckLoads(capacity);
-  const sizeLabel = sizeLabels[size] || "";
+  const sizeLabel = (isEs ? sizeLabelsEs[size] : sizeLabels[size]) || "";
 
   return (
     <div
@@ -56,7 +67,7 @@ export function SizeCard({
     >
       {isPopular && (
         <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary-600 text-white text-xs font-bold px-3 py-1 rounded-full">
-          Most Popular
+          {isEs ? 'Más Popular' : 'Most Popular'}
         </div>
       )}
 
@@ -84,26 +95,26 @@ export function SizeCard({
           <h3 className="text-xl font-bold text-secondary-900">{size} Yard Dumpster</h3>
           {/* Project-based label for quick decision */}
           {sizeLabel && (
-            <p className="text-sm font-medium text-primary-600">Best for {sizeLabel}</p>
+            <p className="text-sm font-medium text-primary-600">{isEs ? 'Mejor para' : 'Best for'} {sizeLabel}</p>
           )}
           <p className="text-xs text-secondary-500">{dimensions}</p>
         </div>
 
         <div className="text-center mb-4">
           <span className="text-3xl font-bold text-primary-600">${price}</span>
-          <p className="text-sm text-secondary-500">Flat rate • {weight} included</p>
+          <p className="text-sm text-secondary-500">{isEs ? `Tarifa fija • ${weight} incluido` : `Flat rate • ${weight} included`}</p>
         </div>
 
         {/* Visual truck capacity indicator - more prominent */}
         <div className="mb-4 bg-secondary-50 rounded-lg py-2 px-3">
           <div className="flex items-center justify-center gap-2 text-secondary-700">
             <Truck className="h-5 w-5 text-primary-600" />
-            <span className="text-sm font-semibold">= {truckLoadCount} pickup truck loads</span>
+            <span className="text-sm font-semibold">= {truckLoadCount} {isEs ? 'cargas de camioneta' : 'pickup truck loads'}</span>
           </div>
         </div>
 
         <div className="space-y-2">
-          <p className="text-xs font-semibold text-secondary-700 uppercase">Ideal For:</p>
+          <p className="text-xs font-semibold text-secondary-700 uppercase">{isEs ? 'Ideal Para:' : 'Ideal For:'}</p>
           {idealFor.slice(0, 3).map((item, index) => (
             <div key={index} className="flex items-center gap-2 text-sm text-secondary-600">
               <Check className="h-4 w-4 text-green-500 flex-shrink-0" />
@@ -120,13 +131,13 @@ export function SizeCard({
           href="#quote-form"
           className="flex items-center justify-center w-full bg-primary-600 text-white text-center py-3.5 px-4 rounded-lg font-semibold hover:bg-primary-700 transition-colors min-h-[48px] touch-manipulation active:scale-[0.98]"
         >
-          Book {size} Yard
+          {isEs ? `Reservar ${size} Yards` : `Book ${size} Yard`}
         </a>
         <Link
           href={`/${size}-yard-dumpster`}
           className="flex items-center justify-center text-center text-secondary-500 text-sm hover:text-primary-600 transition-colors py-2 min-h-[44px]"
         >
-          View Details
+          {isEs ? 'Ver Detalles' : 'View Details'}
         </Link>
       </div>
     </div>

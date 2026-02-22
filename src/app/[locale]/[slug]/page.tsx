@@ -442,6 +442,7 @@ async function StatePage({ stateSlug }: { stateSlug: string }) {
                 capacity={d.capacity}
                 idealFor={d.idealFor}
                 isPopular={"popular" in d && d.popular}
+                locale={locale}
               />
             ))}
           </div>
@@ -836,6 +837,7 @@ async function CityPage({ citySlug, locale = 'en' }: { citySlug: string; locale?
                 capacity={d.capacity}
                 idealFor={d.idealFor}
                 isPopular={"popular" in d && d.popular}
+                locale={locale}
               />
             ))}
           </div>
@@ -950,6 +952,7 @@ async function CityPage({ citySlug, locale = 'en' }: { citySlug: string; locale?
           text: r.text,
           date: r.date || undefined
         })) : undefined}
+        locale={locale}
       />
 
       {/* Neighborhoods Section */}

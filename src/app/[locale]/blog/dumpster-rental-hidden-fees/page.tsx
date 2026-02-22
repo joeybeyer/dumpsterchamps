@@ -407,7 +407,7 @@ export default async function HiddenFeesGuide({ params }: PageProps) {
       <section className="py-8 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <AuthorBox />
+            <AuthorBox locale={locale} />
           </div>
         </div>
       </section>

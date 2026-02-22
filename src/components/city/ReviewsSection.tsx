@@ -17,6 +17,7 @@ interface ReviewsSectionProps {
   googleReviewUrl?: string;
   totalReviews?: number;
   averageRating?: number;
+  locale?: string;
 }
 
 // Default reviews - can be overridden per city
@@ -44,6 +45,30 @@ const DEFAULT_REVIEWS: Review[] = [
   },
 ];
 
+const DEFAULT_REVIEWS_ES: Review[] = [
+  {
+    name: "Miguel R.",
+    location: "",
+    rating: 5,
+    text: "Entrega rápida, precios justos, sin cargos ocultos. Los usé para mi renovación del hogar y fueron profesionales de principio a fin. El conductor lo colocó exactamente donde lo necesitaba.",
+    date: "Hace 2 semanas",
+  },
+  {
+    name: "Sara T.",
+    location: "",
+    rating: 5,
+    text: "La mejor experiencia de alquiler de contenedor que he tenido. Llamé por la mañana y tuve un contenedor de 20 yardas en mi entrada a las 2pm. La recogida también fue puntual. ¡Volveré a usar!",
+    date: "Hace 1 mes",
+  },
+  {
+    name: "Santiago L.",
+    location: "",
+    rating: 5,
+    text: "Excelente servicio y precios competitivos. La reserva en línea fue fácil y el equipo respondió mis preguntas rápidamente. Muy recomendado para cualquier proyecto de limpieza.",
+    date: "Hace 3 semanas",
+  },
+];
+
 function StarRating({ rating }: { rating: number }) {
   return (
     <div className="flex gap-0.5">
@@ -68,11 +93,14 @@ export function ReviewsSection({
   googleReviewUrl,
   totalReviews = 127,
   averageRating = 4.9,
+  locale,
 }: ReviewsSectionProps) {
+  const isEs = locale === 'es';
   // Use provided reviews or defaults with city name injected
-  const displayReviews = reviews || DEFAULT_REVIEWS.map((r, i) => ({
+  const defaultReviews = isEs ? DEFAULT_REVIEWS_ES : DEFAULT_REVIEWS;
+  const displayReviews = reviews || defaultReviews.map((r, i) => ({
     ...r,
-    location: i === 0 ? cityName : (i === 1 ? `Near ${cityName}` : stateAbbr),
+    location: i === 0 ? cityName : (i === 1 ? (isEs ? `Cerca de ${cityName}` : `Near ${cityName}`) : stateAbbr),
   }));
 
   return (
@@ -81,14 +109,14 @@ export function ReviewsSection({
         {/* Header with aggregate rating */}
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-secondary-900 mb-4">
-            What {cityName} Customers Say
+            {isEs ? `Lo Que Dicen los Clientes de ${cityName}` : `What ${cityName} Customers Say`}
           </h2>
           <div className="flex items-center justify-center gap-3 mb-2">
             <StarRating rating={Math.round(averageRating)} />
             <span className="text-2xl font-bold text-secondary-900">{averageRating}</span>
           </div>
           <p className="text-secondary-600">
-            Based on {totalReviews}+ verified Google reviews
+            {isEs ? `Basado en ${totalReviews}+ reseñas verificadas de Google` : `Based on ${totalReviews}+ verified Google reviews`}
           </p>
         </div>
 
@@ -138,7 +166,7 @@ export function ReviewsSection({
               <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
               <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
             </svg>
-            Read All Reviews on Google
+            {isEs ? 'Ver Todas las Reseñas en Google' : 'Read All Reviews on Google'}
           </a>
         </div>
       </div>
