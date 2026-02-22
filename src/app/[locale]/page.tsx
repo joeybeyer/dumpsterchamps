@@ -4,7 +4,7 @@ import { Phone, Truck, Clock, Shield, Star, ChevronRight, HelpCircle, Calculator
 import { QuoteForm } from "@/components/forms/QuoteForm";
 import { prisma } from "@/lib/prisma";
 import { LocalBusinessSchema, FAQSchema, AggregateRatingSchema, ReviewSchema } from "@/components/seo/SchemaMarkup";
-import { LocalFAQAccordion, DEFAULT_CITY_FAQS } from "@/components/city/LocalFAQAccordion";
+import { LocalFAQAccordion, DEFAULT_CITY_FAQS, DEFAULT_CITY_FAQS_ES } from "@/components/city/LocalFAQAccordion";
 import { TestimonialStrip } from "@/components/ui/TestimonialStrip";
 import { DeliveryCounter, ResponseTimeStat } from "@/components/ui/TrustBadges";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -87,6 +87,7 @@ export default async function HomePage({ params }: PageProps) {
   });
 
   const phone = process.env.NEXT_PUBLIC_PHONE || "(888) 860-0710";
+  const isEs = locale === 'es';
 
   return (
     <>
@@ -411,17 +412,19 @@ export default async function HomePage({ params }: PageProps) {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold mb-4 text-secondary-900">
-              Frequently Asked Questions
+              {isEs ? 'Preguntas Frecuentes' : 'Frequently Asked Questions'}
             </h2>
             <p className="text-xl text-secondary-600 max-w-3xl mx-auto">
-              Get answers to the most common questions about dumpster rental costs, sizing, and delivery.
+              {isEs
+                ? 'Obtenga respuestas a las preguntas más comunes sobre costos, tamaños y entrega de contenedores.'
+                : 'Get answers to the most common questions about dumpster rental costs, sizing, and delivery.'}
             </p>
           </div>
           <div className="max-w-4xl mx-auto">
-            <LocalFAQAccordion 
-              faqs={DEFAULT_CITY_FAQS}
-              cityName="your area"
-              stateName="your state"
+            <LocalFAQAccordion
+              faqs={isEs ? DEFAULT_CITY_FAQS_ES : DEFAULT_CITY_FAQS}
+              cityName={isEs ? 'su área' : 'your area'}
+              stateName={isEs ? 'su estado' : 'your state'}
             />
           </div>
         </div>

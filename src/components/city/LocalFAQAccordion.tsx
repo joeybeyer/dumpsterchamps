@@ -60,6 +60,60 @@ export function LocalFAQAccordion({ faqs, cityName, stateName }: LocalFAQAccordi
   );
 }
 
+// Default FAQs in Spanish with geo placeholders
+export const DEFAULT_CITY_FAQS_ES: FAQ[] = [
+  {
+    question: "¿Cuánto cuesta el alquiler de un contenedor en [CITY]?",
+    answer:
+      "Los precios de alquiler de contenedores en [CITY] van desde $495 por un contenedor de 10 yardas hasta $795 por uno de 40 yardas. Nuestros precios fijos incluyen entrega, recogida, un período de alquiler de 7 días y tolerancia de peso. Sin cargos ocultos ni sorpresas.",
+  },
+  {
+    question: "¿Necesito un permiso para un contenedor en [CITY], [STATE]?",
+    answer:
+      "Si coloca el contenedor en su propiedad privada (entrada de auto, patio), generalmente no necesita permiso en [CITY]. Sin embargo, si necesita colocarlo en la vía pública, es posible que necesite un permiso de Obras Públicas de [CITY]. Le ayudamos con el proceso si es necesario.",
+  },
+  {
+    question: "¿Cuán rápido puedo recibir un contenedor en [CITY]?",
+    answer:
+      "Ofrecemos entrega el mismo día o al día siguiente en [CITY] y áreas cercanas. Para proyectos urgentes, llámenos directamente y haremos lo posible para ajustarnos a su horario. La mayoría de entregas se pueden coordinar en 24 horas.",
+  },
+  {
+    question: "¿Qué tamaño de contenedor necesito para mi proyecto en [CITY]?",
+    answer:
+      "El tamaño correcto depende de su proyecto: 10 yardas para limpiezas pequeñas y remodelaciones de baño, 20 yardas (el más popular) para renovaciones de cocina y techos, 30-40 yardas para construcciones mayores o limpieza de toda la casa. ¿No está seguro? Llámenos.",
+  },
+  {
+    question: "¿Qué puedo poner en un contenedor en [CITY]?",
+    answer:
+      "Se aceptan la mayoría de desechos domésticos y de construcción: muebles, electrodomésticos (sin refrigerantes), desechos de jardín, materiales de construcción, tejas y basura general. Artículos prohibidos: materiales peligrosos, neumáticos, baterías, pintura y electrónicos.",
+  },
+  {
+    question: "¿Por cuánto tiempo puedo tener el contenedor en [CITY]?",
+    answer:
+      "Nuestro período estándar de alquiler es de 7 días, suficiente para la mayoría de proyectos residenciales en [CITY]. ¿Necesita más tiempo? Las extensiones están disponibles por solo $15/día. Solo avísenos antes de que termine su período.",
+  },
+  {
+    question: "¿Ofrecen alquiler de contenedores para obras de construcción en [CITY]?",
+    answer:
+      "¡Sí! Servimos a contratistas y empresas de construcción en [CITY] y [STATE]. Ofrecemos contenedores de 20, 30 y 40 yardas ideales para desechos de construcción, demolición y remodelación. Podemos organizar recogidas regulares para proyectos en curso.",
+  },
+  {
+    question: "¿Qué pasa si supero el límite de peso en [CITY]?",
+    answer:
+      "Si su contenedor supera la tolerancia de peso incluida, hay un cargo adicional de $75 por tonelada extra. Solo cobramos por el exceso real. Para evitarlo, elija un tamaño mayor si dispone de materiales pesados como concreto o tejas.",
+  },
+  {
+    question: "¿Puedo colocar un contenedor en mi entrada en [CITY] sin dañarla?",
+    answer:
+      "¡Sí! Usamos tablas protectoras bajo las ruedas del contenedor para evitar daños a su entrada en [CITY]. Nuestros conductores son expertos en la colocación cuidadosa y trabajarán con usted para encontrar el mejor lugar.",
+  },
+  {
+    question: "¿Qué áreas sirven cerca de [CITY]?",
+    answer:
+      "Servimos [CITY] y todas las comunidades cercanas. Ya sea que esté en el centro de [CITY] o en los suburbios, podemos entregar un contenedor en su ubicación. Contáctenos para confirmar el servicio en su vecindario.",
+  },
+];
+
 // Default FAQs with geo placeholders - PAA optimized with geo modifiers
 export const DEFAULT_CITY_FAQS: FAQ[] = [
   {
