@@ -1011,36 +1011,36 @@ async function CityPage({ citySlug, locale = 'en' }: { citySlug: string; locale?
       <section className="py-12 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-xl font-bold text-secondary-900 mb-6 text-center">
-            Helpful Resources
+            {isEs ? 'Recursos Útiles' : 'Helpful Resources'}
           </h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto">
             <Link
               href="/dumpster-rental-prices"
               className="p-4 bg-secondary-50 rounded-lg hover:bg-primary-50 transition-colors group"
             >
-              <p className="font-semibold text-secondary-900 group-hover:text-primary-600">Pricing Guide</p>
-              <p className="text-sm text-secondary-500">See all sizes & prices</p>
+              <p className="font-semibold text-secondary-900 group-hover:text-primary-600">{isEs ? 'Guía de Precios' : 'Pricing Guide'}</p>
+              <p className="text-sm text-secondary-500">{isEs ? 'Ver todos los tamaños y precios' : 'See all sizes & prices'}</p>
             </Link>
             <Link
               href="/calculator"
               className="p-4 bg-secondary-50 rounded-lg hover:bg-primary-50 transition-colors group"
             >
-              <p className="font-semibold text-secondary-900 group-hover:text-primary-600">Size Calculator</p>
-              <p className="text-sm text-secondary-500">Find your perfect size</p>
+              <p className="font-semibold text-secondary-900 group-hover:text-primary-600">{isEs ? 'Calculadora de Tamaño' : 'Size Calculator'}</p>
+              <p className="text-sm text-secondary-500">{isEs ? 'Encuentre su tamaño perfecto' : 'Find your perfect size'}</p>
             </Link>
             <Link
               href="/what-size-dumpster-do-i-need"
               className="p-4 bg-secondary-50 rounded-lg hover:bg-primary-50 transition-colors group"
             >
-              <p className="font-semibold text-secondary-900 group-hover:text-primary-600">Size Guide</p>
-              <p className="text-sm text-secondary-500">Which size is right?</p>
+              <p className="font-semibold text-secondary-900 group-hover:text-primary-600">{isEs ? 'Guía de Tamaños' : 'Size Guide'}</p>
+              <p className="text-sm text-secondary-500">{isEs ? '¿Cuál tamaño es el correcto?' : 'Which size is right?'}</p>
             </Link>
             <Link
               href="/do-i-need-permit-for-dumpster"
               className="p-4 bg-secondary-50 rounded-lg hover:bg-primary-50 transition-colors group"
             >
-              <p className="font-semibold text-secondary-900 group-hover:text-primary-600">Permit Info</p>
-              <p className="text-sm text-secondary-500">Do you need one?</p>
+              <p className="font-semibold text-secondary-900 group-hover:text-primary-600">{isEs ? 'Info sobre Permisos' : 'Permit Info'}</p>
+              <p className="text-sm text-secondary-500">{isEs ? '¿Necesita uno?' : 'Do you need one?'}</p>
             </Link>
           </div>
         </div>
@@ -1051,10 +1051,10 @@ async function CityPage({ citySlug, locale = 'en' }: { citySlug: string; locale?
         <section className="py-16 bg-secondary-50">
           <div className="container mx-auto px-4">
             <h2 className="text-2xl font-bold text-secondary-900 mb-2 text-center">
-              Dumpster Rental in Nearby {city.state.name} Cities
+              {isEs ? `Alquiler de Contenedores en Ciudades Cercanas de ${city.state.name}` : `Dumpster Rental in Nearby ${city.state.name} Cities`}
             </h2>
             <p className="text-secondary-600 text-center mb-6">
-              We also serve these cities near {city.name}:
+              {isEs ? `También servimos estas ciudades cerca de ${city.name}:` : `We also serve these cities near ${city.name}:`}
             </p>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 max-w-4xl mx-auto">
               {nearbyCities.map((nc) => (
