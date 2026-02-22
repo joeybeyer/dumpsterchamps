@@ -755,33 +755,37 @@ async function CityPage({ citySlug, locale = 'en' }: { citySlug: string; locale?
                   <Star className="h-5 w-5 text-yellow-400 fill-yellow-400" />
                 </div>
                 <span className="text-primary-400 font-medium text-sm">
-                  #1 Rated Dumpster Rental in {city.name}
+                  {isEs ? `#1 en Alquiler de Contenedores en ${city.name}` : `#1 Rated Dumpster Rental in ${city.name}`}
                 </span>
               </div>
 
               {/* Headline - Problem-focused with BERT optimization */}
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 leading-tight">
-                {city.name} Homeowners: Get a Dumpster Delivered Tomorrow
+                {isEs
+                  ? `Residentes de ${city.name}: Reciba un Contenedor Mañana`
+                  : `${city.name} Homeowners: Get a Dumpster Delivered Tomorrow`}
               </h1>
 
               {/* Description - Addresses pain points */}
               <p className="text-lg text-secondary-200 mb-6 leading-relaxed">
-                {description || `Stop wasting time with unreliable companies. We deliver roll-off dumpsters to ${city.name} driveways fast — flat-rate pricing from $495, no hidden fees, no hassles.`}
+                {description || (isEs
+                  ? `Deje de perder tiempo con empresas poco confiables. Entregamos contenedores roll-off en ${city.name} rápido — precios fijos desde $495, sin tarifas ocultas, sin complicaciones.`
+                  : `Stop wasting time with unreliable companies. We deliver roll-off dumpsters to ${city.name} driveways fast — flat-rate pricing from $495, no hidden fees, no hassles.`)}
               </p>
 
               {/* Trust Badges */}
               <div className="flex flex-wrap gap-3 mb-6">
                 <div className="flex items-center gap-2 bg-secondary-800/60 px-3 py-2 rounded-lg text-sm">
                   <Clock className="h-4 w-4 text-primary-400" />
-                  <span>Same-Day Delivery</span>
+                  <span>{isEs ? 'Entrega el Mismo Día' : 'Same-Day Delivery'}</span>
                 </div>
                 <div className="flex items-center gap-2 bg-secondary-800/60 px-3 py-2 rounded-lg text-sm">
                   <Shield className="h-4 w-4 text-primary-400" />
-                  <span>No Hidden Fees</span>
+                  <span>{isEs ? 'Sin Cargos Ocultos' : 'No Hidden Fees'}</span>
                 </div>
                 <div className="flex items-center gap-2 bg-secondary-800/60 px-3 py-2 rounded-lg text-sm">
                   <Star className="h-4 w-4 text-yellow-400 fill-yellow-400" />
-                  <span>4.9 Google Rating</span>
+                  <span>{isEs ? '4.9 en Google' : '4.9 Google Rating'}</span>
                 </div>
               </div>
 
@@ -791,14 +795,14 @@ async function CityPage({ citySlug, locale = 'en' }: { citySlug: string; locale?
                 className="bg-primary-600 text-white px-8 py-4 rounded-lg font-semibold text-center hover:bg-primary-700 transition-colors flex items-center justify-center gap-2 w-fit"
               >
                 <Phone className="h-5 w-5" />
-                Call Now: {phone}
+                {isEs ? `Llame Ahora: ${phone}` : `Call Now: ${phone}`}
               </a>
             </div>
 
             {/* Quote Form */}
             <div id="quote-form" className="bg-white rounded-xl p-6 shadow-2xl">
               <h2 className="text-xl font-bold text-secondary-900 mb-4">
-                Get Your Free Quote in 60 Seconds
+                {isEs ? 'Obtenga Su Cotización Gratis en 60 Segundos' : 'Get Your Free Quote in 60 Seconds'}
               </h2>
               <QuoteForm cityName={city.name} stateName={city.state.name} />
             </div>
@@ -810,11 +814,12 @@ async function CityPage({ citySlug, locale = 'en' }: { citySlug: string; locale?
       <section className="py-16 bg-secondary-50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-secondary-900 mb-4 text-center">
-            Dumpster Sizes & Pricing in {city.name}
+            {isEs ? `Tamaños y Precios de Contenedores en ${city.name}` : `Dumpster Sizes & Pricing in ${city.name}`}
           </h2>
           <p className="text-secondary-600 text-center mb-4 max-w-2xl mx-auto">
-            Flat-rate pricing includes delivery, pickup, 7-day rental, and weight allowance.
-            No hidden fees or surprise charges.
+            {isEs
+              ? 'El precio fijo incluye entrega, recogida, alquiler de 7 días y tolerancia de peso. Sin cargos ocultos ni sorpresas.'
+              : 'Flat-rate pricing includes delivery, pickup, 7-day rental, and weight allowance. No hidden fees or surprise charges.'}
           </p>
           {/* Delivery Counter */}
           <div className="text-center mb-8">
@@ -984,10 +989,14 @@ async function CityPage({ citySlug, locale = 'en' }: { citySlug: string; locale?
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl font-bold text-secondary-900 mb-4 text-center">
-              Frequently Asked Questions About Dumpster Rental in {city.name}
+              {isEs
+                ? `Preguntas Frecuentes sobre Alquiler de Contenedores en ${city.name}`
+                : `Frequently Asked Questions About Dumpster Rental in ${city.name}`}
             </h2>
             <p className="text-secondary-600 text-center mb-8">
-              Got questions? We&apos;ve got answers. Here are the most common questions about renting a dumpster in {city.name}.
+              {isEs
+                ? `¿Tiene preguntas? Las respondemos. Aquí están las preguntas más comunes sobre alquiler de contenedores en ${city.name}.`
+                : `Got questions? We've got answers. Here are the most common questions about renting a dumpster in ${city.name}.`}
             </p>
             <LocalFAQAccordion
               faqs={faqs}
@@ -1066,10 +1075,12 @@ async function CityPage({ citySlug, locale = 'en' }: { citySlug: string; locale?
       <section className="py-16 bg-primary-600 text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-4">
-            Ready to Rent a Dumpster in {city.name}?
+            {isEs ? `¿Listo para Alquilar un Contenedor en ${city.name}?` : `Ready to Rent a Dumpster in ${city.name}?`}
           </h2>
           <p className="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
-            Get your free quote today! Same-day delivery available. Flat-rate pricing with no hidden fees.
+            {isEs
+              ? '¡Obtenga su cotización gratis hoy! Entrega el mismo día disponible. Precios fijos sin cargos ocultos.'
+              : 'Get your free quote today! Same-day delivery available. Flat-rate pricing with no hidden fees.'}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
@@ -1077,13 +1088,13 @@ async function CityPage({ citySlug, locale = 'en' }: { citySlug: string; locale?
               className="inline-flex items-center justify-center gap-2 bg-white text-primary-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-primary-50 transition-colors"
             >
               <Phone className="h-5 w-5" />
-              Call {phone}
+              {isEs ? `Llamar ${phone}` : `Call ${phone}`}
             </a>
             <Link
               href="/contact"
               className="inline-flex items-center justify-center gap-2 border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-primary-600 transition-colors"
             >
-              Request Online Quote
+              {isEs ? 'Solicitar Cotización en Línea' : 'Request Online Quote'}
             </Link>
           </div>
         </div>
