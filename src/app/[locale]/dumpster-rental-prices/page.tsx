@@ -105,6 +105,7 @@ const FACTORS_AFFECTING_PRICE = [
 export default async function PricingPage({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const isEs = locale === 'es';
 
   const phone = process.env.NEXT_PUBLIC_PHONE || "(888) 860-0710";
 
@@ -114,13 +115,14 @@ export default async function PricingPage({ params }: PageProps) {
       <section className="bg-gradient-to-br from-secondary-900 to-secondary-800 text-white py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl">
-            <p className="text-primary-400 font-semibold mb-2">2026 Pricing Guide</p>
+            <p className="text-primary-400 font-semibold mb-2">{isEs ? 'Guía de Precios 2026' : '2026 Pricing Guide'}</p>
             <h1 className="text-4xl lg:text-5xl font-bold mb-4">
-              How Much Does a Dumpster Rental Cost?
+              {isEs ? '¿Cuánto Cuesta el Alquiler de un Contenedor?' : 'How Much Does a Dumpster Rental Cost?'}
             </h1>
             <p className="text-xl text-secondary-200 mb-6">
-              Dumpster rental prices range from <strong className="text-white">$495 to $795</strong> for 
-              all-inclusive flat-rate pricing. Our price includes delivery, pickup, 7-day rental, AND weight allowance — no surprises.
+              {isEs
+                ? <>Los precios de alquiler de contenedores van desde <strong className="text-white">$495 a $795</strong> con precio fijo todo incluido. Nuestro precio incluye entrega, recogida, alquiler de 7 días Y tolerancia de peso — sin sorpresas.</>
+                : <>Dumpster rental prices range from <strong className="text-white">$495 to $795</strong> for all-inclusive flat-rate pricing. Our price includes delivery, pickup, 7-day rental, AND weight allowance — no surprises.</>}
             </p>
             <div className="flex flex-wrap gap-4 mb-6">
               <a
@@ -128,14 +130,14 @@ export default async function PricingPage({ params }: PageProps) {
                 className="bg-primary-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors flex items-center gap-2"
               >
                 <Phone className="h-5 w-5" />
-                Get Instant Quote: {phone}
+                {isEs ? `Cotización Instantánea: ${phone}` : `Get Instant Quote: ${phone}`}
               </a>
               <Link
                 href="/calculator"
                 className="border-2 border-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-secondary-900 transition-colors flex items-center gap-2"
               >
                 <Calculator className="h-5 w-5" />
-                Size & Price Calculator
+                {isEs ? 'Calculadora de Tamaño y Precio' : 'Size & Price Calculator'}
               </Link>
             </div>
 

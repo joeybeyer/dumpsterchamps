@@ -102,6 +102,7 @@ const USE_CASES = [
 export default async function RollOffDumpsterPage({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const isEs = locale === 'es';
 
   const phone = process.env.NEXT_PUBLIC_PHONE || "(888) 860-0710";
 
@@ -111,11 +112,11 @@ export default async function RollOffDumpsterPage({ params }: PageProps) {
       <div className="bg-secondary-100 border-b border-secondary-200">
         <div className="container mx-auto px-4 py-3">
           <nav className="flex items-center gap-2 text-sm text-secondary-600">
-            <Link href="/" className="hover:text-primary-600">Home</Link>
+            <Link href="/" className="hover:text-primary-600">{isEs ? 'Inicio' : 'Home'}</Link>
             <span>›</span>
-            <Link href="/services" className="hover:text-primary-600">Services</Link>
+            <Link href="/services" className="hover:text-primary-600">{isEs ? 'Servicios' : 'Services'}</Link>
             <span>›</span>
-            <span className="text-secondary-900">Roll Off Dumpsters</span>
+            <span className="text-secondary-900">{isEs ? 'Contenedores Roll Off' : 'Roll Off Dumpsters'}</span>
           </nav>
           <LastUpdated date="2026-01-11" className="mt-1" />
         </div>
@@ -127,15 +128,15 @@ export default async function RollOffDumpsterPage({ params }: PageProps) {
           <div className="grid lg:grid-cols-2 gap-8 items-center">
             <div>
               <span className="inline-block bg-primary-100 text-primary-700 px-3 py-1 rounded-full text-sm font-medium mb-4">
-                Roll Off Container Rental
+                {isEs ? 'Alquiler de Contenedor Roll Off' : 'Roll Off Container Rental'}
               </span>
               <h1 className="text-4xl lg:text-5xl font-bold text-secondary-900 mb-4">
-                Roll Off Dumpster Rental
+                {isEs ? 'Alquiler de Contenedor Roll Off' : 'Roll Off Dumpster Rental'}
               </h1>
               <p className="text-xl text-secondary-600 mb-6">
-                Open-top containers delivered directly to your location. Our roll off dumpsters are perfect for
-                construction debris, renovation waste, and large cleanout projects. Prices start at <strong className="text-primary-600">$495</strong> with
-                everything included.
+                {isEs
+                  ? <>Contenedores de tapa abierta entregados directamente a su ubicación. Nuestros contenedores roll off son perfectos para escombros de construcción, residuos de renovación y grandes proyectos de limpieza. Precios desde <strong className="text-primary-600">$495</strong> con todo incluido.</>
+                  : <>Open-top containers delivered directly to your location. Our roll off dumpsters are perfect for construction debris, renovation waste, and large cleanout projects. Prices start at <strong className="text-primary-600">$495</strong> with everything included.</>}
               </p>
               <div className="flex flex-wrap gap-4">
                 <a
@@ -143,13 +144,13 @@ export default async function RollOffDumpsterPage({ params }: PageProps) {
                   className="bg-primary-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors flex items-center gap-2"
                 >
                   <Phone className="h-5 w-5" />
-                  Order Now: {phone}
+                  {isEs ? `Ordenar Ahora: ${phone}` : `Order Now: ${phone}`}
                 </a>
                 <Link
                   href="/dumpster-rental-prices"
                   className="border-2 border-secondary-300 text-secondary-700 px-6 py-3 rounded-lg font-semibold hover:bg-secondary-50 transition-colors"
                 >
-                  View All Prices
+                  {isEs ? 'Ver Todos los Precios' : 'View All Prices'}
                 </Link>
               </div>
             </div>
