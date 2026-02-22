@@ -963,6 +963,7 @@ async function CityPage({ citySlug, locale = 'en' }: { citySlug: string; locale?
         stateName={city.state.name}
         coordinates={coordinates}
         gbpEmbed={city.gbpEmbed}
+        locale={locale}
       />
 
       {/* Why Choose Us Section */}

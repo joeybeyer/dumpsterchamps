@@ -16,6 +16,7 @@ interface NeighborhoodGridProps {
   stateName: string;
   coordinates?: { lat: number; lng: number } | null;
   gbpEmbed?: string | null;
+  locale?: string;
 }
 
 export function NeighborhoodGrid({
@@ -25,16 +26,19 @@ export function NeighborhoodGrid({
   stateName,
   coordinates,
   gbpEmbed,
+  locale,
 }: NeighborhoodGridProps) {
+  const isEs = locale === 'es';
   return (
     <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-secondary-900 mb-4 text-center">
-          Neighborhoods We Serve in {cityName}
+          {isEs ? `Vecindarios que Servimos en ${cityName}` : `Neighborhoods We Serve in ${cityName}`}
         </h2>
         <p className="text-secondary-600 text-center mb-8 max-w-2xl mx-auto">
-          We provide dumpster rental services throughout {cityName} and surrounding areas.
-          Same-day delivery available in most neighborhoods.
+          {isEs
+            ? `Brindamos servicios de alquiler de contenedores en todo ${cityName} y áreas circundantes. Entrega el mismo día disponible en la mayoría de los vecindarios.`
+            : `We provide dumpster rental services throughout ${cityName} and surrounding areas. Same-day delivery available in most neighborhoods.`}
         </p>
 
         {/* Layout: Always 2 columns on large screens */}
@@ -65,7 +69,7 @@ export function NeighborhoodGrid({
                         </p>
                       )}
                       <span className="text-xs text-primary-600 mt-2 inline-flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                        View details <ChevronRight className="h-3 w-3" />
+                        {isEs ? 'Ver detalles' : 'View details'} <ChevronRight className="h-3 w-3" />
                       </span>
                     </div>
                   </div>
@@ -81,31 +85,32 @@ export function NeighborhoodGrid({
                 <div className="bg-white/20 p-3 rounded-lg">
                   <Calculator className="h-8 w-8" />
                 </div>
-                <h3 className="text-xl font-bold">What Size Dumpster Do I Need?</h3>
+                <h3 className="text-xl font-bold">{isEs ? '¿Qué Tamaño de Contenedor Necesito?' : 'What Size Dumpster Do I Need?'}</h3>
               </div>
               <p className="text-primary-100 mb-6">
-                Not sure which dumpster size is right for your {cityName} project? 
-                Use our free calculator to get a personalized recommendation in 30 seconds.
+                {isEs
+                  ? `¿No sabe qué tamaño de contenedor es el adecuado para su proyecto en ${cityName}? Use nuestra calculadora gratuita para obtener una recomendación personalizada en 30 segundos.`
+                  : `Not sure which dumpster size is right for your ${cityName} project? Use our free calculator to get a personalized recommendation in 30 seconds.`}
               </p>
               <ul className="space-y-2 mb-6 text-sm">
                 <li className="flex items-center gap-2">
                   <span className="bg-white/20 rounded-full p-1">✓</span>
-                  Avoid overpaying for too much space
+                  {isEs ? 'Evite pagar de más por espacio excesivo' : 'Avoid overpaying for too much space'}
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="bg-white/20 rounded-full p-1">✓</span>
-                  Prevent weight overage fees
+                  {isEs ? 'Evite cargos por exceso de peso' : 'Prevent weight overage fees'}
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="bg-white/20 rounded-full p-1">✓</span>
-                  Get accurate price estimates
+                  {isEs ? 'Obtenga estimaciones de precios precisas' : 'Get accurate price estimates'}
                 </li>
               </ul>
               <Link
                 href="/calculator"
                 className="block w-full bg-white text-primary-600 text-center py-3 px-6 rounded-lg font-semibold hover:bg-primary-50 transition-colors"
               >
-                Try the Calculator →
+                {isEs ? 'Probar la Calculadora →' : 'Try the Calculator →'}
               </Link>
             </div>
           </div>
@@ -114,7 +119,9 @@ export function NeighborhoodGrid({
         {neighborhoods.length === 0 && (
           <div className="bg-secondary-50 rounded-lg p-6 text-center">
             <p className="text-secondary-600">
-              We serve all neighborhoods in {cityName}. Contact us for delivery to your area.
+              {isEs
+                ? `Servimos todos los vecindarios en ${cityName}. Contáctenos para entrega a su área.`
+                : `We serve all neighborhoods in ${cityName}. Contact us for delivery to your area.`}
             </p>
           </div>
         )}
@@ -127,12 +134,12 @@ export function NeighborhoodGrid({
             </div>
             <div>
               <h3 className="font-semibold text-secondary-900 mb-1">
-                Local Service, Fast Delivery
+                {isEs ? 'Servicio Local, Entrega Rápida' : 'Local Service, Fast Delivery'}
               </h3>
               <p className="text-secondary-600">
-                Our local team knows {cityName} inside and out. We understand the best routes,
-                local regulations, and can often provide same-day delivery to any neighborhood
-                in the {cityName} metro area.
+                {isEs
+                  ? `Nuestro equipo local conoce ${cityName} al dedillo. Entendemos las mejores rutas, regulaciones locales y frecuentemente podemos proporcionar entrega el mismo día a cualquier vecindario en el área metropolitana de ${cityName}.`
+                  : `Our local team knows ${cityName} inside and out. We understand the best routes, local regulations, and can often provide same-day delivery to any neighborhood in the ${cityName} metro area.`}
               </p>
             </div>
           </div>
@@ -142,7 +149,7 @@ export function NeighborhoodGrid({
         {gbpEmbed && (
           <div className="mt-8">
             <h3 className="text-xl font-bold text-secondary-900 mb-4 text-center">
-              Find Us on Google
+              {isEs ? 'Encuéntrenos en Google' : 'Find Us on Google'}
             </h3>
             <div
               className="w-full rounded-xl overflow-hidden shadow-lg [&>iframe]:w-full [&>iframe]:h-[400px] [&>iframe]:border-0"
