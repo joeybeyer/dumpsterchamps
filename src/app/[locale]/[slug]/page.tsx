@@ -967,6 +967,7 @@ async function CityPage({ citySlug, locale = 'en' }: { citySlug: string; locale?
         cityName={city.name}
         stateName={city.state.name}
         whyChooseUs={whyChooseUs}
+        locale={locale}
       />
 
       {/* Climate Section */}
@@ -974,6 +975,7 @@ async function CityPage({ citySlug, locale = 'en' }: { citySlug: string; locale?
         climate={climate}
         cityName={city.name}
         stateName={city.state.name}
+        locale={locale}
       />
 
       {/* Permits Section */}
@@ -982,6 +984,7 @@ async function CityPage({ citySlug, locale = 'en' }: { citySlug: string; locale?
         cityName={city.name}
         stateName={city.state.name}
         county={city.county}
+        locale={locale}
       />
 
       {/* FAQ Section */}

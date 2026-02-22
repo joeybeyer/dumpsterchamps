@@ -4,6 +4,7 @@ interface ClimateSectionProps {
   climate?: string | null;
   cityName: string;
   stateName: string;
+  locale?: string;
 }
 
 // Default climate info by region
@@ -65,7 +66,8 @@ const getDefaultClimateInfo = (stateName: string): string => {
   return "Seasonal conditions may affect project scheduling. Contact us to discuss the best timing for your specific project and location. We offer flexible scheduling to work around weather conditions.";
 };
 
-export function ClimateSection({ climate, cityName, stateName }: ClimateSectionProps) {
+export function ClimateSection({ climate, cityName, stateName, locale }: ClimateSectionProps) {
+  const isEs = locale === 'es';
   const climateInfo = climate || getDefaultClimateInfo(stateName);
 
   // Determine which icon to show based on state
@@ -96,7 +98,7 @@ export function ClimateSection({ climate, cityName, stateName }: ClimateSectionP
               {getSeasonalIcon()}
             </div>
             <h2 className="text-2xl font-bold text-secondary-900">
-              Best Time to Rent a Dumpster in {cityName}
+              {isEs ? `Mejor Época para Alquilar un Contenedor en ${cityName}` : `Best Time to Rent a Dumpster in ${cityName}`}
             </h2>
           </div>
 
@@ -107,18 +109,22 @@ export function ClimateSection({ climate, cityName, stateName }: ClimateSectionP
               <div className="flex items-start gap-3 p-4 bg-green-50 rounded-lg">
                 <Calendar className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="font-semibold text-secondary-900">Peak Season</h4>
+                  <h4 className="font-semibold text-secondary-900">{isEs ? 'Temporada Alta' : 'Peak Season'}</h4>
                   <p className="text-sm text-secondary-600">
-                    Spring and fall offer ideal conditions for most projects in {cityName}.
+                    {isEs
+                      ? `La primavera y el otoño ofrecen condiciones ideales para la mayoría de los proyectos en ${cityName}.`
+                      : `Spring and fall offer ideal conditions for most projects in ${cityName}.`}
                   </p>
                 </div>
               </div>
               <div className="flex items-start gap-3 p-4 bg-blue-50 rounded-lg">
                 <Sun className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="font-semibold text-secondary-900">Year-Round Service</h4>
+                  <h4 className="font-semibold text-secondary-900">{isEs ? 'Servicio Todo el Año' : 'Year-Round Service'}</h4>
                   <p className="text-sm text-secondary-600">
-                    We deliver dumpsters in {cityName} 365 days a year, weather permitting.
+                    {isEs
+                      ? `Entregamos contenedores en ${cityName} los 365 días del año, sujeto a condiciones climáticas.`
+                      : `We deliver dumpsters in ${cityName} 365 days a year, weather permitting.`}
                   </p>
                 </div>
               </div>
