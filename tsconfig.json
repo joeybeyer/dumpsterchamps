@@ -41,6 +41,7 @@
     "prisma/*.ts",
     "prisma/*.js",
     "deploy",
-    "dumpsterchamps-deploy"
+    "dumpsterchamps-deploy",
+    "scripts/check-spanish-gaps.ts"
   ]
 }
