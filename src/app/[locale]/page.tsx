@@ -154,8 +154,8 @@ export default async function HomePage({ params }: PageProps) {
 
               {/* Delivery Counter & Response Time - Social proof */}
               <div className="flex flex-wrap gap-3 mb-3">
-                <DeliveryCounter variant="dark" />
-                <ResponseTimeStat variant="dark" />
+                <DeliveryCounter variant="dark" locale={locale} />
+                <ResponseTimeStat variant="dark" locale={locale} />
               </div>
 
               {/* Quote Form */}

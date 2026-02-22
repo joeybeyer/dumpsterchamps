@@ -142,7 +142,7 @@ export default async function PricingPage({ params }: PageProps) {
             </div>
 
             {/* Trust signals */}
-            <TrustBadgesInline variant="dark" />
+            <TrustBadgesInline variant="dark" locale={locale} />
           </div>
         </div>
       </section>
@@ -152,7 +152,7 @@ export default async function PricingPage({ params }: PageProps) {
         <div className="container mx-auto px-4">
           {/* Delivery Counter */}
           <div className="text-center mb-6">
-            <DeliveryCounter />
+            <DeliveryCounter locale={locale} />
           </div>
 
           <div className="grid md:grid-cols-5 gap-4">

@@ -65,11 +65,14 @@ export function TrustBadges({
 export function TrustBadgesInline({
   variant = "light",
   className = "",
+  locale,
 }: {
   variant?: "light" | "dark";
   className?: string;
+  locale?: string;
 }) {
   const isDark = variant === "dark";
+  const isEs = locale === 'es';
   const textStyles = isDark ? "text-secondary-300" : "text-secondary-600";
   const iconStyles = isDark ? "text-primary-400" : "text-primary-600";
 
@@ -77,17 +80,17 @@ export function TrustBadgesInline({
     <div className={`flex flex-wrap items-center gap-4 text-sm ${textStyles} ${className}`}>
       <span className="flex items-center gap-1">
         <Shield className={`h-4 w-4 ${iconStyles}`} />
-        Licensed & Insured
+        {isEs ? 'Con Licencia y Asegurado' : 'Licensed & Insured'}
       </span>
       <span className="hidden sm:block">•</span>
       <span className="flex items-center gap-1">
         <CheckCircle className={`h-4 w-4 ${iconStyles}`} />
-        Satisfaction Guaranteed
+        {isEs ? 'Satisfacción Garantizada' : 'Satisfaction Guaranteed'}
       </span>
       <span className="hidden sm:block">•</span>
       <span className="flex items-center gap-1">
         <Truck className={`h-4 w-4 ${iconStyles}`} />
-        500+ Delivered This Week
+        {isEs ? 'Más de 500 Entregados Esta Semana' : '500+ Delivered This Week'}
       </span>
     </div>
   );
@@ -99,11 +102,14 @@ export function TrustBadgesInline({
 export function DeliveryCounter({
   variant = "light",
   className = "",
+  locale,
 }: {
   variant?: "light" | "dark";
   className?: string;
+  locale?: string;
 }) {
   const isDark = variant === "dark";
+  const isEs = locale === 'es';
 
   const bgStyles = isDark
     ? "bg-green-900/30 border-green-700/50"
@@ -116,7 +122,7 @@ export function DeliveryCounter({
       <div className={`w-2 h-2 rounded-full bg-green-500 animate-pulse`} />
       <Truck className={`h-4 w-4 ${iconStyles}`} />
       <span className={`text-sm font-medium ${textStyles}`}>
-        500+ dumpsters delivered this week
+        {isEs ? 'Más de 500 contenedores entregados esta semana' : '500+ dumpsters delivered this week'}
       </span>
     </div>
   );
@@ -128,11 +134,14 @@ export function DeliveryCounter({
 export function ResponseTimeStat({
   variant = "light",
   className = "",
+  locale,
 }: {
   variant?: "light" | "dark";
   className?: string;
+  locale?: string;
 }) {
   const isDark = variant === "dark";
+  const isEs = locale === 'es';
 
   const bgStyles = isDark
     ? "bg-primary-900/30 border-primary-700/50"
@@ -145,7 +154,7 @@ export function ResponseTimeStat({
     <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border ${bgStyles} ${className}`}>
       <Clock className={`h-4 w-4 ${iconStyles}`} />
       <span className={`text-sm ${textStyles}`}>
-        Average response: <span className={highlightStyles}>2 minutes</span>
+        {isEs ? 'Tiempo de respuesta promedio:' : 'Average response:'} <span className={highlightStyles}>2 {isEs ? 'minutos' : 'minutes'}</span>
       </span>
     </div>
   );

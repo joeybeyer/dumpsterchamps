@@ -429,7 +429,7 @@ async function StatePage({ stateSlug }: { stateSlug: string }) {
           </p>
           {/* Delivery Counter */}
           <div className="text-center mb-8">
-            <DeliveryCounter />
+            <DeliveryCounter locale={locale} />
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
             {DUMPSTER_SIZES.map((d) => (
@@ -824,7 +824,7 @@ async function CityPage({ citySlug, locale = 'en' }: { citySlug: string; locale?
           </p>
           {/* Delivery Counter */}
           <div className="text-center mb-8">
-            <DeliveryCounter />
+            <DeliveryCounter locale={locale} />
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
             {DUMPSTER_SIZES.map((d) => (
