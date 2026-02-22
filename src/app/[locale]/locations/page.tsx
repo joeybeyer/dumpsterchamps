@@ -18,6 +18,8 @@ export default async function LocationsPage({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
 
+  const isEs = locale === 'es';
+
   const states = await prisma.state.findMany({
     include: {
       _count: {
@@ -34,17 +36,18 @@ export default async function LocationsPage({ params }: PageProps) {
         <div className="container mx-auto px-4">
           <div className="flex items-center gap-2 text-secondary-300 text-sm mb-4">
             <Link href="/" className="hover:text-white">
-              Home
+              {isEs ? 'Inicio' : 'Home'}
             </Link>
             <ChevronRight className="h-4 w-4" />
-            <span className="text-white">Locations</span>
+            <span className="text-white">{isEs ? 'Ubicaciones' : 'Locations'}</span>
           </div>
           <h1 className="text-4xl lg:text-5xl font-bold mb-4">
-            Dumpster Rental Locations
+            {isEs ? 'Ubicaciones de Alquiler de Contenedores' : 'Dumpster Rental Locations'}
           </h1>
           <p className="text-xl text-secondary-200 max-w-3xl">
-            Dumpster Champs provides affordable roll-off dumpster rentals
-            nationwide. Find service in your state below.
+            {isEs
+              ? 'Dumpster Champs ofrece alquiler de contenedores asequibles en todo el país. Encuentre servicio en su estado a continuación.'
+              : 'Dumpster Champs provides affordable roll-off dumpster rentals nationwide. Find service in your state below.'}
           </p>
         </div>
       </section>
@@ -66,7 +69,7 @@ export default async function LocationsPage({ params }: PageProps) {
                       {state.name}
                     </span>
                     <p className="text-sm text-secondary-500">
-                      {state._count.cities} cities
+                      {state._count.cities} {isEs ? 'ciudades' : 'cities'}
                     </p>
                   </div>
                 </div>
@@ -81,17 +84,18 @@ export default async function LocationsPage({ params }: PageProps) {
       <section className="py-16 bg-primary-600 text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-4">
-            Don&apos;t See Your City?
+            {isEs ? '¿No ve su ciudad?' : "Don't See Your City?"}
           </h2>
           <p className="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
-            We&apos;re constantly expanding our service areas. Contact us to check
-            availability in your location.
+            {isEs
+              ? 'Estamos expandiendo constantemente nuestras áreas de servicio. Contáctenos para verificar disponibilidad en su ubicación.'
+              : "We're constantly expanding our service areas. Contact us to check availability in your location."}
           </p>
           <Link
             href="/contact"
             className="inline-block bg-white text-primary-600 px-8 py-4 rounded-lg font-semibold hover:bg-primary-50 transition-colors"
           >
-            Contact Us
+            {isEs ? 'Contáctenos' : 'Contact Us'}
           </Link>
         </div>
       </section>
