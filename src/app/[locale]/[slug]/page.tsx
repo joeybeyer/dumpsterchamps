@@ -218,7 +218,7 @@ async function getPageType(slug: string): Promise<PageType> {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = await params;
+  const { slug, locale } = await params;
   const pageType = await getPageType(slug);
 
   if (!pageType) {
@@ -252,15 +252,23 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         geoMetaTags["geo.region"] = `US-${city.state.abbr}`;
       }
 
+      const isEs = locale === 'es';
+      const metaTitle = isEs
+        ? (city?.metaTitleEs ?? city?.metaTitle)
+        : city?.metaTitle;
+      const metaDesc = isEs
+        ? (city?.metaDescEs ?? city?.metaDesc)
+        : city?.metaDesc;
+
       return {
-        title: city?.metaTitle || `Dumpster Rental ${city?.name}, ${city?.state.abbr} | Fast from $495 [2026]`,
-        description: city?.metaDesc || `Affordable dumpster rental in ${city?.name}, ${city?.state.abbr}. 10-40 yard containers starting at $495. Same-day delivery, flat-rate pricing, no hidden fees. Call (888) 860-0710.`,
+        title: metaTitle || `Dumpster Rental ${city?.name}, ${city?.state.abbr} | Fast from $495 [2026]`,
+        description: metaDesc || `Affordable dumpster rental in ${city?.name}, ${city?.state.abbr}. 10-40 yard containers starting at $495. Same-day delivery, flat-rate pricing, no hidden fees. Call (888) 860-0710.`,
         openGraph: {
-          title: `Dumpster Rental ${city?.name}, ${city?.state.abbr} | Fast from $495 [2026]`,
-          description: `Fast, affordable dumpster rentals in ${city?.name}. 10-40 yard roll-off containers with same-day delivery. Flat-rate pricing from $495.`,
-          url: `https://www.dumpsterchamps.com/dumpster-rental-${city?.slug}`,
+          title: metaTitle || `Dumpster Rental ${city?.name}, ${city?.state.abbr} | Fast from $495 [2026]`,
+          description: metaDesc || `Fast, affordable dumpster rentals in ${city?.name}. 10-40 yard roll-off containers with same-day delivery. Flat-rate pricing from $495.`,
+          url: `https://www.dumpsterchamps.com/${isEs ? 'es/' : ''}dumpster-rental-${city?.slug}`,
           type: "website",
-          locale: "en_US",
+          locale: isEs ? "es_ES" : "en_US",
         },
         other: geoMetaTags,
       };
@@ -648,7 +656,7 @@ async function StatePage({ stateSlug }: { stateSlug: string }) {
 }
 
 // ============ CITY PAGE COMPONENT ============
-async function CityPage({ citySlug }: { citySlug: string }) {
+async function CityPage({ citySlug, locale = 'en' }: { citySlug: string; locale?: string }) {
   const city = await prisma.city.findUnique({
     where: { slug: citySlug },
     include: {
@@ -686,10 +694,22 @@ async function CityPage({ citySlug }: { citySlug: string }) {
   // Use city-specific phone (GBP) or default
   const phone = city.phone || process.env.NEXT_PUBLIC_PHONE || "(888) 860-0710";
 
+  // Locale-aware field selection (Spanish with English fallback)
+  const isEs = locale === 'es';
+  const description = isEs ? (city.descriptionEs ?? city.description) : city.description;
+  const aiDescription = isEs ? (city.aiDescriptionEs ?? city.aiDescription) : city.aiDescription;
+  const whyChooseUs = isEs ? (city.whyChooseUsEs ?? city.whyChooseUs) : city.whyChooseUs;
+  const climate = isEs ? (city.climateEs ?? city.climate) : city.climate;
+  const permits = isEs ? (city.permitsEs ?? city.permits) : city.permits;
+
   // Use FAQs from database if available, otherwise use defaults
   const cityFaqs = city.faqs || [];
   const faqs: Array<{ id?: string; question: string; answer: string }> = cityFaqs.length > 0
-    ? cityFaqs.map((f) => ({ id: f.id, question: f.question, answer: f.answer }))
+    ? cityFaqs.map((f) => ({
+        id: f.id,
+        question: isEs ? (f.questionEs ?? f.question) : f.question,
+        answer: isEs ? (f.answerEs ?? f.answer) : f.answer,
+      }))
     : (DEFAULT_CITY_FAQS || []);
 
   // Coordinates for map
@@ -739,7 +759,7 @@ async function CityPage({ citySlug }: { citySlug: string }) {
 
               {/* Description - Addresses pain points */}
               <p className="text-lg text-secondary-200 mb-6 leading-relaxed">
-                {city.description || `Stop wasting time with unreliable companies. We deliver roll-off dumpsters to ${city.name} driveways fast — flat-rate pricing from $495, no hidden fees, no hassles.`}
+                {description || `Stop wasting time with unreliable companies. We deliver roll-off dumpsters to ${city.name} driveways fast — flat-rate pricing from $495, no hidden fees, no hassles.`}
               </p>
 
               {/* Trust Badges */}
@@ -891,14 +911,14 @@ async function CityPage({ citySlug }: { citySlug: string }) {
       </section>
 
       {/* AI-Generated City Content Section */}
-      {city.aiDescription && (
+      {aiDescription && (
         <section className="py-16 bg-secondary-50">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <div
                 className="ai-content"
                 dangerouslySetInnerHTML={{
-                  __html: formatMarkdownContent(city.aiDescription),
+                  __html: formatMarkdownContent(aiDescription!),
                 }}
               />
             </div>
@@ -934,19 +954,19 @@ async function CityPage({ citySlug }: { citySlug: string }) {
       <WhyChooseUs
         cityName={city.name}
         stateName={city.state.name}
-        whyChooseUs={city.whyChooseUs}
+        whyChooseUs={whyChooseUs}
       />
 
       {/* Climate Section */}
       <ClimateSection
-        climate={city.climate}
+        climate={climate}
         cityName={city.name}
         stateName={city.state.name}
       />
 
       {/* Permits Section */}
       <PermitsSection
-        permits={city.permits}
+        permits={permits}
         cityName={city.name}
         stateName={city.state.name}
         county={city.county}
@@ -1085,7 +1105,7 @@ async function CityPage({ citySlug }: { citySlug: string }) {
       />
       <WebPageSchema
         title={`Dumpster Rental ${city.name}, ${city.state.abbr}`}
-        description={city.description || `Affordable dumpster rental in ${city.name}, ${city.state.abbr}.`}
+        description={description || `Affordable dumpster rental in ${city.name}, ${city.state.abbr}.`}
         url={`https://www.dumpsterchamps.com/dumpster-rental-${city.slug}`}
         dateModified={city.updatedAt}
       />
@@ -1571,7 +1591,7 @@ export default async function DynamicPage({ params }: PageProps) {
     case "state":
       return <StatePage stateSlug={slug.replace("dumpster-rental-", "")} />;
     case "city":
-      return <CityPage citySlug={slug.replace("dumpster-rental-", "")} />;
+      return <CityPage citySlug={slug.replace("dumpster-rental-", "")} locale={locale} />;
     case "size":
       return <SizePage sizeSlug={slug} />;
     case "service":

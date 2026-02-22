@@ -231,9 +231,6 @@ const nextConfig = {
       // OLD /location/:city STRUCTURE → NEW STRUCTURE
       { source: "/location/:city", destination: "/locations", permanent: true },
 
-      // SPANISH PAGES → /locations
-      { source: "/es/:path*", destination: "/locations", permanent: true },
-
       // NEIGHBORHOOD PAGES → PARENT CITY (Jacksonville examples)
       { source: "/murray-hill-neighborhood-jacksonville", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
 

@@ -215,9 +215,6 @@ const nextConfig: NextConfig = {
       // ============ SLASH-SEPARATED DUMPSTER RENTAL URLS ============
       { source: "/dumpster-rental/:state", destination: "/dumpster-rental-:state", permanent: true },
 
-      // ============ SPANISH LOCALE PAGES ============
-      { source: "/es/:path*", destination: "/locations", permanent: true },
-
       // ============ GENERIC NEIGHBORHOOD-CITY PATTERN ============
       { source: "/:slug*-neighborhood-:city", destination: "/locations", permanent: true },
     ];

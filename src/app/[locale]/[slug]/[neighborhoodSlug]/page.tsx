@@ -466,7 +466,7 @@ function isValidCitySlug(slug: string): boolean {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug, neighborhoodSlug } = await params;
+  const { slug, neighborhoodSlug, locale } = await params;
 
   if (!isValidCitySlug(slug)) {
     return {};
@@ -565,13 +565,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return {};
   }
 
+  const isEs = locale === 'es';
   const name = neighborhoodPage?.name || neighborhood?.name || neighborhoodSlug;
 
   // Strip "| Dumpster Champs" from metaTitle if present (layout template adds it)
-  let pageTitle = neighborhoodPage?.metaTitle || `Dumpster Rental in ${name}, ${city.name} | From $495`;
+  const rawTitle = isEs
+    ? (neighborhoodPage?.metaTitleEs ?? neighborhoodPage?.metaTitle)
+    : neighborhoodPage?.metaTitle;
+  let pageTitle = rawTitle || `Dumpster Rental in ${name}, ${city.name} | From $495`;
   pageTitle = pageTitle.replace(/\s*\|\s*Dumpster Champs\s*$/i, '');
 
-  const pageDescription = neighborhoodPage?.metaDesc || `Fast, affordable dumpster rental in ${name}, ${city.name}, ${city.state.abbr}. Same-day delivery available. 10-40 yard roll-off dumpsters starting at $495. Call now!`;
+  const rawDesc = isEs
+    ? (neighborhoodPage?.metaDescEs ?? neighborhoodPage?.metaDesc)
+    : neighborhoodPage?.metaDesc;
+  const pageDescription = rawDesc || `Fast, affordable dumpster rental in ${name}, ${city.name}, ${city.state.abbr}. Same-day delivery available. 10-40 yard roll-off dumpsters starting at $495. Call now!`;
 
   return {
     title: pageTitle,
@@ -584,7 +591,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: pageDescription,
       url: canonicalUrl,
       siteName: 'Dumpster Champs',
-      locale: 'en_US',
+      locale: isEs ? 'es_ES' : 'en_US',
       type: 'website',
     },
     twitter: {
@@ -677,15 +684,17 @@ export default async function NeighborhoodPage({ params }: PageProps) {
       notFound();
     }
 
+    const isEs = locale === 'es';
+
     if (neighborhoodPage) {
-      // Use rich NeighborhoodPage content
+      // Use rich NeighborhoodPage content (locale-aware)
       pageData = {
         name: neighborhoodPage.name,
         slug: neighborhoodPage.slug,
-        content: neighborhoodPage.content,
+        content: isEs ? (neighborhoodPage.contentEs ?? neighborhoodPage.content) : neighborhoodPage.content,
         zipCodes: neighborhoodPage.zipCodes,
-        metaTitle: neighborhoodPage.metaTitle,
-        metaDesc: neighborhoodPage.metaDesc,
+        metaTitle: isEs ? (neighborhoodPage.metaTitleEs ?? neighborhoodPage.metaTitle) : neighborhoodPage.metaTitle,
+        metaDesc: isEs ? (neighborhoodPage.metaDescEs ?? neighborhoodPage.metaDesc) : neighborhoodPage.metaDesc,
         isFallback: false,
       };
     } else {

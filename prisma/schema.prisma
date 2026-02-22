@@ -46,6 +46,14 @@ model City {
   heroImageUrl      String?
   gbpEmbed          String?
   googleReviewUrl   String?
+  // Spanish content fields
+  descriptionEs     String?
+  aiDescriptionEs   String?
+  whyChooseUsEs     String?
+  climateEs         String?
+  permitsEs         String?
+  metaTitleEs       String?
+  metaDescEs        String?
   state             State              @relation(fields: [stateId], references: [id])
   blogs             CityBlog[]
   faqs              CityFAQ[]
@@ -71,13 +79,15 @@ model Neighborhood {
 }
 
 model CityFAQ {
-  id        String   @id @default(cuid())
-  cityId    String
-  question  String
-  answer    String
-  sortOrder Int      @default(0)
-  createdAt DateTime @default(now())
-  city      City     @relation(fields: [cityId], references: [id])
+  id         String   @id @default(cuid())
+  cityId     String
+  question   String
+  answer     String
+  sortOrder  Int      @default(0)
+  createdAt  DateTime @default(now())
+  questionEs String?
+  answerEs   String?
+  city       City     @relation(fields: [cityId], references: [id])
 
   @@index([cityId])
 }
@@ -120,6 +130,10 @@ model NeighborhoodPage {
   aiGeneratedAt DateTime?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+  // Spanish content fields
+  contentEs     String?
+  metaTitleEs   String?
+  metaDescEs    String?
   city          City      @relation(fields: [cityId], references: [id])
 
   @@unique([cityId, slug])
@@ -180,6 +194,7 @@ model Lead {
   dumpsterSize String?
   message      String?
   source       String?
+  referrer     String?  // HTTP referrer for LLM traffic attribution (ChatGPT, Perplexity, Claude, etc.)
   spam         Boolean  @default(false)
   spamReason   String?
   createdAt    DateTime @default(now())
