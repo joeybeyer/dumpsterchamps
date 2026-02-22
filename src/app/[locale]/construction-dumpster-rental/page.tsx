@@ -88,6 +88,7 @@ const CONTRACTOR_BENEFITS = [
 export default async function ConstructionDumpsterPage({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const isEs = locale === 'es';
   const phone = process.env.NEXT_PUBLIC_PHONE || "(888) 860-0710";
 
   return (
@@ -96,11 +97,11 @@ export default async function ConstructionDumpsterPage({ params }: PageProps) {
       <div className="bg-secondary-100 border-b border-secondary-200">
         <div className="container mx-auto px-4 py-3">
           <nav className="flex items-center gap-2 text-sm text-secondary-600">
-            <Link href="/" className="hover:text-primary-600">Home</Link>
+            <Link href="/" className="hover:text-primary-600">{isEs ? 'Inicio' : 'Home'}</Link>
             <span>›</span>
-            <Link href="/services" className="hover:text-primary-600">Services</Link>
+            <Link href="/services" className="hover:text-primary-600">{isEs ? 'Servicios' : 'Services'}</Link>
             <span>›</span>
-            <span className="text-secondary-900">Construction Dumpsters</span>
+            <span className="text-secondary-900">{isEs ? 'Contenedores de Construcción' : 'Construction Dumpsters'}</span>
           </nav>
           <LastUpdated date="2026-01-11" className="mt-1" />
         </div>
@@ -112,15 +113,15 @@ export default async function ConstructionDumpsterPage({ params }: PageProps) {
           <div className="grid lg:grid-cols-2 gap-8 items-center">
             <div>
               <span className="inline-block bg-primary-100 text-primary-700 px-3 py-1 rounded-full text-sm font-medium mb-4">
-                Construction Dumpsters
+                {isEs ? 'Contenedores de Construcción' : 'Construction Dumpsters'}
               </span>
               <h1 className="text-4xl lg:text-5xl font-bold text-secondary-900 mb-4">
-                Construction Dumpster Rental
+                {isEs ? 'Alquiler de Contenedores para Construcción' : 'Construction Dumpster Rental'}
               </h1>
               <p className="text-xl text-secondary-600 mb-6">
-                Keep your job site clean and productive with reliable waste removal. Our construction dumpsters
-                handle lumber, drywall, roofing, and all types of construction debris. Volume discounts available
-                for contractors.
+                {isEs
+                  ? 'Mantenga su sitio de trabajo limpio y productivo con eliminación de residuos confiable. Nuestros contenedores de construcción manejan madera, tablero de yeso, techado y todo tipo de escombros de construcción. Descuentos por volumen disponibles para contratistas.'
+                  : 'Keep your job site clean and productive with reliable waste removal. Our construction dumpsters handle lumber, drywall, roofing, and all types of construction debris. Volume discounts available for contractors.'}
               </p>
               <div className="flex flex-wrap gap-4">
                 <a
@@ -128,13 +129,13 @@ export default async function ConstructionDumpsterPage({ params }: PageProps) {
                   className="bg-primary-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors flex items-center gap-2"
                 >
                   <Phone className="h-5 w-5" />
-                  Get Contractor Pricing: {phone}
+                  {isEs ? `Precios para Contratistas: ${phone}` : `Get Contractor Pricing: ${phone}`}
                 </a>
                 <Link
                   href="/dumpster-rental-prices"
                   className="border-2 border-secondary-300 text-secondary-700 px-6 py-3 rounded-lg font-semibold hover:bg-secondary-50 transition-colors"
                 >
-                  View All Prices
+                  {isEs ? 'Ver Todos los Precios' : 'View All Prices'}
                 </Link>
               </div>
             </div>
@@ -352,19 +353,19 @@ export default async function ConstructionDumpsterPage({ params }: PageProps) {
       {/* CTA Section */}
       <section className="py-16 bg-secondary-900 text-white">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4">Need a Construction Dumpster?</h2>
+          <h2 className="text-3xl font-bold mb-4">{isEs ? '¿Necesita un Contenedor de Construcción?' : 'Need a Construction Dumpster?'}</h2>
           <p className="text-xl text-secondary-300 mb-8">
-            Same-day delivery available. Volume discounts for repeat contractors. All-inclusive pricing.
+            {isEs ? 'Entrega el mismo día disponible. Descuentos por volumen para contratistas frecuentes. Precios todo incluido.' : 'Same-day delivery available. Volume discounts for repeat contractors. All-inclusive pricing.'}
           </p>
           <a
             href={`tel:${phone.replace(/\D/g, "")}`}
             className="inline-flex items-center gap-2 bg-primary-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-primary-700 transition-colors"
           >
             <Phone className="h-6 w-6" />
-            Call {phone}
+            {isEs ? `Llamar ${phone}` : `Call ${phone}`}
           </a>
           <p className="text-secondary-400 mt-4">
-            Serving contractors and job sites nationwide
+            {isEs ? 'Atendiendo contratistas y obras en todo el país' : 'Serving contractors and job sites nationwide'}
           </p>
         </div>
       </section>

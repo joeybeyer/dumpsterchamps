@@ -14,42 +14,58 @@ export const metadata: Metadata = {
     "Explore our dumpster rental services including roll-off dumpsters, construction dumpsters, and residential dumpsters. Fast delivery and competitive pricing.",
 };
 
-const serviceDetails = [
-  {
-    slug: "roll-off-dumpster-rental",
-    icon: Truck,
-    features: [
-      "Available in 10-40 yard sizes",
-      "Easy loading with rear door",
-      "Versatile for any waste type",
-      "Quick delivery and pickup",
-    ],
-  },
-  {
-    slug: "construction-dumpsters",
-    icon: HardHat,
-    features: [
-      "Heavy-duty construction",
-      "Handles concrete and debris",
-      "Perfect for job sites",
-      "Long-term rental options",
-    ],
-  },
-  {
-    slug: "residential-dumpsters",
-    icon: Home,
-    features: [
-      "Fits in most driveways",
-      "Perfect for home projects",
-      "Friendly pricing",
-      "Flexible rental periods",
-    ],
-  },
-];
-
 export default async function ServicesPage({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const isEs = locale === 'es';
+
+  const serviceDetails = [
+    {
+      slug: "roll-off-dumpster-rental",
+      icon: Truck,
+      features: isEs ? [
+        "Disponible en tamaños de 10-40 yardas",
+        "Fácil carga con puerta trasera",
+        "Versátil para cualquier tipo de residuo",
+        "Entrega y recogida rápidas",
+      ] : [
+        "Available in 10-40 yard sizes",
+        "Easy loading with rear door",
+        "Versatile for any waste type",
+        "Quick delivery and pickup",
+      ],
+    },
+    {
+      slug: "construction-dumpsters",
+      icon: HardHat,
+      features: isEs ? [
+        "Construcción resistente",
+        "Maneja concreto y escombros",
+        "Perfecto para obras de construcción",
+        "Opciones de alquiler a largo plazo",
+      ] : [
+        "Heavy-duty construction",
+        "Handles concrete and debris",
+        "Perfect for job sites",
+        "Long-term rental options",
+      ],
+    },
+    {
+      slug: "residential-dumpsters",
+      icon: Home,
+      features: isEs ? [
+        "Cabe en la mayoría de entradas",
+        "Perfecto para proyectos del hogar",
+        "Precios amigables",
+        "Períodos de alquiler flexibles",
+      ] : [
+        "Fits in most driveways",
+        "Perfect for home projects",
+        "Friendly pricing",
+        "Flexible rental periods",
+      ],
+    },
+  ];
 
   const services = await prisma.service.findMany({
     orderBy: { name: "asc" },
@@ -62,15 +78,18 @@ export default async function ServicesPage({ params }: PageProps) {
         <div className="container mx-auto px-4">
           <div className="flex items-center gap-2 text-secondary-300 text-sm mb-4">
             <Link href="/" className="hover:text-white">
-              Home
+              {isEs ? 'Inicio' : 'Home'}
             </Link>
             <ChevronRight className="h-4 w-4" />
-            <span className="text-white">Services</span>
+            <span className="text-white">{isEs ? 'Servicios' : 'Services'}</span>
           </div>
-          <h1 className="text-4xl lg:text-5xl font-bold mb-4">Our Services</h1>
+          <h1 className="text-4xl lg:text-5xl font-bold mb-4">
+            {isEs ? 'Nuestros Servicios' : 'Our Services'}
+          </h1>
           <p className="text-xl text-secondary-200 max-w-3xl">
-            From residential cleanouts to large construction projects, we have
-            the right dumpster solution for your needs.
+            {isEs
+              ? 'Desde limpiezas residenciales hasta grandes proyectos de construcción, tenemos la solución de contenedor correcta para sus necesidades.'
+              : 'From residential cleanouts to large construction projects, we have the right dumpster solution for your needs.'}
           </p>
         </div>
       </section>
@@ -126,7 +145,7 @@ export default async function ServicesPage({ params }: PageProps) {
                         href={`/${service.slug}`}
                         className="w-full bg-primary-600 text-white px-6 py-4 rounded-lg font-semibold text-center hover:bg-primary-700 transition-colors"
                       >
-                        Learn More
+                        {isEs ? 'Más Información' : 'Learn More'}
                       </Link>
                     </div>
                   </div>
@@ -141,17 +160,18 @@ export default async function ServicesPage({ params }: PageProps) {
       <section className="py-16 bg-primary-600 text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-4">
-            Ready to Rent a Dumpster?
+            {isEs ? '¿Listo para Alquilar un Contenedor?' : 'Ready to Rent a Dumpster?'}
           </h2>
           <p className="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
-            Get a free quote today and have your dumpster delivered as soon as
-            tomorrow!
+            {isEs
+              ? '¡Obtenga una cotización gratis hoy y tenga su contenedor entregado tan pronto como mañana!'
+              : 'Get a free quote today and have your dumpster delivered as soon as tomorrow!'}
           </p>
           <Link
             href="/contact"
             className="inline-block bg-white text-primary-600 px-8 py-4 rounded-lg font-semibold hover:bg-primary-50 transition-colors"
           >
-            Get a Free Quote
+            {isEs ? 'Obtener Cotización Gratis' : 'Get a Free Quote'}
           </Link>
         </div>
       </section>

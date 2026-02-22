@@ -95,6 +95,7 @@ const HOMEOWNER_TIPS = [
 export default async function ResidentialDumpsterPage({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const isEs = locale === 'es';
   const phone = process.env.NEXT_PUBLIC_PHONE || "(888) 860-0710";
 
   return (
@@ -103,11 +104,11 @@ export default async function ResidentialDumpsterPage({ params }: PageProps) {
       <div className="bg-secondary-100 border-b border-secondary-200">
         <div className="container mx-auto px-4 py-3">
           <nav className="flex items-center gap-2 text-sm text-secondary-600">
-            <Link href="/" className="hover:text-primary-600">Home</Link>
+            <Link href="/" className="hover:text-primary-600">{isEs ? 'Inicio' : 'Home'}</Link>
             <span>›</span>
-            <Link href="/services" className="hover:text-primary-600">Services</Link>
+            <Link href="/services" className="hover:text-primary-600">{isEs ? 'Servicios' : 'Services'}</Link>
             <span>›</span>
-            <span className="text-secondary-900">Residential Dumpsters</span>
+            <span className="text-secondary-900">{isEs ? 'Contenedores Residenciales' : 'Residential Dumpsters'}</span>
           </nav>
           <LastUpdated date="2026-01-11" className="mt-1" />
         </div>
@@ -119,15 +120,15 @@ export default async function ResidentialDumpsterPage({ params }: PageProps) {
           <div className="grid lg:grid-cols-2 gap-8 items-center">
             <div>
               <span className="inline-block bg-primary-100 text-primary-700 px-3 py-1 rounded-full text-sm font-medium mb-4">
-                Residential Dumpsters
+                {isEs ? 'Contenedores Residenciales' : 'Residential Dumpsters'}
               </span>
               <h1 className="text-4xl lg:text-5xl font-bold text-secondary-900 mb-4">
-                Residential Dumpster Rental
+                {isEs ? 'Alquiler de Contenedores Residenciales' : 'Residential Dumpster Rental'}
               </h1>
               <p className="text-xl text-secondary-600 mb-6">
-                Dumpster rentals perfect for homeowners. Ideal for garage cleanouts, home renovations,
-                yard waste, moving, and estate cleanups. Prices start at <strong className="text-primary-600">$495</strong> with
-                everything included.
+                {isEs
+                  ? <>Alquiler de contenedores perfecto para propietarios. Ideal para limpieza de garajes, renovaciones del hogar, residuos de jardín, mudanzas y limpiezas de herencias. Precios desde <strong className="text-primary-600">$495</strong> con todo incluido.</>
+                  : <>Dumpster rentals perfect for homeowners. Ideal for garage cleanouts, home renovations, yard waste, moving, and estate cleanups. Prices start at <strong className="text-primary-600">$495</strong> with everything included.</>}
               </p>
               <div className="flex flex-wrap gap-4">
                 <a
@@ -135,13 +136,13 @@ export default async function ResidentialDumpsterPage({ params }: PageProps) {
                   className="bg-primary-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors flex items-center gap-2"
                 >
                   <Phone className="h-5 w-5" />
-                  Order Now: {phone}
+                  {isEs ? `Ordenar Ahora: ${phone}` : `Order Now: ${phone}`}
                 </a>
                 <Link
                   href="/dumpster-rental-prices"
                   className="border-2 border-secondary-300 text-secondary-700 px-6 py-3 rounded-lg font-semibold hover:bg-secondary-50 transition-colors"
                 >
-                  View All Prices
+                  {isEs ? 'Ver Todos los Precios' : 'View All Prices'}
                 </Link>
               </div>
             </div>
@@ -163,10 +164,10 @@ export default async function ResidentialDumpsterPage({ params }: PageProps) {
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-secondary-900 mb-4 text-center">
-            Why Homeowners Choose Dumpster Champs
+            {isEs ? 'Por Qué los Propietarios Eligen Dumpster Champs' : 'Why Homeowners Choose Dumpster Champs'}
           </h2>
           <p className="text-secondary-600 text-center mb-12 max-w-2xl mx-auto">
-            We make renting a dumpster for your home project simple and stress-free.
+            {isEs ? 'Hacemos que alquilar un contenedor para su proyecto del hogar sea simple y sin estrés.' : 'We make renting a dumpster for your home project simple and stress-free.'}
           </p>
 
           <div className="grid md:grid-cols-4 gap-6 max-w-5xl mx-auto">
@@ -428,9 +429,9 @@ export default async function ResidentialDumpsterPage({ params }: PageProps) {
       {/* CTA Section */}
       <section className="py-16 bg-secondary-900 text-white">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to Tackle Your Home Project?</h2>
+          <h2 className="text-3xl font-bold mb-4">{isEs ? '¿Listo para Abordar su Proyecto del Hogar?' : 'Ready to Tackle Your Home Project?'}</h2>
           <p className="text-xl text-secondary-300 mb-8">
-            Same-day delivery available in most areas. Simple pricing, no surprises.
+            {isEs ? 'Entrega el mismo día disponible en la mayoría de las áreas. Precios simples, sin sorpresas.' : 'Same-day delivery available in most areas. Simple pricing, no surprises.'}
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
@@ -438,13 +439,13 @@ export default async function ResidentialDumpsterPage({ params }: PageProps) {
               className="inline-flex items-center gap-2 bg-primary-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-primary-700 transition-colors"
             >
               <Phone className="h-6 w-6" />
-              Call {phone}
+              {isEs ? `Llamar ${phone}` : `Call ${phone}`}
             </a>
             <Link
               href="/calculator"
               className="inline-flex items-center gap-2 border-2 border-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-secondary-900 transition-colors"
             >
-              Use Size Calculator
+              {isEs ? 'Usar Calculadora de Tamaños' : 'Use Size Calculator'}
             </Link>
           </div>
         </div>
