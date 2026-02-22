@@ -612,6 +612,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function NeighborhoodPage({ params }: PageProps) {
   const { slug, neighborhoodSlug, locale } = await params;
   setRequestLocale(locale);
+  const isEs = locale === 'es';
 
   // Validate city slug format
   if (!isValidCitySlug(slug)) {
@@ -690,8 +691,6 @@ export default async function NeighborhoodPage({ params }: PageProps) {
     if (!neighborhoodPage && !neighborhood) {
       notFound();
     }
-
-    const isEs = locale === 'es';
 
     if (neighborhoodPage) {
       // Use rich NeighborhoodPage content (locale-aware)

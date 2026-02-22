@@ -42,6 +42,12 @@
     "prisma/*.js",
     "deploy",
     "dumpsterchamps-deploy",
-    "scripts/check-spanish-gaps.ts"
+    "scripts",
+    "test-404-urls.ts",
+    "test-live-urls.ts",
+    "analyze-all-404s.ts",
+    "check-404-neighborhoods.ts",
+    "check-aurora.ts",
+    "generate-reindex-urls.ts"
   ]
 }
