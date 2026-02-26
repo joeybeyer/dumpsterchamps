@@ -41,6 +41,7 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
   const [errorMessage, setErrorMessage] = useState("");
   const [zipLookupLoading, setZipLookupLoading] = useState(false);
   const [testimonialIndex, setTestimonialIndex] = useState(0);
+  const [callPulse, setCallPulse] = useState(false);
 
   // Spam prevention: honeypot field (should remain empty)
   const [honeypot, setHoneypot] = useState("");
@@ -80,6 +81,17 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
     if (status === "success") {
       const interval = setInterval(() => {
         setTestimonialIndex((prev) => (prev + 1) % successTestimonials.length);
+      }, 5000);
+      return () => clearInterval(interval);
+    }
+  }, [status]);
+
+  // Pulse the call CTA every 5 seconds on the thank-you state
+  useEffect(() => {
+    if (status === "success") {
+      const interval = setInterval(() => {
+        setCallPulse(true);
+        setTimeout(() => setCallPulse(false), 800);
       }, 5000);
       return () => clearInterval(interval);
     }
@@ -197,23 +209,47 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
 
   if (status === "success") {
     return (
-      <div ref={successRef} className={cn("bg-green-50 border border-green-200 rounded-lg p-6", className)}>
-        {/* Success confirmation */}
-        <div className="flex items-center justify-center gap-2 mb-3">
-          <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div ref={successRef} className={cn("bg-white rounded-lg p-6", className)}>
+        {/* Small success confirmation */}
+        <div className="flex items-center justify-center gap-2 mb-5">
+          <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+            <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h3 className="text-xl font-semibold text-green-800">{t("quoteForm.requestReceived")}</h3>
+          <p className="text-green-700 font-medium text-sm">{t("quoteForm.requestReceived")}</p>
         </div>
 
-        <p className="text-green-700 mb-4 text-center">
-          {t("quoteForm.calculatingQuote")}
-        </p>
+        {/* PRIMARY CTA — visual dominance */}
+        <div className="mb-5">
+          <h3 className="text-2xl font-bold text-secondary-900 text-center mb-1">Skip the Wait</h3>
+          <p className="text-secondary-500 text-sm text-center mb-4">
+            Our agents are standing by. Average callback wait is <strong>~2 hours</strong> — or get your quote on the phone in <strong>2 minutes</strong>.
+          </p>
+          <a
+            href={`tel:${phone.replace(/\D/g, "")}`}
+            className={cn(
+              "flex items-center justify-center gap-3 bg-primary-600 text-white px-6 py-5 rounded-xl font-bold text-xl hover:bg-primary-700 transition-all w-full shadow-lg active:scale-[0.98] touch-manipulation",
+              callPulse && "animate-bounce"
+            )}
+          >
+            <svg className="w-7 h-7 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+            </svg>
+            <span>Get Your Quote Now</span>
+          </a>
+          <p className="text-center text-secondary-400 text-xs mt-2">{phone}</p>
+        </div>
 
-        {/* What happens next timeline */}
-        <div className="bg-white rounded-lg p-4 mb-4">
+        {/* Divider */}
+        <div className="flex items-center gap-3 my-5">
+          <div className="flex-1 border-t border-secondary-200" />
+          <span className="text-secondary-400 text-xs font-medium">or wait for our callback</span>
+          <div className="flex-1 border-t border-secondary-200" />
+        </div>
+
+        {/* What happens next timeline — secondary */}
+        <div className="bg-secondary-50 rounded-lg p-4 mb-4">
           <p className="text-sm font-semibold text-secondary-700 mb-3">{t("quoteForm.whatHappensNext")}</p>
           <div className="space-y-3">
             <div className="flex items-start gap-3">
@@ -240,34 +276,14 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
           </div>
         </div>
 
-        {/* Divider */}
-        <div className="border-t border-green-200 my-4" />
-
-        {/* Double-dip CTA */}
-        <p className="text-secondary-700 font-medium mb-3 text-center">
-          {t("quoteForm.inARush")}
-        </p>
-
-        <a
-          href={`tel:${phone.replace(/\D/g, "")}`}
-          className="inline-flex items-center justify-center gap-2 bg-primary-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors w-full"
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-          </svg>
-          {t("quoteForm.callForInstant", { phone })}
-        </a>
-
         {/* Rotating testimonial */}
-        <div className="bg-secondary-50 rounded-lg p-3 mt-4">
-          <div className="flex items-start gap-2">
-            <div className="flex gap-0.5 flex-shrink-0">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="h-3 w-3 text-yellow-400 fill-yellow-400" />
-              ))}
-            </div>
+        <div className="bg-green-50 border border-green-100 rounded-lg p-3">
+          <div className="flex gap-0.5 mb-2">
+            {[...Array(5)].map((_, i) => (
+              <Star key={i} className="h-3 w-3 text-yellow-400 fill-yellow-400" />
+            ))}
           </div>
-          <p className="text-secondary-700 text-sm mt-2 italic">
+          <p className="text-secondary-700 text-sm italic">
             &ldquo;{successTestimonials[testimonialIndex].text}&rdquo;
           </p>
           <p className="text-secondary-500 text-xs mt-1">
