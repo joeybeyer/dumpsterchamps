@@ -1,6 +1,18 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Check, Truck, User } from "lucide-react";
+import { Check, Truck, User, Home, Wrench, TreePine, Hammer, Trash2, Building2, Briefcase, type LucideIcon } from "lucide-react";
+
+function getIconForItem(item: string): LucideIcon {
+  const lower = item.toLowerCase();
+  if (lower.includes("landscap") || lower.includes("yard") || lower.includes("garden") || lower.includes("tree")) return TreePine;
+  if (lower.includes("roof")) return Hammer;
+  if (lower.includes("deck") || lower.includes("floor") || lower.includes("demolit")) return Hammer;
+  if (lower.includes("commercial") || lower.includes("estate") || lower.includes("briefcase")) return Briefcase;
+  if (lower.includes("construction") || lower.includes("build")) return Building2;
+  if (lower.includes("renovation") || lower.includes("remodel") || lower.includes("removal")) return Wrench;
+  if (lower.includes("cleanout") || lower.includes("cleanup") || lower.includes("junk")) return Trash2;
+  return Home;
+}
 
 interface SizeCardProps {
   size: number;
@@ -123,12 +135,15 @@ export function SizeCard({
 
         <div className="space-y-2">
           <p className="text-xs font-semibold text-secondary-700 uppercase">{isEs ? 'Ideal Para:' : 'Ideal For:'}</p>
-          {idealFor.slice(0, 3).map((item, index) => (
-            <div key={index} className="flex items-center gap-2 text-sm text-secondary-600">
-              <Check className="h-4 w-4 text-green-500 flex-shrink-0" />
-              <span>{item}</span>
-            </div>
-          ))}
+          {idealFor.slice(0, 3).map((item, index) => {
+            const Icon = getIconForItem(item);
+            return (
+              <div key={index} className="flex items-center gap-2 text-sm text-secondary-600">
+                <Icon className="h-4 w-4 text-primary-500 flex-shrink-0" />
+                <span>{item}</span>
+              </div>
+            );
+          })}
         </div>
       </Link>
 
