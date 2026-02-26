@@ -287,13 +287,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       const pricing = DUMPSTER_PRICING[sizeNum as keyof typeof DUMPSTER_PRICING];
       const price = pricing?.price || 495;
 
-      // Unique titles per size page - conversion focused, no brand (uses absolute to bypass template)
+      // Unique titles per size page - conversion focused, unique differentiators, safe claims
       const sizeTitles: Record<string, string> = {
-        "10-yard-dumpster": "10 Yard Dumpster Rental $350 | Same-Day Delivery, No Hidden Fees",
-        "15-yard-dumpster": "15 Yard Dumpster Rental $425 | Same-Day Delivery, No Hidden Fees",
-        "20-yard-dumpster": "20 Yard Dumpster Rental $495 | Same-Day Delivery, No Hidden Fees",
-        "30-yard-dumpster": "30 Yard Dumpster Rental $595 | Same-Day Delivery, No Hidden Fees",
-        "40-yard-dumpster": "40 Yard Dumpster Rental $695 | Same-Day Delivery, No Hidden Fees",
+        "10-yard-dumpster": "10 Yard Dumpster Rental $350 | Small Projects & Cleanouts",
+        "15-yard-dumpster": "15 Yard Dumpster Rental $425 | Roofing & Garage Cleanouts",
+        "20-yard-dumpster": "20 Yard Dumpster Rental $495 | Renovations & Remodels",
+        "30-yard-dumpster": "30 Yard Dumpster Rental $595 | Construction & Large Projects",
+        "40-yard-dumpster": "40 Yard Dumpster Rental $695 | Commercial & Demolition",
       };
 
       return {
