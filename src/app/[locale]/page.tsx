@@ -174,6 +174,7 @@ export default async function HomePage({ params }: PageProps) {
                     alt="Roll-off dumpster being delivered to residential driveway"
                     fill
                     className="object-cover rounded-2xl"
+                    priority
                   />
                 </div>
               </div>
