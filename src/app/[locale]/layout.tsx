@@ -100,9 +100,9 @@ export default async function LocaleLayout({
         {/* Preload critical hero images for LCP improvement */}
         <link
           rel="preload"
-          href="/images/hero/hero-homeowner-desktop-opt.avif"
+          href="/images/hero/hero-homeowner-desktop.jpg"
           as="image"
-          type="image/avif"
+          type="image/jpeg"
           media="(min-width: 1024px)"
         />
       </head>

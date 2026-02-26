@@ -170,13 +170,10 @@ export default async function HomePage({ params }: PageProps) {
               <div className="lg:hidden relative mt-8">
                 <div className="relative aspect-[4/3] max-w-sm mx-auto">
                   <Image
-                    src="/images/hero/hero-homeowner-mobile-opt.avif"
+                    src="/images/hero/hero-homeowner-mobile.jpg"
                     alt="Roll-off dumpster being delivered to residential driveway"
                     fill
                     className="object-cover rounded-2xl"
-                    priority
-                    sizes="(max-width: 768px) 100vw, 384px"
-                    quality={60}
                   />
                 </div>
               </div>
@@ -184,16 +181,13 @@ export default async function HomePage({ params }: PageProps) {
 
             {/* Right Column - Hero Image (Dumpster delivery in action) */}
             <div className="hidden lg:block relative">
-              <div className="relative aspect-[16/9] max-w-lg mx-auto">
+              <div className="relative aspect-[4/5] max-w-md mx-auto">
                 <Image
-                  src="/images/hero/hero-homeowner-desktop-opt.avif"
+                  src="/images/hero/hero-homeowner-desktop.jpg"
                   alt="Roll-off dumpster truck delivering dumpster to home"
                   fill
                   className="object-cover rounded-2xl"
                   priority
-                  fetchPriority="high"
-                  sizes="(max-width: 1024px) 100vw, 512px"
-                  quality={60}
                 />
               </div>
             </div>
