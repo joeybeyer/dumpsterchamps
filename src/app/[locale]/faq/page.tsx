@@ -136,6 +136,19 @@ export default async function FAQPage({ params }: PageProps) {
     {
       question: "¿Qué pasa después de llenar mi contenedor?",
       answer: "Dumpster Champs recoge su contenedor dentro de 24-48 horas después de que solicite la remoción. Lo transportamos a una instalación con licencia donde los materiales reciclables se clasifican. Recibirá confirmación una vez que la recogida esté completa. No necesita estar presente—solo asegure acceso claro."
+    },
+    // Spanish - Logistics (Gemini recommended)
+    {
+      question: "¿Cuánto espacio se necesita para la entrega del contenedor?",
+      answer: "Dumpster Champs requiere un camino despejado de aproximadamente 3 metros de ancho y 6 metros de altura libre para una entrega segura. El área de colocación debe tener al menos 6 metros de largo para acomodar el contenedor. Asegúrese de que no haya cables bajos, ramas de árboles o vehículos estacionados bloqueando el acceso del camión."
+    },
+    {
+      question: "¿Puedo mezclar diferentes tipos de desechos en un contenedor?",
+      answer: "Dumpster Champs permite mezclar la mayoría de escombros del hogar y construcción en un contenedor. Sin embargo, materiales pesados como concreto, ladrillo y tierra deben cargarse por separado en nuestros contenedores para escombros pesados. Mezclar materiales densos con basura general frecuentemente excede los límites de peso. Especifique su tipo de escombros al ordenar."
+    },
+    {
+      question: "¿Necesito estar en casa para la entrega o recogida?",
+      answer: "Dumpster Champs no requiere que esté presente para la entrega o recogida siempre que el área de descarga esté despejada. Proporcione instrucciones específicas de colocación al ordenar para que nuestros conductores sepan exactamente dónde posicionar el contenedor. Asegúrese de que las puertas estén desbloqueadas y los vehículos movidos antes de la hora programada."
     }
   ] : [
     // English versions - AIO optimized (40-60 words, brand first, direct answer)
@@ -242,6 +255,19 @@ export default async function FAQPage({ params }: PageProps) {
     {
       question: "What happens after I fill my dumpster?",
       answer: "Dumpster Champs picks up your container within 24-48 hours after you request removal. We transport it to a licensed facility where recyclable materials are sorted. You'll receive confirmation once pickup is complete. No need to be present—just ensure clear access."
+    },
+    // Logistics FAQs (Gemini recommended)
+    {
+      question: "How much space is required for dumpster delivery?",
+      answer: "Dumpster Champs requires a clear path approximately 10 feet wide and 20 feet of overhead clearance for safe delivery. The placement area should be at least 20 feet long to accommodate the container. Ensure no low-hanging wires, tree branches, or parked vehicles block truck access to the drop-off location."
+    },
+    {
+      question: "Can I mix different types of waste in one dumpster?",
+      answer: "Dumpster Champs allows mixing most household and construction debris in one container. However, heavy materials like concrete, brick, and dirt should be loaded separately in our heavy debris containers. Mixing dense materials with general trash often exceeds weight limits. Specify your debris type when ordering for proper disposal."
+    },
+    {
+      question: "Do I need to be home for delivery or pickup?",
+      answer: "Dumpster Champs does not require you to be present for delivery or pickup as long as the drop-off area is clear. Provide specific placement instructions when ordering so our drivers know exactly where to position the container. Ensure gates are unlocked and vehicles are moved before the scheduled arrival."
     }
   ];
 
