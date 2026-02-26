@@ -145,7 +145,22 @@
     "inARush": "¿Tiene prisa? ¡Sáltese la espera!",
     "callForInstant": "Llame al {phone} para Cotización Instantánea",
     "rated": "Calificado 4.9/5 por Más de 10,000 Clientes",
-    "somethingWentWrong": "Algo salió mal. Por favor intente de nuevo o llámenos directamente."
+    "somethingWentWrong": "Algo salió mal. Por favor intente de nuevo o llámenos directamente.",
+    "enterYourName": "¿Cuál es tu nombre?",
+    "enterYourEmail": "¿Cuál es tu correo electrónico?",
+    "enterYourPhone": "¿Cuál es tu número de teléfono?",
+    "searchingInventory": "Buscando inventario local...",
+    "checkingAvailability": "Verificando disponibilidad en tu área...",
+    "socialProofJoin": "Únete a 450+ propietarios felices en {city} que alquilaron este mes",
+    "socialProofFallback": "Únete a 10,000+ clientes satisfechos en todo el país",
+    "pressEnterToContinue": "Presiona Enter para continuar",
+    "skipTheWait": "¡Sáltese la espera - Obtenga su cotización ahora!",
+    "talkToExpert": "Hable con un experto en 2 minutos",
+    "callNowForInstant": "Llame Ahora: {phone}",
+    "averageResponse": "Tiempo de respuesta promedio",
+    "orWaitForCallback": "O espere nuestra llamada:",
+    "instantQuote": "Cotización Instantánea",
+    "allInclusivePricing": "Precio Todo Incluido"
   },
   "projectTypes": {
     "homeRenovation": "Renovación del Hogar",
@@ -229,7 +244,8 @@
   "stickyFooter": {
     "callNow": "Llamar Ahora",
     "getQuote": "Cotización",
-    "talkToExpert": "Habla con un Experto"
+    "talkToExpert": "Habla con un Experto",
+    "instantQuote": "Cotización Instantánea"
   },
   "trustBar": {
     "sameDayDelivery": "Entrega el Mismo Día",

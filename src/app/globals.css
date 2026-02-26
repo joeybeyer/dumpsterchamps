@@ -214,6 +214,31 @@ button:active {
   will-change: transform, box-shadow; /* Smoother mobile performance */
 }
 
+/* --- SINGLE-FIELD FORM ANIMATIONS --- */
+@keyframes slideUpFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up-fade-in {
+  animation: slideUpFadeIn 0.3s ease-out;
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .animate-slide-up-fade-in,
+  .animate-bounce {
+    animation: none;
+    transition: none;
+  }
+}
+
 /* --- MOBILE CARD TABLE TRANSFORMATION --- */
 /* Add "mobile-card-table" class to any <table> to convert it to cards on mobile */
 /* Requires data-label attributes on <td> elements for labels */

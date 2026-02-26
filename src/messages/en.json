@@ -145,7 +145,22 @@
     "inARush": "In a rush? Skip the wait!",
     "callForInstant": "Call {phone} for Instant Quote",
     "rated": "Rated 4.9/5 by 10,000+ Customers",
-    "somethingWentWrong": "Something went wrong. Please try again or call us directly."
+    "somethingWentWrong": "Something went wrong. Please try again or call us directly.",
+    "enterYourName": "What's your first name?",
+    "enterYourEmail": "What's your email address?",
+    "enterYourPhone": "What's your best phone number?",
+    "searchingInventory": "Searching local inventory...",
+    "checkingAvailability": "Checking availability in your area...",
+    "socialProofJoin": "Join 450+ happy homeowners in {city} who rented this month",
+    "socialProofFallback": "Join 10,000+ satisfied customers nationwide",
+    "pressEnterToContinue": "Press Enter to continue",
+    "skipTheWait": "Skip the wait - Get your quote now!",
+    "talkToExpert": "Talk to a dumpster expert in 2 minutes",
+    "callNowForInstant": "Call Now: {phone}",
+    "averageResponse": "Average response time",
+    "orWaitForCallback": "Or wait for our callback:",
+    "instantQuote": "Instant Quote",
+    "allInclusivePricing": "All-Inclusive Pricing"
   },
   "projectTypes": {
     "homeRenovation": "Home Renovation",
@@ -229,7 +244,8 @@
   "stickyFooter": {
     "callNow": "Call Now",
     "getQuote": "Get Quote",
-    "talkToExpert": "Talk to an Expert"
+    "talkToExpert": "Talk to an Expert",
+    "instantQuote": "Instant Quote"
   },
   "trustBar": {
     "sameDayDelivery": "Same-Day Delivery",

@@ -103,6 +103,14 @@ export function SizeCard({
         <div className="text-center mb-4">
           <span className="text-3xl font-bold text-primary-600">${price}</span>
           <p className="text-sm text-secondary-500">{isEs ? `Tarifa fija • ${weight} incluido` : `Flat rate • ${weight} included`}</p>
+
+          {/* All-Inclusive Pricing badge */}
+          <div className="inline-flex items-center gap-1 mt-2 px-2 py-1 bg-green-50 border border-green-200 rounded-full">
+            <Check className="h-3 w-3 text-green-600" />
+            <span className="text-xs font-medium text-green-700">
+              {isEs ? 'Precio Todo Incluido' : 'All-Inclusive Pricing'}
+            </span>
+          </div>
         </div>
 
         {/* Visual truck capacity indicator - more prominent */}
