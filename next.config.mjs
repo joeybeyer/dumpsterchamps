@@ -158,7 +158,7 @@ const nextConfig = {
       { source: "/feed/rss2", destination: "/blog", permanent: true },
 
       // ============ CASE SENSITIVITY FIXES ============
-      { source: "/dumpster-rental-Victorville-CA", destination: "/dumpster-rental-victorville-ca", permanent: true },
+      // Removed /dumpster-rental-Victorville-CA — same case-insensitive self-loop issue.
       { source: "/Construction-dumpsters", destination: "/construction-dumpster-rental", permanent: true },
       { source: "/construction-dumpsters", destination: "/construction-dumpster-rental", permanent: true },
 
@@ -170,7 +170,8 @@ const nextConfig = {
       { source: "/_next/static/css/:path*", destination: "/", permanent: false }, // Old CSS paths
 
       // ============ MALFORMED/CASE URLS ============
-      { source: "/dumpster-rental-Costa-Mesa-CA", destination: "/dumpster-rental-costa-mesa-ca", permanent: true },
+      // NOTE: Removed /dumpster-rental-Costa-Mesa-CA redirect — Next.js case-insensitive
+      // path matching caused an infinite redirect loop for the canonical lowercase URL.
       { source: "/dumpster-rental-in-weston--fl", destination: "/dumpster-rental-weston", permanent: true },
       { source: "/dumpster-rental-in-weston-fl", destination: "/dumpster-rental-weston", permanent: true },
       { source: "/dumpster-rental-nationwide", destination: "/locations", permanent: true },
