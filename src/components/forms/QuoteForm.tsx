@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import { ChevronRight, ChevronLeft, MapPin, ClipboardList, User, Star, Home, Building2, Hammer, TreePine, Trash2, Briefcase } from "lucide-react";
+import { useQuoteFormContext } from "@/context/QuoteFormContext";
 
 interface QuoteFormProps {
   cityName?: string;
@@ -59,6 +60,18 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
   // LLM traffic attribution: capture referrer on load (ChatGPT, Perplexity, Claude, etc.)
   const [referrer] = useState(() => typeof document !== 'undefined' ? document.referrer : '');
 
+  // Context for sharing form state with scarcity banner
+  const { updateFormState } = useQuoteFormContext();
+
+  // Sync form state to context for scarcity banner
+  useEffect(() => {
+    updateFormState({
+      zipCode: formData.zipCode,
+      city: formData.city,
+      state: formData.state,
+    });
+  }, [formData.zipCode, formData.city, formData.state, updateFormState]);
+
   // Project types with icons for visual selection
   const projectTypes = [
     { value: "Home Renovation", label: t("projectTypes.homeRenovation"), icon: Home, emoji: "🏠" },
@@ -69,13 +82,61 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
     { value: "Commercial Project", label: t("projectTypes.commercialProject"), icon: Briefcase, emoji: "🏢" },
   ];
 
-  // Dumpster sizes with truck load equivalents
+  // Dumpster sizes with visual scale references and pricing
   const dumpsterSizes = [
-    { value: "10 Yard", label: t("dumpsterSizes.10Yard"), trucks: 4, bestFor: "Small cleanouts" },
-    { value: "15 Yard", label: t("dumpsterSizes.15Yard"), trucks: 6, bestFor: "Medium projects" },
-    { value: "20 Yard (Most Popular)", label: t("dumpsterSizes.20YardPopular"), trucks: 8, bestFor: "Renovations", popular: true },
-    { value: "30 Yard", label: t("dumpsterSizes.30Yard"), trucks: 12, bestFor: "Large jobs" },
-    { value: "40 Yard", label: t("dumpsterSizes.40Yard"), trucks: 16, bestFor: "Major projects" },
+    { 
+      value: "10 Yard", 
+      label: "10 Yard", 
+      trucks: 3, 
+      bestFor: "Garage cleanout, small bathroom remodel",
+      dimensions: "12' × 8' × 3.5'",
+      price: "$495",
+      scaleRef: "Compact SUV size",
+      scaleIcon: "🚗",
+      capacity: "Fits 3 pickup truck loads",
+      tons: "1 ton included",
+      heightFt: 3.5,
+    },
+    { 
+      value: "20 Yard", 
+      label: "20 Yard", 
+      trucks: 6, 
+      bestFor: "Kitchen remodel, roofing (up to 25 sq)",
+      dimensions: "22' × 7.5' × 4.5'",
+      price: "$595",
+      scaleRef: "Large sedan length",
+      scaleIcon: "🚙",
+      capacity: "Fits 6 pickup truck loads",
+      popular: true,
+      tons: "2 tons included",
+      heightFt: 4.5,
+    },
+    { 
+      value: "30 Yard", 
+      label: "30 Yard", 
+      trucks: 10, 
+      bestFor: "Major renovation, construction",
+      dimensions: "22' × 7.5' × 6'",
+      price: "$695",
+      scaleRef: "Chest height (6 ft)",
+      scaleIcon: "🧍",
+      capacity: "Fits 10 pickup truck loads",
+      tons: "3 tons included",
+      heightFt: 6,
+    },
+    { 
+      value: "40 Yard", 
+      label: "40 Yard", 
+      trucks: 14, 
+      bestFor: "Large demolition, commercial",
+      dimensions: "22' × 7.5' × 8'",
+      price: "$795",
+      scaleRef: "Taller than most people (8 ft)",
+      scaleIcon: "🏗️",
+      capacity: "Fits 14 pickup truck loads",
+      tons: "4 tons included",
+      heightFt: 8,
+    },
   ];
 
   // Set timestamp when component mounts
@@ -473,11 +534,18 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
             type="button"
             onClick={nextStep}
             disabled={!formData.zipCode}
-            className="w-full bg-primary-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="w-full bg-primary-600 text-white py-3.5 px-6 rounded-lg font-bold hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-lg shadow-lg"
           >
-            {t("quoteForm.checkAvailability")}
+            Get My Instant Quote
             <ChevronRight className="h-5 w-5" />
           </button>
+          {/* What's included micro-copy to reduce anxiety */}
+          <p className="text-xs text-secondary-500 text-center mt-2 flex items-center justify-center gap-1">
+            <svg className="h-3.5 w-3.5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+            Includes delivery, pickup & 7-day rental. Pricing from $495.
+          </p>
         </div>
       )}
 
@@ -528,64 +596,101 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
             </div>
           </div>
 
-          {/* Dumpster Size - Visual Selection */}
+          {/* Dumpster Size - Visual Cards with Scale Reference */}
           <div>
             <label className="block text-sm font-medium text-secondary-700 mb-2">
               {t("quoteForm.dumpsterSize")} *
             </label>
-            <div className="grid grid-cols-1 gap-2">
+            <div className="grid grid-cols-2 gap-3">
               {dumpsterSizes.map((size) => {
                 const isSelected = formData.dumpsterSize === size.value;
+                const sizeNum = parseInt(size.value);
                 return (
                   <button
                     key={size.value}
                     type="button"
                     onClick={() => setFormData({ ...formData, dumpsterSize: size.value })}
                     className={cn(
-                      "flex items-center justify-between p-3 border-2 rounded-xl transition-all active:scale-[0.99]",
+                      "relative flex flex-col p-3 border-2 rounded-xl transition-all active:scale-[0.98] text-left",
                       isSelected
                         ? "border-primary-500 bg-primary-50 ring-2 ring-primary-200"
                         : "border-secondary-200 hover:border-primary-300 hover:bg-primary-50/50",
-                      size.popular && !isSelected && "border-primary-200 bg-primary-50/30"
+                      size.popular && !isSelected && "border-primary-300 bg-primary-50/40"
                     )}
                   >
-                    <div className="flex items-center gap-3">
+                    {/* Popular badge */}
+                    {size.popular && (
+                      <span className="absolute -top-2 -right-2 text-[10px] bg-primary-600 text-white px-2 py-0.5 rounded-full font-bold shadow-sm">
+                        BEST VALUE
+                      </span>
+                    )}
+                    
+                    {/* Size header with visual scale */}
+                    <div className="flex items-start justify-between mb-2">
                       <div className={cn(
-                        "w-10 h-10 rounded-lg flex items-center justify-center font-bold text-sm",
+                        "w-12 h-12 rounded-lg flex flex-col items-center justify-center font-bold",
                         isSelected ? "bg-primary-600 text-white" : "bg-secondary-100 text-secondary-700"
                       )}>
-                        {size.value.split(" ")[0]}
+                        <span className="text-lg leading-none">{sizeNum}</span>
+                        <span className="text-[8px] uppercase tracking-wide">yard</span>
                       </div>
-                      <div className="text-left">
-                        <div className="flex items-center gap-2">
-                          <span className={cn(
-                            "font-semibold text-sm",
-                            isSelected ? "text-primary-700" : "text-secondary-900"
-                          )}>
-                            {size.label}
-                          </span>
-                          {size.popular && (
-                            <span className="text-xs bg-primary-600 text-white px-2 py-0.5 rounded-full">
-                              Popular
-                            </span>
-                          )}
+                      {isSelected && (
+                        <div className="w-5 h-5 bg-primary-600 rounded-full flex items-center justify-center flex-shrink-0">
+                          <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                          </svg>
                         </div>
-                        <span className="text-xs text-secondary-500">
-                          ≈ {size.trucks} pickup truck loads • {size.bestFor}
+                      )}
+                    </div>
+
+                    {/* Visual scale reference with icon */}
+                    <div className="flex items-center gap-1.5 mb-1.5">
+                      {/* Person silhouette for scale */}
+                      <svg className={cn("w-4 h-4 flex-shrink-0", isSelected ? "text-primary-600" : "text-secondary-400")} viewBox="0 0 24 24" fill="currentColor">
+                        <circle cx="12" cy="4" r="2"/>
+                        <path d="M15.89 8.11C15.5 7.72 14.83 7 13.53 7h-3.06C9.17 7 8.5 7.72 8.11 8.11L4 12l1.41 1.41L8 10.83V20h2v-6h4v6h2V10.83l2.59 2.58L20 12l-4.11-3.89z"/>
+                      </svg>
+                      <span className={cn(
+                        "text-[10px] leading-tight",
+                        isSelected ? "text-primary-700" : "text-secondary-500"
+                      )}>
+                        {size.scaleRef}
+                      </span>
+                    </div>
+
+                    {/* Capacity */}
+                    <p className={cn(
+                      "text-xs font-medium mb-1",
+                      isSelected ? "text-primary-700" : "text-secondary-700"
+                    )}>
+                      {size.capacity}
+                    </p>
+
+                    {/* Best for */}
+                    <p className="text-[10px] text-secondary-500 leading-tight mb-2">
+                      {size.bestFor}
+                    </p>
+
+                    {/* Price and what's included */}
+                    <div className="mt-auto pt-2 border-t border-secondary-200">
+                      <div className="flex items-baseline justify-between">
+                        <span className={cn(
+                          "text-lg font-bold",
+                          isSelected ? "text-primary-600" : "text-secondary-900"
+                        )}>
+                          {size.price}
                         </span>
+                        <span className="text-[10px] text-secondary-500">{size.tons}</span>
                       </div>
                     </div>
-                    {isSelected && (
-                      <div className="w-5 h-5 bg-primary-600 rounded-full flex items-center justify-center">
-                        <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                        </svg>
-                      </div>
-                    )}
                   </button>
                 );
               })}
             </div>
+            {/* What's included reminder */}
+            <p className="text-xs text-secondary-500 text-center mt-3 bg-secondary-50 rounded-lg p-2">
+              ✓ All prices include delivery, pickup & 7-day rental — no hidden fees
+            </p>
           </div>
 
           {/* Progress messaging */}

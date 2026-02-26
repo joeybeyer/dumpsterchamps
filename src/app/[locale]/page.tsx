@@ -91,8 +91,11 @@ export default async function HomePage({ params }: PageProps) {
 
   return (
     <>
+      {/* Sticky Scarcity Banner - Mobile Only */}
+      <StickyScarcityBanner />
+      
       {/* Hero Section - Optimized for Conversion */}
-      <section className="bg-gradient-to-br from-secondary-900 to-secondary-800 text-white py-6 lg:py-10">
+      <section className="bg-gradient-to-br from-secondary-900 to-secondary-800 text-white py-6 lg:py-10 mt-10 lg:mt-0">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-center">
             {/* Left Column - Content & Form (natural left-to-right reading flow) */}
@@ -160,9 +163,23 @@ export default async function HomePage({ params }: PageProps) {
 
               {/* Quote Form */}
               <div id="quote-form" className="bg-white rounded-xl p-5 shadow-2xl">
-                <h2 className="text-xl font-bold text-secondary-900 mb-3">
+                {/* Google Rating badge above form header for trust */}
+                <div className="flex items-center justify-center gap-2 mb-3 pb-3 border-b border-secondary-100">
+                  <div className="flex">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="h-4 w-4 text-yellow-400 fill-yellow-400" />
+                    ))}
+                  </div>
+                  <span className="text-sm font-semibold text-secondary-700">4.9 Google Rating</span>
+                  <span className="text-xs text-secondary-500">(500+ reviews)</span>
+                </div>
+                <h2 className="text-xl font-bold text-secondary-900 mb-1">
                   {t("hero.getYourPrice")}
                 </h2>
+                {/* Pricing anchor to reduce anxiety */}
+                <p className="text-sm text-secondary-600 mb-3">
+                  Flat-rate pricing from <span className="font-bold text-primary-600">$495</span> — includes delivery, pickup & 7-day rental
+                </p>
                 <QuoteForm />
               </div>
 
