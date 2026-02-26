@@ -9,6 +9,7 @@ import { Footer } from "@/components/layout/Footer";
 import { StickyCallButton } from "@/components/ui/StickyCallButton";
 import { StickyMobileFooter } from "@/components/ui/StickyMobileFooter";
 import { StickyScarcityBanner } from "@/components/ui/StickyScarcityBanner";
+import { FloatingTrustBadge } from "@/components/ui/FloatingTrustBadge";
 import { QuoteFormProvider } from "@/context/QuoteFormContext";
 import { locales, type Locale } from "@/i18n/config";
 
@@ -139,6 +140,7 @@ export default async function LocaleLayout({
             <StickyCallButton phone={phone} />
             <StickyMobileFooter />
             <StickyScarcityBanner />
+            <FloatingTrustBadge />
           </QuoteFormProvider>
         </NextIntlClientProvider>
       </body>

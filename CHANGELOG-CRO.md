@@ -1,86 +1,126 @@
 # CRO Optimizations Changelog
 
-## Version 2.0 - 2025-01-XX
+## Version 2.1 - Enhanced Implementation (2025-01-XX)
 
 ### 1. Visual Dumpster Size Selection (Step 2) ✅
 
-**Before:** Simple horizontal list with size numbers and basic info
+**"Banana for Scale" Implementation:**
 
-**After:** Visual 2x2 card grid with:
-- Large size badge with yard unit label
-- Visual height indicator bar (proportional to actual dumpster height)
-- Scale reference icons (🚗 🚙 🧍 🏗️) for mental size anchoring
-- **"Fits X pickup truck loads"** - clear capacity messaging
-- "Best for" use cases
-- Price + tons included
-- "BEST VALUE" badge on 20-yard (most popular)
-- Dimensions displayed
-- High-contrast styling on mobile
+- **Tag Line Badges** above each card with specific labels:
+  - 10-yard: "Perfect for Garage Cleanouts"
+  - 20-yard: "Ideal for Room Renovations" 
+  - 30-yard: "Great for Whole-Home Projects"
+  - 40-yard: "Large Construction Projects"
 
-**Files Changed:**
-- `src/components/forms/QuoteForm.tsx` - Enhanced dumpsterSizes array and visual card UI
+- **High-Contrast Silhouettes for Scale:**
+  - 10 & 20-yard: 4-door sedan SVG silhouette
+  - 30 & 40-yard: Person standing SVG silhouette
+  - Visual height indicator bar (proportional to actual dumpster height)
 
-### 2. Pre-Click Anxiety Reduction ✅
-
-**Added:**
-- **"What's included?" micro-copy** under Step 1 CTA:
-  - "✓ Includes delivery, pickup & 7-day rental. Pricing from $495."
-- **Google Rating badge** moved directly into the quote form header:
-  - 5 yellow stars + "4.9 Google Rating (500+ reviews)"
-- **Pricing anchor** below form header:
-  - "Flat-rate pricing from **$495** — includes delivery, pickup & 7-day rental"
-- **"All prices include..."** reminder below size selection in Step 2
+- **Card Layout:**
+  - Size badge (14×14 with yard unit)
+  - Dumpster visual + reference silhouette side by side
+  - "Fits X pickup truck loads" capacity
+  - Use case description
+  - Price + tons included + dimensions
 
 **Files Changed:**
-- `src/components/forms/QuoteForm.tsx` - Added micro-copy after CTA, included pricing info after sizes
-- `src/app/[locale]/page.tsx` - Added Google Rating badge inside quote form
+- `src/components/forms/QuoteForm.tsx` - Added `tagLine` property, sedan/person SVGs, visual scale bars
+
+### 2. Unified Action Block with CTA ✅
+
+**Implementation:**
+- **Pricing anchor** immediately above CTA: "Pricing starts at **$495**"
+- **Matching font styling** between price text and button
+- **CTA text changed** to "See My Instant Quote" (higher CTR variant)
+- **Background container** unifies price + CTA + micro-copy
+- **What's included** micro-copy: "Includes delivery, pickup & 7-day rental — no hidden fees"
+
+**Files Changed:**
+- `src/components/forms/QuoteForm.tsx` - Unified action block component
 
 ### 3. Sticky Scarcity Banner (Mobile) ✅
 
+**Scroll-Triggered Appearance:**
+- Appears after **3 seconds of scrolling** (not immediately)
+- Fallback: shows after 5 seconds even without scroll
+
+**Real-Time Language:**
+- Green pulsing "Live" dot animation
+- "Just updated • Real-time availability" subtext
+- Day-specific messaging: "Only X slots for [Today]" or "Only X slots for [Tomorrow]"
+
+**Dynamic City Copy:**
+- Default: "Only X delivery slots remain for [Day]"
+- With city: "Demand is high in [City]. Only X slots for [Day]"
+- With date selected: "[Day] available! Only X slots left in [City]"
+- Last slot: "Last Slot! Only 1 delivery left in [City] for [Tomorrow]"
+
+**Urgency Styling:**
+- Red gradient when slots ≤ 3
+- Yellow highlight for "Last Slot" messaging
+
+**Files Changed:**
+- `src/components/ui/StickyScarcityBanner.tsx` - Complete rewrite with scroll detection, real-time language
+
+### 4. Floating Trust Badge (Mobile) ✅
+
 **Implementation:**
-- **Positioned at bottom** of screen (thumb-friendly, doesn't block content)
-- **Dynamic updates** based on form state via React Context:
-  - Default: "Only X delivery slots left today"
-  - After zip entered: "Only X delivery slots left in [City] today"
-  - After date selected: "[Day] available in [City]! Only X slots left"
-- **Urgency styling:** Red gradient when slots ≤ 3
-- **Dismissible** with X button
-- **Appears after 1.5s delay** for better UX
-- **Hidden on desktop** (lg:hidden)
-- **Safe area padding** for phones with home indicators
+- **Positioned:** Lower-left corner (above scarcity banner at bottom-16)
+- **Size:** Small pill badge (doesn't obstruct form fields)
+- **Content:** Star icon + "4.9 in [City]" or "4.9 Rating"
+- **Auto-dismiss:** After 15 seconds
+- **City-aware:** Shows city name on city-specific landing pages
 
-**New Files:**
-- `src/context/QuoteFormContext.tsx` - React context for sharing form state
-- Updated `src/components/ui/StickyScarcityBanner.tsx` - Enhanced with context integration
+**Context Integration:**
+- Uses `QuoteFormContext` to get city from page context
+- Priority: page city prop > context pageCity > form city > generic
 
 **Files Changed:**
-- `src/app/[locale]/layout.tsx` - Added QuoteFormProvider wrapper and StickyScarcityBanner
-- `src/components/forms/QuoteForm.tsx` - Syncs state to QuoteFormContext
-
-### 4. CTA Button Text ✅
-
-**Changed:**
-- Step 1: "Check Availability" → **"Get My Instant Quote"**
-- Styling enhanced: larger font, shadow, bolder
-
-**Files Changed:**
-- `src/components/forms/QuoteForm.tsx` - Updated button text and styling
+- `src/components/ui/FloatingTrustBadge.tsx` (new file)
+- `src/app/[locale]/layout.tsx` - Added FloatingTrustBadge
+- `src/context/QuoteFormContext.tsx` - Added pageCity and setPageCity
 
 ---
 
-## Technical Notes
+## Technical Architecture
 
-- **Framework:** Next.js 15 / React 19 / Tailwind 4
-- **State Management:** React Context for cross-component form state sharing
-- **Mobile-First:** All changes optimized for mobile UX
-- **Build Status:** ✅ Passes `npm run build`
+### Context Flow for City Data:
+```
+City Landing Page (/dumpster-rental-oakland-ca)
+    ↓
+QuoteForm receives cityName prop
+    ↓
+QuoteForm calls setPageCity(cityName)
+    ↓
+QuoteFormContext stores pageCity
+    ↓
+StickyScarcityBanner & FloatingTrustBadge read pageCity
+```
+
+### Files Created:
+- `src/context/QuoteFormContext.tsx` - React context for form state sharing
+- `src/components/ui/FloatingTrustBadge.tsx` - Mobile trust badge component
+
+### Files Modified:
+- `src/components/forms/QuoteForm.tsx` - Visual cards, action block, context integration
+- `src/components/ui/StickyScarcityBanner.tsx` - Scroll trigger, real-time language
+- `src/app/[locale]/layout.tsx` - Added FloatingTrustBadge
+
+---
+
+## Build Status
+✅ `npm run build` passes (exit code 0)
 
 ## Summary of Impact
 
 | Change | Expected Impact |
 |--------|-----------------|
-| Visual size cards | ↑ Size selection confidence, ↓ decision paralysis |
-| Pre-click anxiety copy | ↓ Form abandonment, ↑ CTA clicks |
-| Google Rating near CTA | ↑ Trust signals at decision point |
-| Sticky scarcity banner | ↑ Urgency, ↓ procrastination |
-| "Get My Instant Quote" CTA | ↑ Click-through (value proposition clear) |
+| Tag line badges | ↑ Instant recognition of dumpster use case |
+| Car/person silhouettes | ↑ Mental model for size comparison |
+| Unified action block | ↑ Price anchoring, ↓ decision anxiety |
+| "See My Instant Quote" CTA | ↑ Click-through (promise of immediacy) |
+| Scroll-triggered scarcity | ↑ Perceived legitimacy (not aggressive) |
+| Real-time language | ↑ Trust + urgency without being pushy |
+| Dynamic city copy | ↑ Personalization + local relevance |
+| Floating trust badge | ↑ Social proof in peripheral vision |
