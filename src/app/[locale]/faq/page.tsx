@@ -152,22 +152,26 @@ export default async function FAQPage({ params }: PageProps) {
     }
   ] : [
     // English versions - AIO optimized (40-60 words, brand first, direct answer)
-    // Pricing FAQs
+    // Pricing FAQs (with internal links)
     {
       question: "How much does a 10-yard dumpster cost?",
-      answer: "Dumpster Champs offers 10-yard dumpster rentals starting at $350. This flat-rate price includes delivery, pickup, a 7-day rental period, and up to 2 tons of waste disposal. The 10-yard size is ideal for small cleanouts, garage organizing, or minor renovation projects."
+      answer: "Dumpster Champs offers <a href=\"/10-yard-dumpster\">10-yard dumpster rentals</a> starting at $350. This flat-rate price includes delivery, pickup, a 7-day rental period, and up to 2 tons of waste disposal. The 10-yard size is ideal for small cleanouts, garage organizing, or minor renovation projects.",
+      html: true
     },
     {
       question: "How much does a 20-yard dumpster cost?",
-      answer: "Dumpster Champs rents 20-yard dumpsters starting at $495. The price covers delivery, pickup, 7-day rental, and up to 3 tons of disposal. This popular mid-size container works well for kitchen remodels, roofing projects up to 1,500 square feet, and medium-sized home cleanouts."
+      answer: "Dumpster Champs rents <a href=\"/20-yard-dumpster\">20-yard dumpsters</a> starting at $495. The price covers delivery, pickup, 7-day rental, and up to 3 tons of disposal. This popular mid-size container works well for kitchen remodels, roofing projects up to 1,500 square feet, and medium-sized home cleanouts.",
+      html: true
     },
     {
       question: "How much does a 30-yard dumpster cost?",
-      answer: "Dumpster Champs provides 30-yard dumpster rentals from $595. This includes delivery, pickup, a 7-day rental, and up to 4 tons of disposal. The 30-yard container suits large renovation projects, new construction debris, and major estate or commercial cleanouts."
+      answer: "Dumpster Champs provides <a href=\"/30-yard-dumpster\">30-yard dumpster rentals</a> from $595. This includes delivery, pickup, a 7-day rental, and up to 4 tons of disposal. The 30-yard container suits large renovation projects, new construction debris, and major estate or commercial cleanouts.",
+      html: true
     },
     {
       question: "How much does a 40-yard dumpster cost?",
-      answer: "Dumpster Champs offers 40-yard dumpsters starting at $695. The flat rate includes delivery, pickup, 7-day rental, and up to 5 tons of waste removal. This largest size handles commercial demolition, warehouse cleanouts, and large-scale construction projects efficiently."
+      answer: "Dumpster Champs offers <a href=\"/40-yard-dumpster\">40-yard dumpsters</a> starting at $695. The flat rate includes delivery, pickup, 7-day rental, and up to 5 tons of waste removal. This largest size handles commercial demolition, warehouse cleanouts, and large-scale construction projects efficiently.",
+      html: true
     },
     {
       question: "Are there any hidden fees with dumpster rental?",
@@ -190,18 +194,21 @@ export default async function FAQPage({ params }: PageProps) {
       question: "Can I get a dumpster delivered on weekends?",
       answer: "Dumpster Champs provides Saturday delivery in most markets. Sunday delivery is limited but available in select areas. Weekend rentals follow the same flat-rate pricing as weekday service. Book early for weekend delivery as slots fill quickly during peak seasons."
     },
-    // Size & Capacity FAQs
+    // Size & Capacity FAQs (with internal links)
     {
       question: "What size dumpster do I need for a home cleanout?",
-      answer: "Dumpster Champs recommends a 10-yard dumpster for single-room cleanouts or a 20-yard for whole-house projects. The 10-yard holds about 3-4 pickup truck loads, while the 20-yard handles 7-8 loads—enough for most residential decluttering and cleanout jobs."
+      answer: "Dumpster Champs recommends a <a href=\"/10-yard-dumpster\">10-yard dumpster</a> for single-room cleanouts or a <a href=\"/20-yard-dumpster\">20-yard</a> for whole-house projects. The 10-yard holds about 3-4 pickup truck loads, while the 20-yard handles 7-8 loads—enough for most residential decluttering and cleanout jobs.",
+      html: true
     },
     {
       question: "What size dumpster do I need for a roofing project?",
-      answer: "Dumpster Champs suggests a 20-yard dumpster for roofs up to 1,500 square feet or a 30-yard for larger roofs up to 3,000 square feet. Roofing shingles are heavy, so container weight limits matter more than volume for these projects."
+      answer: "Dumpster Champs suggests a <a href=\"/20-yard-dumpster\">20-yard dumpster</a> for roofs up to 1,500 square feet or a <a href=\"/30-yard-dumpster\">30-yard</a> for larger roofs up to 3,000 square feet. Roofing shingles are heavy, so container weight limits matter more than volume for these projects.",
+      html: true
     },
     {
       question: "What size dumpster do I need for a renovation?",
-      answer: "Dumpster Champs recommends a 20-yard container for kitchen or bathroom remodels and a 30-yard for whole-home renovations. Consider the materials involved—drywall and wood fill space quickly, while tile and concrete add weight. Our team can help you choose the right size."
+      answer: "Dumpster Champs recommends a <a href=\"/20-yard-dumpster\">20-yard container</a> for kitchen or bathroom remodels and a <a href=\"/30-yard-dumpster\">30-yard</a> for whole-home renovations. Consider the materials involved—drywall and wood fill space quickly, while tile and concrete add weight. Our team can help you choose the right size.",
+      html: true
     },
     {
       question: "How much weight can a dumpster hold?",

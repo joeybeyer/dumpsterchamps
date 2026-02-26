@@ -7,6 +7,8 @@ export interface FAQ {
   id?: string;
   question: string;
   answer: string;
+  /** If true, answer will be rendered as HTML (for internal links) */
+  html?: boolean;
 }
 
 interface LocalFAQAccordionProps {
@@ -49,9 +51,16 @@ export function LocalFAQAccordion({ faqs, cityName, stateName }: LocalFAQAccordi
           </button>
           {openIndex === index && (
             <div className="px-6 pb-4">
-              <p className="text-secondary-600 leading-relaxed">
-                {processText(faq.answer)}
-              </p>
+              {faq.html ? (
+                <p 
+                  className="text-secondary-600 leading-relaxed [&_a]:text-primary-600 [&_a]:underline [&_a]:hover:text-primary-700"
+                  dangerouslySetInnerHTML={{ __html: processText(faq.answer) }}
+                />
+              ) : (
+                <p className="text-secondary-600 leading-relaxed">
+                  {processText(faq.answer)}
+                </p>
+              )}
             </div>
           )}
         </div>
