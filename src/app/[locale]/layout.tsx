@@ -25,8 +25,8 @@ export function generateStaticParams() {
 
 export const metadata: Metadata = {
   title: {
-    default: "Dumpster Rental Near Me from $495 [2026]",
-    template: "%s | Dumpster Champs",
+    default: "Dumpster Rental Near Me from $495 [2026] | Same-Day Delivery",
+    template: "%s",
   },
   description:
     "Dumpster rental near me from $495. Same-day delivery on 10, 15, 20, 30 & 40 yard roll-off dumpsters. All-inclusive pricing, no hidden fees. Get a free quote!",
