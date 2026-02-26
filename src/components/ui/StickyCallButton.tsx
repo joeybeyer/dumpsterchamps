@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import { Phone, X } from 'lucide-react';
 
@@ -17,32 +17,55 @@ export function StickyCallButton({
   const [isVisible, setIsVisible] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isNearForm, setIsNearForm] = useState(false);
+  const sentinelRef = useRef<HTMLDivElement | null>(null);
 
+  // Use IntersectionObserver for scroll-based visibility (avoids forced reflow)
   useEffect(() => {
-    const handleScroll = () => {
-      setIsVisible(window.scrollY > showAfterScroll);
+    // Create a sentinel element at the scroll threshold
+    const sentinel = document.createElement('div');
+    sentinel.style.cssText = `position:absolute;top:${showAfterScroll}px;left:0;height:1px;width:1px;pointer-events:none;`;
+    document.body.appendChild(sentinel);
+    sentinelRef.current = sentinel;
 
-      // Check if near a form to avoid overlap
-      const forms = document.querySelectorAll('form');
-      let nearForm = false;
-      forms.forEach((form) => {
-        const rect = form.getBoundingClientRect();
-        const viewportHeight = window.innerHeight;
-        // If form is in bottom 200px of viewport, hide mobile bar
-        if (rect.bottom > viewportHeight - 200 && rect.top < viewportHeight) {
-          nearForm = true;
-        }
-      });
-      setIsNearForm(nearForm);
-    };
+    const scrollObserver = new IntersectionObserver(
+      ([entry]) => {
+        // When sentinel is not visible (scrolled past), show button
+        setIsVisible(!entry.isIntersecting);
+      },
+      { threshold: 0 }
+    );
 
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Check initial position
+    scrollObserver.observe(sentinel);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      scrollObserver.disconnect();
+      if (sentinelRef.current) {
+        sentinelRef.current.remove();
+      }
     };
   }, [showAfterScroll]);
+
+  // Use IntersectionObserver for form proximity (avoids getBoundingClientRect in scroll handler)
+  useEffect(() => {
+    const forms = document.querySelectorAll('form');
+    if (forms.length === 0) return;
+
+    const formObserver = new IntersectionObserver(
+      (entries) => {
+        // Check if any observed form is intersecting near viewport bottom
+        const nearForm = entries.some((entry) => entry.isIntersecting);
+        setIsNearForm(nearForm);
+      },
+      { 
+        threshold: 0,
+        rootMargin: '0px 0px -200px 0px' // Trigger when form enters bottom 200px of viewport
+      }
+    );
+
+    forms.forEach((form) => formObserver.observe(form));
+
+    return () => formObserver.disconnect();
+  }, []);
 
   if (!isVisible) return null;
 

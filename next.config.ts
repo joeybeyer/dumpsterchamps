@@ -16,6 +16,12 @@ const nextConfig: NextConfig = {
   // Enable Turbopack for faster development (optional)
   // turbopack: {},
 
+  // Experimental features for performance
+  experimental: {
+    // Optimize CSS loading - reduces render-blocking CSS
+    optimizeCss: true,
+  },
+
   // Image optimization
   images: {
     formats: ["image/avif", "image/webp"],
