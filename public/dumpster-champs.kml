@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>Dumpster Champs Service Areas</name>
+    <description>Dumpster Champs provides affordable roll-off dumpster rental services across the United States. Same-day delivery available. Call (888) 860-0710.</description>
+    
+    <!-- Business Headquarters -->
+    <Placemark>
+      <name>Dumpster Champs - Headquarters</name>
+      <description>
+        <![CDATA[
+          <h3>Dumpster Champs</h3>
+          <p>Affordable Dumpster Rental Services</p>
+          <p>Phone: (888) 860-0710</p>
+          <p>Website: https://www.dumpsterchamps.com</p>
+          <p>Services: 10, 15, 20, 30, 40 Yard Roll-Off Dumpsters</p>
+          <p>Pricing: Starting at $350</p>
+        ]]>
+      </description>
+      <Point>
+        <coordinates>-118.4110618,34.1942088,0</coordinates>
+      </Point>
+    </Placemark>
+    
+    <!-- Major Service Areas -->
+    <Folder>
+      <name>Major Service Areas</name>
+      
+      <!-- California -->
+      <Placemark>
+        <name>Dumpster Rental Los Angeles, CA</name>
+        <description>Dumpster Champs serves Los Angeles with same-day roll-off container delivery. 10-40 yard dumpsters from $495.</description>
+        <Point><coordinates>-118.2437,34.0522,0</coordinates></Point>
+      </Placemark>
+      
+      <Placemark>
+        <name>Dumpster Rental San Diego, CA</name>
+        <description>Dumpster Champs serves San Diego with fast dumpster delivery. Flat-rate pricing, no hidden fees.</description>
+        <Point><coordinates>-117.1611,32.7157,0</coordinates></Point>
+      </Placemark>
+      
+      <Placemark>
+        <name>Dumpster Rental San Jose, CA</name>
+        <description>Dumpster Champs serves San Jose and Silicon Valley. Same-day delivery available.</description>
+        <Point><coordinates>-121.8863,37.3382,0</coordinates></Point>
+      </Placemark>
+      
+      <!-- Texas -->
+      <Placemark>
+        <name>Dumpster Rental Houston, TX</name>
+        <description>Dumpster Champs serves Houston metro. 10-40 yard containers with flat-rate pricing.</description>
+        <Point><coordinates>-95.3698,29.7604,0</coordinates></Point>
+      </Placemark>
+      
+      <Placemark>
+        <name>Dumpster Rental Dallas, TX</name>
+        <description>Dumpster Champs serves Dallas-Fort Worth. Fast delivery, transparent pricing.</description>
+        <Point><coordinates>-96.7970,32.7767,0</coordinates></Point>
+      </Placemark>
+      
+      <Placemark>
+        <name>Dumpster Rental Austin, TX</name>
+        <description>Dumpster Champs serves Austin. Same-day dumpster delivery available.</description>
+        <Point><coordinates>-97.7431,30.2672,0</coordinates></Point>
+      </Placemark>
+      
+      <Placemark>
+        <name>Dumpster Rental San Antonio, TX</name>
+        <description>Dumpster Champs serves San Antonio metro area. No hidden fees.</description>
+        <Point><coordinates>-98.4936,29.4241,0</coordinates></Point>
+      </Placemark>
+      
+      <!-- Florida -->
+      <Placemark>
+        <name>Dumpster Rental Jacksonville, FL</name>
+        <description>Dumpster Champs serves Jacksonville. Roll-off containers from $495.</description>
+        <Point><coordinates>-81.6557,30.3322,0</coordinates></Point>
+      </Placemark>
+      
+      <Placemark>
+        <name>Dumpster Rental Miami, FL</name>
+        <description>Dumpster Champs serves Miami-Dade County. Fast delivery, flat rates.</description>
+        <Point><coordinates>-80.1918,25.7617,0</coordinates></Point>
+      </Placemark>
+      
+      <Placemark>
+        <name>Dumpster Rental Tampa, FL</name>
+        <description>Dumpster Champs serves Tampa Bay area. Same-day service available.</description>
+        <Point><coordinates>-82.4572,27.9506,0</coordinates></Point>
+      </Placemark>
+      
+      <Placemark>
+        <name>Dumpster Rental Orlando, FL</name>
+        <description>Dumpster Champs serves Orlando metro. 10-40 yard dumpsters.</description>
+        <Point><coordinates>-81.3792,28.5383,0</coordinates></Point>
+      </Placemark>
+      
+      <!-- Illinois -->
+      <Placemark>
+        <name>Dumpster Rental Chicago, IL</name>
+        <description>Dumpster Champs serves Chicago and Cook County. Same-day delivery throughout Chicagoland.</description>
+        <Point><coordinates>-87.6298,41.8781,0</coordinates></Point>
+      </Placemark>
+      
+      <!-- Arizona -->
+      <Placemark>
+        <name>Dumpster Rental Phoenix, AZ</name>
+        <description>Dumpster Champs serves Phoenix metro. Roll-off dumpsters from $495.</description>
+        <Point><coordinates>-112.0740,33.4484,0</coordinates></Point>
+      </Placemark>
+      
+      <Placemark>
+        <name>Dumpster Rental Tucson, AZ</name>
+        <description>Dumpster Champs serves Tucson. Flat-rate pricing, no surprises.</description>
+        <Point><coordinates>-110.9747,32.2226,0</coordinates></Point>
+      </Placemark>
+      
+      <!-- Georgia -->
+      <Placemark>
+        <name>Dumpster Rental Atlanta, GA</name>
+        <description>Dumpster Champs serves Atlanta metro. Fast, reliable dumpster delivery.</description>
+        <Point><coordinates>-84.3880,33.7490,0</coordinates></Point>
+      </Placemark>
+      
+      <!-- North Carolina -->
+      <Placemark>
+        <name>Dumpster Rental Charlotte, NC</name>
+        <description>Dumpster Champs serves Charlotte metro. Same-day delivery available.</description>
+        <Point><coordinates>-80.8431,35.2271,0</coordinates></Point>
+      </Placemark>
+      
+      <!-- Ohio -->
+      <Placemark>
+        <name>Dumpster Rental Columbus, OH</name>
+        <description>Dumpster Champs serves Columbus. 10-40 yard roll-off containers.</description>
+        <Point><coordinates>-82.9988,39.9612,0</coordinates></Point>
+      </Placemark>
+      
+      <Placemark>
+        <name>Dumpster Rental Cincinnati, OH</name>
+        <description>Dumpster Champs serves Cincinnati metro. Flat-rate dumpster rental.</description>
+        <Point><coordinates>-84.5120,39.1031,0</coordinates></Point>
+      </Placemark>
+      
+      <!-- New York -->
+      <Placemark>
+        <name>Dumpster Rental New York, NY</name>
+        <description>Dumpster Champs serves NYC and surrounding areas. Fast delivery, transparent pricing.</description>
+        <Point><coordinates>-74.0060,40.7128,0</coordinates></Point>
+      </Placemark>
+      
+      <!-- Nevada -->
+      <Placemark>
+        <name>Dumpster Rental Las Vegas, NV</name>
+        <description>Dumpster Champs serves Las Vegas valley. Same-day dumpster service.</description>
+        <Point><coordinates>-115.1398,36.1699,0</coordinates></Point>
+      </Placemark>
+      
+      <!-- Colorado -->
+      <Placemark>
+        <name>Dumpster Rental Denver, CO</name>
+        <description>Dumpster Champs serves Denver metro. Roll-off containers from $495.</description>
+        <Point><coordinates>-104.9903,39.7392,0</coordinates></Point>
+      </Placemark>
+      
+      <!-- Washington -->
+      <Placemark>
+        <name>Dumpster Rental Seattle, WA</name>
+        <description>Dumpster Champs serves Seattle area. Fast delivery, no hidden fees.</description>
+        <Point><coordinates>-122.3321,47.6062,0</coordinates></Point>
+      </Placemark>
+      
+      <!-- New Jersey -->
+      <Placemark>
+        <name>Dumpster Rental Newark, NJ</name>
+        <description>Dumpster Champs serves Newark and Northern NJ. Same-day service available.</description>
+        <Point><coordinates>-74.1724,40.7357,0</coordinates></Point>
+      </Placemark>
+      
+    </Folder>
+    
+    <!-- Service Information -->
+    <ExtendedData>
+      <Data name="business_name"><value>Dumpster Champs</value></Data>
+      <Data name="phone"><value>(888) 860-0710</value></Data>
+      <Data name="website"><value>https://www.dumpsterchamps.com</value></Data>
+      <Data name="services"><value>Roll-Off Dumpster Rental, Construction Dumpsters, Residential Dumpsters</value></Data>
+      <Data name="service_areas"><value>Nationwide - 35+ States, 195+ Cities</value></Data>
+      <Data name="pricing"><value>Starting at $350 for 10-yard, up to $695 for 40-yard</value></Data>
+    </ExtendedData>
+    
+  </Document>
+</kml>
