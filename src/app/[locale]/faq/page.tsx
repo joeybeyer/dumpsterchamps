@@ -1,7 +1,7 @@
 import { Metadata } from "next";
-import { LocalFAQAccordion, DEFAULT_CITY_FAQS } from "@/components/city/LocalFAQAccordion";
+import { LocalFAQAccordion } from "@/components/city/LocalFAQAccordion";
 import { FAQSchema } from "@/components/seo/SchemaMarkup";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
@@ -17,8 +17,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       ? "Preguntas Frecuentes sobre Alquiler de Contenedores | Dumpster Champs"
       : "Dumpster Rental FAQ - Pricing, Sizes & Delivery | Dumpster Champs",
     description: isEs
-      ? "Respuestas a preguntas frecuentes sobre costos, tamaños, entrega y restricciones de alquiler de contenedores. Precios transparentes desde $495."
-      : "Get answers to frequently asked questions about dumpster rental costs, sizing, delivery, permits, and restrictions. Transparent pricing from $495.",
+      ? "Respuestas a preguntas frecuentes sobre costos, tamaños, entrega y restricciones de alquiler de contenedores. Precios transparentes desde $350."
+      : "Get answers to frequently asked questions about dumpster rental costs, sizing, delivery, permits, and restrictions. Transparent pricing from $350.",
     openGraph: {
       title: isEs
         ? "Preguntas Frecuentes sobre Alquiler de Contenedores"
@@ -33,90 +33,215 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function FAQPage({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const t = await getTranslations();
   const isEs = locale === 'es';
 
+  // AIO-Optimized FAQs: 40-60 words each, brand in first sentence, direct answer first
   const comprehensiveFAQs = isEs ? [
+    // Spanish versions - Pricing
     {
-      question: "¿Cuánto cuesta alquilar un contenedor?",
-      answer: "El alquiler de contenedores varía de $495 para un contenedor de 10 yardas a $795 para uno de 40 yardas. Nuestro precio todo incluido cubre entrega, recogida, período de alquiler de 7 días y límite de peso. Sin cargos ocultos ni sorpresas. El precio incluye: entrega a su ubicación, período de alquiler de 7 días, recogida y eliminación, y generosas tolerancias de peso."
+      question: "¿Cuánto cuesta un contenedor de 10 yardas?",
+      answer: "Dumpster Champs ofrece contenedores de 10 yardas desde $350. Este precio incluye entrega, recogida, período de alquiler de 7 días y hasta 2 toneladas de eliminación. El tamaño de 10 yardas es ideal para pequeñas limpiezas, organización de garaje o proyectos menores de renovación."
     },
     {
-      question: "¿Qué tamaño de contenedor necesito para mi proyecto?",
-      answer: "Elija el tamaño de contenedor según su proyecto: 10 yardas (12×8×3.5 pies) para remodelaciones pequeñas de baño y limpiezas, 15 yardas (16×8×4.5 pies) para renovaciones medianas, 20 yardas (22×8×4.5 pies) para remodelaciones de cocina y proyectos de techado, 30 yardas (22×8×6 pies) para limpiezas grandes del hogar, y 40 yardas (22×8×8 pies) para construcciones mayores o limpiezas de toda la casa."
+      question: "¿Cuánto cuesta un contenedor de 20 yardas?",
+      answer: "Dumpster Champs alquila contenedores de 20 yardas desde $495. El precio cubre entrega, recogida, alquiler de 7 días y hasta 3 toneladas de eliminación. Este popular contenedor mediano funciona bien para remodelaciones de cocina, proyectos de techado hasta 1,500 pies cuadrados y limpiezas medianas."
     },
     {
-      question: "¿Qué tan rápido puedo recibir la entrega de un contenedor?",
-      answer: "Ofrecemos entrega el mismo día o al día siguiente en la mayoría de las áreas de servicio. Llame antes del mediodía para la mejor disponibilidad de entrega el mismo día. Nuestro tiempo promedio de respuesta es de 12 minutos y entregamos más de 500 contenedores semanalmente en nuestras áreas de servicio."
+      question: "¿Cuánto cuesta un contenedor de 30 yardas?",
+      answer: "Dumpster Champs ofrece contenedores de 30 yardas desde $595. Esto incluye entrega, recogida, alquiler de 7 días y hasta 4 toneladas de eliminación. El contenedor de 30 yardas es ideal para proyectos grandes de renovación, escombros de construcción nueva y limpiezas comerciales importantes."
     },
     {
-      question: "¿Por cuánto tiempo puedo conservar el contenedor?",
-      answer: "El período de alquiler estándar es de 7 días incluido en su precio. ¿Necesita más tiempo? Las extensiones están disponibles por solo $15 por día. Simplemente llámenos antes de que termine su período de alquiler para organizar una extensión."
+      question: "¿Cuánto cuesta un contenedor de 40 yardas?",
+      answer: "Dumpster Champs ofrece contenedores de 40 yardas desde $695. La tarifa incluye entrega, recogida, alquiler de 7 días y hasta 5 toneladas de eliminación. Este tamaño más grande maneja demolición comercial, limpiezas de almacén y proyectos de construcción a gran escala eficientemente."
     },
     {
-      question: "¿Qué puedo poner en un contenedor de alquiler?",
-      answer: "Los artículos aceptados incluyen muebles del hogar, electrodomésticos (sin refrigerantes), escombros de construcción, materiales de techado, desechos de jardín, escombros de renovación y artículos generales del hogar. Los artículos prohibidos incluyen desechos peligrosos, pintura, químicos, llantas, baterías, tanques de propano y electrónicos en la mayoría de las áreas."
+      question: "¿Hay cargos ocultos con el alquiler de contenedores?",
+      answer: "Dumpster Champs usa precios transparentes sin cargos ocultos. Su precio cotizado incluye entrega, recogida, período de alquiler y límite de peso. Los cargos adicionales aplican solo si excede el límite de peso o mantiene el contenedor más allá del período de alquiler—ambos divulgados por adelantado."
+    },
+    // Spanish - Delivery
+    {
+      question: "¿Qué tan rápido puedo recibir un contenedor?",
+      answer: "Dumpster Champs ofrece entrega tan rápido como el siguiente día hábil en la mayoría de las áreas de servicio. Llame antes de las 10 AM y la entrega el mismo día puede estar disponible dependiendo de su ubicación y disponibilidad actual. La entrega de fin de semana está disponible en mercados selectos."
     },
     {
-      question: "¿Necesito un permiso para alquilar un contenedor?",
-      answer: "Si coloca el contenedor en su propiedad privada (entrada, jardín), generalmente no se requiere permiso. Si necesita colocarlo en una calle pública o derecho de paso, es posible que necesite un permiso de su municipio local. Podemos ayudarle a gestionar el proceso de permisos si es necesario."
-    },
-    {
-      question: "¿Un contenedor dañará mi entrada?",
-      answer: "Colocamos tablones de madera protectores debajo de las ruedas del contenedor para evitar daños en la superficie de su entrada. La mayoría de las entradas estándar pueden soportar el peso de un contenedor sin problemas. Si tiene preocupaciones sobre su superficie específica, háganos saber al momento de la reserva."
-    },
-    {
-      question: "¿Qué pasa si supero el límite de peso?",
-      answer: "Si su contenedor supera la tolerancia de peso incluida, hay un cargo adicional de $75 por tonelada adicional. Pesamos los contenedores en las instalaciones de eliminación y solo cobramos por los excedentes reales. Para evitar esto, elija un tamaño más grande para materiales pesados como concreto o techado."
-    },
-    {
-      question: "¿Ofrecen entrega de contenedor el mismo día?",
-      answer: "¡Sí! La entrega el mismo día está disponible en la mayoría de las áreas cuando llama antes del mediodía. Priorizamos necesidades urgentes y limpiezas de emergencia. Nuestro tiempo promedio de respuesta es de 12 minutos y trabajaremos para adaptarnos a su cronograma."
+      question: "¿Cómo funciona la entrega del contenedor?",
+      answer: "Dumpster Champs entrega su contenedor directamente a su entrada o sitio de trabajo. Nuestro conductor coloca el contenedor donde usted especifique, usando tablas de madera para proteger su superficie. Recibirá una llamada 30 minutos antes de la llegada para guiar la colocación si es necesario."
     },
     {
       question: "¿Cómo programo la recogida del contenedor?",
-      answer: "Simplemente llámenos cuando haya terminado de llenar el contenedor. Programaremos la recogida dentro de 24-48 horas. No es necesario que esté presente durante la recogida — simplemente asegúrese de que el contenedor sea accesible y no esté demasiado lleno."
+      answer: "Dumpster Champs hace la recogida fácil—simplemente llame o vaya en línea cuando termine de llenar su contenedor. Típicamente recogemos dentro de 24-48 horas de su solicitud. No necesita estar en casa; solo asegúrese de que el contenedor sea accesible y no esté demasiado lleno."
+    },
+    {
+      question: "¿Puedo recibir un contenedor los fines de semana?",
+      answer: "Dumpster Champs proporciona entrega los sábados en la mayoría de los mercados. La entrega los domingos es limitada pero disponible en áreas selectas. Los alquileres de fin de semana siguen los mismos precios que el servicio entre semana. Reserve temprano para entrega de fin de semana ya que los espacios se llenan rápidamente durante temporadas altas."
+    },
+    // Spanish - Size & Capacity
+    {
+      question: "¿Qué tamaño de contenedor necesito para una limpieza del hogar?",
+      answer: "Dumpster Champs recomienda un contenedor de 10 yardas para limpiezas de una habitación o uno de 20 yardas para proyectos de toda la casa. El de 10 yardas sostiene aproximadamente 3-4 cargas de camioneta pickup, mientras que el de 20 yardas maneja 7-8 cargas—suficiente para la mayoría de los trabajos residenciales de limpieza."
+    },
+    {
+      question: "¿Qué tamaño de contenedor necesito para un proyecto de techado?",
+      answer: "Dumpster Champs sugiere un contenedor de 20 yardas para techos hasta 1,500 pies cuadrados o uno de 30 yardas para techos más grandes hasta 3,000 pies cuadrados. Las tejas son pesadas, así que los límites de peso del contenedor importan más que el volumen para estos proyectos."
+    },
+    {
+      question: "¿Qué tamaño de contenedor necesito para una renovación?",
+      answer: "Dumpster Champs recomienda un contenedor de 20 yardas para remodelaciones de cocina o baño y uno de 30 yardas para renovaciones de toda la casa. Considere los materiales involucrados—paneles de yeso y madera llenan espacio rápidamente, mientras que baldosas y concreto agregan peso. Nuestro equipo puede ayudarle a elegir el tamaño correcto."
+    },
+    {
+      question: "¿Cuánto peso puede sostener un contenedor?",
+      answer: "Los límites de peso de Dumpster Champs varían por tamaño: 10 yardas sostiene 2 toneladas, 20 yardas sostiene 3 toneladas, 30 yardas sostiene 4 toneladas, y 40 yardas sostiene 5 toneladas. Exceder su límite de peso incurre cargos adicionales de $50-75 por tonelada adicional, dependiendo de su ubicación."
+    },
+    // Spanish - Rental Terms
+    {
+      question: "¿Por cuánto tiempo puedo mantener un contenedor de alquiler?",
+      answer: "Dumpster Champs incluye un período de alquiler estándar de 7 días con cada contenedor. ¿Necesita más tiempo? Las extensiones están disponibles por $10-15 por día adicional, dependiendo de su ubicación. Solo llame antes de que termine su período de alquiler para evitar interrupciones del servicio."
+    },
+    {
+      question: "¿Puedo extender mi período de alquiler del contenedor?",
+      answer: "Dumpster Champs ofrece extensiones de alquiler flexibles a $10-15 por día más allá del período incluido de 7 días. Llámenos o envíenos un mensaje antes de que expire su alquiler para extender. Mantendremos su contenedor en su lugar tanto tiempo como lo necesite para su proyecto."
+    },
+    // Spanish - Permits
+    {
+      question: "¿Necesito un permiso para un contenedor?",
+      answer: "Los clientes de Dumpster Champs que colocan contenedores en propiedad privada—como una entrada—típicamente no necesitan permisos. La colocación en calles o aceras generalmente requiere un permiso de la ciudad. Los requisitos varían por municipio, así que consulte con su departamento de obras públicas local o pregúntenos por orientación en su área."
+    },
+    {
+      question: "¿Puedo colocar un contenedor en la calle?",
+      answer: "Dumpster Champs puede entregar a ubicaciones en la calle donde las regulaciones locales lo permitan. La mayoría de las ciudades requieren un permiso de derecho de paso para colocación en la calle, que típicamente cuesta $25-100 y toma 1-3 días obtener. Recomendamos la colocación en entrada cuando sea posible para evitar requisitos de permisos."
+    },
+    // Spanish - Acceptable Items
+    {
+      question: "¿Qué puedo poner en un contenedor?",
+      answer: "Dumpster Champs acepta la mayoría de escombros del hogar y construcción incluyendo muebles, electrodomésticos, paneles de yeso, madera, tejas de techado, concreto, desechos de jardín y basura general. Nosotros manejamos la clasificación y reciclaje. Si no está seguro sobre un artículo específico, llámenos antes de cargar."
+    },
+    {
+      question: "¿Qué artículos no están permitidos en un contenedor?",
+      answer: "Dumpster Champs prohíbe materiales peligrosos incluyendo pintura, químicos, baterías, llantas, asbesto, desechos médicos y líquidos inflamables. Los electrodomésticos que contienen freón (refrigeradores, unidades de AC) requieren manejo especial. Los colchones pueden tener cargos adicionales en algunas áreas. Contáctenos con preguntas sobre artículos específicos."
+    },
+    {
+      question: "¿Puedo poner concreto o tierra en un contenedor?",
+      answer: "Dumpster Champs acepta concreto, ladrillo y tierra pero recomienda nuestro contenedor de 10 yardas para 'escombros pesados' diseñado para estos materiales densos. Los contenedores estándar tienen límites de peso que el concreto y la tierra alcanzan rápidamente. Mezclar materiales pesados con escombros regulares puede resultar en cargos adicionales."
+    },
+    // Spanish - Service Area
+    {
+      question: "¿Dumpster Champs entrega en mi área?",
+      answer: "Dumpster Champs sirve a clientes en todo Estados Unidos con entrega en la mayoría de áreas metropolitanas y suburbios circundantes. Ingrese su código postal en nuestro sitio web para confirmar disponibilidad del servicio y obtener precios instantáneos para su ubicación específica. Las áreas rurales pueden tener disponibilidad limitada."
+    },
+    // Spanish - Process
+    {
+      question: "¿Cómo alquilo un contenedor de Dumpster Champs?",
+      answer: "Dumpster Champs hace el alquiler fácil: ingrese su código postal en línea, seleccione el tamaño de su contenedor, elija una fecha de entrega y complete su reserva. Todo el proceso toma aproximadamente 60 segundos. También puede llamarnos directamente para hablar con un especialista en alquiler."
+    },
+    {
+      question: "¿Qué pasa después de llenar mi contenedor?",
+      answer: "Dumpster Champs recoge su contenedor dentro de 24-48 horas después de que solicite la remoción. Lo transportamos a una instalación con licencia donde los materiales reciclables se clasifican. Recibirá confirmación una vez que la recogida esté completa. No necesita estar presente—solo asegure acceso claro."
     }
   ] : [
+    // English versions - AIO optimized (40-60 words, brand first, direct answer)
+    // Pricing FAQs
     {
-      question: "How much does it cost to rent a dumpster?",
-      answer: "Dumpster rental costs range from $495 for a 10-yard container to $795 for a 40-yard container. Our all-inclusive pricing covers delivery, pickup, 7-day rental period, and weight allowance. No hidden fees or surprise charges. Pricing includes: delivery to your location, 7-day rental period, pickup and disposal, and generous weight allowances."
+      question: "How much does a 10-yard dumpster cost?",
+      answer: "Dumpster Champs offers 10-yard dumpster rentals starting at $350. This flat-rate price includes delivery, pickup, a 7-day rental period, and up to 2 tons of waste disposal. The 10-yard size is ideal for small cleanouts, garage organizing, or minor renovation projects."
     },
     {
-      question: "What size dumpster do I need for my project?",
-      answer: "Choose your dumpster size based on your project: 10-yard (12×8×3.5 feet) for small bathroom remodels and cleanouts, 15-yard (16×8×4.5 feet) for medium renovations, 20-yard (22×8×4.5 feet) for kitchen remodels and roofing projects, 30-yard (22×8×6 feet) for large home cleanouts, and 40-yard (22×8×8 feet) for major construction or whole-house cleanouts."
+      question: "How much does a 20-yard dumpster cost?",
+      answer: "Dumpster Champs rents 20-yard dumpsters starting at $495. The price covers delivery, pickup, 7-day rental, and up to 3 tons of disposal. This popular mid-size container works well for kitchen remodels, roofing projects up to 1,500 square feet, and medium-sized home cleanouts."
     },
+    {
+      question: "How much does a 30-yard dumpster cost?",
+      answer: "Dumpster Champs provides 30-yard dumpster rentals from $595. This includes delivery, pickup, a 7-day rental, and up to 4 tons of disposal. The 30-yard container suits large renovation projects, new construction debris, and major estate or commercial cleanouts."
+    },
+    {
+      question: "How much does a 40-yard dumpster cost?",
+      answer: "Dumpster Champs offers 40-yard dumpsters starting at $695. The flat rate includes delivery, pickup, 7-day rental, and up to 5 tons of waste removal. This largest size handles commercial demolition, warehouse cleanouts, and large-scale construction projects efficiently."
+    },
+    {
+      question: "Are there any hidden fees with dumpster rental?",
+      answer: "Dumpster Champs uses transparent flat-rate pricing with no hidden fees. Your quoted price includes delivery, pickup, rental period, and weight allowance. Additional charges apply only if you exceed the weight limit or keep the dumpster beyond the rental period—both disclosed upfront."
+    },
+    // Delivery & Pickup FAQs
     {
       question: "How fast can I get a dumpster delivered?",
-      answer: "We offer same-day or next-day delivery in most service areas. Call before noon for best same-day availability. Our average response time is 12 minutes, and we deliver over 500 dumpsters weekly across our service areas."
+      answer: "Dumpster Champs offers delivery as fast as next business day in most service areas. Call before 10 AM and same-day delivery may be available depending on your location and current availability. Weekend delivery is available in select markets."
     },
     {
-      question: "How long can I keep the dumpster?",
-      answer: "Standard rental period is 7 days included in your price. Need more time? Extensions are available for just $15 per day. Simply call us before your rental period ends to arrange an extension."
+      question: "How does dumpster delivery work?",
+      answer: "Dumpster Champs delivers your container directly to your driveway or job site. Our driver places the dumpster where you specify, using wooden boards to protect your surface. You'll receive a call 30 minutes before arrival so you can guide placement if needed."
     },
     {
-      question: "What can I put in a dumpster rental?",
-      answer: "Accepted items include household furniture, appliances (without refrigerants), construction debris, roofing materials, yard waste, renovation debris, and general household items. Prohibited items include hazardous waste, paint, chemicals, tires, batteries, propane tanks, and electronics in most areas."
+      question: "How do I schedule a dumpster pickup?",
+      answer: "Dumpster Champs makes pickup easy—just call or go online when you're done filling your container. We typically pick up within 24-48 hours of your request. You don't need to be home; just ensure the dumpster is accessible and not overfilled."
     },
     {
-      question: "Do I need a permit for a dumpster rental?",
-      answer: "If you place the dumpster on your private property (driveway, yard), no permit is typically required. If you need to place it on a public street or right-of-way, you may need a permit from your local municipality. We can help guide you through the permit process if needed."
+      question: "Can I get a dumpster delivered on weekends?",
+      answer: "Dumpster Champs provides Saturday delivery in most markets. Sunday delivery is limited but available in select areas. Weekend rentals follow the same flat-rate pricing as weekday service. Book early for weekend delivery as slots fill quickly during peak seasons."
+    },
+    // Size & Capacity FAQs
+    {
+      question: "What size dumpster do I need for a home cleanout?",
+      answer: "Dumpster Champs recommends a 10-yard dumpster for single-room cleanouts or a 20-yard for whole-house projects. The 10-yard holds about 3-4 pickup truck loads, while the 20-yard handles 7-8 loads—enough for most residential decluttering and cleanout jobs."
     },
     {
-      question: "Will a dumpster damage my driveway?",
-      answer: "We place protective wooden boards under the dumpster wheels to prevent damage to your driveway surface. Most standard driveways can handle dumpster weight without issues. If you have concerns about your specific surface, let us know during booking."
+      question: "What size dumpster do I need for a roofing project?",
+      answer: "Dumpster Champs suggests a 20-yard dumpster for roofs up to 1,500 square feet or a 30-yard for larger roofs up to 3,000 square feet. Roofing shingles are heavy, so container weight limits matter more than volume for these projects."
     },
     {
-      question: "What happens if I go over the weight limit?",
-      answer: "If your dumpster exceeds the included weight allowance, there's an overage fee of $75 per additional ton. We weigh containers at the disposal facility and only charge for actual overages. To avoid this, choose a larger size for heavy materials like concrete or roofing."
+      question: "What size dumpster do I need for a renovation?",
+      answer: "Dumpster Champs recommends a 20-yard container for kitchen or bathroom remodels and a 30-yard for whole-home renovations. Consider the materials involved—drywall and wood fill space quickly, while tile and concrete add weight. Our team can help you choose the right size."
     },
     {
-      question: "Do you offer same-day dumpster delivery?",
-      answer: "Yes! Same-day delivery is available in most areas when you call before noon. We prioritize urgent needs and emergency cleanups. Our average response time is 12 minutes, and we'll work to accommodate your timeline."
+      question: "How much weight can a dumpster hold?",
+      answer: "Dumpster Champs weight limits vary by size: 10-yard holds 2 tons, 20-yard holds 3 tons, 30-yard holds 4 tons, and 40-yard holds 5 tons. Exceeding your weight allowance incurs overage fees of $50-75 per additional ton, depending on your location."
+    },
+    // Rental Terms FAQs
+    {
+      question: "How long can I keep a rental dumpster?",
+      answer: "Dumpster Champs includes a standard 7-day rental period with every container. Need more time? Extensions are available for $10-15 per additional day, depending on your location. Just call before your rental period ends to avoid any service interruptions."
     },
     {
-      question: "How do I schedule dumpster pickup?",
-      answer: "Simply call us when you're finished filling the dumpster. We'll schedule pickup within 24-48 hours. No need to be present during pickup - just ensure the dumpster is accessible and not overfilled."
+      question: "Can I extend my dumpster rental period?",
+      answer: "Dumpster Champs offers flexible rental extensions at $10-15 per day beyond the included 7-day period. Call or message us before your rental expires to extend. We'll keep your dumpster in place as long as you need it for your project."
+    },
+    // Permits & Regulations FAQs
+    {
+      question: "Do I need a permit for a dumpster?",
+      answer: "Dumpster Champs customers placing containers on private property—like a driveway—typically don't need permits. Street or sidewalk placement usually requires a city permit. Requirements vary by municipality, so check with your local public works department or ask us for guidance in your area."
+    },
+    {
+      question: "Can I place a dumpster on the street?",
+      answer: "Dumpster Champs can deliver to street locations where local regulations allow. Most cities require a right-of-way permit for street placement, which typically costs $25-100 and takes 1-3 days to obtain. We recommend driveway placement when possible to avoid permit requirements."
+    },
+    // Acceptable Items FAQs
+    {
+      question: "What can I put in a dumpster?",
+      answer: "Dumpster Champs accepts most household and construction debris including furniture, appliances, drywall, wood, roofing shingles, concrete, yard waste, and general trash. We handle the sorting and recycling. If you're unsure about a specific item, call us before loading."
+    },
+    {
+      question: "What items are not allowed in a dumpster?",
+      answer: "Dumpster Champs prohibits hazardous materials including paint, chemicals, batteries, tires, asbestos, medical waste, and flammable liquids. Appliances containing freon (refrigerators, AC units) require special handling. Mattresses may have additional fees in some areas. Contact us with questions about specific items."
+    },
+    {
+      question: "Can I put concrete or dirt in a dumpster?",
+      answer: "Dumpster Champs accepts concrete, brick, and dirt but recommends our 10-yard heavy debris container designed for these dense materials. Standard dumpsters have weight limits that concrete and dirt reach quickly. Mixing heavy materials with regular debris may result in overage charges."
+    },
+    // Service Area FAQs
+    {
+      question: "Does Dumpster Champs deliver to my area?",
+      answer: "Dumpster Champs serves customers across the United States with delivery in most metropolitan areas and surrounding suburbs. Enter your zip code on our website to confirm service availability and get instant pricing for your specific location. Rural areas may have limited availability."
+    },
+    {
+      question: "Do you offer dumpster rental nationwide?",
+      answer: "Dumpster Champs provides dumpster rental service throughout major cities and their surrounding areas nationwide. Visit our locations page or enter your zip code for instant confirmation of service in your area. New markets are added regularly based on customer demand."
+    },
+    // Process FAQs
+    {
+      question: "How do I rent a dumpster from Dumpster Champs?",
+      answer: "Dumpster Champs makes renting easy: enter your zip code online, select your dumpster size, choose a delivery date, and complete your booking. The entire process takes about 60 seconds. You can also call us directly to speak with a rental specialist."
+    },
+    {
+      question: "What happens after I fill my dumpster?",
+      answer: "Dumpster Champs picks up your container within 24-48 hours after you request removal. We transport it to a licensed facility where recyclable materials are sorted. You'll receive confirmation once pickup is complete. No need to be present—just ensure clear access."
     }
   ];
 
@@ -175,10 +300,10 @@ export default async function FAQPage({ params }: PageProps) {
                   {isEs ? 'Obtener Cotización Gratis' : 'Get Free Quote'}
                 </Link>
                 <a
-                  href="tel:+18885551234"
+                  href="tel:8888600710"
                   className="border-2 border-primary-600 text-primary-600 px-8 py-4 rounded-lg font-semibold hover:bg-primary-600 hover:text-white transition-colors"
                 >
-                  {isEs ? 'Llame Ahora' : 'Call Now'}
+                  {isEs ? 'Llame Ahora: (888) 860-0710' : 'Call Now: (888) 860-0710'}
                 </a>
               </div>
             </div>
@@ -186,7 +311,7 @@ export default async function FAQPage({ params }: PageProps) {
         </section>
       </main>
 
-      {/* Schema Markup for FAQ */}
+      {/* Schema Markup for FAQ - JSON-LD auto-generated */}
       <FAQSchema faqs={comprehensiveFAQs} />
     </>
   );
