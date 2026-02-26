@@ -227,6 +227,34 @@ async function checkForSpam(body: {
   };
 }
 
+// ============ LLM REFERRER DETECTION ============
+
+// Known LLM/AI chat platforms that might send traffic
+const LLM_REFERRERS = [
+  { pattern: /chatgpt\.com|chat\.openai\.com/i, name: "ChatGPT" },
+  { pattern: /perplexity\.ai/i, name: "Perplexity" },
+  { pattern: /claude\.ai|anthropic\.com/i, name: "Claude" },
+  { pattern: /gemini\.google\.com|bard\.google\.com/i, name: "Google Gemini" },
+  { pattern: /copilot\.microsoft\.com|bing\.com\/chat/i, name: "Microsoft Copilot" },
+  { pattern: /you\.com/i, name: "You.com" },
+  { pattern: /poe\.com/i, name: "Poe" },
+  { pattern: /character\.ai/i, name: "Character.AI" },
+  { pattern: /phind\.com/i, name: "Phind" },
+  { pattern: /kagi\.com/i, name: "Kagi" },
+];
+
+function detectLLMReferrer(referrer: string | undefined | null): string | null {
+  if (!referrer) return null;
+  
+  for (const llm of LLM_REFERRERS) {
+    if (llm.pattern.test(referrer)) {
+      return llm.name;
+    }
+  }
+  
+  return null;
+}
+
 // ============ API ROUTES ============
 
 export async function POST(request: NextRequest) {
@@ -236,7 +264,8 @@ export async function POST(request: NextRequest) {
     const {
       type, name, email, phone, city, state,
       projectType, dumpsterSize, message, source,
-      honeypot, formTimestamp // New spam prevention fields
+      honeypot, formTimestamp, // Spam prevention fields
+      referrer // LLM traffic attribution (ChatGPT, Perplexity, Claude, etc.)
     } = body;
 
     // Validate required fields
@@ -256,6 +285,9 @@ export async function POST(request: NextRequest) {
       formTimestamp,
     });
 
+    // Detect LLM referral source
+    const llmSource = detectLLMReferrer(referrer);
+    
     // Create lead in database (mark as spam if detected)
     const lead = await prisma.lead.create({
       data: {
@@ -269,6 +301,7 @@ export async function POST(request: NextRequest) {
         dumpsterSize,
         message,
         source,
+        referrer, // Store raw referrer for analytics
         spam: spamCheck.isSpam,
         spamReason: spamCheck.isSpam ? spamCheck.reasons.join(", ") : null,
       },
@@ -287,6 +320,8 @@ export async function POST(request: NextRequest) {
           dumpsterSize,
           message,
           source,
+          referrer, // Include raw referrer
+          llmSource, // Include detected LLM name (if any)
         });
       } catch (emailError) {
         console.error("Failed to send email notification:", emailError);

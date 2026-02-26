@@ -41,7 +41,11 @@
       "Bash(ipconfig:*)",
       "Bash(git commit:*)",
       "Bash(powershell -Command \"Compress-Archive -Path ''deploy/*'' -DestinationPath ''dumpsterchamps-deploy.zip'' -Force\")",
-      "Bash(pm2 restart:*)"
+      "Bash(pm2 restart:*)",
+      "Bash(git pull:*)",
+      "Bash(git stash push:*)",
+      "Bash(npx prisma migrate dev:*)",
+      "Bash(node:*)"
     ]
   }
 }

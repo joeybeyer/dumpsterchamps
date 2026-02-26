@@ -48,6 +48,9 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
   // Spam prevention: timestamp when form was loaded
   const [formTimestamp, setFormTimestamp] = useState<number>(0);
 
+  // LLM traffic attribution: capture referrer on load (ChatGPT, Perplexity, Claude, etc.)
+  const [referrer] = useState(() => typeof document !== 'undefined' ? document.referrer : '');
+
   // Project types with icons for visual selection
   const projectTypes = [
     { value: "Home Renovation", label: t("projectTypes.homeRenovation"), icon: Home, emoji: "🏠" },
@@ -142,6 +145,8 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
           // Spam prevention fields
           honeypot,
           formTimestamp,
+          // LLM traffic attribution (ChatGPT, Perplexity, Claude, etc.)
+          referrer,
         }),
       });
 

@@ -24,6 +24,8 @@ interface LeadEmailData {
   dumpsterSize?: string;
   message?: string;
   source?: string;
+  referrer?: string;  // Raw HTTP referrer
+  llmSource?: string | null; // Detected LLM source (ChatGPT, Perplexity, etc.)
 }
 
 export async function sendLeadNotification(lead: LeadEmailData) {
@@ -77,6 +79,17 @@ export async function sendLeadNotification(lead: LeadEmailData) {
             <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">Source Page</td>
             <td style="padding: 8px; border: 1px solid #ddd;">${lead.source || "Unknown"}</td>
           </tr>
+          ${lead.llmSource ? `
+          <tr style="background-color: #e8f5e9;">
+            <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">🤖 AI Referral</td>
+            <td style="padding: 8px; border: 1px solid #ddd;"><strong>${lead.llmSource}</strong></td>
+          </tr>
+          ` : lead.referrer ? `
+          <tr>
+            <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">Referrer</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">${lead.referrer}</td>
+          </tr>
+          ` : ''}
         </table>
       `,
     });
