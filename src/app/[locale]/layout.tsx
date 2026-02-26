@@ -25,7 +25,7 @@ export function generateStaticParams() {
 
 export const metadata: Metadata = {
   title: {
-    default: "Dumpster Rental Near Me from $495 [2026] | Dumpster Champs",
+    default: "Dumpster Rental Near Me from $495 [2026]",
     template: "%s | Dumpster Champs",
   },
   description:

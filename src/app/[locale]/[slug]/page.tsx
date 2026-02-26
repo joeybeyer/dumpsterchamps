@@ -287,8 +287,17 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       const pricing = DUMPSTER_PRICING[sizeNum as keyof typeof DUMPSTER_PRICING];
       const price = pricing?.price || 495;
 
+      // Unique titles per size page
+      const sizeTitles: Record<string, string> = {
+        "10-yard-dumpster": "10 Yard Dumpster Rental from $350 | Size Guide & Pricing",
+        "15-yard-dumpster": "15 Yard Dumpster Rental from $425 | Size Guide & Pricing",
+        "20-yard-dumpster": "20 Yard Dumpster Rental from $495 | Size Guide & Pricing",
+        "30-yard-dumpster": "30 Yard Dumpster Rental from $595 | Size Guide & Pricing",
+        "40-yard-dumpster": "40 Yard Dumpster Rental from $695 | Size Guide & Pricing",
+      };
+
       return {
-        title: `${sizeNum} Yard Dumpster Rental $${price} | Size Guide [2026]`,
+        title: sizeTitles[slug] || `${sizeNum} Yard Dumpster Rental from $${price} | Size Guide & Pricing`,
         description: `Rent a ${sizeNum} yard dumpster for $${price}. Holds ${pricing?.capacity || "multiple pickup loads"}. Perfect for ${pricing?.idealFor?.[0]?.toLowerCase() || "home projects"}. Same-day delivery, 7-day rental included. No hidden fees.`,
         keywords: `${sizeNum} yard dumpster rental, ${sizeNum} yard dumpster near me, ${sizeNum} yard roll off, ${sizeNum} yard container rental`,
       };
