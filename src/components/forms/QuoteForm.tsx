@@ -42,6 +42,12 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
   const [zipLookupLoading, setZipLookupLoading] = useState(false);
   const [testimonialIndex, setTestimonialIndex] = useState(0);
   const [callPulse, setCallPulse] = useState(false);
+  const [contactStep, setContactStep] = useState<1 | 2 | 3>(1);
+
+  // Refs for sequential auto-focus in step 3
+  const nameRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const phoneRef = useRef<HTMLInputElement>(null);
 
   // Spam prevention: honeypot field (should remain empty)
   const [honeypot, setHoneypot] = useState("");
@@ -96,6 +102,19 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
       return () => clearInterval(interval);
     }
   }, [status]);
+
+  // Reset contact sub-step when navigating away from step 3
+  useEffect(() => {
+    if (step !== 3) setContactStep(1);
+  }, [step]);
+
+  // Auto-focus the active contact field
+  useEffect(() => {
+    if (step === 3) {
+      const refs = [nameRef, emailRef, phoneRef];
+      setTimeout(() => refs[contactStep - 1]?.current?.focus(), 80);
+    }
+  }, [step, contactStep]);
 
   // Scroll form into view when step changes (important for mobile UX)
   useEffect(() => {
@@ -557,88 +576,174 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
         </div>
       )}
 
-      {/* Step 3: Contact Info */}
+      {/* Step 3: Contact Info — single-field sequential reveal */}
       {step === 3 && (
         <div className="space-y-4">
-          {/* Almost done encouragement */}
-          <div className="bg-green-50 border border-green-200 rounded-lg p-3 text-center">
-            <p className="text-green-800 text-sm font-medium">
-              {t("quoteForm.almostDone")}
-            </p>
+          {/* Mini step progress */}
+          <div className="flex items-center justify-center gap-2">
+            {(["Name", "Email", "Phone"] as const).map((label, i) => (
+              <div key={label} className="flex items-center gap-2">
+                <div className={cn(
+                  "w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold transition-colors",
+                  contactStep > i + 1
+                    ? "bg-green-500 text-white"
+                    : contactStep === i + 1
+                    ? "bg-primary-600 text-white"
+                    : "bg-secondary-200 text-secondary-400"
+                )}>
+                  {contactStep > i + 1 ? "✓" : i + 1}
+                </div>
+                {i < 2 && (
+                  <div className={cn("w-8 h-0.5 transition-colors", contactStep > i + 1 ? "bg-green-400" : "bg-secondary-200")} />
+                )}
+              </div>
+            ))}
           </div>
 
-          <div>
-            <label htmlFor="name" className="block text-sm font-medium text-secondary-700 mb-1">
-              {t("quoteForm.firstName")} *
-            </label>
-            <input
-              type="text"
-              id="name"
-              required
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
-              placeholder={t("quoteForm.firstNamePlaceholder")}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-secondary-700 mb-1">
-              {t("quoteForm.emailAddress")} *
-            </label>
-            <input
-              type="email"
-              id="email"
-              required
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
-              placeholder={t("quoteForm.emailPlaceholder")}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="phone" className="block text-sm font-medium text-secondary-700 mb-1">
-              {t("quoteForm.phoneNumber")} *
-            </label>
-            <input
-              type="tel"
-              id="phone"
-              required
-              value={formData.phone}
-              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-              className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
-              placeholder={t("quoteForm.phonePlaceholder")}
-            />
-          </div>
-
-          <div className="flex gap-3">
-            <button
-              type="button"
-              onClick={prevStep}
-              className="flex-1 border-2 border-secondary-300 text-secondary-700 py-3 px-6 rounded-lg font-semibold hover:bg-secondary-50 transition-colors flex items-center justify-center gap-2"
-            >
-              <ChevronLeft className="h-5 w-5" />
-              {t("quoteForm.back")}
-            </button>
-            <button
-              type="submit"
-              disabled={status === "loading" || !formData.name || !formData.email || !formData.phone}
-              className="flex-1 bg-primary-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-            >
-              {status === "loading" ? (
-                <>
-                  <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  {t("quoteForm.processing")}
-                </>
-              ) : (
-                t("quoteForm.getMyQuote")
+          {/* Completed fields summary (sunk cost anchor) */}
+          {contactStep > 1 && (
+            <div className="bg-secondary-50 rounded-lg px-4 py-3 space-y-1">
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-secondary-500">Name</span>
+                <span className="text-secondary-900 font-medium">{formData.name}</span>
+              </div>
+              {contactStep > 2 && (
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-secondary-500">Email</span>
+                  <span className="text-secondary-900 font-medium">{formData.email}</span>
+                </div>
               )}
-            </button>
-          </div>
+            </div>
+          )}
+
+          {/* Name field */}
+          {contactStep === 1 && (
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium text-secondary-700 mb-1">
+                {t("quoteForm.firstName")} *
+              </label>
+              <input
+                ref={nameRef}
+                type="text"
+                id="name"
+                required
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                onKeyDown={(e) => { if (e.key === "Enter" && formData.name) { e.preventDefault(); setContactStep(2); } }}
+                className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                placeholder={t("quoteForm.firstNamePlaceholder")}
+              />
+              <div className="flex gap-3 mt-4">
+                <button
+                  type="button"
+                  onClick={prevStep}
+                  className="border-2 border-secondary-300 text-secondary-700 py-3 px-4 rounded-lg font-semibold hover:bg-secondary-50 transition-colors flex items-center justify-center gap-1"
+                >
+                  <ChevronLeft className="h-5 w-5" />
+                </button>
+                <button
+                  type="button"
+                  disabled={!formData.name}
+                  onClick={() => setContactStep(2)}
+                  className="flex-1 bg-primary-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                >
+                  {t("quoteForm.continue")}
+                  <ChevronRight className="h-5 w-5" />
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Email field */}
+          {contactStep === 2 && (
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-secondary-700 mb-1">
+                {t("quoteForm.emailAddress")} *
+              </label>
+              <input
+                ref={emailRef}
+                type="email"
+                id="email"
+                required
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                onKeyDown={(e) => { if (e.key === "Enter" && formData.email) { e.preventDefault(); setContactStep(3); } }}
+                className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                placeholder={t("quoteForm.emailPlaceholder")}
+              />
+              <div className="flex gap-3 mt-4">
+                <button
+                  type="button"
+                  onClick={() => setContactStep(1)}
+                  className="border-2 border-secondary-300 text-secondary-700 py-3 px-4 rounded-lg font-semibold hover:bg-secondary-50 transition-colors flex items-center justify-center gap-1"
+                >
+                  <ChevronLeft className="h-5 w-5" />
+                </button>
+                <button
+                  type="button"
+                  disabled={!formData.email}
+                  onClick={() => setContactStep(3)}
+                  className="flex-1 bg-primary-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                >
+                  {t("quoteForm.continue")}
+                  <ChevronRight className="h-5 w-5" />
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Phone field */}
+          {contactStep === 3 && (
+            <div>
+              {/* Localized social proof trust banner */}
+              <div className="bg-green-50 border border-green-200 rounded-lg p-3 text-center mb-3">
+                <p className="text-green-800 text-sm font-medium">
+                  {formData.city
+                    ? `Join 450+ happy homeowners in ${formData.city} who rented this month`
+                    : "Join 450+ happy homeowners who rented this month"}
+                </p>
+              </div>
+              <label htmlFor="phone" className="block text-sm font-medium text-secondary-700 mb-1">
+                {t("quoteForm.phoneNumber")} *
+              </label>
+              <input
+                ref={phoneRef}
+                type="tel"
+                id="phone"
+                required
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                placeholder={t("quoteForm.phonePlaceholder")}
+              />
+              <div className="flex gap-3 mt-4">
+                <button
+                  type="button"
+                  onClick={() => setContactStep(2)}
+                  className="border-2 border-secondary-300 text-secondary-700 py-3 px-4 rounded-lg font-semibold hover:bg-secondary-50 transition-colors flex items-center justify-center gap-1"
+                >
+                  <ChevronLeft className="h-5 w-5" />
+                </button>
+                <button
+                  type="submit"
+                  disabled={status === "loading" || !formData.phone}
+                  className="flex-1 bg-primary-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                >
+                  {status === "loading" ? (
+                    <>
+                      <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      {t("quoteForm.processing")}
+                    </>
+                  ) : (
+                    t("quoteForm.getMyQuote")
+                  )}
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </form>
