@@ -8,6 +8,8 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { StickyCallButton } from "@/components/ui/StickyCallButton";
 import { StickyMobileFooter } from "@/components/ui/StickyMobileFooter";
+import { StickyScarcityBanner } from "@/components/ui/StickyScarcityBanner";
+import { QuoteFormProvider } from "@/context/QuoteFormContext";
 import { locales, type Locale } from "@/i18n/config";
 
 const GTM_ID = "GTM-WSW4PWX";
@@ -130,11 +132,14 @@ export default async function LocaleLayout({
           />
         </noscript>
         <NextIntlClientProvider messages={messages}>
-          <Header />
-          <main className="min-h-screen pb-20 lg:pb-0">{children}</main>
-          <Footer />
-          <StickyCallButton phone={phone} />
-          <StickyMobileFooter />
+          <QuoteFormProvider>
+            <Header />
+            <main className="min-h-screen pb-20 lg:pb-0">{children}</main>
+            <Footer />
+            <StickyCallButton phone={phone} />
+            <StickyMobileFooter />
+            <StickyScarcityBanner />
+          </QuoteFormProvider>
         </NextIntlClientProvider>
       </body>
     </html>

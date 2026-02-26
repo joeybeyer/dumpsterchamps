@@ -91,11 +91,8 @@ export default async function HomePage({ params }: PageProps) {
 
   return (
     <>
-      {/* Sticky Scarcity Banner - Mobile Only */}
-      <StickyScarcityBanner />
-      
       {/* Hero Section - Optimized for Conversion */}
-      <section className="bg-gradient-to-br from-secondary-900 to-secondary-800 text-white py-6 lg:py-10 mt-10 lg:mt-0">
+      <section className="bg-gradient-to-br from-secondary-900 to-secondary-800 text-white py-6 lg:py-10">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-center">
             {/* Left Column - Content & Form (natural left-to-right reading flow) */}
