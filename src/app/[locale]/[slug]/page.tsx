@@ -287,7 +287,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       const pricing = DUMPSTER_PRICING[sizeNum as keyof typeof DUMPSTER_PRICING];
       const price = pricing?.price || 495;
 
-      // Unique titles per size page - conversion focused, no brand waste
+      // Unique titles per size page - conversion focused, no brand (uses absolute to bypass template)
       const sizeTitles: Record<string, string> = {
         "10-yard-dumpster": "10 Yard Dumpster Rental $350 | Same-Day Delivery, No Hidden Fees",
         "15-yard-dumpster": "15 Yard Dumpster Rental $425 | Same-Day Delivery, No Hidden Fees",
@@ -297,7 +297,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       };
 
       return {
-        title: sizeTitles[slug] || `${sizeNum} Yard Dumpster Rental from $${price} | Size Guide & Pricing`,
+        title: { absolute: sizeTitles[slug] || `${sizeNum} Yard Dumpster Rental $${price} | Same-Day Delivery, No Hidden Fees` },
         description: `Rent a ${sizeNum} yard dumpster for $${price}. Holds ${pricing?.capacity || "multiple pickup loads"}. Perfect for ${pricing?.idealFor?.[0]?.toLowerCase() || "home projects"}. Same-day delivery, 7-day rental included. No hidden fees.`,
         keywords: `${sizeNum} yard dumpster rental, ${sizeNum} yard dumpster near me, ${sizeNum} yard roll off, ${sizeNum} yard container rental`,
       };
