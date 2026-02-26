@@ -231,6 +231,9 @@ const nextConfig = {
       // OLD /location/:city STRUCTURE → NEW STRUCTURE
       { source: "/location/:city", destination: "/locations", permanent: true },
 
+      // BARE CITY SLUG → CANONICAL CITY+STATE SLUG
+      { source: "/dumpster-rental-jacksonville", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
+
       // NEIGHBORHOOD PAGES → PARENT CITY (Jacksonville examples)
       { source: "/murray-hill-neighborhood-jacksonville", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
       { source: "/san-marco-neighborhood-jacksonville", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
