@@ -233,6 +233,7 @@ const nextConfig = {
 
       // NEIGHBORHOOD PAGES → PARENT CITY (Jacksonville examples)
       { source: "/murray-hill-neighborhood-jacksonville", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
+      { source: "/san-marco-neighborhood-jacksonville", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
 
       // ============ SLASH-SEPARATED DUMPSTER RENTAL URLS ============
       // Fix: /dumpster-rental/texas → /dumpster-rental-texas
