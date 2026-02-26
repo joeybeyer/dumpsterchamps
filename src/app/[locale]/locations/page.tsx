@@ -317,10 +317,10 @@ export default async function LocationsPage({ params }: PageProps) {
                   {isEs ? 'Proyectos Comerciales' : 'Commercial Projects'}
                 </h3>
                 <ul className="space-y-2 text-secondary-600">
-                  <li>• {isEs ? 'Construcción comercial' : 'Commercial construction'</li>
+                  <li>• {isEs ? 'Construcción comercial' : 'Commercial construction'}</li>
                   <li>• {isEs ? 'Renovaciones de oficinas' : 'Office renovations'}</li>
-                  <li>• {isEs ? 'Demoliciones' : 'Demolition work'</li>
-                  <li>• {isEs ? 'Construcción de viviendas' : 'Home building'</li>
+                  <li>• {isEs ? 'Demoliciones' : 'Demolition work'}</li>
+                  <li>• {isEs ? 'Construcción de viviendas' : 'Home building'}</li>
                   <li>• {isEs ? 'Mantenimiento de propiedades' : 'Property maintenance'}</li>
                   <li>• {isEs ? 'Eventos grandes' : 'Large events'}</li>
                 </ul>
