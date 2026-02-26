@@ -306,7 +306,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 // generateStaticParams removed - using force-dynamic instead
 
 // ============ STATE PAGE COMPONENT ============
-async function StatePage({ stateSlug }: { stateSlug: string }) {
+async function StatePage({ stateSlug, locale = 'en' }: { stateSlug: string; locale?: string }) {
   const state = await prisma.state.findUnique({
     where: { slug: stateSlug },
     include: { cities: { orderBy: { name: "asc" } } },
@@ -1614,7 +1614,7 @@ export default async function DynamicPage({ params }: PageProps) {
 
   switch (pageType) {
     case "state":
-      return <StatePage stateSlug={slug.replace("dumpster-rental-", "")} />;
+      return <StatePage stateSlug={slug.replace("dumpster-rental-", "")} locale={locale} />;
     case "city":
       return <CityPage citySlug={slug.replace("dumpster-rental-", "")} locale={locale} />;
     case "size":
