@@ -42,6 +42,7 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
   const [zipLookupLoading, setZipLookupLoading] = useState(false);
   const [testimonialIndex, setTestimonialIndex] = useState(0);
   const [callPulse, setCallPulse] = useState(false);
+  const [priorityCountdown, setPriorityCountdown] = useState(299); // 4:59
   const [contactStep, setContactStep] = useState<1 | 2 | 3>(1);
 
   // Refs for sequential auto-focus in step 3
@@ -99,6 +100,20 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
         setCallPulse(true);
         setTimeout(() => setCallPulse(false), 800);
       }, 5000);
+      return () => clearInterval(interval);
+    }
+  }, [status]);
+
+  // Priority queue countdown (starts at 4:59, stops at 0)
+  useEffect(() => {
+    if (status === "success") {
+      setPriorityCountdown(299);
+      const interval = setInterval(() => {
+        setPriorityCountdown((prev) => {
+          if (prev <= 1) { clearInterval(interval); return 0; }
+          return prev - 1;
+        });
+      }, 1000);
       return () => clearInterval(interval);
     }
   }, [status]);
@@ -227,24 +242,38 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
   const phone = "(888) 860-0710";
 
   if (status === "success") {
+    const mins = Math.floor(priorityCountdown / 60);
+    const secs = priorityCountdown % 60;
+    const countdownDisplay = `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+
     return (
       <div ref={successRef} className={cn("bg-white rounded-lg p-6", className)}>
-        {/* Small success confirmation */}
+        {/* Success confirmation */}
         <div className="flex items-center justify-center gap-2 mb-5">
           <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
             <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <p className="text-green-700 font-medium text-sm">{t("quoteForm.requestReceived")}</p>
+          <p className="text-green-700 font-medium text-sm">Request received! Our team is reviewing it now.</p>
         </div>
 
         {/* PRIMARY CTA — visual dominance */}
         <div className="mb-5">
-          <h3 className="text-2xl font-bold text-secondary-900 text-center mb-1">Skip the Wait</h3>
+          <h3 className="text-2xl font-bold text-secondary-900 text-center mb-1">Want it faster? Call for an Instant Quote.</h3>
           <p className="text-secondary-500 text-sm text-center mb-4">
-            Our agents are standing by. Average callback wait is <strong>~2 hours</strong> — or get your quote on the phone in <strong>2 minutes</strong>.
+            Your request is in our queue <strong>(Current wait: ~8 mins)</strong>. Call now to bypass the queue and speak to an expert immediately.
           </p>
+
+          {/* Live agents signal */}
+          <div className="flex items-center justify-center gap-2 mb-3">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+            </span>
+            <span className="text-green-700 text-sm font-semibold">Agents Live Now</span>
+          </div>
+
           <a
             href={`tel:${phone.replace(/\D/g, "")}`}
             className={cn(
@@ -255,9 +284,19 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
             <svg className="w-7 h-7 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
             </svg>
-            <span>Get Your Quote Now</span>
+            <span>Skip the Queue — Call Now</span>
           </a>
           <p className="text-center text-secondary-400 text-xs mt-2">{phone}</p>
+
+          {/* Priority countdown */}
+          <div className={cn(
+            "mt-3 text-center text-xs font-medium",
+            priorityCountdown > 0 ? "text-amber-600" : "text-secondary-400"
+          )}>
+            {priorityCountdown > 0
+              ? `Priority quote line open for: ${countdownDisplay}`
+              : "Priority line has closed — wait for our callback"}
+          </div>
         </div>
 
         {/* Divider */}
