@@ -61,23 +61,26 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
   const [referrer] = useState(() => typeof document !== 'undefined' ? document.referrer : '');
 
   // Context for sharing form state with scarcity banner and trust badge
-  const { updateFormState, setPageCity } = useQuoteFormContext();
+  const { updateFormState, setPageCity, clearPageCity } = useQuoteFormContext();
 
-  // Set page-level city if provided (for city landing pages)
+  // Set page-level city if provided (for city landing pages); clear on unmount
   useEffect(() => {
     if (cityName) {
       setPageCity(cityName);
     }
-  }, [cityName, setPageCity]);
+    return () => clearPageCity();
+  }, [cityName, setPageCity, clearPageCity]);
 
-  // Sync form state to context for scarcity banner
+  // Sync form state to context for scarcity banner.
+  // On city landing pages (cityName prop set), don't push zip-derived city/state
+  // so the page-level city set via setPageCity isn't overwritten.
   useEffect(() => {
     updateFormState({
       zipCode: formData.zipCode,
-      city: formData.city,
-      state: formData.state,
+      city: cityName ? "" : formData.city,
+      state: cityName ? "" : formData.state,
     });
-  }, [formData.zipCode, formData.city, formData.state, updateFormState]);
+  }, [formData.zipCode, formData.city, formData.state, cityName, updateFormState]);
 
   // Project types with icons for visual selection
   const projectTypes = [

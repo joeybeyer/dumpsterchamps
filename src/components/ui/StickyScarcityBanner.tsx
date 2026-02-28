@@ -29,8 +29,8 @@ export function StickyScarcityBanner({ cityNameProp, selectedDateProp, className
   const { formState } = useQuoteFormContext();
   
   // Use context values if available, otherwise fall back to props
-  // Priority: form city > page city > prop
-  const cityName = formState.city || formState.pageCity || cityNameProp;
+  // Priority: page city > prop > zip-derived city (page context is most reliable)
+  const cityName = formState.pageCity || cityNameProp || formState.city;
   const selectedDate = formState.selectedDate || selectedDateProp;
 
   // Get current day name for messaging
@@ -120,8 +120,8 @@ export function StickyScarcityBanner({ cityNameProp, selectedDateProp, className
   return (
     <div
       className={cn(
-        // Fixed to BOTTOM on mobile for thumb-friendly dismissal, hidden on desktop
-        "fixed bottom-0 left-0 right-0 py-3 px-4 z-[60] lg:hidden",
+        // Positioned above the sticky mobile footer (68px) so it never covers the CTAs
+        "fixed bottom-[68px] left-0 right-0 py-3 px-4 z-[60] lg:hidden",
         "transition-all duration-500 transform",
         isUrgent 
           ? "bg-gradient-to-r from-red-600 to-orange-500 text-white" 
@@ -164,11 +164,11 @@ export function StickyScarcityBanner({ cityNameProp, selectedDateProp, className
                   <span className="text-amber-100">Only {slotsRemaining} slots left in {cityName}</span>
                 </>
               ) : cityName ? (
-                // User entered zip, city detected
+                // City known — credibility-first messaging
                 <>
-                  Demand is high in <span className="font-bold">{cityName}</span>.{" "}
-                  <span className={isUrgent ? "text-yellow-200 font-semibold" : "text-amber-100"}>
-                    Only {slotsRemaining} slots for {getDayName()}
+                  Upfront pricing in <span className="font-bold">{cityName}</span>.{" "}
+                  <span className="text-amber-100">
+                    Delivery as soon as {getTomorrowName()} • No hidden fees
                   </span>
                 </>
               ) : (
@@ -181,16 +181,16 @@ export function StickyScarcityBanner({ cityNameProp, selectedDateProp, className
                 </>
               )}
             </p>
-            {/* "Just Updated" real-time indicator */}
+            {/* Subline */}
             <p className="text-[10px] text-white/70 mt-0.5">
-              Just updated • Real-time availability
+              Upfront pricing • Fast delivery windows
             </p>
           </div>
         </div>
         
         <button
           onClick={() => setDismissed(true)}
-          className="flex-shrink-0 p-1.5 hover:bg-white/20 rounded-full transition-colors"
+          className="flex-shrink-0 p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center hover:bg-white/20 rounded-full transition-colors"
           aria-label="Dismiss banner"
         >
           <X className="h-4 w-4" />

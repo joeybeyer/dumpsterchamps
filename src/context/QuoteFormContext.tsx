@@ -16,6 +16,8 @@ interface QuoteFormContextType {
   updateFormState: (updates: Partial<QuoteFormState>) => void;
   /** Set page-level city (for city landing pages) */
   setPageCity: (city: string) => void;
+  /** Clear page-level city (called on unmount of city landing pages) */
+  clearPageCity: () => void;
 }
 
 const QuoteFormContext = createContext<QuoteFormContextType | undefined>(undefined);
@@ -37,8 +39,12 @@ export function QuoteFormProvider({ children }: { children: ReactNode }) {
     setFormState((prev) => ({ ...prev, pageCity: city }));
   }, []);
 
+  const clearPageCity = useCallback(() => {
+    setFormState((prev) => ({ ...prev, pageCity: "" }));
+  }, []);
+
   return (
-    <QuoteFormContext.Provider value={{ formState, updateFormState, setPageCity }}>
+    <QuoteFormContext.Provider value={{ formState, updateFormState, setPageCity, clearPageCity }}>
       {children}
     </QuoteFormContext.Provider>
   );
@@ -52,6 +58,7 @@ export function useQuoteFormContext() {
       formState: { zipCode: "", city: "", state: "", selectedDate: "", pageCity: "" },
       updateFormState: () => {},
       setPageCity: () => {},
+      clearPageCity: () => {},
     };
   }
   return context;
