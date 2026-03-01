@@ -493,6 +493,35 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
         />
       </div>
 
+      {/* Shadow inputs — offscreen, not display:none so browsers detect a full contact form
+          and offer autofill across all steps. Values stay in sync with formData. */}
+      <div className="absolute left-[-9999px]" aria-hidden="true">
+        <input
+          type="text"
+          name="given-name"
+          autoComplete="given-name"
+          tabIndex={-1}
+          value={formData.name}
+          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+        />
+        <input
+          type="email"
+          name="email"
+          autoComplete="email"
+          tabIndex={-1}
+          value={formData.email}
+          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+        />
+        <input
+          type="tel"
+          name="tel"
+          autoComplete="tel"
+          tabIndex={-1}
+          value={formData.phone}
+          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+        />
+      </div>
+
       <ProgressIndicator />
       <StepLabel />
 
