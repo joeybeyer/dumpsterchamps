@@ -472,7 +472,7 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
   };
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit} className={cn("relative z-50", className)}>
+    <form ref={formRef} onSubmit={handleSubmit} autoComplete="on" className={cn("relative z-50", className)}>
       {status === "error" && (
         <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700 text-sm mb-4">
           {errorMessage}
@@ -507,6 +507,9 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
               <input
                 type="text"
                 id="zipCode"
+                name="postal-code"
+                autoComplete="postal-code"
+                inputMode="numeric"
                 required
                 maxLength={5}
                 value={formData.zipCode}
@@ -811,6 +814,8 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
                 ref={nameRef}
                 type="text"
                 id="name"
+                name="given-name"
+                autoComplete="given-name"
                 required
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -849,6 +854,8 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
                 ref={emailRef}
                 type="email"
                 id="email"
+                name="email"
+                autoComplete="email"
                 required
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -895,6 +902,9 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
                 ref={phoneRef}
                 type="tel"
                 id="phone"
+                name="tel"
+                autoComplete="tel"
+                inputMode="tel"
                 required
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
