@@ -885,6 +885,7 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
                 id="email"
                 name="email"
                 autoComplete="email"
+                inputMode="email"
                 required
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
