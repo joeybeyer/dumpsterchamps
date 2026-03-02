@@ -563,9 +563,11 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
               )}
             </div>
             {formData.city && formData.state && (
-              <p className="text-sm text-green-600 mt-1 flex items-center gap-1">
-                <MapPin className="h-4 w-4" />
-                {formData.city}, {formData.state}
+              <p className="text-sm text-green-600 mt-1 flex items-center gap-1 font-medium">
+                <svg className="h-4 w-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Same-day delivery available in {formData.city}
               </p>
             )}
           </div>
