@@ -82,6 +82,16 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
     });
   }, [formData.zipCode, formData.city, formData.state, cityName, updateFormState]);
 
+  // Pre-select dumpster size when user clicked "Book X Yard" on a city page size card
+  useEffect(() => {
+    const stored = sessionStorage.getItem("preselect-dumpster-size");
+    if (stored) {
+      sessionStorage.removeItem("preselect-dumpster-size");
+      const sizeValue = `${stored} Yard`;
+      setFormData((prev) => ({ ...prev, dumpsterSize: sizeValue }));
+    }
+  }, []);
+
   // Project types with icons for visual selection
   const projectTypes = [
     { value: "Home Renovation", label: t("projectTypes.homeRenovation"), icon: Home, emoji: "🏠" },
