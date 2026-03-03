@@ -5,10 +5,10 @@ import { NextRequest, NextResponse } from 'next/server';
 const handleI18n = createMiddleware(routing);
 
 export default function middleware(request: NextRequest) {
-  // Lowercase redirect for city slug URLs — preserves link equity from
-  // external sites linking to capitalized versions like /dumpster-rental-Costa-Mesa-CA
+  // Lowercase redirect for ALL page URLs — preserves link equity from
+  // external sites linking to capitalized versions
   const pathname = request.nextUrl.pathname;
-  if (pathname !== pathname.toLowerCase() && pathname.startsWith('/dumpster-rental-')) {
+  if (pathname !== pathname.toLowerCase()) {
     const url = request.nextUrl.clone();
     url.pathname = pathname.toLowerCase();
     return NextResponse.redirect(url, 301);
