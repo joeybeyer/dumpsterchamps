@@ -228,6 +228,28 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
     }
   }, [status]);
 
+  // Sync a contact field from autofill/password-manager events that bypass onChange
+  const syncContactField = (field: "name" | "email" | "phone", value: string) => {
+    const v = value ?? "";
+    setFormData((prev) => (prev[field] === v ? prev : { ...prev, [field]: v }));
+  };
+
+  // When arriving at step 3, pull any DOM-prefilled values into state before events fire
+  // (catches iOS Safari / Chrome autofill that resolves before the component mounts)
+  useEffect(() => {
+    if (step === 3) {
+      const domName = nameRef.current?.value || "";
+      const domEmail = emailRef.current?.value || "";
+      const domPhone = phoneRef.current?.value || "";
+      setFormData((prev) => ({
+        ...prev,
+        name: prev.name || domName,
+        email: prev.email || domEmail,
+        phone: prev.phone || domPhone,
+      }));
+    }
+  }, [step]);
+
   // Zip code auto-lookup
   const lookupZipCode = async (zip: string) => {
     if (zip.length !== 5 || !/^\d{5}$/.test(zip)) return;
@@ -859,7 +881,9 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
                 autoComplete="given-name"
                 required
                 value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                onChange={(e) => syncContactField("name", e.currentTarget.value)}
+                onInput={(e) => syncContactField("name", (e.currentTarget as HTMLInputElement).value)}
+                onBlur={(e) => syncContactField("name", e.currentTarget.value)}
                 onKeyDown={(e) => { if (e.key === "Enter" && formData.name) { e.preventDefault(); setContactStep(2); } }}
                 className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
                 placeholder={t("quoteForm.firstNamePlaceholder")}
@@ -900,7 +924,9 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
                 inputMode="email"
                 required
                 value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                onChange={(e) => syncContactField("email", e.currentTarget.value)}
+                onInput={(e) => syncContactField("email", (e.currentTarget as HTMLInputElement).value)}
+                onBlur={(e) => syncContactField("email", e.currentTarget.value)}
                 onKeyDown={(e) => { if (e.key === "Enter" && formData.email) { e.preventDefault(); setContactStep(3); } }}
                 className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
                 placeholder={t("quoteForm.emailPlaceholder")}
@@ -949,7 +975,9 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
                 inputMode="tel"
                 required
                 value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                onChange={(e) => syncContactField("phone", e.currentTarget.value)}
+                onInput={(e) => syncContactField("phone", (e.currentTarget as HTMLInputElement).value)}
+                onBlur={(e) => syncContactField("phone", e.currentTarget.value)}
                 className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
                 placeholder={t("quoteForm.phonePlaceholder")}
               />
