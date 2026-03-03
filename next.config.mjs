@@ -72,7 +72,7 @@ const nextConfig = {
       { source: "/museum-of-science-and-history", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
       { source: "/pabst-mansion", destination: "/dumpster-rental-milwaukee-wi", permanent: true },
       { source: "/riverside-arts-market", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
-      { source: "/riverside-neighborhood-jacksonville", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
+      { source: "/riverside-neighborhood-jacksonville", destination: "/dumpster-rental-jacksonville-fl/riverside", permanent: true },
 
       // ============ FLORIDA CITIES WITH -FL SUFFIX → ACTUAL PAGES (without suffix) ============
       { source: "/dumpster-rental-boynton-beach-fl", destination: "/dumpster-rental-boynton-beach", permanent: true },
@@ -139,16 +139,16 @@ const nextConfig = {
       { source: "/Bay-View-milwaukee-wi", destination: "/dumpster-rental-milwaukee-wi", permanent: true },
 
       // ============ MORE JACKSONVILLE TOURISM/NEIGHBORHOODS ============
-      { source: "/southside-neighborhood-jacksonville", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
-      { source: "/avondale-neighborhood-jacksonville", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
+      { source: "/southside-neighborhood-jacksonville", destination: "/dumpster-rental-jacksonville-fl/southside", permanent: true },
+      { source: "/avondale-neighborhood-jacksonville", destination: "/dumpster-rental-jacksonville-fl/avondale", permanent: true },
       { source: "/jacksonville-zoo-and-gardens", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
       { source: "/kingsley-plantation", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
-      { source: "/beaches-neighborhood-jacksonville", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
-      { source: "/ortega-neighborhood-jacksonville", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
-      { source: "/five-points-neighborhood-jacksonville", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
+      { source: "/beaches-neighborhood-jacksonville", destination: "/dumpster-rental-jacksonville-fl/beaches", permanent: true },
+      { source: "/ortega-neighborhood-jacksonville", destination: "/dumpster-rental-jacksonville-fl/ortega", permanent: true },
+      { source: "/five-points-neighborhood-jacksonville", destination: "/dumpster-rental-jacksonville-fl/five-points", permanent: true },
       { source: "/fishing-st-johns-river", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
       { source: "/cummer-museum-of-art-and-gardens", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
-      { source: "/springfield-neighborhood-jacksonville", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
+      { source: "/springfield-neighborhood-jacksonville", destination: "/dumpster-rental-jacksonville-fl/springfield", permanent: true },
 
       // ============ MORE MILWAUKEE TOURISM/LANDMARKS ============
       { source: "/milwaukee-riverwalk", destination: "/dumpster-rental-milwaukee-wi", permanent: true },
@@ -235,17 +235,14 @@ const nextConfig = {
       // BARE CITY SLUG → CANONICAL CITY+STATE SLUG
       { source: "/dumpster-rental-jacksonville", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
 
-      // NEIGHBORHOOD PAGES → PARENT CITY (Jacksonville examples)
-      { source: "/murray-hill-neighborhood-jacksonville", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
-      { source: "/san-marco-neighborhood-jacksonville", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
+      // NEIGHBORHOOD PAGES → ACTUAL NEIGHBORHOOD PAGES
+      { source: "/murray-hill-neighborhood-jacksonville", destination: "/dumpster-rental-jacksonville-fl/murray-hill", permanent: true },
+      { source: "/san-marco-neighborhood-jacksonville", destination: "/dumpster-rental-jacksonville-fl/san-marco", permanent: true },
 
       // ============ SLASH-SEPARATED DUMPSTER RENTAL URLS ============
       // Fix: /dumpster-rental/texas → /dumpster-rental-texas
       { source: "/dumpster-rental/:state", destination: "/dumpster-rental-:state", permanent: true },
 
-      // ============ GENERIC NEIGHBORHOOD-CITY PATTERN ============
-      // Fix: /{slug}-neighborhood-{city} → /locations
-      { source: "/:slug*-neighborhood-:city", destination: "/locations", permanent: true },
     ];
   },
 };
