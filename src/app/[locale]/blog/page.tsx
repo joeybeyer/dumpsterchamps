@@ -317,7 +317,7 @@ export default async function BlogIndex({ params }: PageProps) {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {featuredTopics.map((article) => (
               <Link
-                key={article.href + article.category}
+                key={`${article.category}::${article.href}`}
                 href={article.href}
                 className="bg-white rounded-xl p-6 border border-secondary-200 hover:border-primary-300 hover:shadow-lg transition-all group"
               >
