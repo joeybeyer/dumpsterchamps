@@ -265,7 +265,8 @@ export async function POST(request: NextRequest) {
       type, name, email, phone, city, state,
       projectType, dumpsterSize, message, source,
       honeypot, formTimestamp, // Spam prevention fields
-      referrer // LLM traffic attribution (ChatGPT, Perplexity, Claude, etc.)
+      referrer, // LLM traffic attribution (ChatGPT, Perplexity, Claude, etc.)
+      utmSource, utmMedium, utmCampaign, // UTM parameters
     } = body;
 
     // Validate required fields
@@ -301,7 +302,10 @@ export async function POST(request: NextRequest) {
         dumpsterSize,
         message,
         source,
-        referrer, // Store raw referrer for analytics
+        referrer,
+        utmSource: utmSource || null,
+        utmMedium: utmMedium || null,
+        utmCampaign: utmCampaign || null,
         spam: spamCheck.isSpam,
         spamReason: spamCheck.isSpam ? spamCheck.reasons.join(", ") : null,
       },
@@ -320,8 +324,11 @@ export async function POST(request: NextRequest) {
           dumpsterSize,
           message,
           source,
-          referrer, // Include raw referrer
-          llmSource, // Include detected LLM name (if any)
+          referrer,
+          llmSource,
+          utmSource: utmSource || undefined,
+          utmMedium: utmMedium || undefined,
+          utmCampaign: utmCampaign || undefined,
         });
       } catch (emailError) {
         console.error("Failed to send email notification:", emailError);

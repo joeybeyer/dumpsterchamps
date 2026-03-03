@@ -26,6 +26,9 @@ interface LeadEmailData {
   source?: string;
   referrer?: string;  // Raw HTTP referrer
   llmSource?: string | null; // Detected LLM source (ChatGPT, Perplexity, etc.)
+  utmSource?: string;
+  utmMedium?: string;
+  utmCampaign?: string;
 }
 
 export async function sendLeadNotification(lead: LeadEmailData) {
@@ -88,6 +91,12 @@ export async function sendLeadNotification(lead: LeadEmailData) {
           <tr>
             <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">Referrer</td>
             <td style="padding: 8px; border: 1px solid #ddd;">${lead.referrer}</td>
+          </tr>
+          ` : ''}
+          ${(lead.utmSource || lead.utmMedium || lead.utmCampaign) ? `
+          <tr style="background-color: #fff8e1;">
+            <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">📊 Traffic Source</td>
+            <td style="padding: 8px; border: 1px solid #ddd;">${[lead.utmSource, lead.utmMedium, lead.utmCampaign].filter(Boolean).join(' / ')}</td>
           </tr>
           ` : ''}
         </table>

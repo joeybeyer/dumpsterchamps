@@ -195,6 +195,9 @@ model Lead {
   message      String?
   source       String?
   referrer     String?  // HTTP referrer for LLM traffic attribution (ChatGPT, Perplexity, Claude, etc.)
+  utmSource    String?
+  utmMedium    String?
+  utmCampaign  String?
   spam         Boolean  @default(false)
   spamReason   String?
   createdAt    DateTime @default(now())

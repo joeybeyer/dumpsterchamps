@@ -297,6 +297,15 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
           formTimestamp,
           // LLM traffic attribution (ChatGPT, Perplexity, Claude, etc.)
           referrer,
+          // UTM parameters from URL (more reliable than referrer)
+          ...(() => {
+            const urlParams = new URLSearchParams(window.location.search);
+            return {
+              utmSource: urlParams.get('utm_source') || '',
+              utmMedium: urlParams.get('utm_medium') || '',
+              utmCampaign: urlParams.get('utm_campaign') || '',
+            };
+          })(),
         }),
       });
 
