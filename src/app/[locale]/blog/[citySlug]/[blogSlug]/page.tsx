@@ -95,10 +95,11 @@ export default async function CityBlogPost({ params }: PageProps) {
   const nextTemplateId = getNextBlogId(template.id);
   const nextTemplate = getBlogTemplate(nextTemplateId);
 
-  // Process content with city data
-  const title = processContent(template.titleTemplate, city.name, city.state.name, city.state.abbr);
-  const content = processContent(template.contentTemplate, city.name, city.state.name, city.state.abbr);
-  const excerpt = processContent(template.excerptTemplate, city.name, city.state.name, city.state.abbr);
+  // Process content with city data — pass city.slug so [CITY_SLUG] resolves to
+  // the canonical DB slug (e.g. bakersfield-ca), not just the city name lowercased
+  const title = processContent(template.titleTemplate, city.name, city.state.name, city.state.abbr, city.slug);
+  const content = processContent(template.contentTemplate, city.name, city.state.name, city.state.abbr, city.slug);
+  const excerpt = processContent(template.excerptTemplate, city.name, city.state.name, city.state.abbr, city.slug);
 
   const phone = process.env.NEXT_PUBLIC_PHONE || "(888) 860-0710";
   const isEs = locale === 'es';
@@ -112,7 +113,7 @@ export default async function CityBlogPost({ params }: PageProps) {
     ? `/blog/${citySlug}/${nextTemplate.slugTemplate.replace("[CITY_SLUG]", citySlug)}`
     : null;
   const nextBlogTitle = nextTemplate
-    ? processContent(nextTemplate.titleTemplate, city.name, city.state.name, city.state.abbr)
+    ? processContent(nextTemplate.titleTemplate, city.name, city.state.name, city.state.abbr, city.slug)
     : null;
 
   // Convert markdown-ish content to HTML sections

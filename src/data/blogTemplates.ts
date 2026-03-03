@@ -2155,11 +2155,13 @@ export function processContent(
   content: string,
   cityName: string,
   stateName: string,
-  stateAbbr: string
+  stateAbbr: string,
+  citySlug?: string
 ): string {
+  const slug = citySlug || cityName.toLowerCase().replace(/\s+/g, "-");
   return content
     .replace(/\[CITY\]/g, cityName)
     .replace(/\[STATE\]/g, stateName)
     .replace(/\[STATE_ABBR\]/g, stateAbbr)
-    .replace(/\[CITY_SLUG\]/g, cityName.toLowerCase().replace(/\s+/g, "-"));
+    .replace(/\[CITY_SLUG\]/g, slug);
 }

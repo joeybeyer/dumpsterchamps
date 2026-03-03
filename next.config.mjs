@@ -234,6 +234,7 @@ const nextConfig = {
 
       // BARE CITY SLUG → CANONICAL CITY+STATE SLUG
       { source: "/dumpster-rental-jacksonville", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
+      { source: "/dumpster-rental-bakersfield", destination: "/dumpster-rental-bakersfield-ca", permanent: true },
 
       // NEIGHBORHOOD PAGES → ACTUAL NEIGHBORHOOD PAGES
       { source: "/murray-hill-neighborhood-jacksonville", destination: "/dumpster-rental-jacksonville-fl/murray-hill", permanent: true },
