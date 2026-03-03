@@ -460,6 +460,47 @@ function formatNeighborhoodContent(content: string): string {
   return result.join('\n');
 }
 
+/**
+ * Extract FAQ question/answer pairs from generated markdown content.
+ * Matches the **Question?** / Answer pattern used in all content generators.
+ */
+function extractFAQs(content: string): { question: string; answer: string }[] {
+  const faqs: { question: string; answer: string }[] = [];
+  const lines = content.split('\n');
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+    // Match **Question text here?** pattern
+    const questionMatch = line.match(/^\*\*(.+?\?)\*\*$/);
+    if (questionMatch) {
+      // Collect answer lines until next ** heading, ## heading, or empty line before new question
+      const answerLines: string[] = [];
+      for (let j = i + 1; j < lines.length; j++) {
+        const nextLine = lines[j].trim();
+        if (nextLine === '') {
+          // Check if next non-empty line is a new question or heading
+          const lookAhead = lines.slice(j + 1).find(l => l.trim() !== '');
+          if (!lookAhead || lookAhead.trim().startsWith('**') || lookAhead.trim().startsWith('##')) {
+            break;
+          }
+          answerLines.push('');
+        } else if (nextLine.startsWith('**') || nextLine.startsWith('##')) {
+          break;
+        } else {
+          answerLines.push(nextLine);
+        }
+      }
+      // Strip markdown links from answer text for clean schema output
+      const answer = answerLines.join(' ').replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').trim();
+      if (answer) {
+        faqs.push({ question: questionMatch[1], answer });
+      }
+    }
+  }
+
+  return faqs;
+}
+
 // Only valid city slugs (starting with dumpster-rental-)
 function isValidCitySlug(slug: string): boolean {
   return slug.startsWith('dumpster-rental-') && slug.length > 16;
@@ -752,6 +793,14 @@ export default async function NeighborhoodPage({ params }: PageProps) {
         ? `¿Busca alquiler de contenedores en ${city.name}? Ofrecemos entrega rápida y confiable de contenedores roll-off en ${pageData.name} y zonas cercanas. Servicio el mismo día con precios fijos desde $495.`
         : `Looking for dumpster rental in ${city.name}? We offer fast, reliable roll-off dumpster delivery to ${pageData.name} and surrounding areas. Same-day service available with flat-rate pricing starting at $495.`);
 
+  // Extract FAQ pairs for structured data
+  const faqs = extractFAQs(pageData.content);
+
+  // Build canonical URL for schema
+  const pageUrl = isEs
+    ? `https://www.dumpsterchamps.com/es/${slug}/${neighborhoodSlug}`
+    : `https://www.dumpsterchamps.com/${slug}/${neighborhoodSlug}`;
+
   return (
     <>
       <LocalBusinessSchema
@@ -763,6 +812,58 @@ export default async function NeighborhoodPage({ params }: PageProps) {
         latitude={city.latitude}
         longitude={city.longitude}
       />
+
+      {/* BreadcrumbList Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": isEs ? "Inicio" : "Home",
+                "item": "https://www.dumpsterchamps.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": isEs ? `Contenedores en ${city.name}` : `${city.name} Dumpster Rental`,
+                "item": `https://www.dumpsterchamps.com/${slug}`
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": pageData.name,
+                "item": pageUrl
+              }
+            ]
+          })
+        }}
+      />
+
+      {/* FAQPage Structured Data */}
+      {faqs.length > 0 && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              "mainEntity": faqs.map(faq => ({
+                "@type": "Question",
+                "name": faq.question,
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": faq.answer
+                }
+              }))
+            })
+          }}
+        />
+      )}
 
       {/* Breadcrumb */}
       <nav className="bg-secondary-100 py-3">
