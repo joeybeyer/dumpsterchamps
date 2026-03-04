@@ -10,11 +10,8 @@
     "db:push": "prisma db push",
     "db:seed": "tsx prisma/seed.ts",
     "db:studio": "prisma studio",
-<<<<<<< HEAD
+    "postinstall": "prisma generate",
     "generate:spanish": "tsx --env-file=.env scripts/generate-spanish-content.ts"
-=======
-    "postinstall": "prisma generate"
->>>>>>> d02e049 (fix: add postinstall prisma generate for Vercel)
   },
   "dependencies": {
     "@libsql/client": "^0.17.0",
