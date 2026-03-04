@@ -6,7 +6,6 @@ import { prisma } from "@/lib/prisma";
 import { LocalBusinessSchema, FAQSchema, AggregateRatingSchema, ReviewSchema } from "@/components/seo/SchemaMarkup";
 import { LocalFAQAccordion, DEFAULT_CITY_FAQS, DEFAULT_CITY_FAQS_ES } from "@/components/city/LocalFAQAccordion";
 import { TestimonialStrip } from "@/components/ui/TestimonialStrip";
-import { DeliveryCounter, ResponseTimeStat } from "@/components/ui/TrustBadges";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 interface PageProps {
@@ -94,8 +93,8 @@ export default async function HomePage({ params }: PageProps) {
       {/* Hero Section - Optimized for Conversion */}
       <section className="bg-gradient-to-br from-secondary-900 to-secondary-800 text-white py-6 lg:py-10">
         <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-center">
-            {/* Left Column - Content & Form (natural left-to-right reading flow) */}
+          <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-start">
+            {/* Left Column - Headline & supporting content */}
             <div>
               {/* Kicker - Social Proof */}
               <div className="flex items-center gap-2 mb-3">
@@ -137,28 +136,22 @@ export default async function HomePage({ params }: PageProps) {
                 </div>
               </div>
 
-              {/* CTA Button */}
-              <div className="flex flex-col items-start mb-4">
-                <a
-                  href={`tel:${phone.replace(/\D/g, "")}`}
-                  className="bg-primary-600 text-white px-8 lg:px-10 py-4 lg:py-5 rounded-lg font-semibold text-center hover:bg-primary-700 transition-colors flex items-center justify-center gap-2 text-lg lg:text-xl"
-                >
-                  <Phone className="h-5 w-5 lg:h-6 lg:w-6" />
-                  {t("hero.callNow")} {phone}
-                </a>
-                <span className="text-primary-300 text-xs mt-1.5 flex items-center gap-1">
-                  <Phone className="h-3 w-3" />
-                  {t("hero.speakRealPerson")}
-                </span>
+              {/* Hero Image - desktop: shown here below trust badges; mobile: shown below form */}
+              <div className="hidden lg:block relative">
+                <div className="relative aspect-[4/3] max-w-md rounded-2xl overflow-hidden">
+                  <Image
+                    src="/images/hero/hero-homeowner-desktop.jpg"
+                    alt="Roll-off dumpster truck delivering dumpster to home"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                </div>
               </div>
+            </div>
 
-              {/* Delivery Counter & Response Time - Social proof */}
-              <div className="flex flex-wrap gap-3 mb-3">
-                <DeliveryCounter variant="dark" locale={locale} />
-                <ResponseTimeStat variant="dark" locale={locale} />
-              </div>
-
-              {/* Quote Form */}
+            {/* Right Column - Quote Form (visible immediately on desktop) */}
+            <div>
               <div id="quote-form" className="bg-white rounded-xl p-5 shadow-2xl">
                 {/* Google Rating badge above form header for trust */}
                 <div className="flex items-center justify-center gap-2 mb-3 pb-3 border-b border-secondary-100">
@@ -181,7 +174,7 @@ export default async function HomePage({ params }: PageProps) {
               </div>
 
               {/* Mobile Hero Image - shown below form on small screens */}
-              <div className="lg:hidden relative mt-8">
+              <div className="lg:hidden relative mt-6">
                 <div className="relative aspect-[4/3] max-w-sm mx-auto">
                   <Image
                     src="/images/hero/hero-homeowner-mobile.jpg"
@@ -191,19 +184,6 @@ export default async function HomePage({ params }: PageProps) {
                     priority
                   />
                 </div>
-              </div>
-            </div>
-
-            {/* Right Column - Hero Image (Dumpster delivery in action) */}
-            <div className="hidden lg:block relative">
-              <div className="relative aspect-[4/5] max-w-md mx-auto">
-                <Image
-                  src="/images/hero/hero-homeowner-desktop.jpg"
-                  alt="Roll-off dumpster truck delivering dumpster to home"
-                  fill
-                  className="object-cover rounded-2xl"
-                  priority
-                />
               </div>
             </div>
           </div>
