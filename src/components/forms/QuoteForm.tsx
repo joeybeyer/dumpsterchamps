@@ -204,7 +204,7 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
   // Auto-focus the active contact field
   useEffect(() => {
     if (step === 3) {
-      const refs = [nameRef, emailRef, phoneRef];
+      const refs = [nameRef, phoneRef, emailRef];
       setTimeout(() => refs[contactStep - 1]?.current?.focus(), 80);
     }
   }, [step, contactStep]);
@@ -369,9 +369,9 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
 
         {/* PRIMARY CTA — visual dominance */}
         <div className="mb-5">
-          <h3 className="text-2xl font-bold text-secondary-900 text-center mb-1">Want it faster? Call for an Instant Quote.</h3>
+          <h3 className="text-2xl font-bold text-secondary-900 text-center mb-1">Prefer to talk? Get your quote right now.</h3>
           <p className="text-secondary-500 text-sm text-center mb-4">
-            Your request is in our queue <strong>(Current wait: ~8 mins)</strong>. Call now to bypass the queue and speak to an expert immediately.
+            Our team is standing by — call for a free, no-obligation quote in under 2 minutes.
           </p>
 
           {/* Live agents signal */}
@@ -393,7 +393,7 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
             <svg className="w-7 h-7 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
             </svg>
-            <span>Skip the Queue — Call Now</span>
+            <span>Call for a Free Quote</span>
           </a>
           <p className="text-center text-secondary-400 text-xs mt-2">{phone}</p>
 
@@ -403,8 +403,8 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
             priorityCountdown > 0 ? "text-amber-600" : "text-secondary-400"
           )}>
             {priorityCountdown > 0
-              ? `Priority quote line open for: ${countdownDisplay}`
-              : "Priority line has closed — wait for our callback"}
+              ? `Team available — callback expected within: ${countdownDisplay}`
+              : "Callback expected shortly — we have your request"}
           </div>
         </div>
 
@@ -807,6 +807,7 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
             <p className="text-xs text-secondary-500 text-center mt-3 bg-secondary-50 rounded-lg p-2">
               ✓ All prices include delivery, pickup & 7-day rental — no hidden fees
             </p>
+            <p className="text-xs text-secondary-400 text-center mt-1">Not sure on size? Skip — we&apos;ll help you choose on the call.</p>
           </div>
 
           {/* Progress messaging */}
@@ -826,7 +827,7 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
             <button
               type="button"
               onClick={nextStep}
-              disabled={!formData.projectType || !formData.dumpsterSize}
+              disabled={!formData.projectType}
               className="flex-1 bg-primary-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {t("quoteForm.continue")}
@@ -841,7 +842,7 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
         <div className="space-y-4">
           {/* Mini step progress */}
           <div className="flex items-center justify-center gap-2">
-            {(["Name", "Email", "Phone"] as const).map((label, i) => (
+            {(["Name", "Phone", "Email"] as const).map((label, i) => (
               <div key={label} className="flex items-center gap-2">
                 <div className={cn(
                   "w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold transition-colors",
@@ -869,8 +870,8 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
               </div>
               {contactStep > 2 && (
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-secondary-500">Email</span>
-                  <span className="text-secondary-900 font-medium">{formData.email}</span>
+                  <span className="text-secondary-500">Phone</span>
+                  <span className="text-secondary-900 font-medium">{formData.phone}</span>
                 </div>
               )}
             </div>
@@ -918,51 +919,8 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
             </div>
           )}
 
-          {/* Email field */}
+          {/* Phone field — step 2 (captured before email) */}
           {contactStep === 2 && (
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-secondary-700 mb-1">
-                {t("quoteForm.emailAddress")} *
-              </label>
-              <input
-                ref={emailRef}
-                type="email"
-                id="email"
-                name="email"
-                autoComplete="email"
-                inputMode="email"
-                required
-                value={formData.email}
-                onChange={(e) => syncContactField("email", e.currentTarget.value)}
-                onInput={(e) => syncContactField("email", (e.currentTarget as HTMLInputElement).value)}
-                onBlur={(e) => syncContactField("email", e.currentTarget.value)}
-                onKeyDown={(e) => { if (e.key === "Enter" && formData.email) { e.preventDefault(); setContactStep(3); } }}
-                className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
-                placeholder={t("quoteForm.emailPlaceholder")}
-              />
-              <div className="flex gap-3 mt-4">
-                <button
-                  type="button"
-                  onClick={() => setContactStep(1)}
-                  className="border-2 border-secondary-300 text-secondary-700 py-3 px-4 rounded-lg font-semibold hover:bg-secondary-50 transition-colors flex items-center justify-center gap-1"
-                >
-                  <ChevronLeft className="h-5 w-5" />
-                </button>
-                <button
-                  type="button"
-                  disabled={!formData.email}
-                  onClick={() => setContactStep(3)}
-                  className="flex-1 bg-primary-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                >
-                  {t("quoteForm.continue")}
-                  <ChevronRight className="h-5 w-5" />
-                </button>
-              </div>
-            </div>
-          )}
-
-          {/* Phone field */}
-          {contactStep === 3 && (
             <div>
               {/* Localized social proof trust banner */}
               <div className="bg-green-50 border border-green-200 rounded-lg p-3 text-center mb-3">
@@ -987,8 +945,52 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
                 onChange={(e) => syncContactField("phone", e.currentTarget.value)}
                 onInput={(e) => syncContactField("phone", (e.currentTarget as HTMLInputElement).value)}
                 onBlur={(e) => syncContactField("phone", e.currentTarget.value)}
+                onKeyDown={(e) => { if (e.key === "Enter" && formData.phone) { e.preventDefault(); setContactStep(3); } }}
                 className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
                 placeholder={t("quoteForm.phonePlaceholder")}
+              />
+              <div className="flex gap-3 mt-4">
+                <button
+                  type="button"
+                  onClick={() => setContactStep(1)}
+                  className="border-2 border-secondary-300 text-secondary-700 py-3 px-4 rounded-lg font-semibold hover:bg-secondary-50 transition-colors flex items-center justify-center gap-1"
+                >
+                  <ChevronLeft className="h-5 w-5" />
+                </button>
+                <button
+                  type="button"
+                  disabled={!formData.phone}
+                  onClick={() => setContactStep(3)}
+                  className="flex-1 bg-primary-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                >
+                  {t("quoteForm.continue")}
+                  <ChevronRight className="h-5 w-5" />
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Email field — step 3 (final, submit here) */}
+          {contactStep === 3 && (
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-secondary-700 mb-1">
+                {t("quoteForm.emailAddress")} *
+              </label>
+              <input
+                ref={emailRef}
+                type="email"
+                id="email"
+                name="email"
+                autoComplete="email"
+                inputMode="email"
+                required
+                value={formData.email}
+                onChange={(e) => syncContactField("email", e.currentTarget.value)}
+                onInput={(e) => syncContactField("email", (e.currentTarget as HTMLInputElement).value)}
+                onBlur={(e) => syncContactField("email", e.currentTarget.value)}
+                onKeyDown={(e) => { if (e.key === "Enter" && formData.email) { e.preventDefault(); formRef.current?.requestSubmit(); } }}
+                className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                placeholder={t("quoteForm.emailPlaceholder")}
               />
               <div className="flex gap-3 mt-4">
                 <button
@@ -1000,7 +1002,7 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
                 </button>
                 <button
                   type="submit"
-                  disabled={status === "loading" || !formData.phone}
+                  disabled={status === "loading" || !formData.email}
                   className="flex-1 bg-primary-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
                   {status === "loading" ? (
@@ -1020,7 +1022,7 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
                 <svg className="h-3 w-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                 </svg>
-                We&apos;ll text your quote — no spam, no sales calls
+                We&apos;ll reach out with your quote in ~15 min — no obligation
               </p>
             </div>
           )}
