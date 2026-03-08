@@ -226,6 +226,7 @@ const nextConfig = {
       { source: "/blog/how-to-rent-dumpsterScheduling", destination: "/blog/how-to-rent-dumpster", permanent: true },
       { source: "/blog/roll-off-vs-front-load-dumpsterCo", destination: "/blog/roll-off-vs-front-load-dumpster", permanent: true },
       { source: "/blog/roll-off-vs-front-load-dumpsterCom", destination: "/blog/roll-off-vs-front-load-dumpster", permanent: true },
+      { source: "/blog/roll-off-vs-front-load-dumpsterComparisons", destination: "/blog/roll-off-vs-front-load-dumpster", permanent: true },
       
       // Next.js static asset path fixes (partial paths that got indexed)
       { source: "/_next/static/media/:path*", destination: "/", permanent: false },
