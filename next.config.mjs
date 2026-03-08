@@ -216,6 +216,20 @@ const nextConfig = {
       { source: "/st-johns-town-center", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
       { source: "/dumpster-rental-fairfield", destination: "/locations", permanent: false }, // Ambiguous - multiple Fairfield cities
 
+      // ============ MARCH 2026 GSC 404 FIXES ============
+      // Malformed location URLs (e.g., /dumpster-rental-jacksonvilleTap)
+      { source: "/dumpster-rental-jacksonvilleTap", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
+      
+      // Malformed blog URLs (category/section appended to slug)
+      { source: "/blog/dumpster-permit-guideRegulations", destination: "/blog/dumpster-permit-guide", permanent: true },
+      { source: "/blog/how-to-rent-dumpsterPreparation", destination: "/blog/how-to-rent-dumpster", permanent: true },
+      { source: "/blog/how-to-rent-dumpsterScheduling", destination: "/blog/how-to-rent-dumpster", permanent: true },
+      { source: "/blog/roll-off-vs-front-load-dumpsterCo", destination: "/blog/roll-off-vs-front-load-dumpster", permanent: true },
+      { source: "/blog/roll-off-vs-front-load-dumpsterCom", destination: "/blog/roll-off-vs-front-load-dumpster", permanent: true },
+      
+      // Next.js static asset path fixes (partial paths that got indexed)
+      { source: "/_next/static/media/:path*", destination: "/", permanent: false },
+
       // ============ GSC AUDIT FEB 2026 - BULK 404 FIXES ============
 
       // OLD CHIMNEY SWEEP SITE PAGES (domain was repurposed)
