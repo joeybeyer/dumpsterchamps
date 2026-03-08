@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { ChevronRight, Users, Target, Award, Heart } from "lucide-react";
 import { setRequestLocale } from "next-intl/server";
+import { BreadcrumbSchema } from "@/components/seo/SchemaMarkup";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -195,6 +196,14 @@ export default async function AboutPage({ params }: PageProps) {
           </Link>
         </div>
       </section>
+
+      {/* Schema Markup */}
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://www.dumpsterchamps.com" },
+          { name: "About Us", url: "https://www.dumpsterchamps.com/about" },
+        ]}
+      />
     </>
   );
 }

@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { Phone, Check, AlertTriangle, Calculator, TrendingDown, Shield, Clock, Truck, ShoppingCart } from "lucide-react";
-import { FAQSchema } from "@/components/seo/SchemaMarkup";
+import { FAQSchema, BreadcrumbSchema } from "@/components/seo/SchemaMarkup";
 import { TrustBadgesInline, DeliveryCounter } from "@/components/ui/TrustBadges";
 import { setRequestLocale } from "next-intl/server";
 
@@ -488,6 +488,12 @@ export default async function PricingPage({ params }: PageProps) {
           { question: "Why are your prices higher than some competitors?", answer: "Our prices include everything upfront. Many competitors advertise low prices but charge extra for weight ($50-$150), delivery ($50-$100), fuel surcharges ($25-$75), and other fees. Our all-inclusive pricing is often the same or less when you add up the total." },
           { question: "What happens if I go over the weight limit?", answer: "Exceeding the weight limit results in overage fees of $50-$100 per additional ton. We recommend using our size calculator to choose the right dumpster. For heavy materials like concrete or roofing, consider sizing up." },
           { question: "How can I get the best value on a dumpster rental?", answer: "To get the best value: 1) Use our calculator to choose the right size, 2) Get all-inclusive pricing that includes weight, 3) Separate heavy materials when possible, 4) Book during off-peak months, and 5) Return on time to avoid extension fees." },
+        ]}
+      />
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://www.dumpsterchamps.com" },
+          { name: "Dumpster Rental Prices", url: "https://www.dumpsterchamps.com/dumpster-rental-prices" },
         ]}
       />
     </>

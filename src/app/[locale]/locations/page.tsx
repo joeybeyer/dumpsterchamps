@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { MapPin, ChevronRight } from "lucide-react";
 import { prisma } from "@/lib/prisma";
+import { BreadcrumbSchema } from "@/components/seo/SchemaMarkup";
 import { setRequestLocale } from "next-intl/server";
 
 interface PageProps {
@@ -349,6 +350,14 @@ export default async function LocationsPage({ params }: PageProps) {
           </Link>
         </div>
       </section>
+
+      {/* Schema Markup */}
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://www.dumpsterchamps.com" },
+          { name: "Locations", url: "https://www.dumpsterchamps.com/locations" },
+        ]}
+      />
     </>
   );
 }

@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { Phone, Check, Truck, Clock, Shield, Ruler, ArrowRight } from "lucide-react";
 import { setRequestLocale } from "next-intl/server";
+import { BreadcrumbSchema, FAQSchema } from "@/components/seo/SchemaMarkup";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -437,6 +438,23 @@ export default async function SmallDumpsterPage({ params }: PageProps) {
           </div>
         </div>
       </section>
+
+      {/* Schema Markup */}
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://www.dumpsterchamps.com" },
+          { name: "Services", url: "https://www.dumpsterchamps.com/services" },
+          { name: "Small Dumpster Rental", url: "https://www.dumpsterchamps.com/small-dumpster-rental" },
+        ]}
+      />
+      <FAQSchema
+        faqs={[
+          { question: "What is the smallest dumpster size available?", answer: "Our smallest option is the 10-yard dumpster, which is perfect for small cleanouts, garage sales, or minor renovation projects. It holds about 3-4 pickup truck loads of debris." },
+          { question: "Will a small dumpster fit in my driveway?", answer: "Yes, our 10-yard dumpsters are compact and fit in most residential driveways. They measure about 12 feet long by 8 feet wide, making them ideal for tight spaces." },
+          { question: "How much can I put in a small dumpster?", answer: "A 10-yard dumpster includes 2 tons (4,000 lbs) of debris allowance. This is perfect for furniture, appliances, carpeting, and small renovation debris." },
+          { question: "Can I extend my rental if needed?", answer: "Yes, we offer rental extensions for all our dumpsters. Contact us before your rental period ends to arrange an extension." },
+        ]}
+      />
     </>
   );
 }

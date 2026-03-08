@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Phone, Check, Truck, Clock, Shield, ArrowRight, HardHat, Home, Building } from "lucide-react";
 import { LastUpdated } from "@/components/seo/LastUpdated";
+import { BreadcrumbSchema, FAQSchema } from "@/components/seo/SchemaMarkup";
 import { setRequestLocale } from "next-intl/server";
 
 interface PageProps {
@@ -417,6 +418,23 @@ export default async function RollOffDumpsterPage({ params }: PageProps) {
           </p>
         </div>
       </section>
+
+      {/* Schema Markup */}
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://www.dumpsterchamps.com" },
+          { name: "Services", url: "https://www.dumpsterchamps.com/services" },
+          { name: "Roll Off Dumpster Rental", url: "https://www.dumpsterchamps.com/roll-off-dumpster-rental" },
+        ]}
+      />
+      <FAQSchema
+        faqs={[
+          { question: "What's the difference between a roll off and a regular dumpster?", answer: "Roll off dumpsters are temporary containers delivered on a truck and placed at your location for a specific project. Regular dumpsters (front-load) are permanent fixtures at businesses emptied on a weekly schedule. Roll offs are open-top for easy loading, while front-load dumpsters have lids and are smaller." },
+          { question: "How much space do I need for a roll off dumpster?", answer: "You need about 60 feet of straight clearance for the delivery truck, plus the footprint of the dumpster itself (10-22 feet long by 8 feet wide). The area should be flat and accessible — driveways work great. We'll place boards under the wheels to protect your surface." },
+          { question: "Can I put a roll off dumpster on the street?", answer: "Many cities allow street placement with a permit. Requirements vary by location — some cities are strict about permits and time limits, others are more flexible. We can help you understand local requirements when you call to order." },
+          { question: "How full can I load a roll off dumpster?", answer: "Debris should not extend above the top edge of the container. This is a safety and legal requirement — overfilled dumpsters can't be transported on public roads. If your dumpster is getting full, call us to swap it out for an empty one." },
+        ]}
+      />
     </>
   );
 }

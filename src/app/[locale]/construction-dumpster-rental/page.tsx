@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Phone, Check, Truck, HardHat, Clock, Shield, Recycle, AlertTriangle } from "lucide-react";
 import { LastUpdated } from "@/components/seo/LastUpdated";
+import { BreadcrumbSchema, FAQSchema } from "@/components/seo/SchemaMarkup";
 import { setRequestLocale } from "next-intl/server";
 
 interface PageProps {
@@ -410,6 +411,23 @@ export default async function ConstructionDumpsterPage({ params }: PageProps) {
           </p>
         </div>
       </section>
+
+      {/* Schema Markup */}
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://www.dumpsterchamps.com" },
+          { name: "Services", url: "https://www.dumpsterchamps.com/services" },
+          { name: "Construction Dumpster Rental", url: "https://www.dumpsterchamps.com/construction-dumpster-rental" },
+        ]}
+      />
+      <FAQSchema
+        faqs={[
+          { question: "What size dumpster do I need for a construction project?", answer: "For construction projects, we typically recommend 20-40 yard dumpsters. A 20-yard is suitable for medium renovations, while 30-40 yards are best for new construction, major renovations, and large demolition projects." },
+          { question: "Can construction debris include mixed materials?", answer: "Yes, our construction dumpsters accept mixed debris including lumber, drywall, flooring, roofing materials, fixtures, and general construction waste. Certain materials may have restrictions." },
+          { question: "Do you offer roll-off dumpsters for commercial construction sites?", answer: "Yes, we offer dumpsters for commercial construction sites of all sizes. We provide scheduled pickups, same-day delivery, and can accommodate multiple containers on large job sites." },
+          { question: "What is the weight limit for construction debris?", answer: "Weight limits vary by dumpster size: 10-15 yard dumpsters include 2 tons, 20-30 yard dumpsters include 3 tons, and 40 yard dumpsters include 4 tons. Additional weight fees apply for exceeding these limits." },
+        ]}
+      />
     </>
   );
 }

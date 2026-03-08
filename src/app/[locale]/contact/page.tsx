@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ChevronRight, Phone, Mail, Clock } from "lucide-react";
 import { QuoteForm } from "@/components/forms/QuoteForm";
 import { setRequestLocale } from "next-intl/server";
+import { BreadcrumbSchema } from "@/components/seo/SchemaMarkup";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -141,6 +142,14 @@ export default async function ContactPage({ params }: PageProps) {
           </div>
         </div>
       </section>
+
+      {/* Schema Markup */}
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://www.dumpsterchamps.com" },
+          { name: "Contact Us", url: "https://www.dumpsterchamps.com/contact" },
+        ]}
+      />
     </>
   );
 }

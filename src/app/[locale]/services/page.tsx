@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ChevronRight, Truck, HardHat, Home, Check } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { setRequestLocale } from "next-intl/server";
+import { BreadcrumbSchema } from "@/components/seo/SchemaMarkup";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -175,6 +176,14 @@ export default async function ServicesPage({ params }: PageProps) {
           </Link>
         </div>
       </section>
+
+      {/* Schema Markup */}
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://www.dumpsterchamps.com" },
+          { name: "Services", url: "https://www.dumpsterchamps.com/services" },
+        ]}
+      />
     </>
   );
 }

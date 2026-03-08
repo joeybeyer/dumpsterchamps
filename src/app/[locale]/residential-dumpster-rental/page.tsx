@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Phone, Check, Truck, Home, Clock, Shield, Sparkles, TreeDeciduous } from "lucide-react";
 import { LastUpdated } from "@/components/seo/LastUpdated";
+import { BreadcrumbSchema, FAQSchema } from "@/components/seo/SchemaMarkup";
 import { setRequestLocale } from "next-intl/server";
 
 interface PageProps {
@@ -467,6 +468,23 @@ export default async function ResidentialDumpsterPage({ params }: PageProps) {
           </div>
         </div>
       </section>
+
+      {/* Schema Markup */}
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://www.dumpsterchamps.com" },
+          { name: "Services", url: "https://www.dumpsterchamps.com/services" },
+          { name: "Residential Dumpster Rental", url: "https://www.dumpsterchamps.com/residential-dumpster-rental" },
+        ]}
+      />
+      <FAQSchema
+        faqs={[
+          { question: "What can I put in a residential dumpster?", answer: "Residential dumpsters accept most household debris including furniture, appliances, carpeting, flooring, drywall, construction debris, yard waste, and general clutter. Prohibited items include hazardous materials, tires, batteries, and electronics." },
+          { question: "How long can I keep a residential dumpster?", answer: "Standard rental is 7 days, but extensions are available if needed. We understand home projects can take longer than expected." },
+          { question: "Will a dumpster damage my driveway?", answer: "We place protective boards under the dumpster wheels to protect your driveway from marks and damage. Our drivers are careful and experienced." },
+          { question: "Do I need a permit for a residential dumpster?", answer: "Most residential properties don't require a permit for dumpster placement in your driveway. If you need to place it on the street, you'll typically need a permit from your city." },
+        ]}
+      />
     </>
   );
 }

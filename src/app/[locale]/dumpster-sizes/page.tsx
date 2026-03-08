@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ChevronRight, Ruler, Package } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { setRequestLocale } from "next-intl/server";
+import { BreadcrumbSchema, FAQSchema } from "@/components/seo/SchemaMarkup";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -137,6 +138,22 @@ export default async function DumpsterSizesPage({ params }: PageProps) {
           </div>
         </div>
       </section>
+
+      {/* Schema Markup */}
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://www.dumpsterchamps.com" },
+          { name: "Dumpster Sizes", url: "https://www.dumpsterchamps.com/dumpster-sizes" },
+        ]}
+      />
+      <FAQSchema
+        faqs={[
+          { question: "What dumpster size do I need?", answer: "The right dumpster size depends on your project. A 10-yard is best for small cleanouts, 15-yard for medium projects, 20-yard for kitchen/bathroom remodels, 30-yard for major renovations, and 40-yard for new construction or large demos." },
+          { question: "How much can a 10-yard dumpster hold?", answer: "A 10-yard dumpster holds about 3-4 pickup truck loads or 2 tons of debris. It's ideal for garage cleanouts, small bathroom remodels, or debris from flooring projects." },
+          { question: "How much can a 20-yard dumpster hold?", answer: "A 20-yard dumpster holds about 7-8 pickup truck loads or 3 tons of debris. This is our most popular size for kitchen remodels, roof tear-offs, and large home cleanouts." },
+          { question: "What happens if I choose the wrong size?", answer: "If you need a larger size, we can swap out your dumpster for a bigger one. If you choose too large, you won't lose money - you'll just have more space than needed." },
+        ]}
+      />
     </>
   );
 }

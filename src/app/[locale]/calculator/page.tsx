@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { DumpsterCalculator } from "@/components/tools/DumpsterCalculator";
-import { FAQSchema } from "@/components/seo/SchemaMarkup";
+import { FAQSchema, BreadcrumbSchema } from "@/components/seo/SchemaMarkup";
 import { setRequestLocale } from "next-intl/server";
 
 interface PageProps {
@@ -230,6 +230,12 @@ export default async function CalculatorPage({ params }: PageProps) {
           { question: "What happens if I exceed the weight limit?", answer: "Most companies charge $50-100 per ton over the weight limit. Use our calculator to estimate your debris weight and choose a dumpster with adequate capacity to avoid overage fees." },
           { question: "Can I put concrete in a dumpster?", answer: "Yes, but concrete weighs about 2,000 lbs per cubic yard. For heavy materials like concrete, ask about clean load pricing or rent a smaller dumpster specifically for heavy materials to avoid exceeding weight limits." },
           { question: "Do I need a permit for a dumpster?", answer: "It depends on placement. Dumpsters on your driveway (private property) usually don't need a permit. Street placement typically requires a city permit ($20-100). Check with your local municipality." },
+        ]}
+      />
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://www.dumpsterchamps.com" },
+          { name: "Dumpster Size Calculator", url: "https://www.dumpsterchamps.com/calculator" },
         ]}
       />
     </div>
