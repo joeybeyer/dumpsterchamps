@@ -1118,6 +1118,10 @@ async function CityPage({ citySlug, locale = 'en' }: { citySlug: string; locale?
 
       {/* Schema Markup */}
       <LocalBusinessSchema
+        name={`Dumpster Champs - ${city.name}`}
+        description={`Affordable dumpster rental services in ${city.name}, ${city.state.abbr}. Same-day delivery available.`}
+        phone={phone}
+        url={`https://www.dumpsterchamps.com/dumpster-rental-${city.slug}`}
         city={city.name}
         state={city.state.name}
         latitude={city.latitude}

@@ -100,6 +100,26 @@ export default async function LocaleLayout({
         {/* Theme color for mobile browser chrome */}
         <meta name="theme-color" content="#df5f12" />
 
+        {/* Organization Schema for SEO */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "Dumpster Champs",
+              "url": "https://www.dumpsterchamps.com",
+              "logo": "https://www.dumpsterchamps.com/logo.png",
+              "telephone": "(888) 860-0710",
+              "priceRange": "$$$$",
+              "sameAs": [
+                "https://facebook.com/dumpsterchamps",
+                "https://instagram.com/dumpsterchamps"
+              ]
+            })
+          }}
+        />
+
         {/* Preload critical hero images for LCP improvement */}
         <link
           rel="preload"
