@@ -28,11 +28,11 @@ export function generateStaticParams() {
 
 export const metadata: Metadata = {
   title: {
-    default: "Dumpster Rental Near Me from $495 [2026] | Dumpster Champs",
+    default: "Dumpster Rental | Same-Day from $495 | No Hidden Fees | Dumpster Champs",
     template: "%s | Dumpster Champs",
   },
   description:
-    "Dumpster rental near me from $495. Same-day delivery on 10, 15, 20, 30 & 40 yard roll-off dumpsters. All-inclusive pricing, no hidden fees. Get a free quote!",
+    "Dumpster rental from $495. Same-day delivery on 10, 15, 20, 30 & 40 yard roll-off dumpsters nationwide. All-inclusive pricing, no hidden fees. Get a free quote!",
   keywords: [
     "dumpster rental near me",
     "dumpster rental",
@@ -49,15 +49,15 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://www.dumpsterchamps.com",
     siteName: "Dumpster Champs",
-    title: "Dumpster Rental Near Me from $495 [2026] | Dumpster Champs",
+    title: "Dumpster Rental | Same-Day from $495 | No Hidden Fees | Dumpster Champs",
     description:
-      "Dumpster rental near me from $495. Same-day delivery on 10-40 yard roll-off dumpsters. All-inclusive pricing, no hidden fees.",
+      "Dumpster rental from $495. Same-day delivery on 10-40 yard roll-off dumpsters nationwide. All-inclusive pricing, no hidden fees.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dumpster Rental Near Me from $495 [2026] | Dumpster Champs",
+    title: "Dumpster Rental | Same-Day from $495 | No Hidden Fees | Dumpster Champs",
     description:
-      "Dumpster rental near me from $495. Same-day delivery on 10-40 yard roll-off dumpsters. All-inclusive pricing, no hidden fees.",
+      "Dumpster rental from $495. Same-day delivery on 10-40 yard roll-off dumpsters nationwide. All-inclusive pricing, no hidden fees.",
   },
   robots: {
     index: true,
