@@ -581,10 +581,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
     const useCaseName = useCaseMap[neighborhoodSlug] || 'Construction';
 
+    // Canonicalize to the parent city page (collapses use case subpages → city hub)
+    const cityCanonical = `https://www.dumpsterchamps.com/${slug}`;
+
     return {
       title: `${useCaseName} Dumpster Rental in ${city.name}, ${city.state.abbr} | From $495`,
       description: `${useCaseName} dumpster rental in ${city.name}, ${city.state.abbr}. Fast delivery for ${useCaseName.toLowerCase()} projects. Flat-rate pricing with no hidden fees. Call now!`,
-      alternates: { canonical: canonicalUrl },
+      alternates: { canonical: cityCanonical },
       openGraph: {
         title: `${useCaseName} Dumpster Rental in ${city.name}, ${city.state.abbr} | Dumpster Champs`,
         description: `${useCaseName} dumpster rental in ${city.name}. Fast delivery, flat-rate pricing.`,
