@@ -10,9 +10,17 @@ interface PageProps {
 }
 
 export const metadata: Metadata = {
-  title: "Dumpster Rental Prices 2026 | How Much Does a Dumpster Cost?",
-  description: "Dumpster rental prices from $495-$795. See 2026 pricing for 10, 15, 20, 30 & 40 yard dumpsters. Flat-rate pricing includes weight, delivery & pickup. No hidden fees.",
+  title: "Dumpster Rental Prices | $495–$795 All-Inclusive | No Hidden Fees",
+  description: "Dumpster rental prices from $495–$795. Flat-rate pricing for 10, 15, 20, 30 & 40 yard dumpsters — includes delivery, pickup, 7-day rental & weight allowance. No hidden fees.",
   keywords: "dumpster rental prices, dumpster rental cost, how much is a dumpster rental, cheap dumpster rental, dumpster rental prices near me",
+  alternates: {
+    canonical: "https://www.dumpsterchamps.com/dumpster-rental-prices",
+  },
+  openGraph: {
+    title: "Dumpster Rental Prices | $495–$795 All-Inclusive | No Hidden Fees",
+    description: "Dumpster rental from $495–$795. Flat-rate all-inclusive pricing with no hidden fees.",
+    url: "https://www.dumpsterchamps.com/dumpster-rental-prices",
+  },
 };
 
 const PRICING_DATA = [
@@ -115,7 +123,7 @@ export default async function PricingPage({ params }: PageProps) {
       <section className="bg-gradient-to-br from-secondary-900 to-secondary-800 text-white py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl">
-            <p className="text-primary-400 font-semibold mb-2">{isEs ? 'Guía de Precios 2026' : '2026 Pricing Guide'}</p>
+            <p className="text-primary-400 font-semibold mb-2">{isEs ? 'Guía de Precios Actualizada' : 'Current Pricing Guide'}</p>
             <h1 className="text-4xl lg:text-5xl font-bold mb-4">
               {isEs ? '¿Cuánto Cuesta el Alquiler de un Contenedor?' : 'How Much Does a Dumpster Rental Cost?'}
             </h1>
@@ -198,7 +206,7 @@ export default async function PricingPage({ params }: PageProps) {
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-secondary-900 mb-4 text-center">
-            2026 Dumpster Rental Price Comparison
+            Dumpster Rental Price Comparison
           </h2>
           <p className="text-secondary-600 text-center mb-8 max-w-2xl mx-auto">
             All prices include delivery, pickup, 7-day rental, weight allowance, and disposal. 
@@ -369,6 +377,21 @@ export default async function PricingPage({ params }: PageProps) {
                 <p className="text-primary-600 text-sm font-medium">💡 {item.tip}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Related Guide CTA */}
+      <section className="py-10 bg-white border-t border-secondary-100">
+        <div className="container mx-auto px-4 max-w-3xl">
+          <div className="bg-secondary-50 rounded-xl p-6 flex gap-4 items-start">
+            <Calculator className="h-8 w-8 text-primary-600 flex-shrink-0 mt-1" />
+            <div>
+              <h3 className="font-bold text-secondary-900 mb-1">Want a deeper breakdown?</h3>
+              <p className="text-secondary-600 text-sm mb-3">
+                See our full guide on <Link href="/how-much-does-dumpster-rental-cost" className="text-primary-600 hover:underline font-medium">how much dumpster rental costs</Link> — including what affects pricing and how to avoid overpaying.
+              </p>
+            </div>
           </div>
         </div>
       </section>
