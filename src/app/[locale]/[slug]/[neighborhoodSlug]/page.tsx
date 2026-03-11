@@ -546,10 +546,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
     const sizeName = sizeMap[neighborhoodSlug] || '20 Yard';
 
+    // Canonicalize to the standalone size hub page (collapses 162 city-size pages → 1 hub per size)
+    const sizeHubCanonical = `https://www.dumpsterchamps.com/${neighborhoodSlug}`;
+
     return {
       title: `${sizeName} Dumpster Rental in ${city.name}, ${city.state.abbr} | From $495`,
       description: `Rent a ${sizeName.toLowerCase()} dumpster in ${city.name}, ${city.state.abbr}. Same-day delivery available. Flat-rate pricing with no hidden fees. Call now for immediate service!`,
-      alternates: { canonical: canonicalUrl },
+      alternates: { canonical: sizeHubCanonical },
       openGraph: {
         title: `${sizeName} Dumpster Rental in ${city.name}, ${city.state.abbr} | Dumpster Champs`,
         description: `Rent a ${sizeName.toLowerCase()} dumpster in ${city.name}. Fast delivery, flat-rate pricing.`,
