@@ -10,15 +10,17 @@ import { TestimonialStrip } from "@/components/ui/TestimonialStrip";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 export const metadata: Metadata = {
-  title: "Dumpster Rental from $495 | Same-Day Delivery | No Hidden Fees | Dumpster Champs",
+  title: {
+    absolute: "Dumpster Rental | Same-Day from $495 | No Hidden Fees | Dumpster Champs",
+  },
   description: "Dumpster Champs offers flat-rate dumpster rentals nationwide starting at $495. Same-day delivery on 10, 15, 20, 30 & 40 yard roll-off containers. All-inclusive pricing — delivery, pickup & 7-day rental included. Get a free quote!",
   openGraph: {
-    title: "Dumpster Rental from $495 | Same-Day Delivery | No Hidden Fees",
+    title: "Dumpster Rental | Same-Day from $495 | No Hidden Fees | Dumpster Champs",
     description: "Flat-rate dumpster rental from $495. Same-day delivery nationwide on 10-40 yard roll-off containers. All-inclusive pricing, no hidden fees.",
     url: "https://www.dumpsterchamps.com",
   },
   twitter: {
-    title: "Dumpster Rental from $495 | Same-Day Delivery | No Hidden Fees",
+    title: "Dumpster Rental | Same-Day from $495 | No Hidden Fees | Dumpster Champs",
     description: "Flat-rate dumpster rental from $495. Same-day delivery nationwide on 10-40 yard roll-off containers. All-inclusive pricing, no hidden fees.",
   },
 };
