@@ -9,12 +9,12 @@ interface PageProps {
 }
 
 export const metadata: Metadata = {
-  title: "How Much Does It Cost to Rent a Dumpster? [2026] Pricing Guide",
-  description: "Dumpster rental costs $300-$500 for a 7-day rental of a 15-20 yard container. Get transparent pricing from Dumpster Champs with no hidden fees. Call (888) 860-0710.",
+  title: "How Much Does Dumpster Rental Cost? Pricing Guide | Dumpster Champs",
+  description: "Dumpster rental starts at $495 for a 10-yard container, up to $795 for a 40-yard. All-inclusive flat-rate pricing covers delivery, pickup & 7-day rental. No hidden fees.",
   keywords: "dumpster rental cost, how much does dumpster rental cost, dumpster prices, roll off dumpster pricing, dumpster rental rates",
   openGraph: {
-    title: "How Much Does It Cost to Rent a Dumpster? [2026] Pricing Guide",
-    description: "Dumpster rental costs $300-$500 for a 7-day rental. Transparent pricing with no hidden fees.",
+    title: "How Much Does Dumpster Rental Cost? Pricing Guide | Dumpster Champs",
+    description: "Dumpster rental from $495 for a 10-yard container. Flat-rate pricing includes delivery, pickup & 7-day rental. No hidden fees.",
     url: "https://www.dumpsterchamps.com/how-much-does-dumpster-rental-cost",
     type: "article",
   },
@@ -24,20 +24,20 @@ const faqs = [
   {
     question: "How much does it cost to rent a dumpster?",
     questionEs: "¿Cuánto cuesta alquilar un contenedor?",
-    answer: "Dumpster rental costs $300-$500 for a 7-day rental of a 15-20 yard container in most US markets. Prices vary by location, size, and debris type. Dumpster Champs offers transparent flat-rate pricing starting at $495 with delivery, pickup, and disposal included.",
-    answerEs: "El alquiler de contenedores cuesta $300-$500 por un alquiler de 7 días de un contenedor de 15-20 yardas en la mayoría de mercados de EE.UU. Los precios varían por ubicación, tamaño y tipo de escombros. Dumpster Champs ofrece precios transparentes de tarifa plana desde $495 con entrega, recogida y disposición incluidas.",
+    answer: "Dumpster rental at Dumpster Champs starts at $495 for a 10-yard container. A 20-yard (most popular) is $595. Our flat-rate pricing includes delivery, pickup, 7-day rental, and disposal — no hidden fees.",
+    answerEs: "El alquiler de contenedores en Dumpster Champs empieza en $495 para un contenedor de 10 yardas. Un contenedor de 20 yardas (el más popular) cuesta $595. Nuestros precios de tarifa plana incluyen entrega, recogida, alquiler de 7 días y disposición — sin cargos ocultos.",
   },
   {
     question: "What is the cheapest dumpster to rent?",
     questionEs: "¿Cuál es el contenedor más económico para alquilar?",
-    answer: "A 10-yard dumpster is the cheapest option, typically costing $250-$350 for a 7-day rental. This size is ideal for small cleanouts, single room remodels, or garage cleanouts with 2-3 pickup truck loads of debris.",
-    answerEs: "Un contenedor de 10 yardas es la opción más económica, con un costo típico de $250-$350 por un alquiler de 7 días. Este tamaño es ideal para limpiezas pequeñas, remodelaciones de un solo cuarto o limpiezas de garaje con 2-3 cargas de camioneta.",
+    answer: "A 10-yard dumpster is our smallest and most affordable option at $495 for a 7-day rental. It holds 2-3 pickup truck loads of debris and is ideal for small cleanouts, single room remodels, or garage cleanouts.",
+    answerEs: "Un contenedor de 10 yardas es nuestra opción más pequeña y económica a $495 por un alquiler de 7 días. Cabe 2-3 cargas de camioneta y es ideal para limpiezas pequeñas, remodelaciones de un cuarto o limpiezas de garaje.",
   },
   {
     question: "How much does a 20 yard dumpster cost?",
     questionEs: "¿Cuánto cuesta un contenedor de 20 yardas?",
-    answer: "A 20-yard dumpster costs $350-$450 for a 7-day rental. This is the most popular size for home renovation projects, kitchen and bathroom remodels, and roofing jobs. It holds approximately 6 pickup truck loads of debris.",
-    answerEs: "Un contenedor de 20 yardas cuesta $350-$450 por un alquiler de 7 días. Este es el tamaño más popular para proyectos de renovación del hogar, remodelaciones de cocina y baño, y trabajos de techado. Cabe aproximadamente 6 cargas de camioneta de escombros.",
+    answer: "A 20-yard dumpster costs $595 for a 7-day rental. This is the most popular size for home renovation projects, kitchen and bathroom remodels, and roofing jobs. It holds approximately 6 pickup truck loads of debris.",
+    answerEs: "Un contenedor de 20 yardas cuesta $595 por un alquiler de 7 días. Este es el tamaño más popular para proyectos de renovación del hogar, remodelaciones de cocina y baño, y trabajos de techado. Cabe aproximadamente 6 cargas de camioneta de escombros.",
   },
   {
     question: "Are there hidden fees with dumpster rental?",
@@ -106,13 +106,13 @@ export default async function HowMuchDoesDumpsterRentalCostPage({ params }: Page
               {isEs ? <><strong>¿Cuánto cuesta alquilar un contenedor?</strong></> : <><strong>How much does it cost to rent a dumpster?</strong></>}
             </p>
             <p className="text-blue-700">
-              {isEs ? <>El alquiler de contenedores cuesta <strong>$300-$500</strong> por un alquiler de 7 días de un contenedor de 15-20 yardas. El propietario promedio paga <strong>$375-$450</strong> por un contenedor residencial estándar. En Dumpster Champs, nuestros precios de tarifa plana empiezan en <strong>$495</strong> sin cargos ocultos.</> : <>Dumpster rental costs <strong>$300-$500</strong> for a 7-day rental of a 15-20 yard container. The average homeowner pays <strong>$375-$450</strong> for a standard residential dumpster. At Dumpster Champs, our flat-rate pricing starts at <strong>$495</strong> with no hidden fees.</>}
+              {isEs ? <>El alquiler de contenedores en Dumpster Champs empieza en <strong>$495</strong> para un contenedor de 10 yardas. El contenedor de 20 yardas más popular cuesta <strong>$595</strong>. El precio incluye entrega, recogida y alquiler de 7 días — sin cargos ocultos.</> : <>Dumpster rental at Dumpster Champs starts at <strong>$495</strong> for a 10-yard container. The most popular 20-yard costs <strong>$595</strong>. Price includes delivery, pickup & 7-day rental — no hidden fees.</>}
             </p>
           </div>
 
-          {/* H1 with year for freshness */}
+          {/* H1 */}
           <h1 className="text-3xl md:text-4xl font-bold text-secondary-900 mb-6">
-            {isEs ? '¿Cuánto Cuesta Alquilar un Contenedor? [2026] Guía de Precios' : 'How Much Does It Cost to Rent a Dumpster? [2026] Pricing Guide'}
+            {isEs ? '¿Cuánto Cuesta Alquilar un Contenedor? Guía de Precios' : 'How Much Does Dumpster Rental Cost? Pricing Guide'}
           </h1>
 
           <p className="text-lg text-secondary-700 mb-8">
@@ -286,9 +286,9 @@ export default async function HowMuchDoesDumpsterRentalCostPage({ params }: Page
             </div>
           </section>
 
-          {/* Last Updated - Freshness signal for AI */}
+          {/* Last Updated - Freshness signal */}
           <p className="text-center text-sm text-secondary-400 mt-8">
-            {isEs ? 'Última actualización: Enero 2026' : 'Last updated: January 2026'}
+            {isEs ? 'Última actualización: Marzo 2026' : 'Last updated: March 2026'}
           </p>
         </div>
       </main>
