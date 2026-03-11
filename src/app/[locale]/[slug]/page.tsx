@@ -230,7 +230,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       const stateSlug = slug.replace("dumpster-rental-", "");
       const state = await prisma.state.findUnique({ where: { slug: stateSlug } });
       return {
-        title: state?.metaTitle || `Dumpster Rental ${state?.name} | Same-Day from $495 [2026]`,
+        title: state?.metaTitle || `${state?.name} Dumpster Rental | Same-Day from $495 | No Hidden Fees`,
         description: state?.metaDesc || `Affordable dumpster rental in ${state?.name}. 10-40 yard roll-off containers from $495. Same-day delivery, flat-rate pricing, no hidden fees.`,
       };
     }
@@ -260,8 +260,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         ? (city?.metaDescEs ?? city?.metaDesc)
         : city?.metaDesc;
 
+      const fallbackTitle = `${city?.name}, ${city?.state.abbr} Dumpster Rental | Same-Day from $495 | No Hidden Fees`;
+
       return {
-        title: metaTitle || `Dumpster Rental ${city?.name}, ${city?.state.abbr} | Fast from $495 [2026]`,
+        title: metaTitle || fallbackTitle,
         description: metaDesc || `Affordable dumpster rental in ${city?.name}, ${city?.state.abbr}. 10-40 yard containers starting at $495. Same-day delivery, flat-rate pricing, no hidden fees. Call (888) 860-0710.`,
         alternates: {
           canonical: `https://www.dumpsterchamps.com/${isEs ? 'es/' : ''}dumpster-rental-${city?.slug}`,
@@ -271,7 +273,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
           },
         },
         openGraph: {
-          title: metaTitle || `Dumpster Rental ${city?.name}, ${city?.state.abbr} | Fast from $495 [2026]`,
+          title: metaTitle || fallbackTitle,
           description: metaDesc || `Fast, affordable dumpster rentals in ${city?.name}. 10-40 yard roll-off containers with same-day delivery. Flat-rate pricing from $495.`,
           url: `https://www.dumpsterchamps.com/${isEs ? 'es/' : ''}dumpster-rental-${city?.slug}`,
           type: "website",
