@@ -268,6 +268,11 @@ const nextConfig = {
       { source: "/newark-nj", destination: "/dumpster-rental-newark-nj", permanent: true },
       { source: "/newark-nj/:path*", destination: "/dumpster-rental-newark-nj/:path*", permanent: true },
 
+      // ============ PRICING PAGE CONSOLIDATION — MARCH 2026 ============
+      // Consolidate two competing pricing pages → PAA-match URL
+      // /dumpster-rental-prices had 5,621 impr / 127 queries split with /how-much-does-dumpster-rental-cost
+      { source: "/dumpster-rental-prices", destination: "/how-much-does-dumpster-rental-cost", permanent: true },
+
     ];
   },
 };
