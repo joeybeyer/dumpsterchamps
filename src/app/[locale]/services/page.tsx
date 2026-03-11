@@ -10,7 +10,7 @@ interface PageProps {
 }
 
 export const metadata: Metadata = {
-  title: "Dumpster Rental Services | Dumpster Champs",
+  title: "Dumpster Rental Services",
   description:
     "Explore our dumpster rental services including roll-off dumpsters, construction dumpsters, and residential dumpsters. Fast delivery and competitive pricing.",
 };

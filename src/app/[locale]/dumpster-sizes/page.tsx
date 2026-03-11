@@ -10,7 +10,7 @@ interface PageProps {
 }
 
 export const metadata: Metadata = {
-  title: "Dumpster Sizes Guide | Dumpster Champs",
+  title: "Dumpster Sizes Guide",
   description:
     "Compare dumpster sizes from 10 to 40 yards. Find the right size for your project with our comprehensive size guide.",
 };

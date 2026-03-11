@@ -9,7 +9,7 @@ interface PageProps {
 }
 
 export const metadata: Metadata = {
-  title: "About Us | Dumpster Champs",
+  title: "About Us",
   description:
     "Learn about Dumpster Champs - your trusted partner for affordable dumpster rentals. We serve residential and commercial customers nationwide.",
 };

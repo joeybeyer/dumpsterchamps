@@ -9,7 +9,7 @@ interface PageProps {
 }
 
 export const metadata: Metadata = {
-  title: "How Much Does Dumpster Rental Cost? Pricing Guide | Dumpster Champs",
+  title: "How Much Does Dumpster Rental Cost? Pricing Guide",
   description: "Dumpster rental starts at $495 for a 10-yard container, up to $795 for a 40-yard. All-inclusive flat-rate pricing covers delivery, pickup & 7-day rental. No hidden fees.",
   keywords: "dumpster rental cost, how much does dumpster rental cost, dumpster prices, roll off dumpster pricing, dumpster rental rates",
   openGraph: {

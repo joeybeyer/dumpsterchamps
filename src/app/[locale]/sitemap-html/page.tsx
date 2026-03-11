@@ -9,7 +9,7 @@ interface PageProps {
 }
 
 export const metadata: Metadata = {
-  title: "Sitemap | Dumpster Champs",
+  title: "Sitemap",
   description:
     "Browse all pages on Dumpster Champs. Find dumpster rental services, sizes, and locations across the United States.",
 };

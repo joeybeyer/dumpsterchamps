@@ -10,7 +10,7 @@ interface PageProps {
 }
 
 export const metadata: Metadata = {
-  title: "Contact Us | Dumpster Champs",
+  title: "Contact Us",
   description:
     "Contact Dumpster Champs for a free quote. Call us at (888) 860-0710 or fill out our contact form for fast, affordable dumpster rental.",
 };
