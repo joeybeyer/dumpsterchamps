@@ -158,7 +158,6 @@ const nextConfig = {
       { source: "/feed/rss2", destination: "/blog", permanent: true },
 
       // ============ CASE SENSITIVITY FIXES ============
-      // Removed /dumpster-rental-Victorville-CA — same case-insensitive self-loop issue.
       { source: "/Construction-dumpsters", destination: "/construction-dumpster-rental", permanent: true },
       { source: "/construction-dumpsters", destination: "/construction-dumpster-rental", permanent: true },
 
@@ -166,19 +165,15 @@ const nextConfig = {
       { source: "/Brewers-Hill-Milwaukee-Wi", destination: "/dumpster-rental-milwaukee-wi", permanent: true },
       { source: "/dumpster-rental-augusta", destination: "/dumpster-rental-augusta-ga", permanent: true },
       { source: "/dumpster-rental-kansas-city", destination: "/dumpster-rental-kansas-city-mo", permanent: true },
-      { source: "/cdn-cgi/:path*", destination: "/", permanent: false }, // Cloudflare paths
-      { source: "/_next/static/css/:path*", destination: "/", permanent: false }, // Old CSS paths
+      { source: "/cdn-cgi/:path*", destination: "/", permanent: false },
+      { source: "/_next/static/css/:path*", destination: "/", permanent: false },
 
       // ============ MALFORMED/CASE URLS ============
-      // NOTE: Removed /dumpster-rental-Costa-Mesa-CA redirect — Next.js case-insensitive
-      // path matching caused an infinite redirect loop for the canonical lowercase URL.
       { source: "/dumpster-rental-in-weston--fl", destination: "/dumpster-rental-weston", permanent: true },
       { source: "/dumpster-rental-in-weston-fl", destination: "/dumpster-rental-weston", permanent: true },
       { source: "/dumpster-rental-nationwide", destination: "/locations", permanent: true },
 
       // ============ CATCH-ALL: "in-" PREFIX PATTERN ============
-      // Redirects /dumpster-rental-in-{city}-{state} to /dumpster-rental-{city}
-      // This catches URLs like /dumpster-rental-in-miami-fl → /dumpster-rental-miami
       { source: "/dumpster-rental-in-:city-fl", destination: "/dumpster-rental-:city", permanent: true },
       { source: "/dumpster-rental-in-:city-ca", destination: "/dumpster-rental-:city", permanent: true },
       { source: "/dumpster-rental-in-:city-tx", destination: "/dumpster-rental-:city", permanent: true },
@@ -212,28 +207,20 @@ const nextConfig = {
       { source: "/dumpster-rental-in-:city-ut", destination: "/dumpster-rental-:city", permanent: true },
 
       // ============ 404 FIXES FROM GOOGLE SEARCH CONSOLE ============
-      // Invalid format URLs (missing city prefix or incomplete structure)
       { source: "/st-johns-town-center", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
-      { source: "/dumpster-rental-fairfield", destination: "/locations", permanent: false }, // Ambiguous - multiple Fairfield cities
+      { source: "/dumpster-rental-fairfield", destination: "/locations", permanent: false },
 
       // ============ MARCH 2026 GSC 404 FIXES ============
-      // Malformed location URLs (e.g., /dumpster-rental-jacksonvilleTap)
       { source: "/dumpster-rental-jacksonvilleTap", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
-      
-      // Malformed blog URLs (category/section appended to slug)
       { source: "/blog/dumpster-permit-guideRegulations", destination: "/blog/dumpster-permit-guide", permanent: true },
       { source: "/blog/how-to-rent-dumpsterPreparation", destination: "/blog/how-to-rent-dumpster", permanent: true },
       { source: "/blog/how-to-rent-dumpsterScheduling", destination: "/blog/how-to-rent-dumpster", permanent: true },
       { source: "/blog/roll-off-vs-front-load-dumpsterCo", destination: "/blog/roll-off-vs-front-load-dumpster", permanent: true },
       { source: "/blog/roll-off-vs-front-load-dumpsterCom", destination: "/blog/roll-off-vs-front-load-dumpster", permanent: true },
       { source: "/blog/roll-off-vs-front-load-dumpsterComparisons", destination: "/blog/roll-off-vs-front-load-dumpster", permanent: true },
-      
-      // Next.js static asset path fixes (partial paths that got indexed)
       { source: "/_next/static/media/:path*", destination: "/", permanent: false },
 
       // ============ GSC AUDIT FEB 2026 - BULK 404 FIXES ============
-
-      // OLD CHIMNEY SWEEP SITE PAGES (domain was repurposed)
       { source: "/chimney-sweeping", destination: "/", permanent: true },
       { source: "/chimney-repair", destination: "/", permanent: true },
       { source: "/chimney-inspection", destination: "/", permanent: true },
@@ -243,21 +230,23 @@ const nextConfig = {
       { source: "/creosote-removal", destination: "/", permanent: true },
       { source: "/bird-guard-installation", destination: "/", permanent: true },
       { source: "/privacy-policy", destination: "/", permanent: true },
-
-      // OLD /location/:city STRUCTURE → NEW STRUCTURE
       { source: "/location/:city", destination: "/locations", permanent: true },
-
-      // BARE CITY SLUG → CANONICAL CITY+STATE SLUG
       { source: "/dumpster-rental-jacksonville", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
       { source: "/dumpster-rental-bakersfield", destination: "/dumpster-rental-bakersfield-ca", permanent: true },
-
-      // NEIGHBORHOOD PAGES → ACTUAL NEIGHBORHOOD PAGES
       { source: "/murray-hill-neighborhood-jacksonville", destination: "/dumpster-rental-jacksonville-fl/murray-hill", permanent: true },
       { source: "/san-marco-neighborhood-jacksonville", destination: "/dumpster-rental-jacksonville-fl/san-marco", permanent: true },
-
-      // ============ SLASH-SEPARATED DUMPSTER RENTAL URLS ============
-      // Fix: /dumpster-rental/texas → /dumpster-rental-texas
       { source: "/dumpster-rental/:state", destination: "/dumpster-rental-:state", permanent: true },
+
+      // ============ CANNIBALIZATION AUDIT — MARCH 2026 ============
+      // Robertsdale AL: bare slug → canonical prefixed slug (3 URLs → 1)
+      { source: "/robertsdale-al", destination: "/dumpster-rental-robertsdale-al", permanent: true },
+      { source: "/robertsdale-al/:path*", destination: "/dumpster-rental-robertsdale-al/:path*", permanent: true },
+
+      // Hartford CT: bare slug variants → canonical prefixed slug
+      { source: "/east-hartford-ct", destination: "/dumpster-rental-east-hartford-ct", permanent: true },
+      { source: "/east-hartford-ct/:path*", destination: "/dumpster-rental-east-hartford-ct/:path*", permanent: true },
+      { source: "/west-hartford-ct", destination: "/dumpster-rental-west-hartford-ct", permanent: true },
+      { source: "/west-hartford-ct/:path*", destination: "/dumpster-rental-west-hartford-ct/:path*", permanent: true },
 
     ];
   },
