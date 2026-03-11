@@ -630,11 +630,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const enUrl = `https://www.dumpsterchamps.com/${slug}/${neighborhoodSlug}`;
   const esUrl = `https://www.dumpsterchamps.com/es/${slug}/${neighborhoodSlug}`;
 
+  // Neighborhood pages canonicalize to parent city page to prevent cannibalization
+  const cityCanonicalUrl = isEs
+    ? `https://www.dumpsterchamps.com/es/${slug}`
+    : `https://www.dumpsterchamps.com/${slug}`;
+
   return {
     title: pageTitle,
     description: pageDescription,
     alternates: {
-      canonical: isEs ? esUrl : enUrl,
+      canonical: cityCanonicalUrl,
       languages: {
         'en': enUrl,
         'es': esUrl,
