@@ -47,11 +47,27 @@ const nextConfig = {
           { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
         ],
       },
+      // Noindex Spanish locale pages — not targeting Spanish-language traffic
+      {
+        source: "/es/:path*",
+        headers: [
+          { key: "X-Robots-Tag", value: "noindex, nofollow" },
+        ],
+      },
     ];
   },
 
   async redirects() {
     return [
+      // ============ CANONICAL: NON-WWW → WWW ============
+      // Consolidates authority split between dumpsterchamps.com and www.dumpsterchamps.com
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "dumpsterchamps.com" }],
+        destination: "https://www.dumpsterchamps.com/:path*",
+        permanent: true,
+      },
+
       // ============ OLD MILWAUKEE NEIGHBORHOOD URLS ============
       { source: "/Brady-Street-Milwaukee-Wi", destination: "/dumpster-rental-milwaukee-wi", permanent: true },
       { source: "/Downtown-Milwaukee-Wisconsin", destination: "/dumpster-rental-milwaukee-wi", permanent: true },
@@ -247,6 +263,10 @@ const nextConfig = {
       { source: "/east-hartford-ct/:path*", destination: "/dumpster-rental-east-hartford-ct/:path*", permanent: true },
       { source: "/west-hartford-ct", destination: "/dumpster-rental-west-hartford-ct", permanent: true },
       { source: "/west-hartford-ct/:path*", destination: "/dumpster-rental-west-hartford-ct/:path*", permanent: true },
+
+      // Newark NJ: bare slug → canonical prefixed slug
+      { source: "/newark-nj", destination: "/dumpster-rental-newark-nj", permanent: true },
+      { source: "/newark-nj/:path*", destination: "/dumpster-rental-newark-nj/:path*", permanent: true },
 
     ];
   },
