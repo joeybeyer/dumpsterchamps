@@ -273,6 +273,19 @@ const nextConfig = {
       // /dumpster-rental-prices had 5,621 impr / 127 queries split with /how-much-does-dumpster-rental-cost
       { source: "/dumpster-rental-prices", destination: "/how-much-does-dumpster-rental-cost", permanent: true },
 
+      // ============ CANNIBALIZATION FIXES — MARCH 2026 (BATCH 2) ============
+      // Memphis TN: no-state-suffix variant → canonical with state (248 impr, 3 URLs, CRITICAL)
+      { source: "/dumpster-rental-memphis", destination: "/dumpster-rental-memphis-tn", permanent: true },
+      { source: "/dumpster-rental-memphis/:path*", destination: "/dumpster-rental-memphis-tn/:path*", permanent: true },
+
+      // Selma AL: no-state-suffix variant → canonical with state (110 impr, 4 URLs, CRITICAL)
+      { source: "/dumpster-rental-selma", destination: "/dumpster-rental-selma-al", permanent: true },
+      { source: "/dumpster-rental-selma/:path*", destination: "/dumpster-rental-selma-al/:path*", permanent: true },
+
+      // Long Beach: generic no-state slug → Long Beach CA (largest city, 305 impr, HIGH geo-dupe)
+      { source: "/dumpster-rental-long-beach", destination: "/dumpster-rental-long-beach-ca", permanent: true },
+      { source: "/dumpster-rental-long-beach/:path*", destination: "/dumpster-rental-long-beach-ca/:path*", permanent: true },
+
     ];
   },
 };
