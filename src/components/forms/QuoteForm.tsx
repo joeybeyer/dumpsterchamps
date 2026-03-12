@@ -590,6 +590,12 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
                     lookupZipCode(zip);
                   }
                 }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && formData.zipCode.length === 5) {
+                    e.preventDefault();
+                    nextStep();
+                  }
+                }}
                 className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors text-lg text-center font-medium"
                 placeholder={t("quoteForm.enterZipCodePlaceholder")}
               />
@@ -628,13 +634,22 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
               See My Instant Quote
               <ChevronRight className="h-5 w-5" />
             </button>
-            {/* What's included micro-copy */}
-            <p className="text-xs text-secondary-500 text-center mt-3 flex items-center justify-center gap-1">
-              <svg className="h-3.5 w-3.5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-              Includes delivery, pickup & 7-day rental — no hidden fees
-            </p>
+            {/* City-found nudge — appears once zip lookup succeeds */}
+            {formData.city && formData.state ? (
+              <p className="text-xs text-green-600 text-center mt-3 font-medium flex items-center justify-center gap-1">
+                <svg className="h-3.5 w-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                Availability found in {formData.city} — tap to see your quote
+              </p>
+            ) : (
+              <p className="text-xs text-secondary-500 text-center mt-3 flex items-center justify-center gap-1">
+                <svg className="h-3.5 w-3.5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                Includes delivery, pickup & 7-day rental — no hidden fees
+              </p>
+            )}
           </div>
         </div>
       )}
@@ -949,7 +964,13 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
                 className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
                 placeholder={t("quoteForm.phonePlaceholder")}
               />
-              <div className="flex gap-3 mt-4">
+              <p className="text-xs text-secondary-400 mt-1.5 flex items-center gap-1">
+                <svg className="h-3 w-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+                For your quote only — no spam calls
+              </p>
+              <div className="flex gap-3 mt-3">
                 <button
                   type="button"
                   onClick={() => setContactStep(1)}
