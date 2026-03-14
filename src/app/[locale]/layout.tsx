@@ -155,7 +155,7 @@ export default async function LocaleLayout({
         <NextIntlClientProvider messages={messages}>
           <QuoteFormProvider>
             <Header />
-            <main className="min-h-screen pb-20 lg:pb-0">{children}</main>
+            <main className="min-h-screen pb-40 lg:pb-0">{children}</main>
             <Footer />
             <StickyCallButton phone={phone} />
             <StickyMobileFooter />
