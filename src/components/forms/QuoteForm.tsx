@@ -61,7 +61,7 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
   const [referrer] = useState(() => typeof document !== 'undefined' ? document.referrer : '');
 
   // Context for sharing form state with scarcity banner and trust badge
-  const { updateFormState, setPageCity, clearPageCity } = useQuoteFormContext();
+  const { updateFormState, setPageCity, clearPageCity, setFormStep } = useQuoteFormContext();
 
   // Set page-level city if provided (for city landing pages); clear on unmount
   useEffect(() => {
@@ -70,6 +70,13 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
     }
     return () => clearPageCity();
   }, [cityName, setPageCity, clearPageCity]);
+
+  // Broadcast the active step to context so competing CTAs (StickyMobileFooter)
+  // can hide themselves at the final submit step.
+  useEffect(() => {
+    setFormStep(step);
+    return () => setFormStep(0);
+  }, [step, setFormStep]);
 
   // Sync form state to context for scarcity banner.
   // On city landing pages (cityName prop set), don't push zip-derived city/state

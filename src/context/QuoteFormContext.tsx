@@ -9,6 +9,8 @@ interface QuoteFormState {
   selectedDate: string;
   /** City name from page context (for city landing pages) */
   pageCity: string;
+  /** Current quote form step (1–3); 0 = no active form on this page */
+  formStep: number;
 }
 
 interface QuoteFormContextType {
@@ -18,6 +20,8 @@ interface QuoteFormContextType {
   setPageCity: (city: string) => void;
   /** Clear page-level city (called on unmount of city landing pages) */
   clearPageCity: () => void;
+  /** Push the active form step so competing CTAs can conditionally hide */
+  setFormStep: (step: number) => void;
 }
 
 const QuoteFormContext = createContext<QuoteFormContextType | undefined>(undefined);
@@ -29,6 +33,7 @@ export function QuoteFormProvider({ children }: { children: ReactNode }) {
     state: "",
     selectedDate: "",
     pageCity: "",
+    formStep: 0,
   });
 
   const updateFormState = useCallback((updates: Partial<QuoteFormState>) => {
@@ -43,8 +48,12 @@ export function QuoteFormProvider({ children }: { children: ReactNode }) {
     setFormState((prev) => ({ ...prev, pageCity: "" }));
   }, []);
 
+  const setFormStep = useCallback((step: number) => {
+    setFormState((prev) => ({ ...prev, formStep: step }));
+  }, []);
+
   return (
-    <QuoteFormContext.Provider value={{ formState, updateFormState, setPageCity, clearPageCity }}>
+    <QuoteFormContext.Provider value={{ formState, updateFormState, setPageCity, clearPageCity, setFormStep }}>
       {children}
     </QuoteFormContext.Provider>
   );
@@ -55,10 +64,11 @@ export function useQuoteFormContext() {
   if (context === undefined) {
     // Return a default context for SSR or when used outside provider
     return {
-      formState: { zipCode: "", city: "", state: "", selectedDate: "", pageCity: "" },
+      formState: { zipCode: "", city: "", state: "", selectedDate: "", pageCity: "", formStep: 0 },
       updateFormState: () => {},
       setPageCity: () => {},
       clearPageCity: () => {},
+      setFormStep: () => {},
     };
   }
   return context;

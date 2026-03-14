@@ -2,10 +2,16 @@
 
 import { Phone, FileText } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useQuoteFormContext } from "@/context/QuoteFormContext";
 
 export function StickyMobileFooter() {
   const t = useTranslations("stickyFooter");
   const common = useTranslations("common");
+  const { formState } = useQuoteFormContext();
+
+  // Hide when the quote form is on its final contact/submit step so the
+  // footer's orange CTA doesn't compete with the form's own submit button.
+  if (formState.formStep >= 3) return null;
 
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-secondary-200 shadow-lg p-3 flex gap-2 lg:hidden z-50">
