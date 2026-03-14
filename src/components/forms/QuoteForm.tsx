@@ -314,6 +314,11 @@ export function QuoteForm({ cityName, stateName, className, source }: QuoteFormP
       }
 
       setStatus("success");
+      // Fire GTM custom event for form submission tracking
+      if (typeof window !== "undefined") {
+        (window as any).dataLayer = (window as any).dataLayer || [];
+        (window as any).dataLayer.push({ event: "quote_submit" });
+      }
       // Fire Facebook Pixel Lead event
       if (typeof window !== "undefined" && (window as any).fbq) {
         (window as any).fbq("track", "Lead");
