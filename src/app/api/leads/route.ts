@@ -255,6 +255,60 @@ function detectLLMReferrer(referrer: string | undefined | null): string | null {
   return null;
 }
 
+// ============ GO HIGH LEVEL WEBHOOK ============
+
+async function sendToGHL(leadData: {
+  name: string;
+  email: string;
+  phone?: string | null;
+  city?: string | null;
+  state?: string | null;
+  projectType?: string | null;
+  dumpsterSize?: string | null;
+  message?: string | null;
+  source?: string | null;
+  llmSource?: string | null;
+}): Promise<void> {
+  const webhookUrl = process.env.GHL_WEBHOOK_URL;
+  
+  if (!webhookUrl) {
+    console.log("GHL_WEBHOOK_URL not configured, skipping GHL sync");
+    return;
+  }
+
+  try {
+    const response = await fetch(webhookUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        // Standard GHL contact fields
+        firstName: leadData.name.split(" ")[0],
+        lastName: leadData.name.split(" ").slice(1).join(" ") || "",
+        email: leadData.email,
+        phone: leadData.phone || "",
+        city: leadData.city || "",
+        state: leadData.state || "",
+        // Custom fields (configure in GHL)
+        projectType: leadData.projectType || "",
+        dumpsterSize: leadData.dumpsterSize || "",
+        message: leadData.message || "",
+        source: leadData.source || "dumpsterchamps.com",
+        llmSource: leadData.llmSource || "",
+        // Tags for segmentation
+        tags: ["dumpster_rental", leadData.projectType ? `project_${leadData.projectType.toLowerCase().replace(/\s+/g, "_")}` : ""].filter(Boolean),
+      }),
+    });
+
+    if (!response.ok) {
+      console.error("GHL webhook failed:", response.status, await response.text());
+    } else {
+      console.log("Lead synced to GHL successfully");
+    }
+  } catch (error) {
+    console.error("GHL webhook error:", error);
+  }
+}
+
 // ============ API ROUTES ============
 
 export async function POST(request: NextRequest) {
@@ -311,8 +365,9 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    // Only send email notification for non-spam leads
+    // Only send email notification and GHL sync for non-spam leads
     if (!spamCheck.isSpam) {
+      // Send email notification
       try {
         await sendLeadNotification({
           name,
@@ -332,6 +387,24 @@ export async function POST(request: NextRequest) {
         });
       } catch (emailError) {
         console.error("Failed to send email notification:", emailError);
+      }
+
+      // Sync to Go High Level CRM for cross-sell automation
+      try {
+        await sendToGHL({
+          name,
+          email,
+          phone,
+          city,
+          state,
+          projectType,
+          dumpsterSize,
+          message,
+          source,
+          llmSource,
+        });
+      } catch (ghlError) {
+        console.error("Failed to sync to GHL:", ghlError);
       }
     } else {
       console.log(`Spam lead detected (ID: ${lead.id}): ${spamCheck.reasons.join(", ")}`);
