@@ -954,7 +954,7 @@ export default async function NeighborhoodPage({ params }: PageProps) {
               <h2 className="text-2xl font-bold text-secondary-900 mb-6">
                 {isEs ? 'Obtenga una Cotización Gratis' : 'Get a Free Quote'}
               </h2>
-              <QuoteForm source={`/${slug}/${neighborhoodSlug}`} />
+              <QuoteForm cityName={city.name} source={`/${slug}/${neighborhoodSlug}`} />
             </div>
           </div>
         </div>
