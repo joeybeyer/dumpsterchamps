@@ -245,7 +245,7 @@ const nextConfig = {
       { source: "/fireplace-cleaning", destination: "/", permanent: true },
       { source: "/creosote-removal", destination: "/", permanent: true },
       { source: "/bird-guard-installation", destination: "/", permanent: true },
-      { source: "/privacy-policy", destination: "/", permanent: true },
+      // { source: "/privacy-policy", destination: "/", permanent: true }, // REMOVED: actual privacy policy page now exists
       { source: "/location/:city", destination: "/locations", permanent: true },
       { source: "/dumpster-rental-jacksonville", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
       { source: "/dumpster-rental-bakersfield", destination: "/dumpster-rental-bakersfield-ca", permanent: true },
