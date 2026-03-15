@@ -163,7 +163,7 @@ export default async function PrivacyPolicyPage({ params }: PageProps) {
                 : "Our website uses cookies to improve your browsing experience, analyze site traffic, and personalize content. You can control cookie preferences through your browser settings."}
             </p>
 
-            <h2>{isEs ? "Sus Derechos" : "Your Rights"}</h2>
+            <h2 id="your-rights">{isEs ? "Sus Derechos" : "Your Rights"}</h2>
             <p>{isEs ? "Usted tiene derecho a:" : "You have the right to:"}</p>
             <ul>
               <li>
