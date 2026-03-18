@@ -142,6 +142,10 @@ const GBP_CITIES: Record<string, GBPData> = {
     phone: '(832) 333-8297',
     embed: '<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d884691.4077520192!2d-95.4516052!3d29.9844356!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640c70da55b0b87%3A0xf5b30461b36bf04!2sDumpster%20Rental%20Champs!5e0!3m2!1sen!2sus!4v1767966145590!5m2!1sen!2sus" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>',
   },
+  'fort-myers': {
+    phone: '(239) 508-7909',
+    embed: '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3567.498958581787!2d-81.87321399999999!3d26.600448900000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88db41f08c4c2757%3A0x5a06c3f8fa381bca!2sDumpster%20Rental%20Champs!5e0!3m2!1sen!2sus!4v1773839593379!5m2!1sen!2sus" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>',
+  },
 };
 
 async function main() {
