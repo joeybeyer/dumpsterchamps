@@ -1138,10 +1138,12 @@ async function CityPage({ citySlug, locale = 'en' }: { citySlug: string; locale?
         ]}
       />
       <FAQSchema
-        faqs={Array.isArray(faqs) ? faqs.map((f) => ({
-          question: f.question.replace(/\[CITY\]/g, city.name).replace(/\[STATE\]/g, city.state.name),
-          answer: f.answer.replace(/\[CITY\]/g, city.name).replace(/\[STATE\]/g, city.state.name),
-        })) : []}
+        faqs={Array.isArray(faqs) ? faqs
+          .filter((f) => f.question && f.answer)
+          .map((f) => ({
+            question: f.question.replace(/\[CITY\]/g, city.name).replace(/\[STATE\]/g, city.state.name),
+            answer: f.answer.replace(/\[CITY\]/g, city.name).replace(/\[STATE\]/g, city.state.name),
+          })) : []}
       />
       <WebPageSchema
         title={`Dumpster Rental ${city.name}, ${city.state.abbr}`}
