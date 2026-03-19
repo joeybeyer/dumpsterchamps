@@ -169,6 +169,21 @@ const nextConfig: NextConfig = {
       // ============ MISSING STATE SUFFIX (GSC 404s) ============
       { source: "/dumpster-rental-bristol", destination: "/dumpster-rental-bristol-ct", permanent: true },
 
+      // ============ LEGACY CHIMNEY SITE PAGES (old domain content) ============
+      { source: "/chimney-rebuild", destination: "/", permanent: true },
+      { source: "/chimney-repair", destination: "/", permanent: true },
+      { source: "/chimney-sweeping", destination: "/", permanent: true },
+      { source: "/chimney-inspection", destination: "/", permanent: true },
+      { source: "/chimney-crown-repair", destination: "/", permanent: true },
+      { source: "/fireplace-cleaning", destination: "/", permanent: true },
+      { source: "/bird-guard-installation", destination: "/", permanent: true },
+      { source: "/creosote-removal", destination: "/", permanent: true },
+      { source: "/location/:path*", destination: "/locations", permanent: true },
+      { source: "/privacy-policy", destination: "/tos", permanent: true },
+      { source: "/residential-dumpsters", destination: "/residential-dumpster-rental", permanent: true },
+      { source: "/murray-hill-neighborhood-jacksonville", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
+      { source: "/dumpster-rental-indiana", destination: "/locations", permanent: true },
+
       // ============ REDIRECT ERRORS (GSC 2026-03-19) ============
       // Blog pages with garbage appended (bot/JS artifacts)
       { source: "/blog/how-to-rent-dumpsterScheduling", destination: "/blog/how-to-rent-dumpster", permanent: true },
