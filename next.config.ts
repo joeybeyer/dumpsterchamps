@@ -166,6 +166,9 @@ const nextConfig: NextConfig = {
       { source: "/Construction-dumpsters", destination: "/construction-dumpster-rental", permanent: true },
       { source: "/construction-dumpsters", destination: "/construction-dumpster-rental", permanent: true },
 
+      // ============ MISSING STATE SUFFIX (GSC 404s) ============
+      { source: "/dumpster-rental-bristol", destination: "/dumpster-rental-bristol-ct", permanent: true },
+
       // ============ MISC 404 FIXES ============
       { source: "/Brewers-Hill-Milwaukee-Wi", destination: "/dumpster-rental-milwaukee-wi", permanent: true },
       { source: "/dumpster-rental-augusta", destination: "/dumpster-rental-augusta-ga", permanent: true },
