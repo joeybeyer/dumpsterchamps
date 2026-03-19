@@ -169,6 +169,17 @@ const nextConfig: NextConfig = {
       // ============ MISSING STATE SUFFIX (GSC 404s) ============
       { source: "/dumpster-rental-bristol", destination: "/dumpster-rental-bristol-ct", permanent: true },
 
+      // ============ REDIRECT ERRORS (GSC 2026-03-19) ============
+      // Blog pages with garbage appended (bot/JS artifacts)
+      { source: "/blog/how-to-rent-dumpsterScheduling", destination: "/blog/how-to-rent-dumpster", permanent: true },
+      { source: "/blog/how-to-rent-dumpsterPreparation", destination: "/blog/how-to-rent-dumpster", permanent: true },
+      { source: "/blog/roll-off-vs-front-load-dumpsterComparisons", destination: "/blog/roll-off-vs-front-load-dumpster", permanent: true },
+      { source: "/blog/dumpster-permit-guideRegulations", destination: "/blog/dumpster-permit-guide", permanent: true },
+      // Jacksonville with "Tap" appended
+      { source: "/dumpster-rental-jacksonvilleTap", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
+      // san-marco neighborhood (old format)
+      { source: "/san-marco-neighborhood-jacksonville", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
+
       // ============ BULK GSC 404 FIXES (2026-03-19) ============
       { source: "/dumpster-rental-jac", destination: "/dumpster-rental-jacksonville-fl", permanent: true },
       { source: "/dumpster-rental-abilene", destination: "/dumpster-rental-abilene-tx", permanent: true },
