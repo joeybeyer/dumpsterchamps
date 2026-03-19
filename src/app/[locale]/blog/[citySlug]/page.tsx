@@ -31,6 +31,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `Dumpster Rental Guides for ${city.name}, ${city.state.abbr} | Expert Tips [2026]`,
     description: `Expert dumpster rental guides for ${city.name}. Learn about sizing, pricing, permits, and best practices. ${BLOG_TEMPLATES.length} comprehensive guides available.`,
+    robots: {
+      index: false,
+      follow: true,
+    },
   };
 }
 
