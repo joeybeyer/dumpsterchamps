@@ -11,6 +11,7 @@ import { StickyMobileFooter } from "@/components/ui/StickyMobileFooter";
 import { StickyScarcityBanner } from "@/components/ui/StickyScarcityBanner";
 import { FloatingTrustBadge } from "@/components/ui/FloatingTrustBadge";
 import { QuoteFormProvider } from "@/context/QuoteFormContext";
+import { ClickToCallTracker } from "@/components/tracking/ClickToCallTracker";
 import { locales, type Locale } from "@/i18n/config";
 
 const GTM_ID = "GTM-WSW4PWX";
@@ -158,6 +159,7 @@ export default async function LocaleLayout({
             <main className="min-h-screen pb-40 lg:pb-0">{children}</main>
             <Footer />
             <StickyCallButton phone={phone} />
+            <ClickToCallTracker />
             <StickyMobileFooter />
             <StickyScarcityBanner />
             <FloatingTrustBadge />
