@@ -15,6 +15,7 @@ import { ClickToCallTracker } from "@/components/tracking/ClickToCallTracker";
 import { locales, type Locale } from "@/i18n/config";
 
 const GTM_ID = "GTM-WSW4PWX";
+const FB_PIXEL_ID = "871249178511414";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -131,6 +132,67 @@ export default async function LocaleLayout({
         />
       </head>
       <body className={`${inter.variable} antialiased`}>
+        {/* Facebook Pixel */}
+        <Script
+          id="fb-pixel"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              !function(f,b,e,v,n,t,s)
+              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+              n.queue=[];t=b.createElement(e);t.async=!0;
+              t.src=v;s=b.getElementsByTagName(e)[0];
+              s.parentNode.insertBefore(t,s)}(window, document,'script',
+              'https://connect.facebook.net/en_US/fbevents.js');
+              fbq('init', '${FB_PIXEL_ID}');
+              fbq('track', 'PageView');
+            `,
+          }}
+        />
+        <noscript>
+          <img
+            height="1"
+            width="1"
+            style={{ display: "none" }}
+            src={`https://www.facebook.com/tr?id=${FB_PIXEL_ID}&ev=PageView&noscript=1`}
+            alt=""
+          />
+        </noscript>
+
+        {/* Click-to-call tracking for Facebook Pixel + GTM dataLayer */}
+        <Script
+          id="click-to-call-tracking"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              document.addEventListener('click', function(e) {
+                var link = e.target.closest('a[href^="tel:"]');
+                if (!link) return;
+                var phone = link.getAttribute('href').replace('tel:', '');
+                var page = window.location.pathname;
+                // Facebook Pixel
+                if (typeof fbq === 'function') {
+                  fbq('track', 'Contact', {
+                    content_name: 'click_to_call',
+                    content_category: 'phone_call',
+                    value: 15.00,
+                    currency: 'USD'
+                  });
+                }
+                // GTM dataLayer
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                  event: 'click_to_call',
+                  phone_number: phone,
+                  page_url: page
+                });
+              });
+            `,
+          }}
+        />
+
         {/* GTM - Load after page is interactive for better LCP */}
         <Script
           id="gtm-script"
