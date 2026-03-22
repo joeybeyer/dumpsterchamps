@@ -44,8 +44,7 @@ export async function sendLeadNotification(lead: LeadEmailData) {
   try {
     const { data, error } = await client.emails.send({
       from: `Dumpster Champs <${fromEmail}>`,
-      to: [adminEmail],
-      bcc: ['Garrett@primedumpster.com', 'leads@primedumpster.com'],
+      to: [adminEmail, 'joeybeyer26@gmail.com'],
       subject: `📞 AUTO-CALLBACK TRIGGERED: ${lead.name} - ${lead.city || "Unknown City"}`,
       html: `
         <h2>🤖 Lead Received - Auto-Callback Triggered</h2>
