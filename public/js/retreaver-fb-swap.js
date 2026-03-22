@@ -23,7 +23,7 @@
     // ============================================
     // CONFIGURE THESE VALUES
     // ============================================
-    var CAMPAIGN_ID = 'a9cf2951a1dcfd1ff0fd423de6b1a9f0'; // Retreaver campaign show_key
+    var CAMPAIGN_ID = 'a58c788936699ffa7934717db25db092'; // FB-Retargeting-DumpsterChamps show_key
     var FB_TRACKING_NUMBER = '+18332844006';         // Dedicated FB tracking number
     var PHONE_SELECTOR = '.phone-number, a[href^="tel:"]'; // CSS selector for phone elements
     // ============================================
