@@ -409,21 +409,21 @@ export async function POST(request: NextRequest) {
           console.error("Failed to trigger Retell callback:", retellError);
         }
 
-        // Log to ACC LTV database
+        // Log to ACC form fills (for conversion tracking)
         try {
-          await fetch("https://agencycommandcenter.ai/api/leads/webhook/form-submit", {
+          await fetch("https://agencycommandcenter.ai/api/leads/form-fill", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               phone, name, email,
-              zip: city || state || "",
               vertical: "dumpster",
               domain: "dumpsterchamps.com",
-              source: source || "website"
+              source: source || "website",
+              retell_triggered: true
             }),
           });
         } catch (ltvError) {
-          console.error("Failed to log to ACC LTV:", ltvError);
+          console.error("Failed to log to ACC:", ltvError);
         }
       }
 
