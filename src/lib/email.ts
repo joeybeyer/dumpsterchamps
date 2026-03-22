@@ -46,9 +46,12 @@ export async function sendLeadNotification(lead: LeadEmailData) {
       from: `Dumpster Champs <${fromEmail}>`,
       to: [adminEmail],
       bcc: ['Garrett@primedumpster.com', 'leads@primedumpster.com'],
-      subject: `New Lead: ${lead.name} - ${lead.city || "Unknown City"}`,
+      subject: `📞 AUTO-CALLBACK TRIGGERED: ${lead.name} - ${lead.city || "Unknown City"}`,
       html: `
-        <h2>New Lead Received</h2>
+        <h2>🤖 Lead Received - Auto-Callback Triggered</h2>
+        <p style="background: #e8f5e9; padding: 12px; border-radius: 4px; font-weight: bold;">
+          ✅ Retell AI is calling this lead right now. Do NOT call manually - buyer will receive via Retreaver.
+        </p>
         <table style="border-collapse: collapse; width: 100%; max-width: 600px;">
           <tr>
             <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold;">Name</td>
