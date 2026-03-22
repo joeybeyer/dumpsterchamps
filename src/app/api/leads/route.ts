@@ -389,6 +389,44 @@ export async function POST(request: NextRequest) {
         console.error("Failed to send email notification:", emailError);
       }
 
+      // Trigger Retell instant callback (20 sec) + log to ACC LTV database
+      if (phone) {
+        try {
+          await fetch("https://n8n.agencycommandcenter.ai/webhook/fb-lead-retell", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              full_name: name,
+              phone_number: phone,
+              email: email,
+              zip_code: city || state || "",
+              dumpster_size: dumpsterSize || "Not specified",
+              source: "dumpsterchamps.com"
+            }),
+          });
+          console.log("Retell callback triggered for:", phone);
+        } catch (retellError) {
+          console.error("Failed to trigger Retell callback:", retellError);
+        }
+
+        // Log to ACC LTV database
+        try {
+          await fetch("https://agencycommandcenter.ai/api/leads/webhook/form-submit", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              phone, name, email,
+              zip: city || state || "",
+              vertical: "dumpster",
+              domain: "dumpsterchamps.com",
+              source: source || "website"
+            }),
+          });
+        } catch (ltvError) {
+          console.error("Failed to log to ACC LTV:", ltvError);
+        }
+      }
+
       // Sync to Go High Level CRM for cross-sell automation
       try {
         await sendToGHL({
